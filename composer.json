@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^8.4",
+        "illuminate/support": "^11.47",
         "spatie/laravel-data": "^4.8"
     },
     "require-dev": {

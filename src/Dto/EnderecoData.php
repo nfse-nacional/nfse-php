@@ -42,6 +42,12 @@ class EnderecoData extends Data
         public ?string $bairro,
 
         /**
+         * Complemento.
+         */
+        #[MapInputName('xCpl')]
+        public ?string $complemento,
+
+        /**
          * Endereço no exterior.
          */
         #[MapInputName('endExt')]

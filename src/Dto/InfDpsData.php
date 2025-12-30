@@ -74,6 +74,20 @@ class InfDpsData extends Data
         public ?string $codigoLocalEmissao,
 
         /**
+         * Motivo da emissão da DPS pelo Tomador ou Intermediário.
+         * Obrigatório se tpEmit = 2 ou 3.
+         */
+        #[MapInputName('cMotivoEmisTI')]
+        public ?string $motivoEmissaoTomadorIntermediario,
+
+        /**
+         * Chave de acesso da NFS-e rejeitada.
+         * Obrigatório se cMotivoEmisTI = 4.
+         */
+        #[MapInputName('chNFSeRej')]
+        public ?string $chaveNfseRejeitada,
+
+        /**
          * Informações de substituição de NFS-e.
          */
         #[MapInputName('subst')]

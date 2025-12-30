@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse"
+      versao="1.00">
+	<infNFSe Id="NFS23140031100006672992383000000000004625120025708585">
+		<xLocEmi>VARZEA ALEGRE</xLocEmi>
+		<xLocPrestacao>VARZEA ALEGRE</xLocPrestacao>
+		<nNFSe>46</nNFSe>
+		<cLocIncid>2314003</cLocIncid>
+		<xLocIncid>VARZEA ALEGRE</xLocIncid>
+		<xTribNac>Enfermagem, inclusive serviços auxiliares.</xTribNac>
+		<xTribMun>04.06 - Enfermagem, inclusive serviços auxiliares.</xTribMun>
+		<verAplic>Sistema NFS-e</verAplic>
+		<ambGer>1</ambGer>
+		<tpEmis>2</tpEmis>
+		<cStat>100</cStat>
+		<dhProc>2025-12-15T11:11:09-03:00</dhProc>
+		<nDFSe>46</nDFSe>
+		<emit>
+			<CPF>06672992383</CPF>
+			<xNome>NAGILA DE SOUSA FREITAS</xNome>
+			<enderNac>
+				<xLgr>RUA ANTONIA CABELEIRA,109</xLgr>
+				<nro>-</nro>
+				<xCpl>-</xCpl>
+				<xBairro>ALTO DA PREFEITURA</xBairro>
+				<cMun>2314003</cMun>
+				<UF>CE</UF>
+				<CEP>63540000</CEP>
+			</enderNac>
+			<email>naoinformado@gmail.com</email>
+		</emit>
+		<valores>
+			<vBC>1850.00</vBC>
+			<pAliqAplic>5.00</pAliqAplic>
+			<vISSQN>92.50</vISSQN>
+			<vLiq>1757.50</vLiq>
+		</valores>
+		<DPS versao="1.00">
+			<infDPS Id="DPS231400310000667299238300001000000000000046">
+				<tpAmb>1</tpAmb>
+				<dhEmi>2025-12-15T11:11:09-03:00</dhEmi>
+				<verAplic>Sistema NFS-e</verAplic>
+				<serie>00001</serie>
+				<nDPS>46</nDPS>
+				<dCompet>2025-12-15</dCompet>
+				<tpEmit>1</tpEmit>
+				<cLocEmi>2314003</cLocEmi>
+				<prest>
+					<CPF>06672992383</CPF>
+					<email>naoinformado@gmail.com</email>
+					<regTrib>
+						<opSimpNac>1</opSimpNac>
+						<regEspTrib>0</regEspTrib>
+					</regTrib>
+				</prest>
+				<toma>
+					<CNPJ>10237604000100</CNPJ>
+					<xNome>FUNDO MUNICIPAL DE SAUDE - VARZEA ALEGRE</xNome>
+					<end>
+						<endNac>
+							<cMun>2314003</cMun>
+							<CEP>63540000</CEP>
+						</endNac>
+						<xLgr>RUA DEP LUIZ OTACILIO CORREIA, 153</xLgr>
+						<nro>-</nro>
+						<xBairro>CENTRO</xBairro>
+					</end>
+				</toma>
+				<serv>
+					<locPrest>
+						<cLocPrestacao>2314003</cLocPrestacao>
+					</locPrest>
+					<cServ>
+						<cTribNac>040601</cTribNac>
+						<xDescServ>(VALOR EMPENHADO PARA ATENDER DESPESAS COM CREDENCIAMENTO DE PROFISSIONAIS ESPECIALIZADOS COMO  TECNICA DE ENFERMAGEM PARA COMPLEMENTAR A EQUIPE DE ATENÇÃO DOMICILIAR (EMAD) E A EQUIPE MULTIPROFISSIONAL  DE APOIO (EMAP), NO ÂMBITO DO SISTEMA ÚNICO DE SAÚDE (SUS), CONFORME TERMO DE REFERÊNCIA, A SEREM PRESTADOS  NESTA CIDADE, ATRAVÉS DA SECRETARIA MUNICIPAL DE SAÚDE DE VÁRZEA ALEGRE/CE,CONFORME PROCESSO DE Nº003-2024 E  CONTRATO DE Nº2024.03.06.1,) </xDescServ>
+						<cNBS>123019100</cNBS>
+					</cServ>
+				</serv>
+				<valores>
+					<vServPrest>
+						<vServ>1850.00</vServ>
+					</vServPrest>
+					<trib>
+						<tribMun>
+							<tribISSQN>1</tribISSQN>
+							<tpRetISSQN>2</tpRetISSQN>
+						</tribMun>
+						<totTrib>
+							<indTotTrib>0</indTotTrib>
+						</totTrib>
+					</trib>
+				</valores>
+			</infDPS>
+		</DPS>
+	</infNFSe>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<DigestValue>OtQyi5k/d5dfo7S3zGIdlxn2EEE=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>DwlXwAC19vViSI3hzLDvsim5xN5jlpbIWjZSx61CUEgPUEzRHcsemluZFOMWgISV4wuptjmkqDNUaeAB0gXiO1aTap2X06ceUQIPr6wSTi5pgfACGDJXWwuYLfAY5+vgNFywJVYKD8jAVg50yGhB5A9W1jtgT2eISeIobBvtHrtDEuPVqfq+dvbq9l6qBnxbkwOW5CiiGEMf0alVqF5NjPrYW8Msp+XI5IKqiPnFAwJK8ICqFwzlGt84wNI7DlT7QILwCXHdIk/+dzuhcgsudSzNJaDh1Dts+HOxRvbjCRrZUZ9t/kjkswAyYIpZ/IbSraIPyZJ/P1Sw1zlV+MKGUw==</SignatureValue>
+		<KeyInfo>
+			<X509Data>
+				<X509Certificate>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</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</NFSe>

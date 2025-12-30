@@ -4,6 +4,14 @@ namespace Nfse\Nfse\Dto;
 
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\Validation\In;
+use Spatie\LaravelData\Attributes\Validation\IntegerType;
+use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Attributes\Validation\Nullable;
+use Spatie\LaravelData\Attributes\Validation\Required;
+use Spatie\LaravelData\Attributes\Validation\Size;
+use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
@@ -16,6 +24,7 @@ class InfDpsData extends Data
          * Formado por: "DPS" + Cód.Mun.Emi. + Tipo Inscrição + Inscrição + Série + Número.
          */
         #[MapInputName('@Id')]
+        #[Required, StringType, Max(50)]
         public ?string $id,
 
         /**
@@ -24,6 +33,7 @@ class InfDpsData extends Data
          * 2 - Homologação
          */
         #[MapInputName('tpAmb')]
+        #[Required, IntegerType, In([1, 2])]
         public ?int $tipoAmbiente,
 
         /**
@@ -31,24 +41,28 @@ class InfDpsData extends Data
          * Formato: AAAA-MM-DDThh:mm:ssTZD
          */
         #[MapInputName('dhEmi')]
+        #[Required, StringType]
         public ?string $dataEmissao,
 
         /**
          * Versão do aplicativo emissor.
          */
         #[MapInputName('verAplic')]
+        #[Required, StringType, Max(20)]
         public ?string $versaoAplicativo,
 
         /**
          * Série da DPS.
          */
         #[MapInputName('serie')]
+        #[Required, StringType, Max(5)]
         public ?string $serie,
 
         /**
          * Número da DPS.
          */
         #[MapInputName('nDPS')]
+        #[Required, StringType, Max(15)]
         public ?string $numeroDps,
 
         /**
@@ -56,6 +70,7 @@ class InfDpsData extends Data
          * Formato: AAAA-MM-DD
          */
         #[MapInputName('dCompet')]
+        #[Required, StringType]
         public ?string $dataCompetencia,
 
         /**
@@ -65,12 +80,14 @@ class InfDpsData extends Data
          * 3 - Intermediário
          */
         #[MapInputName('tpEmit')]
+        #[Required, IntegerType, In([1, 2, 3])]
         public ?int $tipoEmitente,
 
         /**
          * Código do município emissor da DPS (IBGE).
          */
         #[MapInputName('cLocEmi')]
+        #[Required, StringType, Size(7)]
         public ?string $codigoLocalEmissao,
 
         /**
@@ -78,6 +95,7 @@ class InfDpsData extends Data
          * Obrigatório se tpEmit = 2 ou 3.
          */
         #[MapInputName('cMotivoEmisTI')]
+        #[Nullable, StringType, In(['1', '2', '3', '4'])]
         public ?string $motivoEmissaoTomadorIntermediario,
 
         /**
@@ -85,6 +103,7 @@ class InfDpsData extends Data
          * Obrigatório se cMotivoEmisTI = 4.
          */
         #[MapInputName('chNFSeRej')]
+        #[Nullable, StringType, Size(44)]
         public ?string $chaveNfseRejeitada,
 
         /**

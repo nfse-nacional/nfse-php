@@ -73,5 +73,12 @@ class TributacaoData extends Data
          */
         #[MapInputName('totTrib.pTotTribSN')]
         public ?float $percentualTotalTributosSN,
+
+        /**
+         * Indicador de informação de valor total de tributos.
+         * 0 - Nenhum
+         */
+        #[MapInputName('totTrib.indTotTrib')]
+        public ?int $indicadorTotalTributos,
     ) {}
 }

@@ -25,8 +25,8 @@ it('can build xml from dps data', function () {
         dataCompetencia: '2023-10-27',
         tipoEmitente: 1,
         codigoLocalEmissao: '3550308',
-        motivoEmissaoTomadorIntermediario: null,
-        chaveNfseRejeitada: null,
+        motivoEmissaoTomadorIntermediario: '4',
+        chaveNfseRejeitada: '12345678901234567890123456789012345678901234',
         substituicao: null,
         prestador: new PrestadorData(
             cnpj: '12345678000199',
@@ -85,11 +85,15 @@ it('can build xml from dps data', function () {
                 tributacaoIssqn: 1,
                 tipoImunidade: null,
                 tipoRetencaoIssqn: 1,
-                tipoSuspensao: null,
-                numeroProcessoSuspensao: null,
-                beneficioMunicipal: null,
+                tipoSuspensao: 1,
+                numeroProcessoSuspensao: '123456',
+                beneficioMunicipal: new \Nfse\Nfse\Dto\BeneficioMunicipalData(
+                    percentualReducaoBcBm: 10.0,
+                    valorReducaoBcBm: 100.0
+                ),
                 cstPisCofins: null,
-                percentualTotalTributosSN: null
+                percentualTotalTributosSN: null,
+                indicadorTotalTributos: null
             )
         )
     );
@@ -105,5 +109,11 @@ it('can build xml from dps data', function () {
     expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse">')
         ->and($xml)->toContain('<infDPS Id="DPS123" versao="1.0">')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
-        ->and($xml)->toContain('<vServ>1000.00</vServ>');
+        ->and($xml)->toContain('<vServ>1000.00</vServ>')
+        ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')
+        ->and($xml)->toContain('<chNFSeRej>12345678901234567890123456789012345678901234</chNFSeRej>')
+        ->and($xml)->toContain('<tpSusp>1</tpSusp>')
+        ->and($xml)->toContain('<nProcesso>123456</nProcesso>')
+        ->and($xml)->toContain('<pRedBCBM>10.00</pRedBCBM>')
+        ->and($xml)->toContain('<vRedBCBM>100.00</vRedBCBM>');
 });

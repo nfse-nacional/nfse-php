@@ -114,7 +114,8 @@ it('can instantiate dps data with full structure', function () {
                 numeroProcessoSuspensao: null,
                 beneficioMunicipal: null,
                 cstPisCofins: null,
-                percentualTotalTributosSN: null
+                percentualTotalTributosSN: null,
+                indicadorTotalTributos: null
             )
         )
     );

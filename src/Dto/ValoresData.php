@@ -4,6 +4,7 @@ namespace Nfse\Nfse\Dto;
 
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
@@ -15,6 +16,7 @@ class ValoresData extends Data
          * Valor do serviço prestado.
          */
         #[MapInputName('vServPrest')]
+        #[Required]
         public ?ValorServicoPrestadoData $valorServicoPrestado,
 
         /**

@@ -4,6 +4,12 @@ namespace Nfse\Nfse\Dto;
 
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\Validation\Email;
+use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Attributes\Validation\Nullable;
+use Spatie\LaravelData\Attributes\Validation\Required;
+use Spatie\LaravelData\Attributes\Validation\Size;
+use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
@@ -16,6 +22,7 @@ class TomadorData extends Data
          * Obrigatório se pessoa física.
          */
         #[MapInputName('CPF')]
+        #[Nullable, StringType, Size(11)]
         public ?string $cpf,
 
         /**
@@ -23,6 +30,7 @@ class TomadorData extends Data
          * Obrigatório se pessoa jurídica.
          */
         #[MapInputName('CNPJ')]
+        #[Nullable, StringType, Size(14)]
         public ?string $cnpj,
 
         /**
@@ -30,6 +38,7 @@ class TomadorData extends Data
          * Não permitido se tpEmit=2.
          */
         #[MapInputName('NIF')]
+        #[Nullable, StringType, Max(15)]
         public ?string $nif,
 
         /**
@@ -48,12 +57,14 @@ class TomadorData extends Data
          * Inscrição Municipal do tomador.
          */
         #[MapInputName('IM')]
+        #[Nullable, StringType, Max(15)]
         public ?string $inscricaoMunicipal,
 
         /**
          * Razão Social ou Nome do tomador.
          */
         #[MapInputName('xNome')]
+        #[Nullable, StringType, Max(255)]
         public ?string $nome,
 
         /**
@@ -72,6 +83,7 @@ class TomadorData extends Data
          * Email do tomador.
          */
         #[MapInputName('email')]
+        #[Nullable, Email, Max(80)]
         public ?string $email,
     ) {}
 }

@@ -44,6 +44,8 @@ class DpsXmlBuilder
         $this->appendElement($parent, 'dCompet', $data->dataCompetencia);
         $this->appendElement($parent, 'tpEmit', (string)$data->tipoEmitente);
         $this->appendElement($parent, 'cLocEmi', $data->codigoLocalEmissao);
+        $this->appendElement($parent, 'cMotivoEmisTI', $data->motivoEmissaoTomadorIntermediario);
+        $this->appendElement($parent, 'chNFSeRej', $data->chaveNfseRejeitada);
 
         if ($data->substituicao) {
             $subst = $this->dom->createElement('subst');
@@ -143,6 +145,7 @@ class DpsXmlBuilder
         $end = $this->dom->createElement('end');
         $this->appendElement($end, 'xLgr', $data->logradouro);
         $this->appendElement($end, 'nro', $data->numero);
+        $this->appendElement($end, 'xCpl', $data->complemento);
         $this->appendElement($end, 'xBairro', $data->bairro);
         
         $endNac = $this->dom->createElement('endNac');
@@ -225,22 +228,22 @@ class DpsXmlBuilder
         
         if ($data->valorServicoPrestado) {
             $vServPrest = $this->dom->createElement('vServPrest');
-            $this->appendElement($vServPrest, 'vReceb', number_format($data->valorServicoPrestado->valorRecebido, 2, '.', ''));
-            $this->appendElement($vServPrest, 'vServ', number_format($data->valorServicoPrestado->valorServico, 2, '.', ''));
+            $this->appendElement($vServPrest, 'vReceb', $data->valorServicoPrestado->valorRecebido !== null ? number_format($data->valorServicoPrestado->valorRecebido, 2, '.', '') : null);
+            $this->appendElement($vServPrest, 'vServ', $data->valorServicoPrestado->valorServico !== null ? number_format($data->valorServicoPrestado->valorServico, 2, '.', '') : null);
             $valores->appendChild($vServPrest);
         }
 
         if ($data->desconto) {
             $vDescCondIncond = $this->dom->createElement('vDescCondIncond');
-            $this->appendElement($vDescCondIncond, 'vDescIncond', number_format($data->desconto->valorDescontoIncondicionado, 2, '.', ''));
-            $this->appendElement($vDescCondIncond, 'vDescCond', number_format($data->desconto->valorDescontoCondicionado, 2, '.', ''));
+            $this->appendElement($vDescCondIncond, 'vDescIncond', $data->desconto->valorDescontoIncondicionado !== null ? number_format($data->desconto->valorDescontoIncondicionado, 2, '.', '') : null);
+            $this->appendElement($vDescCondIncond, 'vDescCond', $data->desconto->valorDescontoCondicionado !== null ? number_format($data->desconto->valorDescontoCondicionado, 2, '.', '') : null);
             $valores->appendChild($vDescCondIncond);
         }
 
         if ($data->deducaoReducao) {
             $vDedRed = $this->dom->createElement('vDedRed');
-            $this->appendElement($vDedRed, 'pDR', number_format($data->deducaoReducao->percentualDeducaoReducao, 2, '.', ''));
-            $this->appendElement($vDedRed, 'vDR', number_format($data->deducaoReducao->valorDeducaoReducao, 2, '.', ''));
+            $this->appendElement($vDedRed, 'pDR', $data->deducaoReducao->percentualDeducaoReducao !== null ? number_format($data->deducaoReducao->percentualDeducaoReducao, 2, '.', '') : null);
+            $this->appendElement($vDedRed, 'vDR', $data->deducaoReducao->valorDeducaoReducao !== null ? number_format($data->deducaoReducao->valorDeducaoReducao, 2, '.', '') : null);
             // TODO: Map 'documentos' array if needed
             $valores->appendChild($vDedRed);
         }
@@ -250,7 +253,23 @@ class DpsXmlBuilder
             
             $tribMun = $this->dom->createElement('tribMun');
             $this->appendElement($tribMun, 'tribISSQN', (string)$data->tributacao->tributacaoIssqn);
+            $this->appendElement($tribMun, 'tpImunidade', (string)$data->tributacao->tipoImunidade);
             $this->appendElement($tribMun, 'tpRetISSQN', (string)$data->tributacao->tipoRetencaoIssqn);
+
+            if ($data->tributacao->tipoSuspensao) {
+                $exigSusp = $this->dom->createElement('exigSusp');
+                $this->appendElement($exigSusp, 'tpSusp', (string)$data->tributacao->tipoSuspensao);
+                $this->appendElement($exigSusp, 'nProcesso', $data->tributacao->numeroProcessoSuspensao);
+                $tribMun->appendChild($exigSusp);
+            }
+
+            if ($data->tributacao->beneficioMunicipal) {
+                $bm = $this->dom->createElement('BM');
+                $this->appendElement($bm, 'pRedBCBM', $data->tributacao->beneficioMunicipal->percentualReducaoBcBm !== null ? number_format($data->tributacao->beneficioMunicipal->percentualReducaoBcBm, 2, '.', '') : null);
+                $this->appendElement($bm, 'vRedBCBM', $data->tributacao->beneficioMunicipal->valorReducaoBcBm !== null ? number_format($data->tributacao->beneficioMunicipal->valorReducaoBcBm, 2, '.', '') : null);
+                $tribMun->appendChild($bm);
+            }
+
             $trib->appendChild($tribMun);
 
             if ($data->tributacao->cstPisCofins) {
@@ -263,7 +282,11 @@ class DpsXmlBuilder
 
             if ($data->tributacao->percentualTotalTributosSN) {
                 $totTrib = $this->dom->createElement('totTrib');
-                $this->appendElement($totTrib, 'pTotTribSN', number_format($data->tributacao->percentualTotalTributosSN, 2, '.', ''));
+                $this->appendElement($totTrib, 'pTotTribSN', $data->tributacao->percentualTotalTributosSN !== null ? number_format($data->tributacao->percentualTotalTributosSN, 2, '.', '') : null);
+                $trib->appendChild($totTrib);
+            } elseif ($data->tributacao->indicadorTotalTributos !== null) {
+                $totTrib = $this->dom->createElement('totTrib');
+                $this->appendElement($totTrib, 'indTotTrib', (string)$data->tributacao->indicadorTotalTributos);
                 $trib->appendChild($totTrib);
             }
 

@@ -1,33 +1,61 @@
-# This is my package nfse
+# Nfse Nacional - PHP SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/nfse/nfse.svg?style=flat-square)](https://packagist.org/packages/nfse/nfse)
-[![Tests](https://img.shields.io/github/actions/workflow/status/nfse/nfse/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/nfse/nfse/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/nfse/nfse.svg?style=flat-square)](https://packagist.org/packages/nfse/nfse)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
+[![Tests](https://img.shields.io/github/actions/workflow/status/nfse-nacional/nfse-php/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/nfse-nacional/nfse-php/actions/workflows/run-tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+Este pacote é a fundação do ecossistema para integração com a NFS-e Nacional. O foco é garantir contratos sólidos, modelos de dados ricos (DTOs) e facilidade de uso para desenvolvedores PHP.
 
-## Support us
+## Instalação
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/Nfse.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/Nfse)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
-## Installation
-
-You can install the package via composer:
+Você pode instalar o pacote via composer:
 
 ```bash
-composer require nfse/nfse
+composer require nfse-nacional/nfse-php
 ```
 
-## Usage
+## Uso
+
+Exemplo básico de utilização dos DTOs:
 
 ```php
-$skeleton = new Nfse\Nfse();
-echo $skeleton->echoPhrase('Hello, Nfse!');
+use Nfse\Nfse\Dto\DpsData;
+
+// Exemplo de instanciação (ajuste conforme sua necessidade)
+$dps = DpsData::from([
+    '@versao' => '1.00',
+    'infDPS' => [
+        // ... dados da DPS
+    ]
+]);
 ```
+
+## 🗺️ Roadmap
+
+Este projeto está em desenvolvimento ativo. Abaixo estão as fases planejadas:
+
+### Fase 1: Estrutura de Dados (DTOs) 🚧
+- [ ] Implementar DTOs usando `spatie/laravel-data`.
+- [ ] Mapear campos do Excel (`ANEXO_I...`) usando atributos `#[MapInputName]`.
+- [ ] Implementar `Dps`, `Prestador`, `Tomador`, `Servico`, `Valores`.
+- [ ] Adicionar validações (Constraints) nos DTOs.
+- [ ] Testes unitários de validação.
+
+### Fase 2: Serialização 📅
+- [ ] Implementar Serializer para XML (padrão ABRASF/Nacional).
+- [ ] Implementar Serializer para JSON.
+- [ ] Garantir que a serialização respeite os XSDs oficiais.
+
+### Fase 3: Assinatura Digital 📅
+- [ ] Criar `SignerInterface`.
+- [ ] Implementar adaptador para assinatura XML (DSig).
+- [ ] Suporte a certificado A1 (PKCS#12).
+
+### Fase 4: Utilitários 📅
+- [ ] Helpers para cálculo de impostos (simples).
+- [ ] Formatadores de documentos (CPF/CNPJ).
+
+Para mais detalhes, consulte o arquivo [ROADMAP.md](ROADMAP.md).
 
 ## Testing
 
@@ -37,22 +65,21 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Por favor, veja [CHANGELOG](CHANGELOG.md) para mais informações sobre o que mudou recentemente.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
+Por favor, veja [CONTRIBUTING](CONTRIBUTING.md) para detalhes.
 
-## Security Vulnerabilities
+## Security
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Se você descobrir alguma vulnerabilidade de segurança, por favor, envie um e-mail para o mantenedor em vez de usar o rastreador de problemas.
 
 ## Credits
 
-- [a21ns1g4ts](https://github.com/a21ns1g4ts)
+- [Danvizera](https://github.com/danvizera)
 - [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-# nfse-php

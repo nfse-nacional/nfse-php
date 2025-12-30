@@ -25,6 +25,8 @@ it('can build xml from dps data', function () {
         dataCompetencia: '2023-10-27',
         tipoEmitente: 1,
         codigoLocalEmissao: '3550308',
+        motivoEmissaoTomadorIntermediario: null,
+        chaveNfseRejeitada: null,
         substituicao: null,
         prestador: new PrestadorData(
             cnpj: '12345678000199',
@@ -81,7 +83,11 @@ it('can build xml from dps data', function () {
             deducaoReducao: null,
             tributacao: new TributacaoData(
                 tributacaoIssqn: 1,
+                tipoImunidade: null,
                 tipoRetencaoIssqn: 1,
+                tipoSuspensao: null,
+                numeroProcessoSuspensao: null,
+                beneficioMunicipal: null,
                 cstPisCofins: null,
                 percentualTotalTributosSN: null
             )

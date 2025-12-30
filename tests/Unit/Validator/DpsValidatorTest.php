@@ -21,6 +21,8 @@ it('validates a valid DPS', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 1, // Prestador
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: new PrestadorData(
                 cnpj: '12345678000199',
@@ -36,6 +38,7 @@ it('validates a valid DPS', function () {
                     logradouro: 'Rua Teste',
                     numero: '100',
                     bairro: 'Centro',
+                    complemento: null,
                     enderecoExterior: null
                 ),
                 telefone: null,
@@ -69,6 +72,8 @@ it('fails when Prestador is missing', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 1,
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: null, // Missing
             tomador: null,
@@ -98,6 +103,8 @@ it('fails when Prestador address is missing and not emitter', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 2, // Tomador is emitter
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: new PrestadorData(
                 cnpj: '12345678000199',
@@ -139,6 +146,8 @@ it('fails when Tomador is identified but address is missing', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 1,
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: new PrestadorData(
                 cnpj: '12345678000199',
@@ -154,6 +163,7 @@ it('fails when Tomador is identified but address is missing', function () {
                     logradouro: 'Rua Teste',
                     numero: '100',
                     bairro: 'Centro',
+                    complemento: null,
                     enderecoExterior: null
                 ),
                 telefone: null,
@@ -198,6 +208,8 @@ it('fails when Tomador has NIF but missing foreign address', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 1,
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: new PrestadorData(
                 cnpj: '12345678000199',
@@ -213,6 +225,7 @@ it('fails when Tomador has NIF but missing foreign address', function () {
                     logradouro: 'Rua Teste',
                     numero: '100',
                     bairro: 'Centro',
+                    complemento: null,
                     enderecoExterior: null
                 ),
                 telefone: null,
@@ -233,6 +246,7 @@ it('fails when Tomador has NIF but missing foreign address', function () {
                     logradouro: null,
                     numero: null,
                     bairro: null,
+                    complemento: null,
                     enderecoExterior: null // Missing foreign address
                 ),
                 telefone: null,
@@ -264,6 +278,8 @@ it('fails when Tomador has CPF but missing national address', function () {
             dataCompetencia: '2023-01-01',
             tipoEmitente: 1,
             codigoLocalEmissao: '1234567',
+            motivoEmissaoTomadorIntermediario: null,
+            chaveNfseRejeitada: null,
             substituicao: null,
             prestador: new PrestadorData(
                 cnpj: '12345678000199',
@@ -279,6 +295,7 @@ it('fails when Tomador has CPF but missing national address', function () {
                     logradouro: 'Rua Teste',
                     numero: '100',
                     bairro: 'Centro',
+                    complemento: null,
                     enderecoExterior: null
                 ),
                 telefone: null,
@@ -299,6 +316,7 @@ it('fails when Tomador has CPF but missing national address', function () {
                     logradouro: null,
                     numero: null,
                     bairro: null,
+                    complemento: null,
                     enderecoExterior: null
                 ),
                 telefone: null,

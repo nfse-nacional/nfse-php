@@ -27,6 +27,8 @@ it('can instantiate dps data with full structure', function () {
         dataCompetencia: '2023-10-27',
         tipoEmitente: 1,
         codigoLocalEmissao: '3550308',
+        motivoEmissaoTomadorIntermediario: null,
+        chaveNfseRejeitada: null,
         substituicao: null,
         prestador: new PrestadorData(
             cnpj: '12345678000199',
@@ -41,7 +43,9 @@ it('can instantiate dps data with full structure', function () {
                 cep: '01001000',
                 logradouro: 'Exemplo',
                 numero: '100',
-                bairro: 'Centro'
+                bairro: 'Centro',
+                complemento: 'Apto 1',
+                enderecoExterior: null
             ),
             telefone: '11999999999',
             email: 'prestador@example.com',
@@ -64,7 +68,9 @@ it('can instantiate dps data with full structure', function () {
                 cep: '01002000',
                 logradouro: 'Brasil',
                 numero: '200',
-                bairro: 'Jardins'
+                bairro: 'Jardins',
+                complemento: null,
+                enderecoExterior: null
             ),
             telefone: '11888888888',
             email: 'tomador@example.com'
@@ -102,7 +108,11 @@ it('can instantiate dps data with full structure', function () {
             deducaoReducao: null,
             tributacao: new TributacaoData(
                 tributacaoIssqn: 1,
+                tipoImunidade: null,
                 tipoRetencaoIssqn: 1,
+                tipoSuspensao: null,
+                numeroProcessoSuspensao: null,
+                beneficioMunicipal: null,
                 cstPisCofins: null,
                 percentualTotalTributosSN: null
             )

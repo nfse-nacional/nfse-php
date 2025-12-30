@@ -15,6 +15,8 @@ it('can instantiate inf dps data', function () {
         dataCompetencia: '2023-10-27',
         tipoEmitente: 1,
         codigoLocalEmissao: '3550308',
+        motivoEmissaoTomadorIntermediario: null,
+        chaveNfseRejeitada: null,
         substituicao: null,
         prestador: null,
         tomador: null,

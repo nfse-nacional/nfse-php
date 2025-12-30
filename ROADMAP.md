@@ -7,7 +7,7 @@ Este pacote é a fundação do ecossistema. O foco é garantir contratos sólido
 ### Fase 1: Estrutura de Dados (DTOs)
 
 -   [x] Implementar DTOs usando `spatie/laravel-data`.
--   [ ] Mapear campos do Excel (`ANEXO_I...`) usando atributos `#[MapInputName]`.
+-   [x] Mapear campos do Excel (`ANEXO_I...`) usando atributos `#[MapInputName]`.
 -   [ ] Implementar `Dps`, `Prestador`, `Tomador`, `Servico`, `Valores`.
 -   [ ] Adicionar validações (Constraints) nos DTOs.
 -   [ ] Testes unitários de validação.

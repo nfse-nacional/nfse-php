@@ -1,0 +1,95 @@
+.faqSection {
+    padding: 4rem 0;
+    width: 100%;
+    background-color: var(--ifm-background-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--ifm-color-primary);
+}
+
+.accordionItem {
+    margin-bottom: 1rem;
+    border: 1px solid var(--ifm-color-emphasis-200);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--ifm-card-background-color);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.accordionItem:hover {
+    border-color: var(--ifm-color-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.accordionHeader {
+    width: 100%;
+    text-align: left;
+    padding: 1.5rem 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ifm-font-color-base);
+    transition: color 0.2s;
+}
+
+.accordionHeader:hover {
+    color: var(--ifm-color-primary);
+}
+
+.accordionContent {
+    padding: 0 2rem 2rem;
+    color: var(--ifm-font-color-base);
+    opacity: 0.9;
+    line-height: 1.7;
+    border-top: 1px solid transparent;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+}
+
+.accordionContent.open {
+    border-top-color: var(--ifm-color-emphasis-100);
+    max-height: 500px; /* Arbitrary large height */
+    padding-top: 1rem;
+}
+
+.icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: var(--ifm-color-emphasis-100);
+    color: var(--ifm-color-primary);
+    font-size: 0.8rem;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.accordionItem:hover .icon {
+    background-color: var(--ifm-color-primary-lightest);
+}
+
+.icon.open {
+    transform: rotate(180deg);
+    background-color: var(--ifm-color-primary);
+    color: white;
+}

@@ -3,9 +3,9 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-    title: "NFSe PHP",
+    title: "NFS-e Nacional PHP",
     tagline:
-        "A forma mais moderna e simples de integrar com a NFS-e Nacional em PHP",
+        "A maneira mais moderna e eficiente de integrar PHP com a NFS-e Nacional.",
     favicon: "img/favicon.ico",
 
     url: "https://nfse-nacional.github.io",

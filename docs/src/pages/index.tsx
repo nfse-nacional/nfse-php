@@ -4,7 +4,9 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
+import DtoAdvantages from "@site/src/components/DtoAdvantages";
 import RoadmapStepper from "@site/src/components/RoadmapStepper";
+import FAQ from "@site/src/components/FAQ";
 import Heading from "@theme/Heading";
 
 import styles from "./index.module.css";
@@ -18,6 +20,12 @@ function HomepageHeader() {
                     {siteConfig.title}
                 </Heading>
                 <p className="hero__subtitle">{siteConfig.tagline}</p>
+                <p className={styles.heroDescription}>
+                    Este pacote fornece um conjunto robusto de DTOs que
+                    simplificam a criação e validação dos XMLs, oferecendo uma
+                    interface fluida e uma documentação alinhada à realidade do
+                    desenvolvedor.
+                </p>
                 <div className={styles.buttons}>
                     <Link
                         className="button button--secondary button--lg"
@@ -57,7 +65,9 @@ export default function Home(): ReactNode {
             <HomepageHeader />
             <main>
                 <HomepageFeatures />
+                <DtoAdvantages />
                 <RoadmapStepper />
+                <FAQ />
             </main>
             {isVisible && (
                 <div className="devBanner">

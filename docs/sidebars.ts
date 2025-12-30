@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
                 "examples/construcao-civil",
                 "examples/retencoes",
                 "examples/exportacao",
+                "advanced-scenarios",
             ],
         },
         {
@@ -32,7 +33,6 @@ const sidebars: SidebarsConfig = {
         "dtos",
         "validations",
         "xml-serialization",
-        "advanced-scenarios",
         "typescript",
         "schema-rules",
     ],

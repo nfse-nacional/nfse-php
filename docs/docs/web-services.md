@@ -85,6 +85,13 @@ $parametros = $adn->consultarParametrosConvenio('3550308'); // São Paulo
 | `consultarAliquota(...)`                               | Consulta a alíquota vigente para um serviço no município. |
 | `consultarRegimesEspeciais(...)`                       | Consulta regimes especiais de tributação do município.    |
 
+:::tip Formato dos Parâmetros (ADN)
+Ao utilizar métodos de parametrização municipal (como `consultarAliquota`), observe as seguintes regras:
+
+-   **Código do Serviço**: Deve ser informado no formato `00.00.00.000` (9 dígitos com pontos).
+-   **Competência**: Deve seguir o padrão ISO8601 (ex: `2025-01-01T12:00:00`).
+    :::
+
 ---
 
 ## Tratamento de Erros

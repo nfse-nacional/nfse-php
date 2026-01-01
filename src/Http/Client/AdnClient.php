@@ -5,9 +5,13 @@ namespace Nfse\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Nfse\Dto\Http\AliquotaDto;
 use Nfse\Dto\Http\DistribuicaoDfeResponse;
 use Nfse\Dto\Http\DistribuicaoNsuDto;
 use Nfse\Dto\Http\MensagemProcessamentoDto;
+use Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto;
+use Nfse\Dto\Http\ResultadoConsultaAliquotasResponse;
+use Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Contracts\AdnDanfseInterface;
 use Nfse\Http\Exceptions\NfseApiException;
@@ -115,22 +119,40 @@ class AdnClient implements AdnDanfseInterface
     /**
      * ADN Parâmetros Municipais
      */
-    public function consultarParametrosConvenio(string $codigoMunicipio): array
+    public function consultarParametrosConvenio(string $codigoMunicipio): ResultadoConsultaConfiguracoesConvenioResponse
     {
-        return $this->get("/parametrizacao/{$codigoMunicipio}/convenio");
+        $response = $this->get("/parametrizacao/{$codigoMunicipio}/convenio");
+
+        return new ResultadoConsultaConfiguracoesConvenioResponse(
+            mensagem: $response['mensagem'] ?? null,
+            parametrosConvenio: isset($response['parametrosConvenio'])
+                ? new ParametrosConfiguracaoConvenioDto(
+                    tipoConvenio: $response['parametrosConvenio']['tipoConvenio'] ?? null,
+                    aderenteAmbienteNacional: $response['parametrosConvenio']['aderenteAmbienteNacional'] ?? null,
+                    aderenteEmissorNacional: $response['parametrosConvenio']['aderenteEmissorNacional'] ?? null,
+                    situacaoEmissaoPadraoContribuintesRFB: $response['parametrosConvenio']['situacaoEmissaoPadraoContribuintesRFB'] ?? null,
+                    aderenteMAN: $response['parametrosConvenio']['aderenteMAN'] ?? null,
+                    permiteAproveitametoDeCreditos: $response['parametrosConvenio']['permiteAproveitametoDeCreditos'] ?? null,
+                )
+                : null
+        );
     }
 
-    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): array
+    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): ResultadoConsultaAliquotasResponse
     {
         $servicoEncoded = rawurlencode($codigoServico);
         $competenciaEncoded = rawurlencode($competencia);
 
-        return $this->get("/parametrizacao/{$codigoMunicipio}/{$servicoEncoded}/{$competenciaEncoded}/aliquota");
+        $response = $this->get("/parametrizacao/{$codigoMunicipio}/{$servicoEncoded}/{$competenciaEncoded}/aliquota");
+
+        return $this->mapAliquotaResponse($response);
     }
 
-    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): array
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): ResultadoConsultaAliquotasResponse
     {
-        return $this->get("/parametrizacao/{$codigoMunicipio}/{$codigoServico}/historicoaliquotas");
+        $response = $this->get("/parametrizacao/{$codigoMunicipio}/{$codigoServico}/historicoaliquotas");
+
+        return $this->mapAliquotaResponse($response);
     }
 
     public function consultarBeneficio(string $codigoMunicipio, string $numeroBeneficio, string $competencia): array
@@ -182,6 +204,24 @@ class AdnClient implements AdnDanfseInterface
                 nsu: $item['nsu'] ?? null,
                 dfeXmlGZipB64: $item['xmlGZipB64'] ?? null
             ), $response['listaNSU'] ?? [])
+        );
+    }
+
+    private function mapAliquotaResponse(array $response): ResultadoConsultaAliquotasResponse
+    {
+        $aliquotas = [];
+        foreach ($response['aliquotas'] ?? [] as $servico => $lista) {
+            $aliquotas[$servico] = array_map(fn ($item) => new AliquotaDto(
+                incidencia: $item['Incidencia'] ?? null,
+                aliquota: $item['Aliq'] ?? null,
+                dataInicio: $item['DtIni'] ?? null,
+                dataFim: $item['DtFim'] ?? null
+            ), $lista);
+        }
+
+        return new ResultadoConsultaAliquotasResponse(
+            mensagem: $response['mensagem'] ?? null,
+            aliquotas: $aliquotas
         );
     }
 

@@ -64,3 +64,21 @@ $dados = [
 ];
 $service->atualizarContribuinte($dados);
 ```
+
+## Parâmetros Municipais
+
+Consulta regras de tributação e convênios.
+
+```php
+// Consultar convênio do município
+$response = $service->consultarParametrosConvenio('3550308');
+echo $response->mensagem;
+
+// Consultar alíquota para um serviço
+// NOTA: O código do serviço deve estar no formato 00.00.00.000 (9 dígitos)
+// A competência deve seguir o formato ISO8601 (AAAA-MM-DDThh:mm:ss)
+$response = $service->consultarAliquota('3550308', '01.01.00.001', '2025-01-01T12:00:00');
+echo $response->mensagem;
+$aliquotas = $response->aliquotas['01.01.00.001'];
+echo $aliquotas[0]->aliquota;
+```

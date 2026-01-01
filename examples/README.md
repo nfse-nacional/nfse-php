@@ -16,13 +16,9 @@ Esta pasta contém exemplos de como utilizar os diversos métodos disponibilizad
     composer install
     ```
 
-2. Coloque seu certificado digital `.pfx` na pasta `examples/` com o nome `cert.pfx`.
+2. Coloque seu certificado digital `.pfx` na pasta `examples/certs/` com o nome `contribuinte.pfx`.
 
-3. Edite o arquivo `examples/bootstrap.php` e ajuste a senha do certificado:
-
-    ```php
-    $certificatePassword = 'sua_senha_aqui';
-    ```
+3. Edite o arquivo `examples/bootstrap.php` e ajuste a senha do certificado se necessário (o padrão configurado é `Maia2040!`):
 
 4. Execute qualquer exemplo via linha de comando:
     ```bash
@@ -31,5 +27,5 @@ Esta pasta contém exemplos de como utilizar os diversos métodos disponibilizad
 
 ## Observações
 
--   Os exemplos estão configurados por padrão para o ambiente de **Homologação** (`isProduction: false` no `bootstrap.php`).
+-   Os exemplos estão configurados por padrão para o ambiente de **Homologação** (usando `TipoAmbiente::Homologacao` no `bootstrap.php`).
 -   Alguns exemplos requerem chaves de acesso ou IDs de DPS reais para funcionar corretamente. Substitua os valores de exemplo pelos seus dados reais.

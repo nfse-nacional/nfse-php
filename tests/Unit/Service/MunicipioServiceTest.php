@@ -110,25 +110,37 @@ class MunicipioServiceTest extends TestCase
 
     public function test_consultar_parametros_convenio()
     {
+        $response = new \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse(
+            mensagem: 'Sucesso',
+            parametrosConvenio: new \Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto(tipoConvenio: 1)
+        );
+
         $this->adnClientMock->expects($this->once())
             ->method('consultarParametrosConvenio')
             ->with('3550308')
-            ->willReturn(['param' => 'value']);
+            ->willReturn($response);
 
         $result = $this->service->consultarParametrosConvenio('3550308');
 
-        $this->assertEquals(['param' => 'value'], $result);
+        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse::class, $result);
+        $this->assertEquals('Sucesso', $result->mensagem);
     }
 
     public function test_consultar_aliquota()
     {
+        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse(
+            mensagem: 'Sucesso',
+            aliquotas: ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(aliquota: 5.0)]]
+        );
+
         $this->adnClientMock->expects($this->once())
             ->method('consultarAliquota')
-            ->with('3550308', '01.01', '2023-10-01')
-            ->willReturn(['aliquota' => 5.0]);
+            ->with('3550308', '01.01.00.001', '2025-01-01T12:00:00')
+            ->willReturn($response);
 
-        $result = $this->service->consultarAliquota('3550308', '01.01', '2023-10-01');
+        $result = $this->service->consultarAliquota('3550308', '01.01.00.001', '2025-01-01T12:00:00');
 
-        $this->assertEquals(['aliquota' => 5.0], $result);
+        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $result);
+        $this->assertEquals('Sucesso', $result->mensagem);
     }
 }

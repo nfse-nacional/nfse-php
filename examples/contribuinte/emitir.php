@@ -17,7 +17,7 @@ $nfse = require_once __DIR__ . '/../bootstrap.php';
 
 try {
     $cnpjPrestador = '12345678000199';
-    $codigoMunicipio = '3550308';
+    // $codigoMunicipio já vem do bootstrap.php
     $serie = '1';
     $numero = '100';
 

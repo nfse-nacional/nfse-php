@@ -38,7 +38,10 @@ class AdnClientTest extends TestCase
 
     public function test_consultar_parametros_convenio()
     {
-        $responseData = ['param' => 'value'];
+        $responseData = [
+            'mensagem' => 'Sucesso',
+            'parametrosConvenio' => ['tipoConvenio' => 1]
+        ];
 
         $client = $this->createClientWithMock([
             new Response(200, [], json_encode($responseData)),
@@ -46,7 +49,9 @@ class AdnClientTest extends TestCase
 
         $response = $client->consultarParametrosConvenio('3550308');
 
-        $this->assertEquals($responseData, $response);
+        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse::class, $response);
+        $this->assertEquals('Sucesso', $response->mensagem);
+        $this->assertEquals(1, $response->parametrosConvenio->tipoConvenio);
     }
 
     public function test_baixar_dfe_contribuinte()

@@ -37,17 +37,17 @@ class MunicipioService
     /**
      * ADN Parâmetros Municipais
      */
-    public function consultarParametrosConvenio(string $codigoMunicipio): array
+    public function consultarParametrosConvenio(string $codigoMunicipio): \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse
     {
         return $this->adnClient->consultarParametrosConvenio($codigoMunicipio);
     }
 
-    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): array
+    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarAliquota($codigoMunicipio, $codigoServico, $competencia);
     }
 
-    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): array
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarHistoricoAliquotas($codigoMunicipio, $codigoServico);
     }

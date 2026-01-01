@@ -67,10 +67,17 @@ Consulta regras de tributação e convênios de um município.
 
 ```php
 // Consultar convênio do município
-$convenio = $service->consultarParametrosConvenio('3550308');
+$response = $service->consultarParametrosConvenio('3550308');
+echo $response->mensagem;
+echo $response->parametrosConvenio->tipoConvenio;
 
 // Consultar alíquota para um serviço
-$aliquota = $service->consultarAliquota('3550308', '01.01', '2023-10');
+// NOTA: O código do serviço deve estar no formato 00.00.00.000 (9 dígitos)
+// A competência deve seguir o formato ISO8601 (AAAA-MM-DDThh:mm:ss)
+$response = $service->consultarAliquota('3550308', '01.01.00.001', '2025-01-01T12:00:00');
+echo $response->mensagem;
+$aliquotas = $response->aliquotas['01.01.00.001'];
+echo $aliquotas[0]->aliquota; // 5.0
 ```
 
 ## Distribuição (ADN Contribuinte)

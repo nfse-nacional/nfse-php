@@ -1,8 +1,8 @@
 <?php
 
+use Nfse\Dto\Nfse\CancelamentoData;
 use Nfse\Dto\Nfse\InfPedRegData;
 use Nfse\Dto\Nfse\PedRegEventoData;
-use Nfse\Dto\Nfse\CancelamentoData;
 use Nfse\Xml\EventosXmlBuilder;
 
 it('includes both CNPJAutor and CPFAutor if both are provided', function () {
@@ -21,7 +21,7 @@ it('includes both CNPJAutor and CPFAutor if both are provided', function () {
     );
 
     $pedido = new PedRegEventoData(infPedReg: $inf);
-    $xml = (new EventosXmlBuilder())->buildPedRegEvento($pedido);
+    $xml = (new EventosXmlBuilder)->buildPedRegEvento($pedido);
 
     expect($xml)->toContain('<CNPJAutor>12345678000199</CNPJAutor>');
     expect($xml)->toContain('<CPFAutor>11122233344</CPFAutor>');

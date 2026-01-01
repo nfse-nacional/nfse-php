@@ -1,8 +1,8 @@
 <?php
 
+use Nfse\Dto\Nfse\CancelamentoData;
 use Nfse\Dto\Nfse\InfPedRegData;
 use Nfse\Dto\Nfse\PedRegEventoData;
-use Nfse\Dto\Nfse\CancelamentoData;
 use Nfse\Xml\EventosXmlBuilder;
 
 it('constructs Id with zero padded nPedRegEvento and preserves large numbers', function () {
@@ -20,8 +20,8 @@ it('constructs Id with zero padded nPedRegEvento and preserves large numbers', f
     $inf->e101101 = $cancel;
 
     $pedido = new PedRegEventoData(infPedReg: $inf);
-    $xml = (new EventosXmlBuilder())->buildPedRegEvento($pedido);
+    $xml = (new EventosXmlBuilder)->buildPedRegEvento($pedido);
 
     expect($xml)->toContain('nPedRegEvento>123</nPedRegEvento>');
-    expect($xml)->toContain('Id="PRE' . $ch . '101101123');
+    expect($xml)->toContain('Id="PRE'.$ch.'101101123');
 });

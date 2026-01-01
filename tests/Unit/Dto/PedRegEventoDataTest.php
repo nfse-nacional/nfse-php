@@ -1,7 +1,7 @@
 <?php
 
-use Nfse\Dto\Nfse\PedRegEventoData;
 use Nfse\Dto\Nfse\InfPedRegData;
+use Nfse\Dto\Nfse\PedRegEventoData;
 
 it('defaults versao to 1.01 when not provided', function () {
     $inf = new InfPedRegData(

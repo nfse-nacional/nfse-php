@@ -57,3 +57,6 @@ $nfse = $service->emitir($dps);
 ```
 
 Pronto — você emitiu sua primeira nota. Próximos passos recomendados: configurar corretamente o certificado, aprender a consultar notas e a tratar eventos (cancelamento).
+
+> Nota: este arquivo foi movido para a pasta de documentos utilizada pelo site de documentação.
+> A versão canônica está em `/docs/quickstart` (arquivo: `/docs/docs/quickstart.md`).

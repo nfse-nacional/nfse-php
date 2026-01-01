@@ -132,50 +132,57 @@ try {
                                 </TabItem>
                                 <TabItem value="emitir" label="Emitir NFS-e">
                                     <CodeBlock language="php">
-                                        {`use Nfse\Contribuinte\Service\NfseService;
-    use Nfse\Contribuinte\Configuration\NfseContext;
-    use Nfse\Dto\DpsData;
+                                        {`use Nfse\Http\NfseContext;
+use Nfse\Nfse;
+use Nfse\Enums\TipoAmbiente;
+use Nfse\Dto\DpsData;
 
-    $context = new NfseContext(
-        Environment::Homologation,
-        '/path/to/certificate.pfx',
-        'password'
-    );
-    $service = new NfseService($context);
+$context = new NfseContext(
+    TipoAmbiente::Homologacao,
+    '/path/to/certificate.pfx',
+    'password'
+);
 
-    $dps = new DpsData(
-        versao: '1.00',
-        infDps: [
-            'id' => 'DPS123',
-            'tipoAmbiente' => 2,
-            'prestador' => ['cnpj' => '12345678000199'],
-            'tomador' => ['cpf' => '11122233344'],
-            'servico' => ['codigoTributacaoNacional' => '01.01'],
-            'valores' => ['valorServicoPrestado' => ['valorServico' => 100.00]]
-        ]
-    );
+// Obtenha o serviço de Contribuinte via helper
+$nfse = new Nfse($context);
+$service = $nfse->contribuinte();
 
-    $nfse = $service->emitir($dps);
-    echo "Nota emitida! Número: {$nfse->infNfse->numeroNfse}";`}
+$dps = new DpsData(
+    versao: '1.00',
+    infDps: [
+        'id' => 'DPS123',
+        'tipoAmbiente' => 2,
+        'prestador' => ['cnpj' => '12345678000199'],
+        'tomador' => ['cpf' => '11122233344'],
+        'servico' => ['codigoTributacaoNacional' => '01.01'],
+        'valores' => ['valorServicoPrestado' => ['valorServico' => 100.00]]
+    ]
+);
+
+$nfse = $service->emitir($dps);
+// Observação: o parser do XML de resposta ainda está em desenvolvimento
+// — o retorno atual inclui o XML compactado; quando disponível, o
+// serviço retornará um objeto NfseData com os campos tipados.`}
                                     </CodeBlock>
                                 </TabItem>
                                 <TabItem value="consultar" label="Consultar">
                                     <CodeBlock language="php">
                                         {`// 1. Instancie o serviço (igual ao exemplo anterior)
-    $service = new NfseService($context);
+$nfse = new Nfse($context);
+$service = $nfse->contribuinte();
 
-    // 2. Consulte pela chave de acesso
-    $chave = '12345678901234567890123456789012345678901234567890';
-    try {
-        $nfse = $service->consultar($chave);
-        if ($nfse) {
-            echo "Nota encontrada! Emitida em: " . $nfse->infNfse->dataEmissao;
-        } else {
-            echo "Nota não encontrada.";
-        }
-    } catch (\Exception $e) {
-        echo "Erro na consulta: " . $e->getMessage();
-    }`}
+// 2. Consulte pela chave de acesso
+$chave = '12345678901234567890123456789012345678901234567890';
+try {
+    $nfse = $service->consultar($chave);
+    if ($nfse) {
+        echo "Nota encontrada! Emitida em: " . $nfse->infNfse->dataEmissao;
+    } else {
+        echo "Nota não encontrada.";
+    }
+} catch (\Exception $e) {
+    echo "Erro na consulta: " . $e->getMessage();
+}`}
                                     </CodeBlock>
                                 </TabItem>
                                 <TabItem
@@ -183,23 +190,20 @@ try {
                                     label="Eventos (Cancelar)"
                                 >
                                     <CodeBlock language="php">
-                                        {`use Nfse\Dto\EventoData;
+                                        {`use Nfse\Signer\Certificate;
+use Nfse\Signer\XmlSigner;
 
-    $evento = new EventoData(
-        chaveAcesso: '12345678901234567890123456789012345678901234567890',
-        tipoEvento: 'CANCELAMENTO',
-        motivo: 'Erro na emissão dos valores',
-        codigoCancelamento: '1'
-    );
+// Exemplo simplificado: montar o pedido de registro de evento e assiná-lo
+$pedidoXml = "<PedidoRegistroEvento>...seu-xml-de-evento-aqui...</PedidoRegistroEvento>";
+$cert = new Certificate('/path/to/cert.pfx', 'password');
+$signer = new XmlSigner($cert);
+$signedXml = $signer->sign($pedidoXml, 'PedidoRegistroEvento');
+$payload = base64_encode(gzencode($signedXml));
 
-    try {
-        $resultado = $service->registrarEvento($evento);
-        if ($resultado->sucesso) {
-            echo "Evento registrado com sucesso!";
-        }
-    } catch (\Exception $e) {
-        echo "Falha ao registrar evento: " . $e->getMessage();
-    }`}
+$resultado = $service->registrarEvento('12345678901234567890123456789012345678901234567890', $payload);
+if ($resultado->sucesso) {
+    echo "Evento registrado com sucesso!";
+}`}
                                     </CodeBlock>
                                 </TabItem>
                                 <TabItem

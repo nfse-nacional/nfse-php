@@ -71,9 +71,13 @@ it('serializes nfse data to xml correctly', function () {
                 email: 'contato@prefeitura.sp.gov.br'
             ),
             valores: new ValoresNfseData(
+                valorCalculadoDeducaoReducao: null,
+                tipoBeneficioMunicipal: null,
+                valorCalculadoBeneficioMunicipal: null,
                 baseCalculo: 1850.00,
                 aliquotaAplicada: 5.00,
                 valorIssqn: 92.50,
+                valorTotalRetido: null,
                 valorLiquido: 1757.50
             )
         )

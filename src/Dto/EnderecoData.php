@@ -38,21 +38,21 @@ class EnderecoData extends Data
          */
         #[MapInputName('xLgr')]
         #[Required, StringType, Max(255)]
-        public ?string $logradouro,
+        public ?string $logradouro = null,
 
         /**
          * Número.
          */
         #[MapInputName('nro')]
         #[Required, StringType, Max(60)]
-        public ?string $numero,
+        public ?string $numero = null,
 
         /**
          * Bairro.
          */
         #[MapInputName('xBairro')]
         #[Required, StringType, Max(60)]
-        public ?string $bairro,
+        public ?string $bairro = null,
 
         /**
          * Complemento.

@@ -119,13 +119,13 @@ class InfDpsData extends Data
          * Dados do prestador do serviço.
          */
         #[MapInputName('prest')]
-        public ?PrestadorData $prestador,
+        public ?PrestadorData $prestador = null,
 
         /**
          * Dados do tomador do serviço.
          */
         #[MapInputName('toma')]
-        public ?TomadorData $tomador,
+        public ?TomadorData $tomador = null,
 
         /**
          * Dados do intermediário do serviço.
@@ -137,12 +137,12 @@ class InfDpsData extends Data
          * Dados do serviço prestado.
          */
         #[MapInputName('serv')]
-        public ?ServicoData $servico,
+        public ?ServicoData $servico = null,
 
         /**
          * Valores do serviço e tributos.
          */
         #[MapInputName('valores')]
-        public ?ValoresData $valores,
+        public ?ValoresData $valores = null,
     ) {}
 }

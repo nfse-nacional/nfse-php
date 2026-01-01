@@ -49,7 +49,7 @@ class DpsXmlBuilder
 
         if ($data->substituicao) {
             $subst = $this->dom->createElement('subst');
-            $this->appendElement($subst, 'chSubstda', $data->substituicao->chaveSubstituida);
+            $this->appendElement($subst, 'chSubstda', $data->substituicao->chaveNfseSubstituida);
             $this->appendElement($subst, 'cMotivo', $data->substituicao->codigoMotivo);
             $this->appendElement($subst, 'xMotivo', $data->substituicao->descricaoMotivo);
             $parent->appendChild($subst);
@@ -112,7 +112,7 @@ class DpsXmlBuilder
         if ($data->regimeTributario) {
             $regTrib = $this->dom->createElement('regTrib');
             $this->appendElement($regTrib, 'opSimpNac', (string)$data->regimeTributario->opcaoSimplesNacional);
-            $this->appendElement($regTrib, 'regApTribSN', (string)$data->regimeTributario->regimeApuracaoTributariaSN);
+            $this->appendElement($regTrib, 'regApTribSN', (string)$data->regimeTributario->regimeApuracaoTributosSn);
             $this->appendElement($regTrib, 'regEspTrib', (string)$data->regimeTributario->regimeEspecialTributacao);
             $prest->appendChild($regTrib);
         }

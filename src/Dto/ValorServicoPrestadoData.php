@@ -25,6 +25,6 @@ class ValorServicoPrestadoData extends Data
          * Valor do serviço prestado.
          */
         #[MapInputName('vServ')]
-        public ?float $valorServico,
+        public ?float $valorServico = null,
     ) {}
 }

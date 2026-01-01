@@ -43,7 +43,7 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
             email: 'naoinformado@gmail.com',
             regimeTributario: new RegimeTributarioData(
                 opcaoSimplesNacional: 1,
-                regimeApuracaoTributariaSN: null, // Not in example
+                regimeApuracaoTributosSn: null, // Not in example
                 regimeEspecialTributacao: 0
             )
         ),

@@ -54,7 +54,7 @@ it('can instantiate dps data with full structure', function () {
             email: 'prestador@example.com',
             regimeTributario: new RegimeTributarioData(
                 opcaoSimplesNacional: 1,
-                regimeApuracaoTributariaSN: 0,
+                regimeApuracaoTributosSn: 0,
                 regimeEspecialTributacao: 0
             )
         ),

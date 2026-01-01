@@ -18,85 +18,85 @@ class InfNfseData extends Data
          * Identificador da NFS-e.
          */
         #[MapInputName('id')]
-        public ?string $id,
+        public ?string $id = null,
 
         /**
          * Número da NFS-e.
          */
         #[MapInputName('nNFSe')]
-        public ?string $numeroNfse,
+        public ?string $numeroNfse = null,
 
         /**
          * Número do DFe.
          */
         #[MapInputName('nDFe')]
-        public ?string $numeroDfse,
+        public ?string $numeroDfse = null,
 
         /**
          * Código de verificação.
          */
         #[MapInputName('cVerif')]
-        public ?string $codigoVerificacao,
+        public ?string $codigoVerificacao = null,
 
         /**
          * Data e hora de processamento.
          */
         #[MapInputName('dhProc')]
-        public ?string $dataProcessamento,
+        public ?string $dataProcessamento = null,
 
         /**
          * Ambiente gerador.
          */
         #[MapInputName('ambGer')]
-        public ?int $ambienteGerador,
+        public ?int $ambienteGerador = null,
 
         /**
          * Versão do aplicativo.
          */
         #[MapInputName('verAplic')]
-        public ?string $versaoAplicativo,
+        public ?string $versaoAplicativo = null,
 
         /**
          * Processo de emissão.
          */
         #[MapInputName('procEmi')]
-        public ?int $processoEmissao,
+        public ?int $processoEmissao = null,
 
         /**
          * Local de emissão (Nome).
          */
         #[MapInputName('xLocEmi')]
-        public ?string $localEmissao,
+        public ?string $localEmissao = null,
 
         /**
          * Local de prestação (Nome).
          */
         #[MapInputName('xLocPrestacao')]
-        public ?string $localPrestacao,
+        public ?string $localPrestacao = null,
 
         /**
          * Código do local de incidência.
          */
         #[MapInputName('cLocIncid')]
-        public ?string $codigoLocalIncidencia,
+        public ?string $codigoLocalIncidencia = null,
 
         /**
          * Local de incidência (Nome).
          */
         #[MapInputName('xLocIncid')]
-        public ?string $nomeLocalIncidencia,
+        public ?string $nomeLocalIncidencia = null,
 
         /**
          * Descrição da tributação nacional.
          */
         #[MapInputName('xTribNac')]
-        public ?string $descricaoTributacaoNacional,
+        public ?string $descricaoTributacaoNacional = null,
 
         /**
          * Descrição da tributação municipal.
          */
         #[MapInputName('xTribMun')]
-        public ?string $descricaoTributacaoMunicipal,
+        public ?string $descricaoTributacaoMunicipal = null,
 
         /**
          * Descrição da NBS.
@@ -126,18 +126,18 @@ class InfNfseData extends Data
          * Dados da DPS.
          */
         #[MapInputName('DPS')]
-        public ?DpsData $dps,
+        public ?DpsData $dps = null,
 
         /**
          * Dados do emitente.
          */
         #[MapInputName('emit')]
-        public ?EmitenteData $emitente,
+        public ?EmitenteData $emitente = null,
 
         /**
          * Valores da NFS-e.
          */
         #[MapInputName('valores')]
-        public ?ValoresNfseData $valores,
+        public ?ValoresNfseData $valores = null,
     ) {}
 }

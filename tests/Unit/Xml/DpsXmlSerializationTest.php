@@ -52,7 +52,7 @@ it('serializes dps data to xml correctly', function () {
             email: 'prestador@example.com',
             regimeTributario: new RegimeTributarioData(
                 opcaoSimplesNacional: 1,
-                regimeApuracaoTributariaSN: 0,
+                regimeApuracaoTributosSn: 0,
                 regimeEspecialTributacao: 0
             )
         ),

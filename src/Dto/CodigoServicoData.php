@@ -18,13 +18,13 @@ class CodigoServicoData extends Data
          * Código de tributação nacional (LC 116/03).
          */
         #[MapInputName('cTribNac')]
-        public ?string $codigoTributacaoNacional,
+        public ?string $codigoTributacaoNacional = null,
 
         /**
          * Código de tributação municipal.
          */
         #[MapInputName('cTribMun')]
-        public ?string $codigoTributacaoMunicipal,
+        public ?string $codigoTributacaoMunicipal = null,
 
         /**
          * Descrição do serviço.
@@ -36,13 +36,13 @@ class CodigoServicoData extends Data
          * Código NBS (Nomenclatura Brasileira de Serviços).
          */
         #[MapInputName('cNBS')]
-        public ?string $codigoNbs,
+        public ?string $codigoNbs = null,
 
         /**
          * Código CNAE (Classificação Nacional de Atividades Econômicas).
          */
         #[MapInputName('cCNAE')]
-        public ?string $codigoCnae,
+        public ?string $codigoCnae = null,
 
         /**
          * Código interno do serviço no sistema do contribuinte.

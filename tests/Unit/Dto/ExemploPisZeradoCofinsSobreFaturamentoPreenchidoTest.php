@@ -75,7 +75,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
                         email: 'sau@mxm.com.br',
                         regimeTributario: new RegimeTributarioData(
                             opcaoSimplesNacional: 3,
-                            regimeApuracaoTributariaSN: 3,
+                            regimeApuracaoTributosSn: 3,
                             regimeEspecialTributacao: 0
                         )
                     ),

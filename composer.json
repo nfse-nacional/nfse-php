@@ -17,9 +17,9 @@
     "require": {
         "php": "^8.4",
         "guzzlehttp/guzzle": "^7.9",
-        "illuminate/support": "^11.47",
-        "illuminate/translation": "^11.47",
-        "illuminate/validation": "^11.47",
+        "illuminate/support": "^12.0",
+        "illuminate/translation": "^12.0",
+        "illuminate/validation": "^12.0",
         "spatie/laravel-data": "^4.11"
     },
     "require-dev": {

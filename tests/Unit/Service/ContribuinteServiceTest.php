@@ -212,4 +212,227 @@ class ContribuinteServiceTest extends TestCase
         $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $result);
         $this->assertEquals('Sucesso', $result->mensagem);
     }
+
+    public function test_registrar_evento()
+    {
+        $response = new \Nfse\Dto\Http\RegistroEventoResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00'
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('registrarEvento')
+            ->with('CHAVE123', 'payload')
+            ->willReturn($response);
+
+        $result = $this->service->registrarEvento('CHAVE123', 'payload');
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function test_consultar_evento()
+    {
+        $response = new \Nfse\Dto\Http\RegistroEventoResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00'
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('consultarEvento')
+            ->with('CHAVE123', 101101, 1)
+            ->willReturn($response);
+
+        $result = $this->service->consultarEvento('CHAVE123', 101101, 1);
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function test_listar_eventos()
+    {
+        $this->sefinClientMock->expects($this->once())
+            ->method('listarEventos')
+            ->with('CHAVE123')
+            ->willReturn([]);
+
+        $result = $this->service->listarEventos('CHAVE123');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_listar_eventos_por_tipo()
+    {
+        $this->sefinClientMock->expects($this->once())
+            ->method('listarEventosPorTipo')
+            ->with('CHAVE123', 101101)
+            ->willReturn([]);
+
+        $result = $this->service->listarEventos('CHAVE123', 101101);
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_eventos_adn()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarEventosContribuinte')
+            ->with('CHAVE123')
+            ->willReturn([]);
+
+        $result = $this->service->consultarEventos('CHAVE123');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_historico_aliquotas()
+    {
+        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse(
+            mensagem: 'Sucesso',
+            aliquotas: []
+        );
+
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarHistoricoAliquotas')
+            ->with('3550308', '01.01.00.001')
+            ->willReturn($response);
+
+        $result = $this->service->consultarHistoricoAliquotas('3550308', '01.01.00.001');
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function test_consultar_beneficio()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarBeneficio')
+            ->with('3550308', 'BENEF123', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarBeneficio('3550308', 'BENEF123', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_regimes_especiais()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarRegimesEspeciais')
+            ->with('3550308', '01.01.00.001', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarRegimesEspeciais('3550308', '01.01.00.001', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_retencoes()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarRetencoes')
+            ->with('3550308', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarRetencoes('3550308', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_emitir_nfse_com_erros()
+    {
+        $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
+        $dpsData = new DpsData(
+            versao: '1.00',
+            infDps: new InfDpsData(
+                id: $idDps,
+                tipoAmbiente: 2,
+                dataEmissao: '2023-10-27T10:00:00',
+                versaoAplicativo: '1.0',
+                serie: '1',
+                numeroDps: '1',
+                dataCompetencia: '2023-10-27',
+                tipoEmitente: 1,
+                codigoLocalEmissao: '3550308'
+            )
+        );
+
+        $responseDto = new EmissaoNfseResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00',
+            erros: [['codigo' => '1', 'descricao' => 'Erro teste']]
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('emitirNfse')
+            ->willReturn($responseDto);
+
+        $this->expectException(\Nfse\Http\Exceptions\NfseApiException::class);
+        $this->expectExceptionMessage('Erro na emissão');
+
+        $this->service->emitir($dpsData);
+    }
+
+    public function test_emitir_nfse_sem_xml()
+    {
+        $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
+        $dpsData = new DpsData(
+            versao: '1.00',
+            infDps: new InfDpsData(
+                id: $idDps,
+                tipoAmbiente: 2,
+                dataEmissao: '2023-10-27T10:00:00',
+                versaoAplicativo: '1.0',
+                serie: '1',
+                numeroDps: '1',
+                dataCompetencia: '2023-10-27',
+                tipoEmitente: 1,
+                codigoLocalEmissao: '3550308'
+            )
+        );
+
+        $responseDto = new EmissaoNfseResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00'
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('emitirNfse')
+            ->willReturn($responseDto);
+
+        $this->expectException(\Nfse\Http\Exceptions\NfseApiException::class);
+        $this->expectExceptionMessage('Resposta sem XML da NFS-e');
+
+        $this->service->emitir($dpsData);
+    }
+
+    public function test_consultar_nfse_not_found()
+    {
+        $this->sefinClientMock->expects($this->once())
+            ->method('consultarNfse')
+            ->willThrowException(\Nfse\Http\Exceptions\NfseApiException::requestError('Not Found', 404));
+
+        $result = $this->service->consultar('CHAVE123');
+
+        $this->assertNull($result);
+    }
+
+    public function test_consultar_nfse_sem_xml()
+    {
+        $responseDto = new ConsultaNfseResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00',
+            chaveAcesso: 'CHAVE123'
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('consultarNfse')
+            ->willReturn($responseDto);
+
+        $result = $this->service->consultar('CHAVE123');
+
+        $this->assertNull($result);
+    }
 }

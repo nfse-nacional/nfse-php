@@ -91,4 +91,108 @@ class SefinClientTest extends TestCase
         $this->assertTrue($client->verificarDps('DPS123'));
         $this->assertFalse($client->verificarDps('DPS456'));
     }
+
+    public function test_consultar_dps()
+    {
+        $responseData = [
+            'tipoAmbiente' => 2,
+            'versaoAplicativo' => '1.0',
+            'dataHoraProcessamento' => '2023-10-27T10:00:00',
+            'idDps' => 'DPS123',
+            'chaveAcesso' => 'CHAVE123',
+        ];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData)),
+        ]);
+
+        $response = $client->consultarDps('DPS123');
+
+        $this->assertInstanceOf(\Nfse\Dto\Http\ConsultaDpsResponse::class, $response);
+        $this->assertEquals('DPS123', $response->idDps);
+    }
+
+    public function test_registrar_evento()
+    {
+        $responseData = [
+            'tipoAmbiente' => 2,
+            'versaoAplicativo' => '1.0',
+            'dataHoraProcessamento' => '2023-10-27T10:00:00',
+            'eventoXmlGZipB64' => 'base64',
+        ];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData)),
+        ]);
+
+        $response = $client->registrarEvento('CHAVE123', 'payload');
+
+        $this->assertInstanceOf(\Nfse\Dto\Http\RegistroEventoResponse::class, $response);
+        $this->assertEquals('base64', $response->eventoXmlGZipB64);
+    }
+
+    public function test_consultar_evento()
+    {
+        $responseData = [
+            'tipoAmbiente' => 2,
+            'versaoAplicativo' => '1.0',
+            'dataHoraProcessamento' => '2023-10-27T10:00:00',
+            'eventoXmlGZipB64' => 'base64',
+        ];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData)),
+        ]);
+
+        $response = $client->consultarEvento('CHAVE123', 101101, 1);
+
+        $this->assertInstanceOf(\Nfse\Dto\Http\RegistroEventoResponse::class, $response);
+    }
+
+    public function test_listar_eventos()
+    {
+        $responseData = [['tipoEvento' => 101101]];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData)),
+        ]);
+
+        $response = $client->listarEventos('CHAVE123');
+
+        $this->assertEquals($responseData, $response);
+    }
+
+    public function test_listar_eventos_por_tipo()
+    {
+        $responseData = [['tipoEvento' => 101101]];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData)),
+        ]);
+
+        $response = $client->listarEventosPorTipo('CHAVE123', 101101);
+
+        $this->assertEquals($responseData, $response);
+    }
+
+    public function test_verificar_dps_error_throws_exception()
+    {
+        $client = $this->createClientWithMock([
+            new Response(500, [], 'Server Error'),
+        ]);
+
+        $this->expectException(\Nfse\Http\Exceptions\NfseApiException::class);
+        $client->verificarDps('DPS123');
+    }
+
+    public function test_post_invalid_json_throws_exception()
+    {
+        $client = $this->createClientWithMock([
+            new Response(200, [], 'invalid json'),
+        ]);
+
+        $this->expectException(\Nfse\Http\Exceptions\NfseApiException::class);
+        $this->expectExceptionMessage('Resposta inválida da API');
+        $client->emitirNfse('payload');
+    }
 }

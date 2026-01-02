@@ -143,4 +143,57 @@ class MunicipioServiceTest extends TestCase
         $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $result);
         $this->assertEquals('Sucesso', $result->mensagem);
     }
+
+    public function test_consultar_historico_aliquotas()
+    {
+        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse(
+            mensagem: 'Sucesso',
+            aliquotas: []
+        );
+
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarHistoricoAliquotas')
+            ->with('3550308', '01.01.00.001')
+            ->willReturn($response);
+
+        $result = $this->service->consultarHistoricoAliquotas('3550308', '01.01.00.001');
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function test_consultar_beneficio()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarBeneficio')
+            ->with('3550308', 'BENEF123', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarBeneficio('3550308', 'BENEF123', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_regimes_especiais()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarRegimesEspeciais')
+            ->with('3550308', '01.01.00.001', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarRegimesEspeciais('3550308', '01.01.00.001', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
+
+    public function test_consultar_retencoes()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarRetencoes')
+            ->with('3550308', '2025-01')
+            ->willReturn([]);
+
+        $result = $this->service->consultarRetencoes('3550308', '2025-01');
+
+        $this->assertEquals([], $result);
+    }
 }

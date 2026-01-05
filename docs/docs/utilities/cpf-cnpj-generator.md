@@ -1,6 +1,6 @@
-# DocumentGenerator
+# CpfCnpjGenerator
 
-A classe `DocumentGenerator` gera CPFs e CNPJs **válidos** aleatórios, com dígitos verificadores corretos. Esta classe é destinada **exclusivamente para ambientes de teste e desenvolvimento**.
+A classe `CpfCnpjGenerator` gera CPFs e CNPJs **válidos** aleatórios, com dígitos verificadores corretos. Esta classe é destinada **exclusivamente para ambientes de teste e desenvolvimento**.
 
 > ⚠️ **ATENÇÃO:** Nunca use documentos gerados por esta classe em ambiente de produção ou para fins oficiais. Os documentos são válidos matematicamente, mas não representam pessoas ou empresas reais.
 
@@ -9,7 +9,7 @@ A classe `DocumentGenerator` gera CPFs e CNPJs **válidos** aleatórios, com dí
 Esta classe faz parte do pacote principal e está disponível no namespace `Nfse\Support`.
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 ```
 
 ## Métodos Disponíveis
@@ -19,10 +19,10 @@ use Nfse\Support\DocumentGenerator;
 Gera um CPF válido aleatório com dígitos verificadores corretos.
 
 ```php
-$cpf = DocumentGenerator::generateCpf();
+$cpf = CpfCnpjGenerator::generateCpf();
 echo $cpf; // Ex: 12345678901
 
-$cpfFormatado = DocumentGenerator::generateCpf(true);
+$cpfFormatado = CpfCnpjGenerator::generateCpf(true);
 echo $cpfFormatado; // Ex: 123.456.789-01
 ```
 
@@ -54,10 +54,10 @@ public static function generateCpf(bool $formatted = false): string
 Gera um CNPJ válido aleatório com dígitos verificadores corretos.
 
 ```php
-$cnpj = DocumentGenerator::generateCnpj();
+$cnpj = CpfCnpjGenerator::generateCnpj();
 echo $cnpj; // Ex: 12345678000195
 
-$cnpjFormatado = DocumentGenerator::generateCnpj(true);
+$cnpjFormatado = CpfCnpjGenerator::generateCnpj(true);
 echo $cnpjFormatado; // Ex: 12.345.678/0001-95
 ```
 
@@ -90,10 +90,10 @@ public static function generateCnpj(bool $formatted = false): string
 ### 1. Testes Unitários
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 it('validates CPF format', function () {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 
     expect($cpf)
         ->toHaveLength(11)
@@ -101,8 +101,8 @@ it('validates CPF format', function () {
 });
 
 it('creates DPS with valid documents', function () {
-    $cpfTomador = DocumentGenerator::generateCpf();
-    $cnpjPrestador = DocumentGenerator::generateCnpj();
+    $cpfTomador = CpfCnpjGenerator::generateCpf();
+    $cnpjPrestador = CpfCnpjGenerator::generateCnpj();
 
     $dps = new DpsData(
         versao: '1.00',
@@ -126,7 +126,7 @@ it('creates DPS with valid documents', function () {
 
 ```php
 // database/seeders/ClienteSeeder.php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 use App\Models\Cliente;
 
 class ClienteSeeder extends Seeder
@@ -136,7 +136,7 @@ class ClienteSeeder extends Seeder
         for ($i = 0; $i < 100; $i++) {
             Cliente::create([
                 'nome' => fake()->name(),
-                'cpf' => DocumentGenerator::generateCpf(),
+                'cpf' => CpfCnpjGenerator::generateCpf(),
                 'email' => fake()->email(),
                 'telefone' => fake()->phoneNumber(),
             ]);
@@ -149,7 +149,7 @@ class ClienteSeeder extends Seeder
 
 ```php
 // database/factories/ClienteFactory.php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 class ClienteFactory extends Factory
 {
@@ -157,7 +157,7 @@ class ClienteFactory extends Factory
     {
         return [
             'nome' => $this->faker->name(),
-            'cpf' => DocumentGenerator::generateCpf(),
+            'cpf' => CpfCnpjGenerator::generateCpf(),
             'email' => $this->faker->unique()->safeEmail(),
         ];
     }
@@ -166,7 +166,7 @@ class ClienteFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'cpf' => null,
-            'cnpj' => DocumentGenerator::generateCnpj(),
+            'cnpj' => CpfCnpjGenerator::generateCnpj(),
             'razao_social' => $this->faker->company(),
         ]);
     }
@@ -176,26 +176,26 @@ class ClienteFactory extends Factory
 ### 4. Dados de Demonstração
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 // Criar DPS de exemplo para demonstração
 $dpsDemo = new DpsData(
     versao: '1.00',
     infDps: new InfDpsData(
         id: IdGenerator::generateDpsId(
-            DocumentGenerator::generateCnpj(),
+            CpfCnpjGenerator::generateCnpj(),
             '3550308',
             '1',
             '1'
         ),
         prestador: new PrestadorData(
-            cnpj: DocumentGenerator::generateCnpj(),
+            cnpj: CpfCnpjGenerator::generateCnpj(),
             nome: 'Empresa Demonstração Ltda',
             inscricaoMunicipal: '12345',
             // ...
         ),
         tomador: new TomadorData(
-            cpf: DocumentGenerator::generateCpf(),
+            cpf: CpfCnpjGenerator::generateCpf(),
             nome: 'Cliente Exemplo',
             // ...
         ),
@@ -207,10 +207,10 @@ $dpsDemo = new DpsData(
 ### 5. Testes de API
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 test('API creates cliente with valid CPF', function () {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 
     $response = $this->postJson('/api/clientes', [
         'nome' => 'Teste',
@@ -232,8 +232,8 @@ test('API creates cliente with valid CPF', function () {
 if (app()->environment('local')) {
     Route::get('/dev/generate-test-data', function () {
         return [
-            'cpf' => DocumentGenerator::generateCpf(true),
-            'cnpj' => DocumentGenerator::generateCnpj(true),
+            'cpf' => CpfCnpjGenerator::generateCpf(true),
+            'cnpj' => CpfCnpjGenerator::generateCnpj(true),
         ];
     });
 }
@@ -246,16 +246,16 @@ if (app()->environment('local')) {
 ### Gerar Múltiplos Documentos
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 // Gerar 10 CPFs
 $cpfs = collect(range(1, 10))
-    ->map(fn() => DocumentGenerator::generateCpf())
+    ->map(fn() => CpfCnpjGenerator::generateCpf())
     ->toArray();
 
 // Gerar 5 CNPJs formatados
 $cnpjs = collect(range(1, 5))
-    ->map(fn() => DocumentGenerator::generateCnpj(true))
+    ->map(fn() => CpfCnpjGenerator::generateCnpj(true))
     ->toArray();
 
 print_r($cpfs);
@@ -276,14 +276,14 @@ print_r($cnpjs);
 ### Integração com Faker
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 use Faker\Factory;
 
 $faker = Factory::create('pt_BR');
 
 $cliente = [
     'nome' => $faker->name(),
-    'cpf' => DocumentGenerator::generateCpf(),
+    'cpf' => CpfCnpjGenerator::generateCpf(),
     'email' => $faker->email(),
     'telefone' => $faker->phoneNumber(),
     'endereco' => [
@@ -299,7 +299,7 @@ $cliente = [
 ### Criar Dataset Completo
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 function criarClientesTeste(int $quantidade): array
 {
@@ -311,8 +311,8 @@ function criarClientesTeste(int $quantidade): array
         $clientes[] = [
             'tipo' => $tipo,
             'documento' => $tipo === 'PF'
-                ? DocumentGenerator::generateCpf(true)
-                : DocumentGenerator::generateCnpj(true),
+                ? CpfCnpjGenerator::generateCpf(true)
+                : CpfCnpjGenerator::generateCnpj(true),
             'nome' => fake()->name(),
             'email' => fake()->email(),
         ];
@@ -331,9 +331,9 @@ $clientes = criarClientesTeste(50);
 Os documentos gerados passam em validações matemáticas padrão:
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
-$cpf = DocumentGenerator::generateCpf();
+$cpf = CpfCnpjGenerator::generateCpf();
 
 // Validação manual dos dígitos verificadores
 function validarCpf(string $cpf): bool
@@ -371,11 +371,11 @@ var_dump(validarCpf($cpf)); // true ✅
 ```php
 // ✅ CORRETO - Ambiente de teste
 if (app()->environment('testing')) {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 }
 
 // ❌ ERRADO - Produção
-$cliente->cpf = DocumentGenerator::generateCpf(); // NUNCA FAÇA ISSO!
+$cliente->cpf = CpfCnpjGenerator::generateCpf(); // NUNCA FAÇA ISSO!
 ```
 
 ### ⚠️ Não Representa Pessoas Reais
@@ -394,10 +394,10 @@ Embora improvável, é possível gerar o mesmo documento duas vezes:
 
 ```php
 // Adicione verificação de unicidade se necessário
-$cpf = DocumentGenerator::generateCpf();
+$cpf = CpfCnpjGenerator::generateCpf();
 
 while (Cliente::where('cpf', $cpf)->exists()) {
-    $cpf = DocumentGenerator::generateCpf(); // Gera outro
+    $cpf = CpfCnpjGenerator::generateCpf(); // Gera outro
 }
 ```
 
@@ -410,7 +410,7 @@ while (Cliente::where('cpf', $cpf)->exists()) {
 ```php
 // 1. Use apenas em testes
 if (app()->environment(['local', 'testing'])) {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 }
 
 // 2. Combine com factories
@@ -421,7 +421,7 @@ Cliente::factory()
 // 3. Marque dados de teste claramente
 Cliente::create([
     'nome' => '[TESTE] ' . fake()->name(),
-    'cpf' => DocumentGenerator::generateCpf(),
+    'cpf' => CpfCnpjGenerator::generateCpf(),
     'is_teste' => true,
 ]);
 ```
@@ -431,11 +431,11 @@ Cliente::create([
 ```php
 // Não use em produção
 if (app()->environment('production')) {
-    $cpf = DocumentGenerator::generateCpf(); // ❌
+    $cpf = CpfCnpjGenerator::generateCpf(); // ❌
 }
 
 // Não assuma que o documento existe
-$cpf = DocumentGenerator::generateCpf();
+$cpf = CpfCnpjGenerator::generateCpf();
 $pessoa = consultarReceitaFederal($cpf); // ❌ Não vai encontrar
 
 // Não use para fraude

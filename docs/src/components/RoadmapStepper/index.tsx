@@ -30,7 +30,7 @@ const steps: Step[] = [
     {
         title: "Fase 4: Utilitários ✅",
         description:
-            "IdGenerator (DPS/NFSe), DocumentGenerator (CPF/CNPJ), validadores e helpers implementados.",
+            "IdGenerator (DPS/NFSe), CpfCnpjGenerator (CPF/CNPJ), validadores e helpers implementados.",
         status: "completed",
     },
     {

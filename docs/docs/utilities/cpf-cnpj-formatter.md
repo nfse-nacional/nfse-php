@@ -302,4 +302,4 @@ public function rules()
 
 -   [TaxCalculator](./tax-calculator) - Cálculos tributários
 -   [IdGenerator](./id-generator) - Geração de IDs únicos
--   [DocumentGenerator](./document-generator) - Geração de documentos para testes
+-   [CpfCnpjGenerator](./cpf-cnpj-generator) - Geração de documentos para testes

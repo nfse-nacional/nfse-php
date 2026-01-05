@@ -2,7 +2,7 @@
 
 namespace Nfse\Support;
 
-class DocumentGenerator
+class CpfCnpjGenerator
 {
     /**
      * Gera um CPF válido.

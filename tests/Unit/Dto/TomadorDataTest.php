@@ -3,10 +3,10 @@
 use Nfse\Dto\Nfse\EnderecoData;
 use Nfse\Dto\Nfse\EnderecoExteriorData;
 use Nfse\Dto\Nfse\TomadorData;
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 it('can instantiate tomador as PF (Person)', function () {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
     $tomador = new TomadorData(
         cpf: $cpf,
         cnpj: null,
@@ -34,7 +34,7 @@ it('can instantiate tomador as PF (Person)', function () {
 });
 
 it('can instantiate tomador as PJ (Company)', function () {
-    $cnpj = DocumentGenerator::generateCnpj();
+    $cnpj = CpfCnpjGenerator::generateCnpj();
     $tomador = new TomadorData(
         cpf: null,
         cnpj: $cnpj,

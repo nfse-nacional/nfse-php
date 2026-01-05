@@ -1,9 +1,9 @@
 <?php
 
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 it('can generate a valid CPF', function () {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 
     expect(strlen($cpf))->toBe(11);
     expect(ctype_digit($cpf))->toBeTrue();
@@ -13,21 +13,21 @@ it('can generate a valid CPF', function () {
 });
 
 it('can generate a formatted CPF', function () {
-    $cpf = DocumentGenerator::generateCpf(true);
+    $cpf = CpfCnpjGenerator::generateCpf(true);
 
     expect(strlen($cpf))->toBe(14);
     expect($cpf)->toMatch('/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/');
 });
 
 it('can generate a valid CNPJ', function () {
-    $cnpj = DocumentGenerator::generateCnpj();
+    $cnpj = CpfCnpjGenerator::generateCnpj();
 
     expect(strlen($cnpj))->toBe(14);
     expect(ctype_digit($cnpj))->toBeTrue();
 });
 
 it('can generate a formatted CNPJ', function () {
-    $cnpj = DocumentGenerator::generateCnpj(true);
+    $cnpj = CpfCnpjGenerator::generateCnpj(true);
 
     expect(strlen($cnpj))->toBe(18);
     expect($cnpj)->toMatch('/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/');

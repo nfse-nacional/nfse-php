@@ -227,9 +227,9 @@ $id = IdGenerator::generateDpsId(
 
 ---
 
-## DocumentGenerator
+## CpfCnpjGenerator
 
-A classe `DocumentGenerator` gera CPFs e CNPJs **válidos** aleatórios, útil para testes e desenvolvimento.
+A classe `CpfCnpjGenerator` gera CPFs e CNPJs **válidos** aleatórios, útil para testes e desenvolvimento.
 
 > ⚠️ **Atenção:** Esta classe é destinada **exclusivamente para ambientes de teste e desenvolvimento**. Nunca use documentos gerados em produção.
 
@@ -240,14 +240,14 @@ A classe `DocumentGenerator` gera CPFs e CNPJs **válidos** aleatórios, útil p
 Gera um CPF válido aleatório com dígitos verificadores corretos.
 
 ```php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 // CPF sem formatação
-$cpf = DocumentGenerator::generateCpf();
+$cpf = CpfCnpjGenerator::generateCpf();
 echo $cpf; // Ex: 12345678901
 
 // CPF formatado
-$cpfFormatado = DocumentGenerator::generateCpf(true);
+$cpfFormatado = CpfCnpjGenerator::generateCpf(true);
 echo $cpfFormatado; // Ex: 123.456.789-01
 ```
 
@@ -265,11 +265,11 @@ Gera um CNPJ válido aleatório com dígitos verificadores corretos.
 
 ```php
 // CNPJ sem formatação
-$cnpj = DocumentGenerator::generateCnpj();
+$cnpj = CpfCnpjGenerator::generateCnpj();
 echo $cnpj; // Ex: 12345678000195
 
 // CNPJ formatado
-$cnpjFormatado = DocumentGenerator::generateCnpj(true);
+$cnpjFormatado = CpfCnpjGenerator::generateCnpj(true);
 echo $cnpjFormatado; // Ex: 12.345.678/0001-95
 ```
 
@@ -283,13 +283,13 @@ echo $cnpjFormatado; // Ex: 12.345.678/0001-95
 
 ---
 
-### Casos de Uso para DocumentGenerator
+### Casos de Uso para CpfCnpjGenerator
 
 **1. Testes Unitários:**
 
 ```php
 it('validates CPF format', function () {
-    $cpf = DocumentGenerator::generateCpf();
+    $cpf = CpfCnpjGenerator::generateCpf();
 
     expect($cpf)->toHaveLength(11)
         ->and($cpf)->toMatch('/^\d{11}$/');
@@ -300,12 +300,12 @@ it('validates CPF format', function () {
 
 ```php
 // database/seeders/ClienteSeeder.php
-use Nfse\Support\DocumentGenerator;
+use Nfse\Support\CpfCnpjGenerator;
 
 for ($i = 0; $i < 100; $i++) {
     Cliente::create([
         'nome' => fake()->name(),
-        'cpf' => DocumentGenerator::generateCpf(),
+        'cpf' => CpfCnpjGenerator::generateCpf(),
         'email' => fake()->email(),
     ]);
 }
@@ -320,12 +320,12 @@ $dpsDemo = new DpsData(
     infDps: new InfDpsData(
         // ...
         prestador: new PrestadorData(
-            cnpj: DocumentGenerator::generateCnpj(),
+            cnpj: CpfCnpjGenerator::generateCnpj(),
             nome: 'Empresa Demonstração Ltda',
             // ...
         ),
         tomador: new TomadorData(
-            cpf: DocumentGenerator::generateCpf(),
+            cpf: CpfCnpjGenerator::generateCpf(),
             nome: 'Cliente Exemplo',
             // ...
         )
@@ -337,12 +337,12 @@ $dpsDemo = new DpsData(
 
 ## Resumo das Classes
 
-| Classe              | Propósito                   | Principais Métodos                                         |
-| ------------------- | --------------------------- | ---------------------------------------------------------- |
-| `CpfCnpjFormatter`  | Formatação de documentos    | `formatCpf()`, `formatCnpj()`, `formatCep()`, `unformat()` |
-| `TaxCalculator`     | Cálculos tributários        | `calculate()`                                              |
-| `IdGenerator`       | Geração de IDs únicos       | `generateDpsId()`                                          |
-| `DocumentGenerator` | Geração de docs para testes | `generateCpf()`, `generateCnpj()`                          |
+| Classe             | Propósito                   | Principais Métodos                                         |
+| ------------------ | --------------------------- | ---------------------------------------------------------- |
+| `CpfCnpjFormatter` | Formatação de documentos    | `formatCpf()`, `formatCnpj()`, `formatCep()`, `unformat()` |
+| `TaxCalculator`    | Cálculos tributários        | `calculate()`                                              |
+| `IdGenerator`      | Geração de IDs únicos       | `generateDpsId()`                                          |
+| `CpfCnpjGenerator` | Geração de docs para testes | `generateCpf()`, `generateCnpj()`                          |
 
 ---
 
@@ -351,11 +351,11 @@ $dpsDemo = new DpsData(
 Veja como usar múltiplos utilitários em conjunto:
 
 ```php
-use Nfse\Support\{CpfCnpjFormatter, TaxCalculator, IdGenerator, DocumentGenerator};
+use Nfse\Support\{CpfCnpjFormatter, TaxCalculator, IdGenerator, CpfCnpjGenerator};
 
 // 1. Gerar documentos para teste
-$cnpjPrestador = DocumentGenerator::generateCnpj();
-$cpfTomador = DocumentGenerator::generateCpf();
+$cnpjPrestador = CpfCnpjGenerator::generateCnpj();
+$cpfTomador = CpfCnpjGenerator::generateCpf();
 
 // 2. Formatar para exibição
 echo "Prestador: " . CpfCnpjFormatter::formatCnpj($cnpjPrestador) . "\n";

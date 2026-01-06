@@ -33,7 +33,7 @@ jobs:
         run: ./vendor/bin/pest --coverage --coverage-clover=coverage/clover.xml --coverage-text
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-clover
           path: coverage/clover.xml

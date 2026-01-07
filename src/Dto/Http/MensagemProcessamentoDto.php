@@ -2,9 +2,9 @@
 
 namespace Nfse\Dto\Http;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class MensagemProcessamentoDto extends DataTransferObject
+class MensagemProcessamentoDto extends Dto
 {
     public ?string $mensagem = null;
 

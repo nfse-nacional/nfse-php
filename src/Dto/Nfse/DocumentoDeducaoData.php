@@ -6,9 +6,9 @@ use Nfse\Enums\TipoDeducaoReducao;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class DocumentoDeducaoData extends DataTransferObject
+class DocumentoDeducaoData extends Dto
 {
     /**
      * Chave de NFS-e.

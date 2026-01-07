@@ -7,9 +7,9 @@ use Nfse\Enums\ProcessoEmissao;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class InfNfseData extends DataTransferObject
+class InfNfseData extends Dto
 {
     /**
      * Identificador da NFS-e.

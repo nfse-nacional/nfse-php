@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class InfPedRegData extends DataTransferObject
+class InfPedRegData extends Dto
 {
     #[MapFrom('tpAmb')]
     public ?int $tipoAmbiente = null;

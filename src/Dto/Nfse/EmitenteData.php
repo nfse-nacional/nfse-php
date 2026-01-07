@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class EmitenteData extends DataTransferObject
+class EmitenteData extends Dto
 {
     /**
      * CNPJ do emitente.

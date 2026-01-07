@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class EnderecoExteriorData extends DataTransferObject
+class EnderecoExteriorData extends Dto
 {
     /**
      * Código do país (ISO2).

@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Http;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class AliquotaDto extends DataTransferObject
+class AliquotaDto extends Dto
 {
     #[MapFrom('incid')]
     public ?string $incidencia = null;

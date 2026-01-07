@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class ValoresNfseData extends DataTransferObject
+class ValoresNfseData extends Dto
 {
     /**
      * Valor calculado de Dedução/Redução.

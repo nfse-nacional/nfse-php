@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Http;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class DistribuicaoNsuDto extends DataTransferObject
+class DistribuicaoNsuDto extends Dto
 {
     #[MapFrom('NSU')]
     public ?int $nsu = null;

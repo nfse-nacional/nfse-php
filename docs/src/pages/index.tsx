@@ -38,6 +38,29 @@ function HomepageHeader() {
                         automática de DTOs, assinatura digital integrada e
                         tipagem completa.
                     </p>
+                    <div
+                        className="alert alert--warning margin-bottom--md"
+                        role="alert"
+                        style={{ textAlign: "left" }}
+                    >
+                        <div className="admonition-heading">
+                            <h5>⚠️ Adequação dos Municípios</h5>
+                        </div>
+                        <div className="admonition-content">
+                            <p style={{ marginBottom: 0 }}>
+                                Os municípios ainda estão em processo de
+                                adequação. Verifique o status no{" "}
+                                <Link to="https://app.powerbi.com/view?r=eyJrIjoiNGQ4YTcxNmMtMzdhNC00Mzc5LTllM2EtMjY1MTM3NWQyZDgyIiwidCI6IjZmNDlhYTQzLTgyMmEtNGMyMC05NjcwLWRiNzcwMGJmMWViMCJ9&pageName=608609c2e0a53d7a3c6e">
+                                    PowerBI
+                                </Link>{" "}
+                                e consulte o convênio via API (veja exemplo no{" "}
+                                <Link to="https://github.com/nfse-nacional/nfse-php/blob/main/examples/contribuinte/parametros/consultar_parametros.php">
+                                    GitHub
+                                </Link>
+                                ).
+                            </p>
+                        </div>
+                    </div>
                     <div className={styles.buttons}>
                         <Link
                             className="button button--secondary button--lg"

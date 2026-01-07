@@ -8,9 +8,9 @@ use Nfse\Enums\TipoPessoa;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class ComercioExteriorData extends DataTransferObject
+class ComercioExteriorData extends Dto
 {
     /**
      * Modo de prestação do serviço.

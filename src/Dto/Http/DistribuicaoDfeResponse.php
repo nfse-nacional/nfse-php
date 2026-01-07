@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Http;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class DistribuicaoDfeResponse extends DataTransferObject
+class DistribuicaoDfeResponse extends Dto
 {
     #[MapFrom('tpAmb')]
     public ?string $tipoAmbiente = null;

@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class LocalPrestacaoData extends DataTransferObject
+class LocalPrestacaoData extends Dto
 {
     /**
      * Código do município onde o serviço foi prestado (IBGE).

@@ -13,7 +13,7 @@ try {
     echo 'Mensagem: '.$response->mensagem."\n";
     if ($response->parametrosConvenio) {
         echo 'Tipo Convênio: '.$response->parametrosConvenio->tipoConvenio."\n";
-        echo 'Aderente Emissor Nacional: '.($response->parametrosConvenio->aderenteEmissorNacional ? 'Sim' : 'Não')."\n";
+        echo 'Aderente Emissor Nacional: '.($response->parametrosConvenio->tipoConvenio === 1 ? 'Sim' : 'Não')."\n";
     }
 } catch (\Exception $e) {
     echo 'Erro: '.$e->getMessage()."\n";

@@ -2,9 +2,9 @@
 
 namespace Nfse\Dto\Http;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class EmissaoNfseResponse extends DataTransferObject
+class EmissaoNfseResponse extends Dto
 {
     public ?int $tipoAmbiente = null;
 

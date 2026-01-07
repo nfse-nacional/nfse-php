@@ -8,9 +8,9 @@ use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class RegimeTributarioData extends DataTransferObject
+class RegimeTributarioData extends Dto
 {
     /**
      * Opção pelo Simples Nacional.

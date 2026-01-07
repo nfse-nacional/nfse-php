@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class PedRegEventoData extends DataTransferObject
+class PedRegEventoData extends Dto
 {
     #[MapFrom('infPedReg')]
     public ?InfPedRegData $infPedReg = null;

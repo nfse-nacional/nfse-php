@@ -3,9 +3,9 @@
 namespace Nfse\Dto\Http;
 
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
+use Nfse\Dto\Dto;
 
-class ParametrosConfiguracaoConvenioDto extends DataTransferObject
+class ParametrosConfiguracaoConvenioDto extends Dto
 {
     #[MapFrom('tpConv')]
     public ?int $tipoConvenio = null;

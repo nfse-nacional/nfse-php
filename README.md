@@ -9,6 +9,13 @@ A maneira mais moderna e eficiente de integrar PHP com a NFS-e Nacional.
 
 Este pacote é a fundação do ecossistema para integração com a NFS-e Nacional. O foco é garantir contratos sólidos, modelos de dados ricos (DTOs) e facilidade de uso para desenvolvedores PHP. Ele fornece um conjunto robusto de DTOs que simplificam a criação e validação dos XMLs, oferecendo uma interface fluida e uma documentação alinhada à realidade do desenvolvedor.
 
+> ⚠️ **Atenção: Adequação dos Municípios**
+>
+> Os municípios ainda estão em processo de adequação à API Nacional. Antes de iniciar a integração, verifique se o município desejado já está credenciado e operando:
+>
+> 1.  **Consulte o Status no PowerBI:** [Painel de Monitoramento da NFS-e](https://app.powerbi.com/view?r=eyJrIjoiNGQ4YTcxNmMtMzdhNC00Mzc5LTllM2EtMjY1MTM3NWQyZDgyIiwidCI6IjZmNDlhYTQzLTgyMmEtNGMyMC05NjcwLWRiNzcwMGJmMWViMCJ9&pageName=608609c2e0a53d7a3c6e)
+> 2.  **Verifique o Convênio via API:** Utilize o método `consultarParametrosConvenio` para confirmar se o município aceita emissão via API Nacional. Veja o exemplo em [examples/contribuinte/parametros/consultar_parametros.php](https://github.com/nfse-nacional/nfse-php/blob/main/examples/contribuinte/parametros/consultar_parametros.php).
+
 📚 **Documentação Técnica:** [nfse-php.netlify.app](https://nfse-php.netlify.app/)
 
 ## Instalação

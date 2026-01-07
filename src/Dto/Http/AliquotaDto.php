@@ -7,12 +7,15 @@ use Nfse\Dto\Dto;
 
 class AliquotaDto extends Dto
 {
-    #[MapFrom('incid')]
+    #[MapFrom('Incidencia')]
     public ?string $incidencia = null;
 
-    #[MapFrom('aliq')]
+    #[MapFrom('Aliq')]
     public ?float $aliquota = null;
 
-    #[MapFrom('tpRet')]
-    public ?int $tipoRetencao = null;
+    #[MapFrom('DtIni')]
+    public ?string $dataInicio = null;
+
+    #[MapFrom('DtFim')]
+    public ?string $dataFim = null;
 }

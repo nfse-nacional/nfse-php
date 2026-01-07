@@ -231,7 +231,7 @@ class ContribuinteServiceTest extends TestCase
     {
         $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse([
             'mensagem' => 'Sucesso',
-            'aliquotas' => ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(['aliq' => 5.0])]],
+            'aliquotas' => ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(['Aliq' => 5.0])]],
         ]);
 
         $this->adnClientMock->expects($this->once())

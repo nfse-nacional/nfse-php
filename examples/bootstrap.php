@@ -17,6 +17,7 @@ $municipios = [
     'BELO_HORIZONTE' => '3106200',
     'PORTO_ALEGRE' => '4314902',
     'BRASILIA' => '5300108',
+    'RECIFE' => '2611606',
 ];
 
 // Escolha o município que será usado nos exemplos

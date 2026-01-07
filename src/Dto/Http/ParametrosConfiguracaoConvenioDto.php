@@ -7,15 +7,18 @@ use Nfse\Dto\Dto;
 
 class ParametrosConfiguracaoConvenioDto extends Dto
 {
-    #[MapFrom('tpConv')]
-    public ?int $tipoConvenio = null;
+    #[MapFrom('aderenteAmbienteNacional')]
+    public ?int $aderenteAmbienteNacional = null;
 
-    #[MapFrom('tpInsc')]
-    public ?int $tipoInscricao = null;
+    #[MapFrom('aderenteEmissorNacional')]
+    public ?int $aderenteEmissorNacional = null;
 
-    #[MapFrom('nInsc')]
-    public ?string $numeroInscricao = null;
+    #[MapFrom('situacaoEmissaoPadraoContribuintesRFB')]
+    public ?int $situacaoEmissaoPadraoContribuintesRFB = null;
 
-    #[MapFrom('vinc')]
-    public ?int $vinculo = null;
+    #[MapFrom('aderenteMAN')]
+    public ?int $aderenteMAN = null;
+
+    #[MapFrom('permiteAproveitametoDeCreditos')]
+    public ?bool $permiteAproveitametoDeCreditos = null;
 }

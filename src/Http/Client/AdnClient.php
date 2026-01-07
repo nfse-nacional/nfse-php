@@ -167,14 +167,7 @@ class AdnClient implements AdnDanfseInterface
         return new ResultadoConsultaConfiguracoesConvenioResponse([
             'mensagem' => $response['mensagem'] ?? null,
             'parametrosConvenio' => isset($response['parametrosConvenio'])
-                ? new ParametrosConfiguracaoConvenioDto([
-                    'tpConv' => $response['parametrosConvenio']['tipoConvenio'] ?? null,
-                    'aderenteAmbienteNacional' => $response['parametrosConvenio']['aderenteAmbienteNacional'] ?? null,
-                    'aderenteEmissorNacional' => $response['parametrosConvenio']['aderenteEmissorNacional'] ?? null,
-                    'situacaoEmissaoPadraoContribuintesRFB' => $response['parametrosConvenio']['situacaoEmissaoPadraoContribuintesRFB'] ?? null,
-                    'aderenteMAN' => $response['parametrosConvenio']['aderenteMAN'] ?? null,
-                    'permiteAproveitametoDeCreditos' => $response['parametrosConvenio']['permiteAproveitametoDeCreditos'] ?? null,
-                ])
+                ? new ParametrosConfiguracaoConvenioDto($response['parametrosConvenio'])
                 : null,
         ]);
     }
@@ -272,12 +265,7 @@ class AdnClient implements AdnDanfseInterface
     {
         $aliquotas = [];
         foreach ($response['aliquotas'] ?? [] as $servico => $lista) {
-            $aliquotas[$servico] = array_map(fn ($item) => new AliquotaDto([
-                'incid' => $item['Incidencia'] ?? null,
-                'aliq' => $item['Aliq'] ?? null,
-                'DtIni' => $item['DtIni'] ?? null,
-                'DtFim' => $item['DtFim'] ?? null,
-            ]), $lista);
+            $aliquotas[$servico] = array_map(fn ($item) => new AliquotaDto($item), $lista);
         }
 
         return new ResultadoConsultaAliquotasResponse([

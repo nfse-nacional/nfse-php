@@ -5,7 +5,8 @@ $nfse = require_once __DIR__.'/../../bootstrap.php';
 
 try {
     // $codigoMunicipio já vem do bootstrap.php
-    $codigoServico = '01.07.01.001'; // O código deve ter 9 dígitos no formato 00.00.00.000
+    // $codigoServico = '01.07.01.001'; // O código deve ter 9 dígitos no formato 00.00.00.000
+    $codigoServico = '38.01.01.001'; // O código deve ter 9 dígitos no formato 00.00.00.000
     $competencia = '2025-01-01T12:00:00'; // Formato ISO8601 (date-time)
 
     echo "Consultando alíquota para o serviço $codigoServico no município $codigoMunicipio...\n";

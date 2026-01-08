@@ -7,6 +7,7 @@ use Spatie\DataTransferObject\Caster;
 class ArrayCaster implements Caster
 {
     public function __construct(
+        array $types,
         private string $itemType,
     ) {}
 

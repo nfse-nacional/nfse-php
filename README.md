@@ -112,10 +112,16 @@ $dps = new DpsData([
         'prest' => [
             'CNPJ' => '12345678000199',
             'IM' => '12345',
+            'regTrib' => [
+                    'opSimpNac' => 3,   // 1- Não optante 2 Optante (MEI) 3 - Optante (ME/EPP)
+                    'regApTribSN' => 1, // se Aplicável
+                    'regEspTrib' => 0,
+                ],
         ],
         'toma' => [
             'CPF' => '11122233344',
             'xNome' => 'Tomador Exemplo',
+            
         ],
         'serv' => [
             'locPrest' => [

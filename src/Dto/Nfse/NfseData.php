@@ -2,8 +2,8 @@
 
 namespace Nfse\Dto\Nfse;
 
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Nfse\Dto\Dto;
+use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class NfseData extends Dto
 {
@@ -18,4 +18,10 @@ class NfseData extends Dto
      */
     #[MapFrom('infNFSe')]
     public ?InfNfseData $infNfse = null;
+
+    /**
+     * Informações do Evento.
+     */
+    #[MapFrom('infEvento')]
+    public ?InfEventoData $infEvento = null;
 }

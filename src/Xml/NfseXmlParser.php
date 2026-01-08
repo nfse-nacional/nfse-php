@@ -2,54 +2,65 @@
 
 namespace Nfse\Xml;
 
-use Nfse\Dto\Nfse\NfseData;
 use Exception;
+use Nfse\Dto\Nfse\NfseData;
 
 class NfseXmlParser
 {
     public function parse(string $xml): NfseData
     {
-        // Clean up the XML string
-        $xml = trim($xml);
-        
-        // Try to detect if the XML has double UTF-8 encoding
-        // This happens when the SEFIN API returns XML that was already UTF-8 encoded
-        // and then got encoded again during transmission
-        $hasDoubleEncoding = $this->detectDoubleUtf8Encoding($xml);
-        
-        if ($hasDoubleEncoding) {
-            // Decode once to fix the double encoding
-            $xml = utf8_decode($xml);
+        // 1. Fix Encoding
+        if (! mb_check_encoding($xml, 'UTF-8')) {
+            $xml = mb_convert_encoding($xml, 'UTF-8', 'ISO-8859-1');
         }
-        
-        // Load with proper encoding options
+
+        // Remove invalid characters
+        $xml = iconv('UTF-8', 'UTF-8//IGNORE', $xml);
+
+        // Remove escaped quotes if present (e.g. from JSON dumps)
+        $xml = str_replace('\"', '"', $xml);
+
+        // 2. Parse XML
+        $useInternal = libxml_use_internal_errors(true);
         $simpleXml = simplexml_load_string(
             $xml,
             'SimpleXMLElement',
-            LIBXML_NOCDATA | LIBXML_NOBLANKS
+            LIBXML_NOCDATA | LIBXML_NOBLANKS | LIBXML_RECOVER
         );
 
         if ($simpleXml === false) {
-            throw new Exception('Failed to parse XML');
+            $errors = libxml_get_errors();
+            $errorMsg = $errors[0]->message ?? 'Failed to parse XML';
+            libxml_clear_errors();
+            libxml_use_internal_errors($useInternal);
+            throw new Exception($errorMsg);
         }
+        libxml_use_internal_errors($useInternal);
 
-        // Use JSON_UNESCAPED_UNICODE to preserve characters correctly
+        // 3. Convert to Array via JSON (mimic vendor behavior)
         $json = json_encode($simpleXml, JSON_UNESCAPED_UNICODE);
         $parsedDoc = json_decode($json, true);
+
+        // 4. Sanitize Array (Fix [] -> null)
+        $parsedDoc = $this->sanitizeArray($parsedDoc);
 
         return new NfseData($parsedDoc);
     }
 
-    /**
-     * Detect if the XML has double UTF-8 encoding
-     * 
-     * This checks for the pattern where UTF-8 multi-byte characters are double-encoded
-     * For example: "ç" (0xC3 0xA7) becomes "Ã§" (0xC3 0x83 0xC2 0xA7)
-     */
-    private function detectDoubleUtf8Encoding(string $xml): bool
+    private function sanitizeArray($data)
     {
-        // Look for the double-encoding pattern: 0xC3 0x83 or 0xC3 0x82
-        // This is a strong indicator of double UTF-8 encoding
-        return preg_match('/\xC3[\x82\x83]/', $xml) === 1;
+        if (! is_array($data)) {
+            return $data;
+        }
+
+        if (empty($data)) {
+            return null;
+        }
+
+        foreach ($data as $key => $value) {
+            $data[$key] = $this->sanitizeArray($value);
+        }
+
+        return $data;
     }
 }

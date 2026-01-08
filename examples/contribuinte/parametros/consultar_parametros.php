@@ -4,7 +4,7 @@
 $nfse = require_once __DIR__.'/../../bootstrap.php';
 
 try {
-  
+
     echo "Consultando parâmetros do convênio para o município: $codigoMunicipio ($municipioSelecionado)...\n";
 
     $response = $nfse->contribuinte()->consultarParametrosConvenio($codigoMunicipio);

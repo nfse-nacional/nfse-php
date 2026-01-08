@@ -6,9 +6,9 @@ use Nfse\Dto\Nfse\NfseData;
 use Nfse\Xml\NfseXmlParser;
 
 it('can parse full nfse xml from fixture', function () {
-    $xmlContent = file_get_contents(__DIR__ . '/../../fixtures/nfse.xml');
+    $xmlContent = file_get_contents(__DIR__.'/../../fixtures/nfse.xml');
 
-    $parser = new NfseXmlParser();
+    $parser = new NfseXmlParser;
     $nfseData = $parser->parse($xmlContent);
 
     expect($nfseData)->toBeInstanceOf(NfseData::class)
@@ -22,7 +22,7 @@ it('can parse full nfse xml from fixture', function () {
         ->and($nfseData->infNfse->ambienteGerador)->toBe(\Nfse\Enums\AmbienteGerador::SefinNacional) // 2
         ->and($nfseData->infNfse->tipoEmissao)->toBe(1) // 1
         ->and($nfseData->infNfse->processoEmissao)->toBe(\Nfse\Enums\ProcessoEmissao::WebFisco) // 2
-        
+
         // Emitente
         ->and($nfseData->infNfse->emitente->cnpj)->toBe('31305199000190')
         ->and($nfseData->infNfse->emitente->nome)->toBe('DINAMARQUES T SANTOS')
@@ -44,7 +44,7 @@ it('can parse full nfse xml from fixture', function () {
         ->and($nfseData->infNfse->dps->infDps->prestador->cnpj)->toBe('31305199000190')
         ->and($nfseData->infNfse->dps->infDps->tomador->cpf)->toBe('76920500230')
         ->and($nfseData->infNfse->dps->infDps->tomador->nome)->toBe('FRANCIONE DA ROCHA NASCIMENTO')
-        
+
         // Servico
         ->and($nfseData->infNfse->dps->infDps->servico->codigoServico->descricaoServico)->toBe('ultrassonografia')
         ->and($nfseData->infNfse->dps->infDps->servico->codigoServico->codigoTributacaoNacional)->toBe('040303')

@@ -46,12 +46,12 @@ abstract class Dto extends DataTransferObject
                     // Se o mappedName usa dot notation, precisamos expandir
                     if (str_contains($mappedName, '.')) {
                         // Verifica se já existe valor no caminho mapeado
-                        if (!$this->hasDotNotation($input, $mappedName)) {
+                        if (! $this->hasDotNotation($input, $mappedName)) {
                             $this->setDotNotation($input, $mappedName, $input[$propName]);
                         }
                     } else {
                         // Se não existe a chave mapeada, define ela
-                        if (!array_key_exists($mappedName, $input)) {
+                        if (! array_key_exists($mappedName, $input)) {
                             $input[$mappedName] = $input[$propName];
                         }
                     }
@@ -68,7 +68,7 @@ abstract class Dto extends DataTransferObject
         $current = $array;
 
         foreach ($keys as $k) {
-            if (!is_array($current) || !array_key_exists($k, $current)) {
+            if (! is_array($current) || ! array_key_exists($k, $current)) {
                 return false;
             }
             $current = $current[$k];
@@ -86,7 +86,7 @@ abstract class Dto extends DataTransferObject
             if ($i === count($keys) - 1) {
                 $current[$k] = $value;
             } else {
-                if (!isset($current[$k]) || !is_array($current[$k])) {
+                if (! isset($current[$k]) || ! is_array($current[$k])) {
                     $current[$k] = [];
                 }
                 $current = &$current[$k];

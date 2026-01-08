@@ -66,7 +66,14 @@ class XmlSigner implements SignerInterface
             $canonical
         );
 
-        return $dom->saveXML();
+        $xml = $dom->saveXML();
+        $xml = str_replace([
+            "\n",
+            "\r",
+            "\t",
+        ], '', $xml);
+
+        return $xml;
     }
 
     private function createSignature(

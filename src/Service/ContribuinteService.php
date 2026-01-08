@@ -10,6 +10,7 @@ use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
 use Nfse\Signer\Certificate;
+use Nfse\Signer\SignerInterface;
 use Nfse\Signer\XmlSigner;
 use Nfse\Xml\DpsXmlBuilder;
 use Nfse\Xml\NfseXmlParser;
@@ -35,7 +36,7 @@ class ContribuinteService
         $xml = $builder->build($dps);
 
         $cert = new Certificate($this->context->certificatePath, $this->context->certificatePassword);
-        $signer = new XmlSigner($cert);
+        $signer = $this->createSigner($cert);
 
         // Assina a tag 'infDPS'
         $signedXml = $signer->sign($xml, 'infDPS');
@@ -159,5 +160,10 @@ class ContribuinteService
     public function consultarRetencoes(string $codigoMunicipio, string $competencia): array
     {
         return $this->adnClient->consultarRetencoes($codigoMunicipio, $competencia);
+    }
+
+    protected function createSigner(Certificate $certificate): SignerInterface
+    {
+        return new XmlSigner($certificate);
     }
 }

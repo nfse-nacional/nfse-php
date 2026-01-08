@@ -90,9 +90,9 @@ class DpsValidator
             return;
         }
 
-        $vServ = $valores->valorServicoPrestado?->valorServico ?? 0;
-        $vDescIncond = $valores->desconto?->valorDescontoIncondicionado ?? 0;
-        $vDescCond = $valores->desconto?->valorDescontoCondicionado ?? 0;
+        $vServ = $valores->valorServicoPrestado ? ($valores->valorServicoPrestado->valorServico ?? 0) : 0;
+        $vDescIncond = $valores->desconto ? ($valores->desconto->valorDescontoIncondicionado ?? 0) : 0;
+        $vDescCond = $valores->desconto ? ($valores->desconto->valorDescontoCondicionado ?? 0) : 0;
 
         // Rule 307: vDescIncond < vServ
         if ($vDescIncond > 0 && $vDescIncond >= $vServ) {
@@ -105,8 +105,11 @@ class DpsValidator
         }
 
         // Rule 303: vServ >= descIncond + vDR + vRedBCBM
-        $vDR = $valores->deducaoReducao?->valorDeducaoReducao ?? 0;
-        $vRedBCBM = $valores->tributacao?->beneficioMunicipal?->valorReducaoBcBm ?? 0;
+        $vDR = $valores->deducaoReducao ? ($valores->deducaoReducao->valorDeducaoReducao ?? 0) : 0;
+        $vRedBCBM = 0;
+        if ($valores->tributacao && $valores->tributacao->beneficioMunicipal) {
+            $vRedBCBM = $valores->tributacao->beneficioMunicipal->valorReducaoBcBm ?? 0;
+        }
 
         if ($vServ < ($vDescIncond + $vDR + $vRedBCBM)) {
             $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.';

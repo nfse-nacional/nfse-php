@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\NfseData;
 use Nfse\Xml\NfseXmlParser;
 
 it('parses XML and maps to DTO properties with full names', function () {
-    $xml = <<<XML
+    $xml = <<<'XML'
 <?xml version="1.0" encoding="UTF-8"?>
 <NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">
   <infNFSe Id="NFS123456" versao="1.00">
@@ -83,10 +83,10 @@ XML;
     $nfse = $parser->parse($xml);
 
     expect($nfse)->toBeInstanceOf(NfseData::class);
-    
+
     // Validar propriedades de nível superior (NfseData)
     expect($nfse->versao)->toBe('1.00');
-    
+
     // Validar InfNfseData
     $infNfse = $nfse->infNfse;
     expect($infNfse->id)->toBe('NFS123456');
@@ -102,7 +102,7 @@ XML;
     expect($infNfse->nomeLocalIncidencia)->toBe('VARZEA ALEGRE');
     expect($infNfse->descricaoTributacaoNacional)->toBe('Enfermagem...');
     expect($infNfse->descricaoTributacaoMunicipal)->toBe('04.06 - Enfermagem...');
-    expect($infNfse->codigoStatus)->toBe(100);
+    expect($infNfse->codigoStatus)->toBe(\Nfse\Enums\CodigoStatus::NfseGerada);
     expect($infNfse->numeroDfse)->toBe('987654321');
 
     // Validar EmitenteData
@@ -111,7 +111,7 @@ XML;
     expect($emitente->nome)->toBe('Prefeitura Municipal');
     expect($emitente->telefone)->toBe('1112345678');
     expect($emitente->email)->toBe('contato@prefeitura.sp.gov.br');
-    
+
     // Validar EnderecoEmitenteData
     $enderecoEmitente = $emitente->endereco;
     expect($enderecoEmitente->logradouro)->toBe('Praça da Sé');
@@ -131,7 +131,7 @@ XML;
     // Validar DpsData e InfDpsData
     $dps = $infNfse->dps;
     expect($dps->versao)->toBe('1.00');
-    
+
     $infDps = $dps->infDps;
     expect($infDps->id)->toBe('DPS123');
     expect($infDps->tipoAmbiente)->toBe(\Nfse\Enums\TipoAmbiente::Homologacao);
@@ -140,22 +140,22 @@ XML;
     expect($infDps->numeroDps)->toBe('100');
     expect($infDps->dataCompetencia)->toBe('2023-01-01');
     expect($infDps->tipoEmitente)->toBe(\Nfse\Enums\EmitenteDPS::Prestador);
-    
+
     // Validar PrestadorData
     $prestador = $infDps->prestador;
     expect($prestador->cnpj)->toBe('12345678000199');
     expect($prestador->nome)->toBe('Prestador Teste');
-    
+
     // Validar TomadorData
     $tomador = $infDps->tomador;
     expect($tomador->cpf)->toBe('12345678901');
     expect($tomador->nome)->toBe('Tomador Teste');
-    
+
     // Validar ServicoData
     $servico = $infDps->servico;
     expect($servico->codigoServico->codigoTributacaoNacional)->toBe('010701');
     expect($servico->codigoServico->descricaoServico)->toBe('Descricao do Servico');
-    
+
     // Validar ValoresData
     $valores = $infDps->valores;
     expect($valores->valorServicoPrestado->valorServico)->toBe(1000.00);

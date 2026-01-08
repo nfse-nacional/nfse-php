@@ -6,8 +6,9 @@ use Spatie\DataTransferObject\Caster;
 
 class ArrayCaster implements Caster
 {
+    /** @phpstan-ignore constructor.unusedParameter */
     public function __construct(
-        private array $types,
+        array $types,
         private string $itemType,
     ) {}
 

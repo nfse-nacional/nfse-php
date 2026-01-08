@@ -19,7 +19,7 @@ class NfseXmlParser
 
         if ($hasDoubleEncoding) {
             // Decode once to fix the double encoding
-            $xml = utf8_decode($xml);
+            $xml = mb_convert_encoding($xml, 'ISO-8859-1', 'UTF-8');
         }
 
         // Load with proper encoding options

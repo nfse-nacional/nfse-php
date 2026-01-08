@@ -11,6 +11,7 @@ use Nfse\Dto\Nfse\PrestadorData;
 use Nfse\Dto\Nfse\ServicoData;
 use Nfse\Dto\Nfse\TomadorData;
 use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Enums\OpcaoSimplesNacional;
 
 class DpsXmlBuilder
 {
@@ -321,7 +322,7 @@ class DpsXmlBuilder
             }
 
             $isSimplesNacional = false;
-            if ($prestador && $prestador->regimeTributario && $prestador->regimeTributario->opcaoSimplesNacional === 3) {
+            if ($prestador && $prestador->regimeTributario && $prestador->regimeTributario->opcaoSimplesNacional === OpcaoSimplesNacional::MeEpp) {
                 $isSimplesNacional = true;
             }
 

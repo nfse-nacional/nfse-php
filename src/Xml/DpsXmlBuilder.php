@@ -33,6 +33,7 @@ class DpsXmlBuilder
         $this->buildInfDps($infDps, $dps->infDps);
 
         $xml = $this->dom->saveXML($root);
+
         return str_replace(["\n", "\r", "\t"], '', $xml);
     }
 

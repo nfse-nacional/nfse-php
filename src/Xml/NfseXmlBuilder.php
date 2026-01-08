@@ -38,6 +38,7 @@ class NfseXmlBuilder
         $this->buildInfNfse($infNfse, $nfse->infNfse);
 
         $xml = $this->dom->saveXML();
+
         return str_replace(["\n", "\r", "\t"], '', $xml);
     }
 
@@ -59,7 +60,6 @@ class NfseXmlBuilder
         $this->appendElement($parent, 'dhProc', $data->dataProcessamento);
         $this->appendElement($parent, 'nDFSe', $data->numeroDfse);
         $this->appendElement($parent, 'cVerif', $data->codigoVerificacao);
-
 
         if ($data->emitente) {
             $this->buildEmitente($parent, $data->emitente);

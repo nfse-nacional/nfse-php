@@ -71,7 +71,7 @@ class XmlSigner implements SignerInterface
             "\n",
             "\r",
             "\t",
-        ], "", $xml);
+        ], '', $xml);
 
         return $xml;
     }

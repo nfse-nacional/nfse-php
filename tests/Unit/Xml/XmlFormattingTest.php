@@ -1,25 +1,25 @@
 <?php
 
-use Nfse\Signer\Certificate;
-use Nfse\Signer\XmlSigner;
-use Nfse\Xml\DpsXmlBuilder;
-use Nfse\Xml\NfseXmlBuilder;
-use Nfse\Xml\EventosXmlBuilder;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\NfseData;
 use Nfse\Dto\Nfse\PedRegEventoData;
+use Nfse\Signer\Certificate;
+use Nfse\Signer\XmlSigner;
+use Nfse\Xml\DpsXmlBuilder;
+use Nfse\Xml\EventosXmlBuilder;
+use Nfse\Xml\NfseXmlBuilder;
 
 test('XmlSigner should not contain newlines, carriage returns or tabs', function () {
-    $certPath = __DIR__ . '/../../fixtures/certs/test.pfx';
+    $certPath = __DIR__.'/../../fixtures/certs/test.pfx';
     $password = '1234';
     $certificate = new Certificate($certPath, $password);
     $signer = new XmlSigner($certificate);
 
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
-           '<root>' . "\n" .
-           '  <infDPS Id="DPS123">' . "\n" .
-           '    <test>value</test>' . "\n" .
-           '  </infDPS>' . "\n" .
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".
+           '<root>'."\n".
+           '  <infDPS Id="DPS123">'."\n".
+           '    <test>value</test>'."\n".
+           '  </infDPS>'."\n".
            '</root>';
 
     $signedXml = $signer->sign($xml, 'infDPS');
@@ -30,7 +30,7 @@ test('XmlSigner should not contain newlines, carriage returns or tabs', function
 });
 
 test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', function () {
-    $builder = new DpsXmlBuilder();
+    $builder = new DpsXmlBuilder;
     $dpsData = new DpsData([
         'versao' => '1.00',
         'infDPS' => [
@@ -43,7 +43,7 @@ test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', func
             'dCompet' => '2023-01-01',
             'tpEmit' => 1,
             'cLocEmi' => '3550308',
-        ]
+        ],
     ]);
 
     $xml = $builder->build($dpsData);
@@ -54,7 +54,7 @@ test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', func
 });
 
 test('NfseXmlBuilder should not contain newlines, carriage returns or tabs', function () {
-    $builder = new NfseXmlBuilder();
+    $builder = new NfseXmlBuilder;
     $nfseData = new NfseData([
         'versao' => '1.00',
         'infNFSe' => [
@@ -67,7 +67,7 @@ test('NfseXmlBuilder should not contain newlines, carriage returns or tabs', fun
             'tpEmis' => 1,
             'procEmi' => 1,
             'verAplic' => '1.0',
-        ]
+        ],
     ]);
 
     $xml = $builder->build($nfseData);
@@ -78,7 +78,7 @@ test('NfseXmlBuilder should not contain newlines, carriage returns or tabs', fun
 });
 
 test('EventosXmlBuilder should not contain newlines, carriage returns or tabs', function () {
-    $builder = new EventosXmlBuilder();
+    $builder = new EventosXmlBuilder;
     $eventoData = new PedRegEventoData([
         'versao' => '1.00',
         'infPedReg' => [
@@ -91,9 +91,9 @@ test('EventosXmlBuilder should not contain newlines, carriage returns or tabs', 
             'e101101' => [
                 'xDesc' => 'Cancelamento',
                 'cMotivo' => '1',
-                'xMotivo' => 'Erro de preenchimento'
-            ]
-        ]
+                'xMotivo' => 'Erro de preenchimento',
+            ],
+        ],
     ]);
 
     $xml = $builder->buildPedRegEvento($eventoData);

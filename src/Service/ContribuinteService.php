@@ -10,8 +10,8 @@ use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
 use Nfse\Signer\Certificate;
-use Nfse\Signer\XmlSigner;
 use Nfse\Signer\SignerInterface;
+use Nfse\Signer\XmlSigner;
 use Nfse\Xml\DpsXmlBuilder;
 use Nfse\Xml\NfseXmlParser;
 

@@ -22,9 +22,10 @@ it('removes newlines from signed xml before emission', function () {
     $adnClientMock = test()->createMock(AdnClient::class);
 
     // Create a partial mock or subclass to override createSigner
-    $service = new class($context) extends ContribuinteService {
+    $service = new class($context) extends ContribuinteService
+    {
         public $signerMock;
-        
+
         protected function createSigner(Certificate $certificate): SignerInterface
         {
             return $this->signerMock;
@@ -35,15 +36,15 @@ it('removes newlines from signed xml before emission', function () {
     $reflection = new ReflectionClass(ContribuinteService::class);
     $sefinProperty = $reflection->getProperty('sefinClient');
     $sefinProperty->setValue($service, $sefinClientMock);
-    
+
     $adnProperty = $reflection->getProperty('adnClient');
     $adnProperty->setValue($service, $adnClientMock);
 
     // Setup the mock signer to return XML WITHOUT newlines (matching real XmlSigner behavior)
-    $signedXmlWithoutNewlines = "<SignedXML><Content>Test</Content></SignedXML>";
+    $signedXmlWithoutNewlines = '<SignedXML><Content>Test</Content></SignedXML>';
     $signerMock = test()->createMock(SignerInterface::class);
     $signerMock->method('sign')->willReturn($signedXmlWithoutNewlines);
-    
+
     $service->signerMock = $signerMock;
 
     // Setup input data
@@ -78,12 +79,12 @@ it('removes newlines from signed xml before emission', function () {
         ->method('emitirNfse')
         ->with(test()->callback(function ($payload) use ($signedXmlWithoutNewlines) {
             $decoded = gzdecode(base64_decode($payload));
-            
+
             // Check if newlines are present
             $hasNewlines = strpos($decoded, "\n") !== false || strpos($decoded, "\r") !== false;
-            
+
             // We expect NO newlines and the decoded content should match
-            return !$hasNewlines && $decoded === $signedXmlWithoutNewlines;
+            return ! $hasNewlines && $decoded === $signedXmlWithoutNewlines;
         }))
         ->willReturn($responseDto);
 

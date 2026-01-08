@@ -2,8 +2,8 @@
 
 namespace Nfse\Xml;
 
-use Nfse\Dto\Nfse\NfseData;
 use Exception;
+use Nfse\Dto\Nfse\NfseData;
 
 class NfseXmlParser
 {
@@ -11,17 +11,17 @@ class NfseXmlParser
     {
         // Clean up the XML string
         $xml = trim($xml);
-        
+
         // Try to detect if the XML has double UTF-8 encoding
         // This happens when the SEFIN API returns XML that was already UTF-8 encoded
         // and then got encoded again during transmission
         $hasDoubleEncoding = $this->detectDoubleUtf8Encoding($xml);
-        
+
         if ($hasDoubleEncoding) {
             // Decode once to fix the double encoding
             $xml = utf8_decode($xml);
         }
-        
+
         // Load with proper encoding options
         $simpleXml = simplexml_load_string(
             $xml,
@@ -42,7 +42,7 @@ class NfseXmlParser
 
     /**
      * Detect if the XML has double UTF-8 encoding
-     * 
+     *
      * This checks for the pattern where UTF-8 multi-byte characters are double-encoded
      * For example: "ç" (0xC3 0xA7) becomes "Ã§" (0xC3 0x83 0xC2 0xA7)
      */

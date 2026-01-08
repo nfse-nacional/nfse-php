@@ -2,12 +2,12 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Nfse\Enums\AmbienteGerador;
 use Nfse\Enums\ProcessoEmissao;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Nfse\Dto\Dto;
 
 class InfNfseData extends Dto
 {

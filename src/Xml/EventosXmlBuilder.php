@@ -54,6 +54,7 @@ class EventosXmlBuilder
         $root->appendChild($inf);
 
         $xml = $this->dom->saveXML($this->dom->documentElement, LIBXML_NOXMLDECL);
+
         return str_replace(["\n", "\r", "\t"], '', $xml);
     }
 

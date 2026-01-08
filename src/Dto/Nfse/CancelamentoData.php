@@ -2,8 +2,8 @@
 
 namespace Nfse\Dto\Nfse;
 
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Nfse\Dto\Dto;
+use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class CancelamentoData extends Dto
 {

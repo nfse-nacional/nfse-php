@@ -18,7 +18,7 @@ $inf->appendChild($el);
 
 $xml = $dom->saveXML();
 
-echo "Generated XML:\n" . $xml . "\n";
+echo "Generated XML:\n".$xml."\n";
 
 $simpleXml = simplexml_load_string($xml);
 $json = json_encode($simpleXml);

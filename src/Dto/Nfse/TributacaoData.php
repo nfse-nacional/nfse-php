@@ -48,6 +48,12 @@ class TributacaoData extends Dto
     public ?TipoRetencaoIssqn $tipoRetencaoIssqn = null;
 
     /**
+     * Alíquota do ISSQN.
+     */
+    #[MapFrom('tribMun.pAliq')]
+    public ?float $aliquota = null;
+
+    /**
      * Suspensão da exigibilidade do ISSQN.
      * 1 - Suspenso por decisão judicial
      * 2 - Suspenso por decisão administrativa

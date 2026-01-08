@@ -102,7 +102,7 @@ XML;
     expect($infNfse->nomeLocalIncidencia)->toBe('VARZEA ALEGRE');
     expect($infNfse->descricaoTributacaoNacional)->toBe('Enfermagem...');
     expect($infNfse->descricaoTributacaoMunicipal)->toBe('04.06 - Enfermagem...');
-    expect($infNfse->codigoStatus)->toBe(100);
+    expect($infNfse->codigoStatus)->toBe(\Nfse\Enums\CodigoStatus::NfseGerada);
     expect($infNfse->numeroDfse)->toBe('987654321');
 
     // Validar EmitenteData

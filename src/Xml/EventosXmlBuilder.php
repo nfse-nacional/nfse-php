@@ -13,10 +13,10 @@ class EventosXmlBuilder
     public function buildPedRegEvento(PedRegEventoData $data): string
     {
         $this->dom = new DOMDocument('1.0', 'UTF-8');
-        $this->dom->formatOutput = true;
+        $this->dom->formatOutput = false;
 
         $root = $this->dom->createElementNS('http://www.sped.fazenda.gov.br/nfse', 'pedRegEvento');
-        $root->setAttribute('versao', $data->versao);
+        $root->setAttribute('versao', (string) $data->versao);
         $this->dom->appendChild($root);
 
         $inf = $this->dom->createElement('infPedReg');
@@ -53,7 +53,8 @@ class EventosXmlBuilder
 
         $root->appendChild($inf);
 
-        return $this->dom->saveXML($this->dom->documentElement, LIBXML_NOXMLDECL);
+        $xml = $this->dom->saveXML($this->dom->documentElement, LIBXML_NOXMLDECL);
+        return str_replace(["\n", "\r", "\t"], '', $xml);
     }
 
     private function appendElement(DOMElement $parent, string $name, ?string $value): void

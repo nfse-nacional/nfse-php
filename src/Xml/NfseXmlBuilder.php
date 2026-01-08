@@ -24,20 +24,21 @@ class NfseXmlBuilder
     public function build(NfseData $nfse): string
     {
         $this->dom = new DOMDocument('1.0', 'UTF-8');
-        $this->dom->formatOutput = true;
+        $this->dom->formatOutput = false;
 
         $root = $this->dom->createElementNS('http://www.sped.fazenda.gov.br/nfse', 'NFSe');
-        $root->setAttribute('versao', $nfse->versao);
+        $root->setAttribute('versao', (string) $nfse->versao);
         $this->dom->appendChild($root);
 
         $infNfse = $this->dom->createElement('infNFSe');
-        $infNfse->setAttribute('Id', $nfse->infNfse->id);
-        $infNfse->setAttribute('versao', $nfse->versao);
+        $infNfse->setAttribute('Id', (string) $nfse->infNfse->id);
+        $infNfse->setAttribute('versao', (string) $nfse->versao);
         $root->appendChild($infNfse);
 
         $this->buildInfNfse($infNfse, $nfse->infNfse);
 
-        return $this->dom->saveXML();
+        $xml = $this->dom->saveXML();
+        return str_replace(["\n", "\r", "\t"], '', $xml);
     }
 
     private function buildInfNfse(DOMElement $parent, InfNfseData $data): void

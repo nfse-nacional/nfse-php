@@ -66,10 +66,14 @@ class XmlSigner implements SignerInterface
             $canonical
         );
 
-        $signedXml = $dom->saveXML();
-        
-        // Remove quebras de linha que podem causar problemas em alguns municípios
-        return str_replace(["\r", "\n"], '', $signedXml);
+        $xml = $dom->saveXML();
+        $xml = str_replace([
+            "\n",
+            "\r",
+            "\t",
+        ], "", $xml);
+
+        return $xml;
     }
 
     private function createSignature(

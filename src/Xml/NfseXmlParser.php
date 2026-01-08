@@ -17,6 +17,9 @@ class NfseXmlParser
         // Remove invalid characters
         $xml = iconv('UTF-8', 'UTF-8//IGNORE', $xml);
 
+        // Remove escaped quotes if present (e.g. from JSON dumps)
+        $xml = str_replace('\"', '"', $xml);
+
         // 2. Parse XML
         $useInternal = libxml_use_internal_errors(true);
         $simpleXml = simplexml_load_string(

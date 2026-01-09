@@ -1,438 +1,426 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - ADN Município",
-    "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a distribuição de documentos fiscais para os municípios.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n\n  # Padrões técnicos\n A API NFS-e utiliza a arquitetura RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
-    "version": "v1",
-    "x-logo": {
-      "url": "/municipios/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "paths": {
-    "/DFe/{NSU}": {
-      "get": {
-        "tags": [
-          "DistribuicaoMunicipio"
-        ],
-        "summary": "Retorna um lote contendo até 100 (cem) Documentos Fiscais de Serviço a partir do NSU informado (inclusive)",
-        "parameters": [
-          {
-            "name": "NSU",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "tipoNSU",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/TipoNSU"
-            }
-          },
-          {
-            "name": "lote",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
-            }
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - ADN Município",
+        "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a distribuição de documentos fiscais para os municípios.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n\n  # Padrões técnicos\n A API NFS-e utiliza a arquitetura RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
+        "version": "v1",
+        "x-logo": {
+            "url": "/municipios/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
         }
-      }
     },
-    "/NFSe/{ChaveAcesso}/Eventos": {
-      "get": {
-        "tags": [
-          "DistribuicaoMunicipio"
-        ],
-        "summary": "Retorna os Documentos Fiscais de Serviço do tipo Evento vinculados à chave de acesso informada",
-        "parameters": [
-          {
-            "name": "ChaveAcesso",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+    "paths": {
+        "/DFe/{NSU}": {
+            "get": {
+                "tags": ["DistribuicaoMunicipio"],
+                "summary": "Retorna um lote contendo até 100 (cem) Documentos Fiscais de Serviço a partir do NSU informado (inclusive)",
+                "parameters": [
+                    {
+                        "name": "NSU",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "tipoNSU",
+                        "in": "query",
+                        "schema": {
+                            "$ref": "#/components/schemas/TipoNSU"
+                        }
+                    },
+                    {
+                        "name": "lote",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean",
+                            "default": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+        },
+        "/NFSe/{ChaveAcesso}/Eventos": {
+            "get": {
+                "tags": ["DistribuicaoMunicipio"],
+                "summary": "Retorna os Documentos Fiscais de Serviço do tipo Evento vinculados à chave de acesso informada",
+                "parameters": [
+                    {
+                        "name": "ChaveAcesso",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoNSUResponse"
-                }
-              }
-            }
-          }
         }
-      }
+    },
+    "components": {
+        "schemas": {
+            "TipoNSU": {
+                "enum": ["RECEPCAO", "DISTRIBUICAO", "GERAL", "MEI"],
+                "type": "string"
+            },
+            "StatusProcessamentoDistribuicao": {
+                "enum": [
+                    "REJEICAO",
+                    "NENHUM_DOCUMENTO_LOCALIZADO",
+                    "DOCUMENTOS_LOCALIZADOS"
+                ],
+                "type": "string"
+            },
+            "TipoDocumentoRequisicao": {
+                "enum": [
+                    "NENHUM",
+                    "DPS",
+                    "PEDIDO_REGISTRO_EVENTO",
+                    "NFSE",
+                    "EVENTO",
+                    "CNC"
+                ],
+                "type": "string"
+            },
+            "TipoEvento": {
+                "enum": [
+                    "CANCELAMENTO",
+                    "SOLICITACAO_CANCELAMENTO_ANALISE_FISCAL",
+                    "CANCELAMENTO_POR_SUBSTITUICAO",
+                    "CANCELAMENTO_DEFERIDO_ANALISE_FISCAL",
+                    "CANCELAMENTO_INDEFERIDO_ANALISE_FISCAL",
+                    "CONFIRMACAO_PRESTADOR",
+                    "REJEICAO_PRESTADOR",
+                    "CONFIRMACAO_TOMADOR",
+                    "REJEICAO_TOMADOR",
+                    "CONFIRMACAO_INTERMEDIARIO",
+                    "REJEICAO_INTERMEDIARIO",
+                    "CONFIRMACAO_TACITA",
+                    "ANULACAO_REJEICAO",
+                    "CANCELAMENTO_POR_OFICIO",
+                    "BLOQUEIO_POR_OFICIO",
+                    "DESBLOQUEIO_POR_OFICIO",
+                    "INCLUSAO_NFSE_DAN",
+                    "TRIBUTOS_NFSE_RECOLHIDOS"
+                ],
+                "type": "string"
+            },
+            "DistribuicaoNSU": {
+                "type": "object",
+                "properties": {
+                    "NSU": {
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "ChaveAcesso": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "TipoDocumento": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TipoDocumentoRequisicao"
+                            }
+                        ]
+                    },
+                    "TipoEvento": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TipoEvento"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "ArquivoXml": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraGeracao": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Enum": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "MensagemProcessamento": {
+                "type": "object",
+                "properties": {
+                    "Mensagem": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Enum"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "Parametros": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "Codigo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Descricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Complemento": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TipoAmbiente": {
+                "enum": ["PRODUCAO", "HOMOLOGACAO"],
+                "type": "string"
+            },
+            "LoteDistribuicaoNSUResponse": {
+                "type": "object",
+                "properties": {
+                    "StatusProcessamento": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusProcessamentoDistribuicao"
+                            }
+                        ]
+                    },
+                    "LoteDFe": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DistribuicaoNSU"
+                        },
+                        "nullable": true
+                    },
+                    "Alertas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "Erros": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "TipoAmbiente": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TipoAmbiente"
+                            }
+                        ]
+                    },
+                    "VersaoAplicativo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
     }
-  },
-  "components": {
-    "schemas": {
-      "TipoNSU": {
-        "enum": [
-          "RECEPCAO",
-          "DISTRIBUICAO",
-          "GERAL",
-          "MEI"
-        ],
-        "type": "string"
-      },
-      "StatusProcessamentoDistribuicao": {
-        "enum": [
-          "REJEICAO",
-          "NENHUM_DOCUMENTO_LOCALIZADO",
-          "DOCUMENTOS_LOCALIZADOS"
-        ],
-        "type": "string"
-      },
-      "TipoDocumentoRequisicao": {
-        "enum": [
-          "NENHUM",
-          "DPS",
-          "PEDIDO_REGISTRO_EVENTO",
-          "NFSE",
-          "EVENTO",
-          "CNC"
-        ],
-        "type": "string"
-      },
-      "TipoEvento": {
-        "enum": [
-          "CANCELAMENTO",
-          "SOLICITACAO_CANCELAMENTO_ANALISE_FISCAL",
-          "CANCELAMENTO_POR_SUBSTITUICAO",
-          "CANCELAMENTO_DEFERIDO_ANALISE_FISCAL",
-          "CANCELAMENTO_INDEFERIDO_ANALISE_FISCAL",
-          "CONFIRMACAO_PRESTADOR",
-          "REJEICAO_PRESTADOR",
-          "CONFIRMACAO_TOMADOR",
-          "REJEICAO_TOMADOR",
-          "CONFIRMACAO_INTERMEDIARIO",
-          "REJEICAO_INTERMEDIARIO",
-          "CONFIRMACAO_TACITA",
-          "ANULACAO_REJEICAO",
-          "CANCELAMENTO_POR_OFICIO",
-          "BLOQUEIO_POR_OFICIO",
-          "DESBLOQUEIO_POR_OFICIO",
-          "INCLUSAO_NFSE_DAN",
-          "TRIBUTOS_NFSE_RECOLHIDOS"
-        ],
-        "type": "string"
-      },
-      "DistribuicaoNSU": {
-        "type": "object",
-        "properties": {
-          "NSU": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "ChaveAcesso": {
-            "type": "string",
-            "nullable": true
-          },
-          "TipoDocumento": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TipoDocumentoRequisicao"
-              }
-            ]
-          },
-          "TipoEvento": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TipoEvento"
-              }
-            ],
-            "nullable": true
-          },
-          "ArquivoXml": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraGeracao": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Enum": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "MensagemProcessamento": {
-        "type": "object",
-        "properties": {
-          "Mensagem": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Enum"
-              }
-            ],
-            "nullable": true
-          },
-          "Parametros": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "Codigo": {
-            "type": "string",
-            "nullable": true
-          },
-          "Descricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "Complemento": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TipoAmbiente": {
-        "enum": [
-          "PRODUCAO",
-          "HOMOLOGACAO"
-        ],
-        "type": "string"
-      },
-      "LoteDistribuicaoNSUResponse": {
-        "type": "object",
-        "properties": {
-          "StatusProcessamento": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StatusProcessamentoDistribuicao"
-              }
-            ]
-          },
-          "LoteDFe": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DistribuicaoNSU"
-            },
-            "nullable": true
-          },
-          "Alertas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "Erros": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "TipoAmbiente": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TipoAmbiente"
-              }
-            ]
-          },
-          "VersaoAplicativo": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      }
-    }
-  }
 }

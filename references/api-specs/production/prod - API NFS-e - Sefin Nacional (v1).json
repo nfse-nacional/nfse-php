@@ -1,1 +1,609 @@
-{"swagger":"2.0","info":{"version":"v1","title":"API NFS-e - Sefin Nacional","description":"<br/><p><strong>Protocolo de comunicação:</strong> TLS 1.0, TLS 1.1 e TLS 1.2 com autenticação mútua</p><br/>\r\n                        <p><strong>Formato para troca de mensagens:</strong> JSON</p><br/>\r\n                        <p><strong>Formato dos documentos da NFS-e:</strong> XML 1.0 (https://www.w3.org/TR/REC-xml)</p><br/>\r\n                        <p><strong>Codificação de caracteres:</strong> UTF-8</p><br/>\r\n                        <p><strong>Certificado digital:</strong> Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ ou CPF, com \"Autenticação Cliente\"</p><br/>\r\n                        <p><strong>Padrão de assinatura dos documentos XML:</strong> XMLDSIG (https://www.w3.org/TR/xmldsig-core/)</p><br/>\r\n                        <p><strong>Padrão de compactação dos documentos XML para troca de mensagens:</strong> GZip com representação base64binary</p><br/>","x-logo":{"url":"https://sefin.nfse.gov.br/SefinNacional//img/logo_nfse_vertical.png","altText":"Logo da API"}},"host":"sefin.nfse.gov.br","basePath":"/SefinNacional/","schemes":["http"],"paths":{"/DANFSe":{"get":{"tags":["DANFSe"],"summary":"Este serviço foi movido para https://adn.producaorestrita.nfse.gov.br/danfse/docs/index.html","operationId":"DANFSe_Get","consumes":[],"produces":["application/json"],"responses":{"200":{"description":"OK","schema":{"type":"object"}},"501":{"description":"Este serviço foi movido para o novo endereço"}}}},"/decisao-judicial/nfse":{"post":{"tags":["NFS-e com indicativo de decisão judicial"],"summary":"Recepção de NFSe gerada de acordo com a decisão judicial.","operationId":"NFSeByPass_Post","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"nfsePostRequest","in":"body","required":true,"schema":{"$ref":"#/definitions/NFSeBypassPostRequest"}}],"responses":{"201":{"description":"A NFS-e foi com indicativo de decisão judicial foi recebida com sucesso","schema":{"$ref":"#/definitions/NFSePostResponseSucesso"}},"400":{"description":"Não foi possível recepcionar a NFS-e com indicativo de decisão judicial","schema":{"$ref":"#/definitions/NFSePostResponseErro"}},"403":{"description":"Certificado digital da transmissão inválido ou fora dos padrões da NFS-e","schema":{"$ref":"#/definitions/NFSePostResponseErro"}},"500":{"description":"Falha durante o processamento da NFSe com indicativo de decisão judicial","schema":{"$ref":"#/definitions/NFSePostResponseErro"}}}}},"/dps/{id}":{"get":{"tags":["DPS"],"summary":"Retorna a chave de acesso da NFS-e a partir do identificador do DPS.","operationId":"Dps_Get","consumes":[],"produces":["application/json"],"parameters":[{"name":"id","in":"path","description":"Identificador do DPS","required":true,"type":"string"}],"responses":{"200":{"description":"Foi gerada uma NFS-e com o identificador de DPS informado","schema":{"$ref":"#/definitions/DpsGetResponse"}},"400":{"description":"Identificador de DPS inválido","schema":{"$ref":"#/definitions/ResponseErro"}},"404":{"description":"Não foi gerada uma NFS-e com o identificador de DPS informado","schema":{"$ref":"#/definitions/ResponseErro"}}}},"head":{"tags":["DPS"],"summary":"Verifica se uma NFS-e foi emitida a partir do Id do DPS","operationId":"Dps_Head","consumes":[],"produces":["application/json"],"parameters":[{"name":"id","in":"path","description":"Identificador do DPS","required":true,"type":"string"}],"responses":{"200":{"description":"Identificador do DPS encontrado"},"400":{"description":"Identificador inválido"},"404":{"description":"Identificador do DPS não encontrado"}}}},"/nfse":{"post":{"tags":["NFS-e"],"summary":"Recepciona a DPS e Gera a NFS-e de forma síncrona.","operationId":"NFSe_Post","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"nfsePostRequest","in":"body","description":"Estrutura contendo um DPS compactado no padrão gZip (base64Binary)","required":true,"schema":{"$ref":"#/definitions/NFSePostRequest"}}],"responses":{"201":{"description":"A NFS-e foi criada com sucesso","schema":{"$ref":"#/definitions/NFSePostResponseSucesso"}},"400":{"description":"Não foi possível criar a NFS-e","schema":{"$ref":"#/definitions/NFSePostResponseErro"}},"403":{"description":"Certificado digital da transmissão inválido ou fora dos padrões da NFS-e","schema":{"$ref":"#/definitions/NFSePostResponseErro"}},"500":{"description":"Falha durante o processamento do DPS","schema":{"$ref":"#/definitions/NFSePostResponseErro"}}}}},"/nfse/{chaveAcesso}":{"get":{"tags":["NFS-e"],"summary":"Retorna a NFS-e a partir da consulta pela chave de acesso correspondente (50 posições).","operationId":"NFSe_Get","consumes":[],"produces":["application/json"],"parameters":[{"name":"chaveAcesso","in":"path","description":"","required":true,"type":"string"}],"responses":{"200":{"description":"NFS-e encontrada","schema":{"$ref":"#/definitions/NFSeGetResponseSucesso"}},"400":{"description":"A chave de acesso consultada deve conter 50 números.","schema":{"$ref":"#/definitions/ResponseErro"}},"401":{"description":"Não foi possível obter o certificado de cliente.","schema":{"$ref":"#/definitions/ResponseErro"}},"403":{"description":"Consulta desta NFS-e não é permitida para este usuário.","schema":{"$ref":"#/definitions/ResponseErro"}},"404":{"description":"Chave de acesso não encontrada.","schema":{"$ref":"#/definitions/ResponseErro"}}}}},"/nfse/{chaveAcesso}/eventos":{"post":{"tags":["Eventos"],"summary":"Recepciona a DPS e Gera a NFS-e de forma síncrona","operationId":"Eventos_Post","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"eventosPostRequest","in":"body","description":"Estrutura contendo o pedido de registro de evento compactado\r\n            no padrão GZip com representação base64binary","required":true,"schema":{"$ref":"#/definitions/EventosPostRequest"}},{"name":"chaveAcesso","in":"path","required":true,"type":"string"}],"responses":{"201":{"description":"O evento da NFS-e foi registrado com sucesso","schema":{"$ref":"#/definitions/EventosPostResponseSucesso"}},"400":{"description":"Não foi possível registrar o pedido de evento de NFS-e por violar alguma regra de negócio","schema":{"$ref":"#/definitions/ResponseErro"}},"401":{"description":"Usuário não tem permissão para acessar os eventos","schema":{"$ref":"#/definitions/ResponseErro"}}}}},"/nfse/{chaveAcesso}/eventos/{tipoEvento}/{numSeqEvento}":{"get":{"tags":["Eventos"],"summary":"Retorna a NFS-e a partir da consulta pela chave de acesso correspondente (50 posições)","operationId":"Eventos_Get","consumes":[],"produces":["application/json"],"parameters":[{"name":"chaveAcesso","in":"path","description":"Chave de acesso","required":true,"type":"string"},{"name":"tipoEvento","in":"path","description":"Tipo de evento","required":true,"type":"integer","format":"int32","enum":[101101,101103,105102,105104,105105,202201,202205,203202,203206,204203,204207,205204,205208,305101,305102,305103,907201,907209]},{"name":"numSeqEvento","in":"path","description":"Número sequencial do evento. Se informado, os demais parâmetros são obrigatórios","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Eventos encontrados","schema":{"$ref":"#/definitions/EventosPostResponseSucesso"}},"401":{"description":"Usuário não tem permissão para acessar os eventos","schema":{"$ref":"#/definitions/ResponseErro"}},"404":{"description":"Nenhum evento encontrado para a NFS-e","schema":{"$ref":"#/definitions/ResponseErro"}},"422":{"description":"A requisição violou alguma regra de negócio","schema":{"$ref":"#/definitions/ResponseErro"}}}}},"/ParametrosMunicipais":{"get":{"tags":["Parâmetros Municipais"],"summary":"Este serviço foi movido para https://adn.producaorestrita.nfse.gov.br/parametrizacao/docs/index.html","operationId":"ParametrosMunicipais_Get","consumes":[],"produces":["application/json"],"responses":{"200":{"description":"OK","schema":{"type":"object"}},"501":{"description":"Este serviço foi movido para o novo endereço"}}}}},"definitions":{"DpsGetResponse":{"description":"Estrutura de resposta para consulta de DPS","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","idDps","chaveAcesso"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"idDps":{"description":"Identificador do DPS","type":"string"},"chaveAcesso":{"description":"Chave de acesso da NFS-e","type":"string"}}},"ResponseErro":{"description":"Estrutura de resposta padrão para erros","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","erro"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"erro":{"$ref":"#/definitions/MensagemProcessamento","description":"Erro de processamento do DPS"}}},"MensagemProcessamento":{"type":"object","properties":{"mensagem":{"type":"string"},"codigo":{"type":"string"},"descricao":{"type":"string"},"complemento":{"type":"string"}}},"EventosPostRequest":{"description":"Estrutura para requisição de pedido de registro de evento","required":["pedidoRegistroEventoXmlGZipB64"],"type":"object","properties":{"pedidoRegistroEventoXmlGZipB64":{"description":"Pedido de registro de evento no formato Xml compactado no padrão gZip (base64Binary)","type":"string"}}},"EventosPostResponseSucesso":{"description":"Estrutura de resposta de sucesso do processamento do pedido de registro de evento\r\ncontendo o evento no formato Xml compactado no padrão gZip(base64Binary)","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","eventoXmlGZipB64"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"eventoXmlGZipB64":{"description":"Evento no formato Xml compactado no padrão gZip (base64Binary)","type":"string"}}},"NFSePostRequest":{"description":"Estrutura para enviar o DPS para processamento síncrono","required":["dpsXmlGZipB64"],"type":"object","properties":{"dpsXmlGZipB64":{"description":"DPS compactado no padrão gZip (base64Binary)","type":"string"}}},"NFSePostResponseSucesso":{"description":"Estrutura para resposta de sucesso para a criação da NFS-e síncrona","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","idDps","chaveAcesso","nfseXmlGZipB64"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"idDps":{"description":"Identificador do DPS","type":"string","readOnly":true},"chaveAcesso":{"description":"Chave de acesso da NFS-e","type":"string","readOnly":true},"nfseXmlGZipB64":{"description":"NFS-e em formato Xml compactado no padrão gZip (base64Binary)","type":"string","readOnly":true},"alertas":{"description":"Alertas da NFS-e gerada","type":"array","items":{"$ref":"#/definitions/MensagemProcessamento"},"readOnly":true}}},"NFSePostResponseErro":{"description":"Estrutura para resposta de erro no processamento do DPS","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","erros"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"idDPS":{"description":"Id do DPS (se tiver conseguido capturar do Xml)","type":"string","readOnly":true},"erros":{"description":"Erro de processamento do DPS","type":"array","items":{"$ref":"#/definitions/MensagemProcessamento"},"readOnly":true}}},"NFSeGetResponseSucesso":{"description":"Estrutura de resposta para consulta de NFS-e","required":["tipoAmbiente","versaoAplicativo","dataHoraProcessamento","chaveAcesso","nfseXmlGZipB64"],"type":"object","properties":{"tipoAmbiente":{"format":"int32","description":"Tipo de ambiente (1-Produção | 2-Homologação)","enum":[1,2],"type":"integer"},"versaoAplicativo":{"description":"Versão do aplicativo que processou a requisição","type":"string"},"dataHoraProcessamento":{"format":"date-time","description":"Data e hora de processamento da requisição","type":"string","example":"2025-12-31T21:47:12.1202384-03:00"},"chaveAcesso":{"description":"Chave de acesso da NFS-e","type":"string"},"nfseXmlGZipB64":{"description":"NFS-e em formato Xml compactado no padrão gZip (base64Binary)","type":"string"}}},"NFSeBypassPostRequest":{"description":"Estrutura para enviar a NFSe com decisão judicial para processamento síncrono","type":"object","properties":{"xmlGZipB64":{"description":"Documento XML da NFSe compactado no padrão GZIP (base64Binary)","type":"string"}}}}}
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "API NFS-e - Sefin Nacional",
+        "description": "<br/><p><strong>Protocolo de comunicação:</strong> TLS 1.0, TLS 1.1 e TLS 1.2 com autenticação mútua</p><br/>\r\n                        <p><strong>Formato para troca de mensagens:</strong> JSON</p><br/>\r\n                        <p><strong>Formato dos documentos da NFS-e:</strong> XML 1.0 (https://www.w3.org/TR/REC-xml)</p><br/>\r\n                        <p><strong>Codificação de caracteres:</strong> UTF-8</p><br/>\r\n                        <p><strong>Certificado digital:</strong> Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ ou CPF, com \"Autenticação Cliente\"</p><br/>\r\n                        <p><strong>Padrão de assinatura dos documentos XML:</strong> XMLDSIG (https://www.w3.org/TR/xmldsig-core/)</p><br/>\r\n                        <p><strong>Padrão de compactação dos documentos XML para troca de mensagens:</strong> GZip com representação base64binary</p><br/>",
+        "x-logo": {
+            "url": "https://sefin.nfse.gov.br/SefinNacional//img/logo_nfse_vertical.png",
+            "altText": "Logo da API"
+        }
+    },
+    "host": "sefin.nfse.gov.br",
+    "basePath": "/SefinNacional/",
+    "schemes": ["http"],
+    "paths": {
+        "/DANFSe": {
+            "get": {
+                "tags": ["DANFSe"],
+                "summary": "Este serviço foi movido para https://adn.producaorestrita.nfse.gov.br/danfse/docs/index.html",
+                "operationId": "DANFSe_Get",
+                "consumes": [],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": { "type": "object" }
+                    },
+                    "501": {
+                        "description": "Este serviço foi movido para o novo endereço"
+                    }
+                }
+            }
+        },
+        "/decisao-judicial/nfse": {
+            "post": {
+                "tags": ["NFS-e com indicativo de decisão judicial"],
+                "summary": "Recepção de NFSe gerada de acordo com a decisão judicial.",
+                "operationId": "NFSeByPass_Post",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "nfsePostRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NFSeBypassPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "A NFS-e foi com indicativo de decisão judicial foi recebida com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseSucesso"
+                        }
+                    },
+                    "400": {
+                        "description": "Não foi possível recepcionar a NFS-e com indicativo de decisão judicial",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    },
+                    "403": {
+                        "description": "Certificado digital da transmissão inválido ou fora dos padrões da NFS-e",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    },
+                    "500": {
+                        "description": "Falha durante o processamento da NFSe com indicativo de decisão judicial",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    }
+                }
+            }
+        },
+        "/dps/{id}": {
+            "get": {
+                "tags": ["DPS"],
+                "summary": "Retorna a chave de acesso da NFS-e a partir do identificador do DPS.",
+                "operationId": "Dps_Get",
+                "consumes": [],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do DPS",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Foi gerada uma NFS-e com o identificador de DPS informado",
+                        "schema": { "$ref": "#/definitions/DpsGetResponse" }
+                    },
+                    "400": {
+                        "description": "Identificador de DPS inválido",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "404": {
+                        "description": "Não foi gerada uma NFS-e com o identificador de DPS informado",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    }
+                }
+            },
+            "head": {
+                "tags": ["DPS"],
+                "summary": "Verifica se uma NFS-e foi emitida a partir do Id do DPS",
+                "operationId": "Dps_Head",
+                "consumes": [],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do DPS",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Identificador do DPS encontrado" },
+                    "400": { "description": "Identificador inválido" },
+                    "404": {
+                        "description": "Identificador do DPS não encontrado"
+                    }
+                }
+            }
+        },
+        "/nfse": {
+            "post": {
+                "tags": ["NFS-e"],
+                "summary": "Recepciona a DPS e Gera a NFS-e de forma síncrona.",
+                "operationId": "NFSe_Post",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "nfsePostRequest",
+                        "in": "body",
+                        "description": "Estrutura contendo um DPS compactado no padrão gZip (base64Binary)",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/NFSePostRequest" }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "A NFS-e foi criada com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseSucesso"
+                        }
+                    },
+                    "400": {
+                        "description": "Não foi possível criar a NFS-e",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    },
+                    "403": {
+                        "description": "Certificado digital da transmissão inválido ou fora dos padrões da NFS-e",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    },
+                    "500": {
+                        "description": "Falha durante o processamento do DPS",
+                        "schema": {
+                            "$ref": "#/definitions/NFSePostResponseErro"
+                        }
+                    }
+                }
+            }
+        },
+        "/nfse/{chaveAcesso}": {
+            "get": {
+                "tags": ["NFS-e"],
+                "summary": "Retorna a NFS-e a partir da consulta pela chave de acesso correspondente (50 posições).",
+                "operationId": "NFSe_Get",
+                "consumes": [],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "chaveAcesso",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "NFS-e encontrada",
+                        "schema": {
+                            "$ref": "#/definitions/NFSeGetResponseSucesso"
+                        }
+                    },
+                    "400": {
+                        "description": "A chave de acesso consultada deve conter 50 números.",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "401": {
+                        "description": "Não foi possível obter o certificado de cliente.",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "403": {
+                        "description": "Consulta desta NFS-e não é permitida para este usuário.",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "404": {
+                        "description": "Chave de acesso não encontrada.",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    }
+                }
+            }
+        },
+        "/nfse/{chaveAcesso}/eventos": {
+            "post": {
+                "tags": ["Eventos"],
+                "summary": "Recepciona a DPS e Gera a NFS-e de forma síncrona",
+                "operationId": "Eventos_Post",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "eventosPostRequest",
+                        "in": "body",
+                        "description": "Estrutura contendo o pedido de registro de evento compactado\r\n            no padrão GZip com representação base64binary",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/EventosPostRequest" }
+                    },
+                    {
+                        "name": "chaveAcesso",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "O evento da NFS-e foi registrado com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/EventosPostResponseSucesso"
+                        }
+                    },
+                    "400": {
+                        "description": "Não foi possível registrar o pedido de evento de NFS-e por violar alguma regra de negócio",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "401": {
+                        "description": "Usuário não tem permissão para acessar os eventos",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    }
+                }
+            }
+        },
+        "/nfse/{chaveAcesso}/eventos/{tipoEvento}/{numSeqEvento}": {
+            "get": {
+                "tags": ["Eventos"],
+                "summary": "Retorna a NFS-e a partir da consulta pela chave de acesso correspondente (50 posições)",
+                "operationId": "Eventos_Get",
+                "consumes": [],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "chaveAcesso",
+                        "in": "path",
+                        "description": "Chave de acesso",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tipoEvento",
+                        "in": "path",
+                        "description": "Tipo de evento",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "enum": [
+                            101101, 101103, 105102, 105104, 105105, 202201,
+                            202205, 203202, 203206, 204203, 204207, 205204,
+                            205208, 305101, 305102, 305103, 907201, 907209
+                        ]
+                    },
+                    {
+                        "name": "numSeqEvento",
+                        "in": "path",
+                        "description": "Número sequencial do evento. Se informado, os demais parâmetros são obrigatórios",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eventos encontrados",
+                        "schema": {
+                            "$ref": "#/definitions/EventosPostResponseSucesso"
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não tem permissão para acessar os eventos",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "404": {
+                        "description": "Nenhum evento encontrado para a NFS-e",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    },
+                    "422": {
+                        "description": "A requisição violou alguma regra de negócio",
+                        "schema": { "$ref": "#/definitions/ResponseErro" }
+                    }
+                }
+            }
+        },
+        "/ParametrosMunicipais": {
+            "get": {
+                "tags": ["Parâmetros Municipais"],
+                "summary": "Este serviço foi movido para https://adn.producaorestrita.nfse.gov.br/parametrizacao/docs/index.html",
+                "operationId": "ParametrosMunicipais_Get",
+                "consumes": [],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": { "type": "object" }
+                    },
+                    "501": {
+                        "description": "Este serviço foi movido para o novo endereço"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DpsGetResponse": {
+            "description": "Estrutura de resposta para consulta de DPS",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "idDps",
+                "chaveAcesso"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "idDps": {
+                    "description": "Identificador do DPS",
+                    "type": "string"
+                },
+                "chaveAcesso": {
+                    "description": "Chave de acesso da NFS-e",
+                    "type": "string"
+                }
+            }
+        },
+        "ResponseErro": {
+            "description": "Estrutura de resposta padrão para erros",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "erro"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "erro": {
+                    "$ref": "#/definitions/MensagemProcessamento",
+                    "description": "Erro de processamento do DPS"
+                }
+            }
+        },
+        "MensagemProcessamento": {
+            "type": "object",
+            "properties": {
+                "mensagem": { "type": "string" },
+                "codigo": { "type": "string" },
+                "descricao": { "type": "string" },
+                "complemento": { "type": "string" }
+            }
+        },
+        "EventosPostRequest": {
+            "description": "Estrutura para requisição de pedido de registro de evento",
+            "required": ["pedidoRegistroEventoXmlGZipB64"],
+            "type": "object",
+            "properties": {
+                "pedidoRegistroEventoXmlGZipB64": {
+                    "description": "Pedido de registro de evento no formato Xml compactado no padrão gZip (base64Binary)",
+                    "type": "string"
+                }
+            }
+        },
+        "EventosPostResponseSucesso": {
+            "description": "Estrutura de resposta de sucesso do processamento do pedido de registro de evento\r\ncontendo o evento no formato Xml compactado no padrão gZip(base64Binary)",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "eventoXmlGZipB64"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "eventoXmlGZipB64": {
+                    "description": "Evento no formato Xml compactado no padrão gZip (base64Binary)",
+                    "type": "string"
+                }
+            }
+        },
+        "NFSePostRequest": {
+            "description": "Estrutura para enviar o DPS para processamento síncrono",
+            "required": ["dpsXmlGZipB64"],
+            "type": "object",
+            "properties": {
+                "dpsXmlGZipB64": {
+                    "description": "DPS compactado no padrão gZip (base64Binary)",
+                    "type": "string"
+                }
+            }
+        },
+        "NFSePostResponseSucesso": {
+            "description": "Estrutura para resposta de sucesso para a criação da NFS-e síncrona",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "idDps",
+                "chaveAcesso",
+                "nfseXmlGZipB64"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "idDps": {
+                    "description": "Identificador do DPS",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "chaveAcesso": {
+                    "description": "Chave de acesso da NFS-e",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "nfseXmlGZipB64": {
+                    "description": "NFS-e em formato Xml compactado no padrão gZip (base64Binary)",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "alertas": {
+                    "description": "Alertas da NFS-e gerada",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/MensagemProcessamento" },
+                    "readOnly": true
+                }
+            }
+        },
+        "NFSePostResponseErro": {
+            "description": "Estrutura para resposta de erro no processamento do DPS",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "erros"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "idDPS": {
+                    "description": "Id do DPS (se tiver conseguido capturar do Xml)",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "erros": {
+                    "description": "Erro de processamento do DPS",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/MensagemProcessamento" },
+                    "readOnly": true
+                }
+            }
+        },
+        "NFSeGetResponseSucesso": {
+            "description": "Estrutura de resposta para consulta de NFS-e",
+            "required": [
+                "tipoAmbiente",
+                "versaoAplicativo",
+                "dataHoraProcessamento",
+                "chaveAcesso",
+                "nfseXmlGZipB64"
+            ],
+            "type": "object",
+            "properties": {
+                "tipoAmbiente": {
+                    "format": "int32",
+                    "description": "Tipo de ambiente (1-Produção | 2-Homologação)",
+                    "enum": [1, 2],
+                    "type": "integer"
+                },
+                "versaoAplicativo": {
+                    "description": "Versão do aplicativo que processou a requisição",
+                    "type": "string"
+                },
+                "dataHoraProcessamento": {
+                    "format": "date-time",
+                    "description": "Data e hora de processamento da requisição",
+                    "type": "string",
+                    "example": "2025-12-31T21:47:12.1202384-03:00"
+                },
+                "chaveAcesso": {
+                    "description": "Chave de acesso da NFS-e",
+                    "type": "string"
+                },
+                "nfseXmlGZipB64": {
+                    "description": "NFS-e em formato Xml compactado no padrão gZip (base64Binary)",
+                    "type": "string"
+                }
+            }
+        },
+        "NFSeBypassPostRequest": {
+            "description": "Estrutura para enviar a NFSe com decisão judicial para processamento síncrono",
+            "type": "object",
+            "properties": {
+                "xmlGZipB64": {
+                    "description": "Documento XML da NFSe compactado no padrão GZIP (base64Binary)",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

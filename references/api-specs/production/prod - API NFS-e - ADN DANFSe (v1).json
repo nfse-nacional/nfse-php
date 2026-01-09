@@ -1,54 +1,52 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - ADN DANFSe",
-    "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata DANFSe.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.",
-    "version": "v1",
-    "x-logo": {
-      "url": "/danfse/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "servers": [
-    {
-      "url": "/danfse"
-    }
-  ],
-  "paths": {
-    "/{chaveAcesso}": {
-      "get": {
-        "tags": [
-          "DANFSe"
-        ],
-        "summary": "Retorna o DANFSe de uma NFS-e a partir de sua chave de acesso.",
-        "parameters": [
-          {
-            "name": "chaveAcesso",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - ADN DANFSe",
+        "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata DANFSe.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.",
+        "version": "v1",
+        "x-logo": {
+            "url": "/danfse/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
         }
-      }
-    }
-  },
-  "components": { }
+    },
+    "servers": [
+        {
+            "url": "/danfse"
+        }
+    ],
+    "paths": {
+        "/{chaveAcesso}": {
+            "get": {
+                "tags": ["DANFSe"],
+                "summary": "Retorna o DANFSe de uma NFS-e a partir de sua chave de acesso.",
+                "parameters": [
+                    {
+                        "name": "chaveAcesso",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {}
 }

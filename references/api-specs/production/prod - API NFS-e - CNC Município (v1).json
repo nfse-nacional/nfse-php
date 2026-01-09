@@ -1,439 +1,790 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - CNC Município",
-    "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a distribuição do Cadastro Nacional de Contribuintes (CNC).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem consultar as informações complementares dos contribuintes sob sua gestão, recuperando informações sobre eles por meio de um arquivo XML específico para tal fim.\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Recepção do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
-    "version": "v1",
-    "x-logo": {
-      "url": "/cnc/municipio/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "servers": [
-    {
-      "url": "/cnc/municipio"
-    }
-  ],
-  "paths": {
-    "/cad/NSU": {
-      "get": {
-        "tags": [
-          "Distribuicao"
-        ],
-        "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes aos cadastros ou movimentações de contribuintes no CNC",
-        "parameters": [
-          {
-            "name": "NSUMovimento",
-            "in": "query",
-            "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação no CNC.",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "NSUCadastro",
-            "in": "query",
-            "description": "Numero sequencial único a partir do qual se deseja obter os documentos de cadastro no CNC.",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197528-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197628-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197711-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197784-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197855-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1197859-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197528-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197628-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197711-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197784-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197855-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1197859-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197528-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197628-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197711-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197784-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1197855-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1197859-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1197859-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197528-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197628-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197711-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197784-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197855-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1197859-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197528-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197628-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197711-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197784-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197855-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1201089-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1201089-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1201089-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1201089-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1201089-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - CNC Município",
+        "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a distribuição do Cadastro Nacional de Contribuintes (CNC).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem consultar as informações complementares dos contribuintes sob sua gestão, recuperando informações sobre eles por meio de um arquivo XML específico para tal fim.\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Recepção do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
+        "version": "v1",
+        "x-logo": {
+            "url": "/cnc/municipio/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
         }
-      }
     },
-    "/cad/{inscricaoFederal}/{NSUMovimento}": {
-      "get": {
-        "tags": [
-          "Distribuicao"
-        ],
-        "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes às movimentações de um determinado contribuinte",
-        "parameters": [
-          {
-            "name": "inscricaoFederal",
-            "in": "path",
-            "description": "Inscrição federal do contribuinte, podendo ser CPF ou CNPJ.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "NSUMovimento",
-            "in": "path",
-            "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação do CNC.",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208655-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208744-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208821-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208894-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1209112-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1209116-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208655-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208744-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208821-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208894-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1209112-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1209116-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208655-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208744-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208821-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1208894-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1209112-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1209116-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1209116-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208655-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208744-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208821-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208894-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1209112-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1209116-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208655-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208744-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208821-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208894-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1209112-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.121072-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.121072-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.121072-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.121072-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.121072-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          }
+    "servers": [
+        {
+            "url": "/cnc/municipio"
         }
-      }
+    ],
+    "paths": {
+        "/cad/NSU": {
+            "get": {
+                "tags": ["Distribuicao"],
+                "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes aos cadastros ou movimentações de contribuintes no CNC",
+                "parameters": [
+                    {
+                        "name": "NSUMovimento",
+                        "in": "query",
+                        "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação no CNC.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "NSUCadastro",
+                        "in": "query",
+                        "description": "Numero sequencial único a partir do qual se deseja obter os documentos de cadastro no CNC.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197528-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197628-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197711-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197784-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197855-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1197859-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197528-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197628-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197711-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197784-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197855-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1197859-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197528-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197628-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197711-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197784-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1197855-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1197859-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1197859-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197528-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197628-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197711-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197784-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197855-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1197859-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197528-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197628-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197711-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197784-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1197855-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1201089-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1201089-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1201089-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1201089-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1201089-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cad/{inscricaoFederal}/{NSUMovimento}": {
+            "get": {
+                "tags": ["Distribuicao"],
+                "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes às movimentações de um determinado contribuinte",
+                "parameters": [
+                    {
+                        "name": "inscricaoFederal",
+                        "in": "path",
+                        "description": "Inscrição federal do contribuinte, podendo ser CPF ou CNPJ.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "NSUMovimento",
+                        "in": "path",
+                        "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação do CNC.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208655-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208744-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208821-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208894-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1209112-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1209116-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208655-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208744-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208821-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208894-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1209112-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1209116-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208655-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208744-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208821-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1208894-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1209112-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1209116-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1209116-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208655-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208744-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208821-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208894-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1209112-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1209116-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208655-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208744-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208821-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1208894-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1209112-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.121072-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.121072-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.121072-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.121072-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.121072-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mun/{codMunicipio}/{NSUMunicipio}": {
+            "get": {
+                "tags": ["Distribuicao"],
+                "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes às movimentações de um determinado município",
+                "parameters": [
+                    {
+                        "name": "codMunicipio",
+                        "in": "path",
+                        "description": "Código IBGE do município que se deseja recuperar as movimentações do CNC",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "NSUMunicipio",
+                        "in": "path",
+                        "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação do município no CNC.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.121691-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1216995-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217069-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217139-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217207-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1217211-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.121691-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1216995-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217069-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217139-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217207-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1217211-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": {
+                                    "LoteDistribuicaoCNC": [
+                                        {
+                                            "NSU": 1,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.121691-03:00"
+                                        },
+                                        {
+                                            "NSU": 2,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1216995-03:00"
+                                        },
+                                        {
+                                            "NSU": 3,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217069-03:00"
+                                        },
+                                        {
+                                            "NSU": 4,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217139-03:00"
+                                        },
+                                        {
+                                            "NSU": 5,
+                                            "ArquivoXml": "H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=",
+                                            "DataHoraProcessamento": "2025-12-31T21:44:14.1217207-03:00"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1217211-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1217211-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.121691-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1216995-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217069-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217139-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217207-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1217211-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.121691-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1216995-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217069-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217139-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217207-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1218601-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1218601-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:14.1218601-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1218601-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
+                                },
+                                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1218601-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
-    "/mun/{codMunicipio}/{NSUMunicipio}": {
-      "get": {
-        "tags": [
-          "Distribuicao"
-        ],
-        "summary": "Este endpoint permite a consulta de um lote de até 50 documentos CNC correspondentes às movimentações de um determinado município",
-        "parameters": [
-          {
-            "name": "codMunicipio",
-            "in": "path",
-            "description": "Código IBGE do município que se deseja recuperar as movimentações do CNC",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+    "components": {
+        "schemas": {
+            "DistribuicaoCNC": {
+                "type": "object",
+                "properties": {
+                    "NSU": {
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "ArquivoXml": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Enum": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ExemploRetornoSucessoDistribuicao": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "LoteDistribuicaoCNCResponse": {
+                "type": "object",
+                "properties": {
+                    "TipoAmbiente": {
+                        "$ref": "#/components/schemas/TipoAmbiente"
+                    },
+                    "VersaoAplicativo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "StatusProcessamento": {
+                        "$ref": "#/components/schemas/StatusProcessamentoDistribuicao"
+                    },
+                    "Alertas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "Erros": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "LoteDistribuicaoCNC": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DistribuicaoCNC"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MensagemProcessamento": {
+                "type": "object",
+                "properties": {
+                    "Mensagem": {
+                        "$ref": "#/components/schemas/Enum"
+                    },
+                    "Parametros": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "Codigo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Descricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Complemento": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "StatusProcessamentoDistribuicao": {
+                "enum": [
+                    "REJEICAO",
+                    "NENHUM_DOCUMENTO_LOCALIZADO",
+                    "DOCUMENTOS_LOCALIZADOS"
+                ],
+                "type": "string"
+            },
+            "TipoAmbiente": {
+                "enum": ["PRODUCAO", "HOMOLOGACAO"],
+                "type": "string"
             }
-          },
-          {
-            "name": "NSUMunicipio",
-            "in": "path",
-            "description": "Numero sequencial único a partir do qual se deseja obter os documentos de movimentação do município no CNC.",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.121691-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1216995-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217069-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217139-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217207-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1217211-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.121691-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1216995-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217069-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217139-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217207-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1217211-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": {"LoteDistribuicaoCNC":[{"NSU":1,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.121691-03:00"},{"NSU":2,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1216995-03:00"},{"NSU":3,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217069-03:00"},{"NSU":4,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217139-03:00"},{"NSU":5,"ArquivoXml":"H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=","DataHoraProcessamento":"2025-12-31T21:44:14.1217207-03:00"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:44:14.1217211-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1217211-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.121691-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1216995-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217069-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217139-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217207-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoDistribuicao"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1217211-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <LoteDistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>1</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtNPT07PRB7MAjYPXARAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.121691-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>2</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xstPT07PRB7MAvgJkXRAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1216995-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>3</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xttPT07PRB7MAkH/a3xAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217069-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>4</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xsdPT07PRB7MA2AAD5BAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217139-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n    <DistribuicaoCNC>\n      <NSU>5</NSU>\n      <ArquivoXml>H4sIAAAAAAAAA7OpyM0xtdPT07PRB7MA9n29ZhAAAAA=</ArquivoXml>\n      <DataHoraProcessamento>2025-12-31T21:44:14.1217207-03:00</DataHoraProcessamento>\n    </DistribuicaoCNC>\n  </LoteDistribuicaoCNC>\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1218601-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1218601-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:14.1218601-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1218601-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteDistribuicaoCNCResponse"
-                },
-                "example": "<LoteDistribuicaoCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:14.1218601-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteDistribuicaoCNCResponse>"
-              }
-            }
-          }
         }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "DistribuicaoCNC": {
-        "type": "object",
-        "properties": {
-          "NSU": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "ArquivoXml": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Enum": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ExemploRetornoSucessoDistribuicao": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "LoteDistribuicaoCNCResponse": {
-        "type": "object",
-        "properties": {
-          "TipoAmbiente": {
-            "$ref": "#/components/schemas/TipoAmbiente"
-          },
-          "VersaoAplicativo": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "StatusProcessamento": {
-            "$ref": "#/components/schemas/StatusProcessamentoDistribuicao"
-          },
-          "Alertas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "Erros": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "LoteDistribuicaoCNC": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DistribuicaoCNC"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MensagemProcessamento": {
-        "type": "object",
-        "properties": {
-          "Mensagem": {
-            "$ref": "#/components/schemas/Enum"
-          },
-          "Parametros": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "Codigo": {
-            "type": "string",
-            "nullable": true
-          },
-          "Descricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "Complemento": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "StatusProcessamentoDistribuicao": {
-        "enum": [
-          "REJEICAO",
-          "NENHUM_DOCUMENTO_LOCALIZADO",
-          "DOCUMENTOS_LOCALIZADOS"
-        ],
-        "type": "string"
-      },
-      "TipoAmbiente": {
-        "enum": [
-          "PRODUCAO",
-          "HOMOLOGACAO"
-        ],
-        "type": "string"
-      }
-    }
-  }
 }

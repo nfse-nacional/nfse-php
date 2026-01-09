@@ -1,2755 +1,2742 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - ADN Recepção",
-    "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a recepção de documentos compartilhados no ambiente nacional (ADN).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n",
-    "version": "v1",
-    "x-logo": {
-      "url": "/adn/images/logo_nfse_vertical.png",
-      "altText": "NFS-e",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "servers": [
-    {
-      "url": "/adn"
-    }
-  ],
-  "paths": {
-    "/DFe": {
-      "post": {
-        "tags": [
-          "Recepcao"
-        ],
-        "summary": "Recepciona um lote de Documentos",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RecepcaoRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponseLote"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponseLote"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponseLote"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponseLote"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponseLote"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - ADN Recepção",
+        "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a recepção de documentos compartilhados no ambiente nacional (ADN).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.\n",
+        "version": "v1",
+        "x-logo": {
+            "url": "/adn/images/logo_nfse_vertical.png",
+            "altText": "NFS-e",
+            "backgroundColor": "#FFFFFF"
         }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "RecepcaoRequest": {
-        "type": "object",
-        "properties": {
-          "LoteXmlGZipB64": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Enum": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "MethodAttributes": {
-        "enum": [
-          "PrivateScope",
-          "PrivateScope",
-          "Private",
-          "FamANDAssem",
-          "Assembly",
-          "Family",
-          "FamORAssem",
-          "Public",
-          "MemberAccessMask",
-          "UnmanagedExport",
-          "Static",
-          "Final",
-          "Virtual",
-          "HideBySig",
-          "NewSlot",
-          "NewSlot",
-          "CheckAccessOnOverride",
-          "Abstract",
-          "SpecialName",
-          "RTSpecialName",
-          "PinvokeImpl",
-          "HasSecurity",
-          "RequireSecObject",
-          "ReservedMask"
-        ],
-        "type": "string"
-      },
-      "MethodImplAttributes": {
-        "enum": [
-          "IL",
-          "IL",
-          "Native",
-          "OPTIL",
-          "CodeTypeMask",
-          "CodeTypeMask",
-          "ManagedMask",
-          "ManagedMask",
-          "NoInlining",
-          "ForwardRef",
-          "Synchronized",
-          "NoOptimization",
-          "PreserveSig",
-          "AggressiveInlining",
-          "AggressiveOptimization",
-          "InternalCall",
-          "MaxMethodImplVal"
-        ],
-        "type": "string"
-      },
-      "CallingConventions": {
-        "enum": [
-          "Standard",
-          "VarArgs",
-          "Any",
-          "HasThis",
-          "ExplicitThis"
-        ],
-        "type": "string"
-      },
-      "IntPtr": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "RuntimeMethodHandle": {
-        "type": "object",
-        "properties": {
-          "Value": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/IntPtr"
-              }
-            ],
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MemberTypes": {
-        "enum": [
-          "Constructor",
-          "Event",
-          "Field",
-          "Method",
-          "Property",
-          "TypeInfo",
-          "Custom",
-          "NestedType",
-          "All"
-        ],
-        "type": "string"
-      },
-      "ModuleHandle": {
-        "type": "object",
-        "properties": {
-          "MDStreamVersion": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CustomAttributeTypedArgument": {
-        "type": "object",
-        "properties": {
-          "ArgumentType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Value": {
-            "type": "object",
-            "additionalProperties": false,
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MemberInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CustomAttributeNamedArgument": {
-        "type": "object",
-        "properties": {
-          "MemberInfo": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "TypedValue": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CustomAttributeTypedArgument"
-              }
-            ],
-            "readOnly": true
-          },
-          "MemberName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsField": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CustomAttributeData": {
-        "type": "object",
-        "properties": {
-          "AttributeType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Constructor": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ConstructorInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ConstructorArguments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeTypedArgument"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "NamedArguments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeNamedArgument"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Module": {
-        "type": "object",
-        "properties": {
-          "Assembly": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Assembly"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "FullyQualifiedName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "MDStreamVersion": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "ModuleVersionId": {
-            "type": "string",
-            "format": "uuid",
-            "readOnly": true
-          },
-          "ScopeName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "ModuleHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ModuleHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ConstructorInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "MethodImplementationFlags": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodImplAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "CallingConvention": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CallingConventions"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsAbstract": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFinal": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsHideBySig": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsStatic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVirtual": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyAndAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyOrAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructedGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethodDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "ContainsGenericParameters": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MethodHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeMethodHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "EventAttributes": {
-        "enum": [
-          "None",
-          "SpecialName",
-          "RTSpecialName",
-          "RTSpecialName"
-        ],
-        "type": "string"
-      },
-      "ParameterAttributes": {
-        "enum": [
-          "None",
-          "In",
-          "Out",
-          "Lcid",
-          "Retval",
-          "Optional",
-          "HasDefault",
-          "HasFieldMarshal",
-          "Reserved3",
-          "Reserved4",
-          "ReservedMask"
-        ],
-        "type": "string"
-      },
-      "ParameterInfo": {
-        "type": "object",
-        "properties": {
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ParameterAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Member": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "ParameterType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Position": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "IsIn": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsLcid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsOptional": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsOut": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsRetval": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "DefaultValue": {
-            "type": "object",
-            "additionalProperties": false,
-            "nullable": true,
-            "readOnly": true
-          },
-          "RawDefaultValue": {
-            "type": "object",
-            "additionalProperties": false,
-            "nullable": true,
-            "readOnly": true
-          },
-          "HasDefaultValue": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ICustomAttributeProvider": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "MethodInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "ReturnParameter": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ParameterInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReturnType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReturnTypeCustomAttributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ICustomAttributeProvider"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "MethodImplementationFlags": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodImplAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "CallingConvention": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CallingConventions"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsAbstract": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFinal": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsHideBySig": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsStatic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVirtual": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyAndAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyOrAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructedGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethodDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "ContainsGenericParameters": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MethodHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeMethodHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "EventInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/EventAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "AddMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "RemoveMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "RaiseMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsMulticast": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "EventHandlerType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FieldAttributes": {
-        "enum": [
-          "PrivateScope",
-          "Private",
-          "FamANDAssem",
-          "Assembly",
-          "Family",
-          "FamORAssem",
-          "Public",
-          "FieldAccessMask",
-          "Static",
-          "InitOnly",
-          "Literal",
-          "NotSerialized",
-          "HasFieldRVA",
-          "SpecialName",
-          "RTSpecialName",
-          "HasFieldMarshal",
-          "PinvokeImpl",
-          "HasDefault",
-          "ReservedMask"
-        ],
-        "type": "string"
-      },
-      "RuntimeFieldHandle": {
-        "type": "object",
-        "properties": {
-          "Value": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/IntPtr"
-              }
-            ],
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FieldInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/FieldAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "FieldType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsInitOnly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsLiteral": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNotSerialized": {
-            "type": "boolean",
-            "readOnly": true,
-            "deprecated": true
-          },
-          "IsPinvokeImpl": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsStatic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyAndAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyOrAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "FieldHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeFieldHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "PropertyAttributes": {
-        "enum": [
-          "None",
-          "SpecialName",
-          "RTSpecialName",
-          "HasDefault",
-          "Reserved2",
-          "Reserved3",
-          "Reserved4",
-          "ReservedMask"
-        ],
-        "type": "string"
-      },
-      "PropertyInfo": {
-        "type": "object",
-        "properties": {
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "PropertyType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PropertyAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "CanRead": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "CanWrite": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "GetMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "SetMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GenericParameterAttributes": {
-        "enum": [
-          "None",
-          "Covariant",
-          "Contravariant",
-          "VarianceMask",
-          "ReferenceTypeConstraint",
-          "NotNullableValueTypeConstraint",
-          "DefaultConstructorConstraint",
-          "SpecialConstraintMask"
-        ],
-        "type": "string"
-      },
-      "TypeAttributes": {
-        "enum": [
-          "NotPublic",
-          "NotPublic",
-          "NotPublic",
-          "NotPublic",
-          "Public",
-          "NestedPublic",
-          "NestedPrivate",
-          "NestedFamily",
-          "NestedAssembly",
-          "NestedFamANDAssem",
-          "VisibilityMask",
-          "VisibilityMask",
-          "SequentialLayout",
-          "ExplicitLayout",
-          "LayoutMask",
-          "Interface",
-          "Interface",
-          "Abstract",
-          "Sealed",
-          "SpecialName",
-          "RTSpecialName",
-          "Import",
-          "Serializable",
-          "WindowsRuntime",
-          "UnicodeClass",
-          "AutoClass",
-          "StringFormatMask",
-          "StringFormatMask",
-          "HasSecurity",
-          "ReservedMask",
-          "BeforeFieldInit",
-          "CustomFormatMask"
-        ],
-        "type": "string"
-      },
-      "LayoutKind": {
-        "enum": [
-          "Sequential",
-          "Explicit",
-          "Auto"
-        ],
-        "type": "string"
-      },
-      "StructLayoutAttribute": {
-        "type": "object",
-        "properties": {
-          "Value": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/LayoutKind"
-              }
-            ],
-            "readOnly": true
-          },
-          "TypeId": {
-            "type": "object",
-            "additionalProperties": false,
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RuntimeTypeHandle": {
-        "type": "object",
-        "properties": {
-          "Value": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/IntPtr"
-              }
-            ],
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TypeInfo": {
-        "type": "object",
-        "properties": {
-          "GenericTypeParameters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Type"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredConstructors": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConstructorInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredEvents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EventInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredFields": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredMembers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MemberInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredMethods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MethodInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredNestedTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TypeInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaredProperties": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PropertyInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "ImplementedInterfaces": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Type"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsInterface": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Namespace": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "AssemblyQualifiedName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "FullName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "Assembly": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Assembly"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsNested": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodBase"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "UnderlyingSystemType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsTypeDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsByRef": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructedGenericType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericTypeParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethodParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericTypeDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSZArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVariableBoundArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsByRefLike": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFunctionPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsUnmanagedFunctionPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "HasElementType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "GenericTypeArguments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Type"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "GenericParameterPosition": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "GenericParameterAttributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/GenericParameterAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TypeAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsAbstract": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsImport": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSealed": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamANDAssem": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamORAssem": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNotPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAutoLayout": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsExplicitLayout": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsLayoutSequential": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAnsiClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAutoClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsUnicodeClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsCOMObject": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsContextful": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsEnum": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsMarshalByRef": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrimitive": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsValueType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSignatureType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "StructLayoutAttribute": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructLayoutAttribute"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "TypeInitializer": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ConstructorInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "TypeHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeTypeHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "GUID": {
-            "type": "string",
-            "format": "uuid",
-            "readOnly": true
-          },
-          "BaseType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsSerializable": {
-            "type": "boolean",
-            "readOnly": true,
-            "deprecated": true
-          },
-          "ContainsGenericParameters": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVisible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SecurityRuleSet": {
-        "enum": [
-          "None",
-          "Level1",
-          "Level2"
-        ],
-        "type": "string"
-      },
-      "Assembly": {
-        "type": "object",
-        "properties": {
-          "DefinedTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TypeInfo"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "ExportedTypes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Type"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "CodeBase": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true,
-            "deprecated": true
-          },
-          "EntryPoint": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "FullName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "ImageRuntimeVersion": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsDynamic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Location": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectionOnly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFullyTrusted": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "EscapedCodeBase": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true,
-            "deprecated": true
-          },
-          "ManifestModule": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Modules": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Module"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "GlobalAssemblyCache": {
-            "type": "boolean",
-            "readOnly": true,
-            "deprecated": true
-          },
-          "HostContext": {
-            "type": "integer",
-            "format": "int64",
-            "readOnly": true
-          },
-          "SecurityRuleSet": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/SecurityRuleSet"
-              }
-            ],
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Type": {
-        "type": "object",
-        "properties": {
-          "IsInterface": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Namespace": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "AssemblyQualifiedName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "FullName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "Assembly": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Assembly"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsNested": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringMethod": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodBase"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "UnderlyingSystemType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsTypeDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsByRef": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructedGenericType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericTypeParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethodParameter": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericTypeDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSZArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVariableBoundArray": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsByRefLike": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFunctionPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsUnmanagedFunctionPointer": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "HasElementType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "GenericTypeArguments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Type"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "GenericParameterPosition": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "GenericParameterAttributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/GenericParameterAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TypeAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsAbstract": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsImport": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSealed": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamANDAssem": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedFamORAssem": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNestedPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsNotPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAutoLayout": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsExplicitLayout": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsLayoutSequential": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAnsiClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAutoClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsUnicodeClass": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsCOMObject": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsContextful": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsEnum": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsMarshalByRef": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrimitive": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsValueType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSignatureType": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "StructLayoutAttribute": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructLayoutAttribute"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "TypeInitializer": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ConstructorInfo"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "TypeHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeTypeHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "GUID": {
-            "type": "string",
-            "format": "uuid",
-            "readOnly": true
-          },
-          "BaseType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsSerializable": {
-            "type": "boolean",
-            "readOnly": true,
-            "deprecated": true
-          },
-          "ContainsGenericParameters": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVisible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MethodBase": {
-        "type": "object",
-        "properties": {
-          "Attributes": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "MethodImplementationFlags": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodImplAttributes"
-              }
-            ],
-            "readOnly": true
-          },
-          "CallingConvention": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CallingConventions"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsAbstract": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructor": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFinal": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsHideBySig": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSpecialName": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsStatic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsVirtual": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamily": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyAndAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFamilyOrAssembly": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPrivate": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsPublic": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsConstructedGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethod": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsGenericMethodDefinition": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "ContainsGenericParameters": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MethodHandle": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RuntimeMethodHandle"
-              }
-            ],
-            "readOnly": true
-          },
-          "IsSecurityCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecuritySafeCritical": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsSecurityTransparent": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MemberType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MemberTypes"
-              }
-            ],
-            "readOnly": true
-          },
-          "Name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "DeclaringType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "ReflectedType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Type"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Module": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Module"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "CustomAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomAttributeData"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "IsCollectible": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "MetadataToken": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Exception": {
-        "type": "object",
-        "properties": {
-          "TargetSite": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MethodBase"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "Message": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "Data": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": false
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "InnerException": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Exception"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          },
-          "HelpLink": {
-            "type": "string",
-            "nullable": true
-          },
-          "Source": {
-            "type": "string",
-            "nullable": true
-          },
-          "HResult": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "StackTrace": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MensagemProcessamento": {
-        "type": "object",
-        "properties": {
-          "Mensagem": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Enum"
-              }
-            ],
-            "nullable": true
-          },
-          "Parametros": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "Excecao": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Exception"
-              }
-            ],
-            "nullable": true
-          },
-          "Codigo": {
-            "type": "string",
-            "nullable": true
-          },
-          "Descricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "Complemento": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RecepcaoResponseDocumento": {
-        "type": "object",
-        "properties": {
-          "ChaveAcesso": {
-            "type": "string",
-            "description": "Chave de acesso",
-            "nullable": true
-          },
-          "NsuRecepcao": {
-            "type": "string",
-            "description": "NSU - Número Sequencial de Busca",
-            "nullable": true
-          },
-          "StatusProcessamento": {
-            "type": "string",
-            "description": "Status do processamento",
-            "nullable": true
-          },
-          "Alertas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "description": "Alertas da NFS-e",
-            "nullable": true,
-            "readOnly": true
-          },
-          "Erros": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "description": "Erros da NFS-e gerada",
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TipoAmbiente": {
-        "enum": [
-          "PRODUCAO",
-          "HOMOLOGACAO"
-        ],
-        "type": "string"
-      },
-      "RecepcaoResponseLote": {
-        "type": "object",
-        "properties": {
-          "Lote": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RecepcaoResponseDocumento"
-            },
-            "description": "Lote de documentos processados",
-            "nullable": true
-          },
-          "TipoAmbiente": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TipoAmbiente"
-              }
-            ]
-          },
-          "VersaoAplicativo": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProblemDetails": {
-        "type": "object",
-        "additionalProperties": {
-          "type": "object",
-          "additionalProperties": false
+    },
+    "servers": [
+        {
+            "url": "/adn"
         }
-      }
+    ],
+    "paths": {
+        "/DFe": {
+            "post": {
+                "tags": ["Recepcao"],
+                "summary": "Recepciona um lote de Documentos",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecepcaoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponseLote"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponseLote"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponseLote"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponseLote"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponseLote"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RecepcaoRequest": {
+                "type": "object",
+                "properties": {
+                    "LoteXmlGZipB64": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Enum": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "MethodAttributes": {
+                "enum": [
+                    "PrivateScope",
+                    "PrivateScope",
+                    "Private",
+                    "FamANDAssem",
+                    "Assembly",
+                    "Family",
+                    "FamORAssem",
+                    "Public",
+                    "MemberAccessMask",
+                    "UnmanagedExport",
+                    "Static",
+                    "Final",
+                    "Virtual",
+                    "HideBySig",
+                    "NewSlot",
+                    "NewSlot",
+                    "CheckAccessOnOverride",
+                    "Abstract",
+                    "SpecialName",
+                    "RTSpecialName",
+                    "PinvokeImpl",
+                    "HasSecurity",
+                    "RequireSecObject",
+                    "ReservedMask"
+                ],
+                "type": "string"
+            },
+            "MethodImplAttributes": {
+                "enum": [
+                    "IL",
+                    "IL",
+                    "Native",
+                    "OPTIL",
+                    "CodeTypeMask",
+                    "CodeTypeMask",
+                    "ManagedMask",
+                    "ManagedMask",
+                    "NoInlining",
+                    "ForwardRef",
+                    "Synchronized",
+                    "NoOptimization",
+                    "PreserveSig",
+                    "AggressiveInlining",
+                    "AggressiveOptimization",
+                    "InternalCall",
+                    "MaxMethodImplVal"
+                ],
+                "type": "string"
+            },
+            "CallingConventions": {
+                "enum": [
+                    "Standard",
+                    "VarArgs",
+                    "Any",
+                    "HasThis",
+                    "ExplicitThis"
+                ],
+                "type": "string"
+            },
+            "IntPtr": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "RuntimeMethodHandle": {
+                "type": "object",
+                "properties": {
+                    "Value": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/IntPtr"
+                            }
+                        ],
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MemberTypes": {
+                "enum": [
+                    "Constructor",
+                    "Event",
+                    "Field",
+                    "Method",
+                    "Property",
+                    "TypeInfo",
+                    "Custom",
+                    "NestedType",
+                    "All"
+                ],
+                "type": "string"
+            },
+            "ModuleHandle": {
+                "type": "object",
+                "properties": {
+                    "MDStreamVersion": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "CustomAttributeTypedArgument": {
+                "type": "object",
+                "properties": {
+                    "ArgumentType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Value": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "nullable": true,
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MemberInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "CustomAttributeNamedArgument": {
+                "type": "object",
+                "properties": {
+                    "MemberInfo": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "TypedValue": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CustomAttributeTypedArgument"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "MemberName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsField": {
+                        "type": "boolean",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "CustomAttributeData": {
+                "type": "object",
+                "properties": {
+                    "AttributeType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Constructor": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ConstructorInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ConstructorArguments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeTypedArgument"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "NamedArguments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeNamedArgument"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Module": {
+                "type": "object",
+                "properties": {
+                    "Assembly": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Assembly"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "FullyQualifiedName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "MDStreamVersion": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    },
+                    "ModuleVersionId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true
+                    },
+                    "ScopeName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ModuleHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ModuleHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ConstructorInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "MethodImplementationFlags": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodImplAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "CallingConvention": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CallingConventions"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsAbstract": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructor": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFinal": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsHideBySig": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsStatic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVirtual": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyAndAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyOrAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructedGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethodDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "ContainsGenericParameters": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MethodHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeMethodHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "EventAttributes": {
+                "enum": [
+                    "None",
+                    "SpecialName",
+                    "RTSpecialName",
+                    "RTSpecialName"
+                ],
+                "type": "string"
+            },
+            "ParameterAttributes": {
+                "enum": [
+                    "None",
+                    "In",
+                    "Out",
+                    "Lcid",
+                    "Retval",
+                    "Optional",
+                    "HasDefault",
+                    "HasFieldMarshal",
+                    "Reserved3",
+                    "Reserved4",
+                    "ReservedMask"
+                ],
+                "type": "string"
+            },
+            "ParameterInfo": {
+                "type": "object",
+                "properties": {
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ParameterAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Member": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ParameterType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Position": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    },
+                    "IsIn": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsLcid": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsOptional": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsOut": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsRetval": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "DefaultValue": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "RawDefaultValue": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "HasDefaultValue": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ICustomAttributeProvider": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "MethodInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "ReturnParameter": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ParameterInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReturnType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReturnTypeCustomAttributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ICustomAttributeProvider"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "MethodImplementationFlags": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodImplAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "CallingConvention": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CallingConventions"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsAbstract": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructor": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFinal": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsHideBySig": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsStatic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVirtual": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyAndAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyOrAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructedGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethodDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "ContainsGenericParameters": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MethodHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeMethodHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "EventInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/EventAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "AddMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "RemoveMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "RaiseMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsMulticast": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "EventHandlerType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FieldAttributes": {
+                "enum": [
+                    "PrivateScope",
+                    "Private",
+                    "FamANDAssem",
+                    "Assembly",
+                    "Family",
+                    "FamORAssem",
+                    "Public",
+                    "FieldAccessMask",
+                    "Static",
+                    "InitOnly",
+                    "Literal",
+                    "NotSerialized",
+                    "HasFieldRVA",
+                    "SpecialName",
+                    "RTSpecialName",
+                    "HasFieldMarshal",
+                    "PinvokeImpl",
+                    "HasDefault",
+                    "ReservedMask"
+                ],
+                "type": "string"
+            },
+            "RuntimeFieldHandle": {
+                "type": "object",
+                "properties": {
+                    "Value": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/IntPtr"
+                            }
+                        ],
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FieldInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/FieldAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "FieldType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsInitOnly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsLiteral": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNotSerialized": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "IsPinvokeImpl": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsStatic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyAndAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyOrAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "FieldHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeFieldHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PropertyAttributes": {
+                "enum": [
+                    "None",
+                    "SpecialName",
+                    "RTSpecialName",
+                    "HasDefault",
+                    "Reserved2",
+                    "Reserved3",
+                    "Reserved4",
+                    "ReservedMask"
+                ],
+                "type": "string"
+            },
+            "PropertyInfo": {
+                "type": "object",
+                "properties": {
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "PropertyType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PropertyAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "CanRead": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "CanWrite": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "GetMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "SetMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "GenericParameterAttributes": {
+                "enum": [
+                    "None",
+                    "Covariant",
+                    "Contravariant",
+                    "VarianceMask",
+                    "ReferenceTypeConstraint",
+                    "NotNullableValueTypeConstraint",
+                    "DefaultConstructorConstraint",
+                    "SpecialConstraintMask"
+                ],
+                "type": "string"
+            },
+            "TypeAttributes": {
+                "enum": [
+                    "NotPublic",
+                    "NotPublic",
+                    "NotPublic",
+                    "NotPublic",
+                    "Public",
+                    "NestedPublic",
+                    "NestedPrivate",
+                    "NestedFamily",
+                    "NestedAssembly",
+                    "NestedFamANDAssem",
+                    "VisibilityMask",
+                    "VisibilityMask",
+                    "SequentialLayout",
+                    "ExplicitLayout",
+                    "LayoutMask",
+                    "Interface",
+                    "Interface",
+                    "Abstract",
+                    "Sealed",
+                    "SpecialName",
+                    "RTSpecialName",
+                    "Import",
+                    "Serializable",
+                    "WindowsRuntime",
+                    "UnicodeClass",
+                    "AutoClass",
+                    "StringFormatMask",
+                    "StringFormatMask",
+                    "HasSecurity",
+                    "ReservedMask",
+                    "BeforeFieldInit",
+                    "CustomFormatMask"
+                ],
+                "type": "string"
+            },
+            "LayoutKind": {
+                "enum": ["Sequential", "Explicit", "Auto"],
+                "type": "string"
+            },
+            "StructLayoutAttribute": {
+                "type": "object",
+                "properties": {
+                    "Value": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/LayoutKind"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "TypeId": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "nullable": true,
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "RuntimeTypeHandle": {
+                "type": "object",
+                "properties": {
+                    "Value": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/IntPtr"
+                            }
+                        ],
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TypeInfo": {
+                "type": "object",
+                "properties": {
+                    "GenericTypeParameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredConstructors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ConstructorInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredEvents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredFields": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FieldInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredMembers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MemberInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredMethods": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MethodInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredNestedTypes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TypeInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaredProperties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PropertyInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ImplementedInterfaces": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsInterface": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Namespace": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "AssemblyQualifiedName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "FullName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Assembly": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Assembly"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsNested": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodBase"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "UnderlyingSystemType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsTypeDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsByRef": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructedGenericType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericTypeParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethodParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericTypeDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSZArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVariableBoundArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsByRefLike": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFunctionPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsUnmanagedFunctionPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "HasElementType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "GenericTypeArguments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "GenericParameterPosition": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    },
+                    "GenericParameterAttributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/GenericParameterAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TypeAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsAbstract": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsImport": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSealed": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamANDAssem": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamORAssem": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNotPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAutoLayout": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsExplicitLayout": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsLayoutSequential": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAnsiClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAutoClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsUnicodeClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsCOMObject": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsContextful": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsEnum": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsMarshalByRef": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrimitive": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsValueType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSignatureType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "StructLayoutAttribute": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StructLayoutAttribute"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "TypeInitializer": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ConstructorInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "TypeHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeTypeHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "GUID": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true
+                    },
+                    "BaseType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsSerializable": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "ContainsGenericParameters": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVisible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SecurityRuleSet": {
+                "enum": ["None", "Level1", "Level2"],
+                "type": "string"
+            },
+            "Assembly": {
+                "type": "object",
+                "properties": {
+                    "DefinedTypes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TypeInfo"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ExportedTypes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CodeBase": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "EntryPoint": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "FullName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ImageRuntimeVersion": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsDynamic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "Location": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectionOnly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFullyTrusted": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "EscapedCodeBase": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "ManifestModule": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Modules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Module"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "GlobalAssemblyCache": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "HostContext": {
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "SecurityRuleSet": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/SecurityRuleSet"
+                            }
+                        ],
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Type": {
+                "type": "object",
+                "properties": {
+                    "IsInterface": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Namespace": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "AssemblyQualifiedName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "FullName": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Assembly": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Assembly"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsNested": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringMethod": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodBase"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "UnderlyingSystemType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsTypeDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsByRef": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructedGenericType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericTypeParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethodParameter": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericTypeDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSZArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVariableBoundArray": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsByRefLike": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFunctionPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsUnmanagedFunctionPointer": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "HasElementType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "GenericTypeArguments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "GenericParameterPosition": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    },
+                    "GenericParameterAttributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/GenericParameterAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TypeAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsAbstract": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsImport": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSealed": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamANDAssem": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedFamORAssem": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNestedPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsNotPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAutoLayout": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsExplicitLayout": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsLayoutSequential": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAnsiClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAutoClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsUnicodeClass": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsCOMObject": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsContextful": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsEnum": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsMarshalByRef": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrimitive": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsValueType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSignatureType": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "StructLayoutAttribute": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StructLayoutAttribute"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "TypeInitializer": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ConstructorInfo"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "TypeHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeTypeHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "GUID": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true
+                    },
+                    "BaseType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsSerializable": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "deprecated": true
+                    },
+                    "ContainsGenericParameters": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVisible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MethodBase": {
+                "type": "object",
+                "properties": {
+                    "Attributes": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "MethodImplementationFlags": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodImplAttributes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "CallingConvention": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CallingConventions"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsAbstract": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructor": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFinal": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsHideBySig": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSpecialName": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsStatic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsVirtual": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamily": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyAndAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsFamilyOrAssembly": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPrivate": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsPublic": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsConstructedGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethod": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsGenericMethodDefinition": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "ContainsGenericParameters": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MethodHandle": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RuntimeMethodHandle"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "IsSecurityCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecuritySafeCritical": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "IsSecurityTransparent": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MemberType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MemberTypes"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "DeclaringType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "ReflectedType": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Type"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Module": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Module"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "CustomAttributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomAttributeData"
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "IsCollectible": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "MetadataToken": {
+                        "type": "integer",
+                        "format": "int32",
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Exception": {
+                "type": "object",
+                "properties": {
+                    "TargetSite": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MethodBase"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Message": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Data": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": false
+                        },
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "InnerException": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Exception"
+                            }
+                        ],
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "HelpLink": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Source": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "HResult": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "StackTrace": {
+                        "type": "string",
+                        "nullable": true,
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MensagemProcessamento": {
+                "type": "object",
+                "properties": {
+                    "Mensagem": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Enum"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "Parametros": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "Excecao": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Exception"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "Codigo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Descricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Complemento": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "RecepcaoResponseDocumento": {
+                "type": "object",
+                "properties": {
+                    "ChaveAcesso": {
+                        "type": "string",
+                        "description": "Chave de acesso",
+                        "nullable": true
+                    },
+                    "NsuRecepcao": {
+                        "type": "string",
+                        "description": "NSU - Número Sequencial de Busca",
+                        "nullable": true
+                    },
+                    "StatusProcessamento": {
+                        "type": "string",
+                        "description": "Status do processamento",
+                        "nullable": true
+                    },
+                    "Alertas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "description": "Alertas da NFS-e",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "Erros": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "description": "Erros da NFS-e gerada",
+                        "nullable": true,
+                        "readOnly": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TipoAmbiente": {
+                "enum": ["PRODUCAO", "HOMOLOGACAO"],
+                "type": "string"
+            },
+            "RecepcaoResponseLote": {
+                "type": "object",
+                "properties": {
+                    "Lote": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RecepcaoResponseDocumento"
+                        },
+                        "description": "Lote de documentos processados",
+                        "nullable": true
+                    },
+                    "TipoAmbiente": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/TipoAmbiente"
+                            }
+                        ]
+                    },
+                    "VersaoAplicativo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProblemDetails": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": false
+                }
+            }
+        }
     }
-  }
 }

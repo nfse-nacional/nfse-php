@@ -1,203 +1,258 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - CNC Recepção",
-    "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a recepção do Cadastro Nacional de Contribuintes (CNC).\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso. \n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem alimentar as informações complementares dos contribuintes sob sua gestão, enviando informações sobre eles utilizando um arquivo XML específico para tal fim.\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Recepção do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
-    "version": "v1",
-    "x-logo": {
-      "url": "/cnc/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "servers": [
-    {
-      "url": "/cnc"
-    }
-  ],
-  "paths": {
-    "/CNC": {
-      "post": {
-        "tags": [
-          "Cnc"
-        ],
-        "summary": "Este endpoint recepciona um contribuinte para cadastro ou atualização no CNC.\r\nCaso o contribuinte não esteja presente no CNC, seu cadastro será feito, do contrário, será feita uma atualização de seus dados",
-        "requestBody": {
-          "description": "XML CNC do contribuinte compactado em base64binary.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucesso"
-                },
-                "example": {"ChaveMovimentacao":"MOV1234567890","StatusProcessamento":"PROCESSADO_COM_SUCESSO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:43:53.9029521-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucesso"
-                },
-                "example": {"ChaveMovimentacao":"MOV1234567890","StatusProcessamento":"PROCESSADO_COM_SUCESSO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:43:53.9029521-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucesso"
-                },
-                "example": {"ChaveMovimentacao":"MOV1234567890","StatusProcessamento":"PROCESSADO_COM_SUCESSO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","DataHoraProcessamento":"2025-12-31T21:43:53.9029521-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucesso"
-                },
-                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9029521-03:00</DataHoraProcessamento>\n  <StatusProcessamento>PROCESSADO_COM_SUCESSO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ChaveMovimentacao>MOV1234567890</ChaveMovimentacao>\n</RecepcaoResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucesso"
-                },
-                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9029521-03:00</DataHoraProcessamento>\n  <StatusProcessamento>PROCESSADO_COM_SUCESSO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ChaveMovimentacao>MOV1234567890</ChaveMovimentacao>\n</RecepcaoResponse>"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponse"
-                },
-                "example": {"StatusProcessamento":"FALHA_NO_PROCESSAMENTO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:43:53.9032053-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponse"
-                },
-                "example": {"StatusProcessamento":"FALHA_NO_PROCESSAMENTO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:43:53.9032053-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponse"
-                },
-                "example": {"StatusProcessamento":"FALHA_NO_PROCESSAMENTO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:43:53.9032053-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponse"
-                },
-                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9032053-03:00</DataHoraProcessamento>\n  <StatusProcessamento>FALHA_NO_PROCESSAMENTO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</RecepcaoResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecepcaoResponse"
-                },
-                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9032053-03:00</DataHoraProcessamento>\n  <StatusProcessamento>FALHA_NO_PROCESSAMENTO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</RecepcaoResponse>"
-              }
-            }
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - CNC Recepção",
+        "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a recepção do Cadastro Nacional de Contribuintes (CNC).\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso. \n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem alimentar as informações complementares dos contribuintes sob sua gestão, enviando informações sobre eles utilizando um arquivo XML específico para tal fim.\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Recepção do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
+        "version": "v1",
+        "x-logo": {
+            "url": "/cnc/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
         }
-      }
+    },
+    "servers": [
+        {
+            "url": "/cnc"
+        }
+    ],
+    "paths": {
+        "/CNC": {
+            "post": {
+                "tags": ["Cnc"],
+                "summary": "Este endpoint recepciona um contribuinte para cadastro ou atualização no CNC.\r\nCaso o contribuinte não esteja presente no CNC, seu cadastro será feito, do contrário, será feita uma atualização de seus dados",
+                "requestBody": {
+                    "description": "XML CNC do contribuinte compactado em base64binary.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucesso"
+                                },
+                                "example": {
+                                    "ChaveMovimentacao": "MOV1234567890",
+                                    "StatusProcessamento": "PROCESSADO_COM_SUCESSO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9029521-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucesso"
+                                },
+                                "example": {
+                                    "ChaveMovimentacao": "MOV1234567890",
+                                    "StatusProcessamento": "PROCESSADO_COM_SUCESSO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9029521-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucesso"
+                                },
+                                "example": {
+                                    "ChaveMovimentacao": "MOV1234567890",
+                                    "StatusProcessamento": "PROCESSADO_COM_SUCESSO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9029521-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucesso"
+                                },
+                                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9029521-03:00</DataHoraProcessamento>\n  <StatusProcessamento>PROCESSADO_COM_SUCESSO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ChaveMovimentacao>MOV1234567890</ChaveMovimentacao>\n</RecepcaoResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucesso"
+                                },
+                                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9029521-03:00</DataHoraProcessamento>\n  <StatusProcessamento>PROCESSADO_COM_SUCESSO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ChaveMovimentacao>MOV1234567890</ChaveMovimentacao>\n</RecepcaoResponse>"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "FALHA_NO_PROCESSAMENTO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9032053-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "FALHA_NO_PROCESSAMENTO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9032053-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "FALHA_NO_PROCESSAMENTO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:43:53.9032053-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponse"
+                                },
+                                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9032053-03:00</DataHoraProcessamento>\n  <StatusProcessamento>FALHA_NO_PROCESSAMENTO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</RecepcaoResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecepcaoResponse"
+                                },
+                                "example": "<RecepcaoResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:43:53.9032053-03:00</DataHoraProcessamento>\n  <StatusProcessamento>FALHA_NO_PROCESSAMENTO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</RecepcaoResponse>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Enum": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ExemploRetornoSucesso": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "MensagemProcessamento": {
+                "type": "object",
+                "properties": {
+                    "Mensagem": {
+                        "$ref": "#/components/schemas/Enum"
+                    },
+                    "Parametros": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "Codigo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Descricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Complemento": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "RecepcaoResponse": {
+                "type": "object",
+                "properties": {
+                    "TipoAmbiente": {
+                        "$ref": "#/components/schemas/TipoAmbiente"
+                    },
+                    "VersaoAplicativo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "StatusProcessamento": {
+                        "$ref": "#/components/schemas/StatusProcessamento"
+                    },
+                    "Alertas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "Erros": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "ChaveMovimentacao": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "StatusProcessamento": {
+                "enum": [
+                    "PROCESSADO_COM_SUCESSO",
+                    "PROCESSADO_COM_ERROS",
+                    "FALHA_NO_PROCESSAMENTO"
+                ],
+                "type": "string"
+            },
+            "TipoAmbiente": {
+                "enum": ["PRODUCAO", "HOMOLOGACAO"],
+                "type": "string"
+            }
+        }
     }
-  },
-  "components": {
-    "schemas": {
-      "Enum": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ExemploRetornoSucesso": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "MensagemProcessamento": {
-        "type": "object",
-        "properties": {
-          "Mensagem": {
-            "$ref": "#/components/schemas/Enum"
-          },
-          "Parametros": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "Codigo": {
-            "type": "string",
-            "nullable": true
-          },
-          "Descricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "Complemento": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RecepcaoResponse": {
-        "type": "object",
-        "properties": {
-          "TipoAmbiente": {
-            "$ref": "#/components/schemas/TipoAmbiente"
-          },
-          "VersaoAplicativo": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "StatusProcessamento": {
-            "$ref": "#/components/schemas/StatusProcessamento"
-          },
-          "Alertas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "Erros": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "ChaveMovimentacao": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "StatusProcessamento": {
-        "enum": [
-          "PROCESSADO_COM_SUCESSO",
-          "PROCESSADO_COM_ERROS",
-          "FALHA_NO_PROCESSAMENTO"
-        ],
-        "type": "string"
-      },
-      "TipoAmbiente": {
-        "enum": [
-          "PRODUCAO",
-          "HOMOLOGACAO"
-        ],
-        "type": "string"
-      }
-    }
-  }
 }

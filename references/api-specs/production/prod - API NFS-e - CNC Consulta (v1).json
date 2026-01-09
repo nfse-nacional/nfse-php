@@ -1,278 +1,540 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - CNC Consulta",
-    "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a consulta do Cadastro Nacional de Contribuintes (CNC).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso. \n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem consultar as informações complementares dos contribuintes sob sua gestão, recuperando informações sobre eles em formato JSON (JavaScript Object Notation).\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Consulta do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
-    "version": "v1",
-    "x-logo": {
-      "url": "/cnc/consulta/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
-    }
-  },
-  "servers": [
-    {
-      "url": "/cnc/consulta"
-    }
-  ],
-  "paths": {
-    "/cad": {
-      "get": {
-        "tags": [
-          "Consulta"
-        ],
-        "summary": "Este endpoint permite a consulta das informações atuais de contribuintes no CNC",
-        "parameters": [
-          {
-            "name": "codMunicipio",
-            "in": "query",
-            "description": "Código IBGE do município do contribuinte.",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "inscricaoFederal",
-            "in": "query",
-            "description": "Inscrição federal do contribuinte, podendo ser CPF ou CNPJ.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "indicadorMunicipal",
-            "in": "query",
-            "description": "Indicador Municipal do contribuinte.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
-                },
-                "example": {"ListaCadastroMunicipal":[{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"1234567","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519516-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519518-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519519-03:00","OpcaoSimplesNacional":"NENHUM"},{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"7654321","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519525-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"NAO_HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519527-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519528-03:00","OpcaoSimplesNacional":"NENHUM"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1519746-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
-                },
-                "example": {"ListaCadastroMunicipal":[{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"1234567","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519516-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519518-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519519-03:00","OpcaoSimplesNacional":"NENHUM"},{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"7654321","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519525-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"NAO_HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519527-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519528-03:00","OpcaoSimplesNacional":"NENHUM"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1519746-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
-                },
-                "example": {"ListaCadastroMunicipal":[{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"1234567","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519516-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519518-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519519-03:00","OpcaoSimplesNacional":"NENHUM"},{"OrigemDados":"CNC","CodigoMunicipio":1234567,"TipoAmbiente":"HOMOLOGACAO","Id":1,"CodigoUF":12,"InfCad":{"Inscricao":"99999999999999","TpInscricao":"CNPJ","InscricaoMunicipal":"7654321","DataInicioInscricaoMunicipal":"2025-12-31T21:44:28.1519525-03:00","DataApenasInicioInscricaoMunicipal":"2025-12-31","RazaoSocial":"Razao Social","InfoEndereco":{"CEP":"12345678","Logradouro":"Logradouro","Numero":"123","Complemento":"Complemento","Bairro":"Bairro"},"Telefone":"1234567890","Email":"email@email.com","SituacaoEmissaoNFSe":"NAO_HABILITADO","SituacaoCadastral":"1","MotivoSituacaoCadastral":"Motivo"},"DhCadastro":"2025-12-31T21:44:28.1519527-03:00","DhAtualizacao":"2025-12-31T21:44:28.1519528-03:00","OpcaoSimplesNacional":"NENHUM"}],"StatusProcessamento":"DOCUMENTOS_LOCALIZADOS","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1519746-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
-                },
-                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1519746-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ListaCadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>1234567</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>1</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>7654321</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>0</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n  </ListaCadastroMunicipal>\n</CadastroMunicipalResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
-                },
-                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1519746-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ListaCadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>1234567</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>1</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>7654321</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>0</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n  </ListaCadastroMunicipal>\n</CadastroMunicipalResponse>"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1522556-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1522556-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"NENHUM_DOCUMENTO_LOCALIZADO","Alertas":[],"Erros":[],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1522556-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": "<LoteConsultaCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1522556-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteConsultaCNCResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": "<LoteConsultaCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1522556-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteConsultaCNCResponse>"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"REJEICAO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1523187-03:00"}
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"REJEICAO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1523187-03:00"}
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": {"StatusProcessamento":"REJEICAO","Alertas":[],"Erros":[{"Mensagem":{},"Codigo":"E3317","Descricao":"Certificado expirado"}],"TipoAmbiente":"HOMOLOGACAO","VersaoAplicativo":"1.0.0.0","DataHoraProcessamento":"2025-12-31T21:44:28.1523187-03:00"}
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1523187-03:00</DataHoraProcessamento>\n  <StatusProcessamento>REJEICAO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</CadastroMunicipalResponse>"
-              },
-              "text/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoteConsultaCNCResponse"
-                },
-                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1523187-03:00</DataHoraProcessamento>\n  <StatusProcessamento>REJEICAO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</CadastroMunicipalResponse>"
-              }
-            }
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - CNC Consulta",
+        "description": " # Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a consulta do Cadastro Nacional de Contribuintes (CNC).\n\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso. \n\n # Sobre o CNC\n O CNC é um módulo do Sistema Nacional NFS-e que trata informações de contribuintes emissores de documentos de NFS-e. Para emissão de notas, o Sistema Nacional NFS-e utiliza as bases oficiais da Receita Federal do Brasil (CNPJ/CPF) \n como fonte principal de informações dos contribuintes. O CNC serve como base de informações complementares de uso opcional pelos municípios conveniados ao Sistema.\n\n Através desta API, os municípios conveniados ao Sistema Nacional da NFS-e podem consultar as informações complementares dos contribuintes sob sua gestão, recuperando informações sobre eles em formato JSON (JavaScript Object Notation).\n\n # Requisitos para uso\n Para estabelecer conexão com esta API, é necessário informar um Certificado Digital do tipo e-CNPJ. O Cerfificado Digital deve seguir as especificações detalhadas nos padrões técnicos do projeto e o CNPJ do mesmo deve possuir autorização\n a acessar o endpoint da API. Esta autorização deve ser adquirida junto ao Comitê Gestor da NFS-e.\n\n # Padrões técnicos\n A API NFS-e de Consulta do CNC é uma API RESTful que segue os seguintes padrões técnicos:\n\t \n- **Protocolo de comunicação** : TLS 1.2 ou superior com autenticação mútua\n\n- **Formato para troca de mensagens** : JSON\n\n- **Formato dos documentos do CNC** : XML 1.0 (https://www.w3.org/TR/REC-xml)\n\n- **Codificação de caracteres** : UTF-8\n\n- **Certificado digital** : Emitido por Autoridade Certificadora ICP-Brasil, tipo A1 ou A3, CNPJ , com \"Autenticação do Cliente\"\n\n- **Padrão de assinatura dos documentos XML** : XMLDSIG (https://www.w3.org/TR/xmldsig-core/)\n\n- **Padrão de compactação dos documentos XML para troca de mensagens** : GZip com representao base64binary",
+        "version": "v1",
+        "x-logo": {
+            "url": "/cnc/consulta/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
         }
-      }
+    },
+    "servers": [
+        {
+            "url": "/cnc/consulta"
+        }
+    ],
+    "paths": {
+        "/cad": {
+            "get": {
+                "tags": ["Consulta"],
+                "summary": "Este endpoint permite a consulta das informações atuais de contribuintes no CNC",
+                "parameters": [
+                    {
+                        "name": "codMunicipio",
+                        "in": "query",
+                        "description": "Código IBGE do município do contribuinte.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "inscricaoFederal",
+                        "in": "query",
+                        "description": "Inscrição federal do contribuinte, podendo ser CPF ou CNPJ.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "indicadorMunicipal",
+                        "in": "query",
+                        "description": "Indicador Municipal do contribuinte.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
+                                },
+                                "example": {
+                                    "ListaCadastroMunicipal": [
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "1234567",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519516-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519518-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519519-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        },
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "7654321",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519525-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "NAO_HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519527-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519528-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1519746-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
+                                },
+                                "example": {
+                                    "ListaCadastroMunicipal": [
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "1234567",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519516-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519518-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519519-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        },
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "7654321",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519525-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "NAO_HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519527-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519528-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1519746-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
+                                },
+                                "example": {
+                                    "ListaCadastroMunicipal": [
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "1234567",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519516-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519518-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519519-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        },
+                                        {
+                                            "OrigemDados": "CNC",
+                                            "CodigoMunicipio": 1234567,
+                                            "TipoAmbiente": "HOMOLOGACAO",
+                                            "Id": 1,
+                                            "CodigoUF": 12,
+                                            "InfCad": {
+                                                "Inscricao": "99999999999999",
+                                                "TpInscricao": "CNPJ",
+                                                "InscricaoMunicipal": "7654321",
+                                                "DataInicioInscricaoMunicipal": "2025-12-31T21:44:28.1519525-03:00",
+                                                "DataApenasInicioInscricaoMunicipal": "2025-12-31",
+                                                "RazaoSocial": "Razao Social",
+                                                "InfoEndereco": {
+                                                    "CEP": "12345678",
+                                                    "Logradouro": "Logradouro",
+                                                    "Numero": "123",
+                                                    "Complemento": "Complemento",
+                                                    "Bairro": "Bairro"
+                                                },
+                                                "Telefone": "1234567890",
+                                                "Email": "email@email.com",
+                                                "SituacaoEmissaoNFSe": "NAO_HABILITADO",
+                                                "SituacaoCadastral": "1",
+                                                "MotivoSituacaoCadastral": "Motivo"
+                                            },
+                                            "DhCadastro": "2025-12-31T21:44:28.1519527-03:00",
+                                            "DhAtualizacao": "2025-12-31T21:44:28.1519528-03:00",
+                                            "OpcaoSimplesNacional": "NENHUM"
+                                        }
+                                    ],
+                                    "StatusProcessamento": "DOCUMENTOS_LOCALIZADOS",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1519746-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
+                                },
+                                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1519746-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ListaCadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>1234567</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>1</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>7654321</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>0</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n  </ListaCadastroMunicipal>\n</CadastroMunicipalResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExemploRetornoSucessoCadastro"
+                                },
+                                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1519746-03:00</DataHoraProcessamento>\n  <StatusProcessamento>DOCUMENTOS_LOCALIZADOS</StatusProcessamento>\n  <Alertas />\n  <Erros />\n  <ListaCadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>1234567</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>1</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n    <CadastroMunicipal>\n      <cMun>1234567</cMun>\n      <tpAmb>2</tpAmb>\n      <infContrib>\n        <CNPJ>99999999999999</CNPJ>\n        <IM>7654321</IM>\n        <dIM>2025-12-31</dIM>\n        <ender>\n          <CEP>12345678</CEP>\n          <xLgr>Logradouro</xLgr>\n          <nro>123</nro>\n          <xCpl>Complemento</xCpl>\n          <xBairro>Bairro</xBairro>\n        </ender>\n        <fone>1234567890</fone>\n        <email>email@email.com</email>\n        <cStatEmiss>0</cStatEmiss>\n        <cSitCNC xsi:nil=\"true\" />\n        <xSitCadMun>1</xSitCadMun>\n        <xMotivoSitCadMun>Motivo</xMotivoSitCadMun>\n      </infContrib>\n    </CadastroMunicipal>\n  </ListaCadastroMunicipal>\n</CadastroMunicipalResponse>"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1522556-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1522556-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "NENHUM_DOCUMENTO_LOCALIZADO",
+                                    "Alertas": [],
+                                    "Erros": [],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1522556-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": "<LoteConsultaCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1522556-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteConsultaCNCResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": "<LoteConsultaCNCResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1522556-03:00</DataHoraProcessamento>\n  <StatusProcessamento>NENHUM_DOCUMENTO_LOCALIZADO</StatusProcessamento>\n  <Alertas />\n  <Erros />\n</LoteConsultaCNCResponse>"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "REJEICAO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1523187-03:00"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "REJEICAO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1523187-03:00"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": {
+                                    "StatusProcessamento": "REJEICAO",
+                                    "Alertas": [],
+                                    "Erros": [
+                                        {
+                                            "Mensagem": {},
+                                            "Codigo": "E3317",
+                                            "Descricao": "Certificado expirado"
+                                        }
+                                    ],
+                                    "TipoAmbiente": "HOMOLOGACAO",
+                                    "VersaoAplicativo": "1.0.0.0",
+                                    "DataHoraProcessamento": "2025-12-31T21:44:28.1523187-03:00"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1523187-03:00</DataHoraProcessamento>\n  <StatusProcessamento>REJEICAO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</CadastroMunicipalResponse>"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoteConsultaCNCResponse"
+                                },
+                                "example": "<CadastroMunicipalResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TipoAmbiente>2</TipoAmbiente>\n  <VersaoAplicativo>1.0.0.0</VersaoAplicativo>\n  <DataHoraProcessamento>2025-12-31T21:44:28.1523187-03:00</DataHoraProcessamento>\n  <StatusProcessamento>REJEICAO</StatusProcessamento>\n  <Alertas />\n  <Erros>\n    <MensagemProcessamento>\n      <cMsg>E3317</cMsg>\n      <xDesc>Certificado expirado</xDesc>\n    </MensagemProcessamento>\n  </Erros>\n</CadastroMunicipalResponse>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ConsultaCNC": {
+                "type": "object",
+                "properties": {
+                    "NSU": {
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "ArquivoXml": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Enum": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ExemploRetornoSucessoCadastro": {
+                "type": "object",
+                "additionalProperties": false
+            },
+            "LoteConsultaCNCResponse": {
+                "type": "object",
+                "properties": {
+                    "TipoAmbiente": {
+                        "$ref": "#/components/schemas/TipoAmbiente"
+                    },
+                    "VersaoAplicativo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "DataHoraProcessamento": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "StatusProcessamento": {
+                        "$ref": "#/components/schemas/StatusProcessamentoConsulta"
+                    },
+                    "Alertas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "Erros": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MensagemProcessamento"
+                        },
+                        "nullable": true
+                    },
+                    "LoteConsultaCNC": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ConsultaCNC"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MensagemProcessamento": {
+                "type": "object",
+                "properties": {
+                    "Mensagem": {
+                        "$ref": "#/components/schemas/Enum"
+                    },
+                    "Parametros": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "Codigo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Descricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Complemento": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "StatusProcessamentoConsulta": {
+                "enum": [
+                    "REJEICAO",
+                    "NENHUM_DOCUMENTO_LOCALIZADO",
+                    "DOCUMENTOS_LOCALIZADOS"
+                ],
+                "type": "string"
+            },
+            "TipoAmbiente": {
+                "enum": ["PRODUCAO", "HOMOLOGACAO"],
+                "type": "string"
+            }
+        }
     }
-  },
-  "components": {
-    "schemas": {
-      "ConsultaCNC": {
-        "type": "object",
-        "properties": {
-          "NSU": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "ArquivoXml": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Enum": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ExemploRetornoSucessoCadastro": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "LoteConsultaCNCResponse": {
-        "type": "object",
-        "properties": {
-          "TipoAmbiente": {
-            "$ref": "#/components/schemas/TipoAmbiente"
-          },
-          "VersaoAplicativo": {
-            "type": "string",
-            "nullable": true
-          },
-          "DataHoraProcessamento": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "StatusProcessamento": {
-            "$ref": "#/components/schemas/StatusProcessamentoConsulta"
-          },
-          "Alertas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "Erros": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MensagemProcessamento"
-            },
-            "nullable": true
-          },
-          "LoteConsultaCNC": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConsultaCNC"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MensagemProcessamento": {
-        "type": "object",
-        "properties": {
-          "Mensagem": {
-            "$ref": "#/components/schemas/Enum"
-          },
-          "Parametros": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "Codigo": {
-            "type": "string",
-            "nullable": true
-          },
-          "Descricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "Complemento": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "StatusProcessamentoConsulta": {
-        "enum": [
-          "REJEICAO",
-          "NENHUM_DOCUMENTO_LOCALIZADO",
-          "DOCUMENTOS_LOCALIZADOS"
-        ],
-        "type": "string"
-      },
-      "TipoAmbiente": {
-        "enum": [
-          "PRODUCAO",
-          "HOMOLOGACAO"
-        ],
-        "type": "string"
-      }
-    }
-  }
 }

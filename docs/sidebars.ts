@@ -8,7 +8,12 @@ const sidebars: SidebarsConfig = {
         {
             type: "category",
             label: "Guias Práticos",
-            items: ["guides/emitir", "guides/consultar", "guides/eventos"],
+            items: [
+                "guides/emitir",
+                "guides/consultar",
+                "guides/eventos",
+                "guides/substituicao",
+            ],
         },
         {
             type: "category",

@@ -1,1079 +1,1024 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API NFS-e - ADN Parâmetros Municipais",
-    "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a parametrização de municípios.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.",
-    "version": "v1",
-    "x-logo": {
-      "url": "/parametrizacao/images/logo_nfse_vertical.png",
-      "altText": "Logo da API",
-      "backgroundColor": "#FFFFFF"
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API NFS-e - ADN Parâmetros Municipais",
+        "description": "# Apresentação\n Bem-vindo a documentação técnica da API do Projeto Nota Fiscal de Serviços Eletrônica (NFS-e) que trata a parametrização de municípios.\n Aqui você encontrará informações detalhadas sobre os endpoints, parâmetros, respostas e exemplos de uso.",
+        "version": "v1",
+        "x-logo": {
+            "url": "/parametrizacao/images/logo_nfse_vertical.png",
+            "altText": "Logo da API",
+            "backgroundColor": "#FFFFFF"
+        }
+    },
+    "servers": [
+        {
+            "url": "/parametrizacao"
+        }
+    ],
+    "paths": {
+        "/{codigoMunicipio}/{codigoServico}/{competencia}/aliquota": {
+            "get": {
+                "tags": ["Aliquotas"],
+                "summary": "Consulta alíquotas",
+                "description": "Retorna uma alíquota do ISSQN parametrizada de um município a partir desta consulta.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "codigoServico",
+                        "in": "path",
+                        "description": "Código do serviço",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "competencia",
+                        "in": "path",
+                        "description": "Data de competência",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/{codigoServico}/historicoaliquotas": {
+            "get": {
+                "tags": ["Aliquotas"],
+                "summary": "Consulta histórico de alíquotas",
+                "description": "Retorna histórico de alíquotas do ISSQN parametrizadas de um município a partir de um código de município e código de serviço.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "codigoServico",
+                        "in": "path",
+                        "description": "Código do serviço",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/{numeroBeneficio}/{competencia}/beneficio": {
+            "get": {
+                "tags": ["Beneficio"],
+                "summary": "Consulta benefício municipal",
+                "description": "Retorna os parâmetros de um número de benefício municipal a partir desta consulta.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "numeroBeneficio",
+                        "in": "path",
+                        "description": "Número do benefício municipal",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "competencia",
+                        "in": "path",
+                        "description": "Data de competência",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/beneficiomunicipal/{idManut}": {
+            "post": {
+                "tags": ["Beneficio"],
+                "summary": "Alteração de parâmetros de benefícios municipais",
+                "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários dos beneficios municipais",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idManut",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/convenio": {
+            "get": {
+                "tags": ["Convenio"],
+                "summary": "Consulta convênios municipais",
+                "description": "Retorna os parâmetros do convênio de um município a partir desta consulta.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/{codigoServico}/{competencia}/regimes_especiais": {
+            "get": {
+                "tags": ["RegimesEspeciais"],
+                "summary": "Consulta regimes especiais",
+                "description": "Retorna os parâmetros de regimes especiais de tributação de um município a partir desta consulta.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "codigoServico",
+                        "in": "path",
+                        "description": "Código do serviço",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "competencia",
+                        "in": "path",
+                        "description": "Data de competência",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/regimes_especiais/{idManut}": {
+            "post": {
+                "tags": ["RegimesEspeciais"],
+                "summary": "Alteração parâmetros regimes especiais",
+                "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários de regimes especiais",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idManut",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/{competencia}/retencoes": {
+            "get": {
+                "tags": ["Retencoes"],
+                "summary": "Consulta retenções município",
+                "description": "Retorna os parâmetros para retenções do ISSQN de um município a partir desta consulta.",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "description": "Código do município",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "competencia",
+                        "in": "path",
+                        "description": "Data de competencia",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{codigoMunicipio}/retencoes/{idManut}": {
+            "post": {
+                "tags": ["Retencoes"],
+                "summary": "Alteração de parametros de retenções municipais",
+                "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários das retenções municipais",
+                "parameters": [
+                    {
+                        "name": "codigoMunicipio",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idManut",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParamPostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Aliquota": {
+                "type": "object",
+                "properties": {
+                    "Incidencia": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "Aliq": {
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "DtIni": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "DtFim": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Beneficio": {
+                "type": "object",
+                "properties": {
+                    "codigoBeneficio": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "descricao": {
+                        "type": "string",
+                        "description": "",
+                        "nullable": true
+                    },
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "tipoBeneficio": {
+                        "$ref": "#/components/schemas/TipoBeneficioMunicipal"
+                    },
+                    "tipoReducaoBC": {
+                        "$ref": "#/components/schemas/TipoReducaoBaseDeCalculo"
+                    },
+                    "reducaoPercentualBC": {
+                        "type": "number",
+                        "description": "",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "aliquotaDiferenciada": {
+                        "type": "number",
+                        "description": "",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "restritoAoMunicipio": {
+                        "type": "boolean",
+                        "description": "",
+                        "nullable": true
+                    },
+                    "servicos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BeneficioServico"
+                        },
+                        "description": "",
+                        "nullable": true
+                    },
+                    "contribuintes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BeneficioInscricao"
+                        },
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "BeneficioInscricao": {
+                "type": "object",
+                "properties": {
+                    "tipoInscricao": {
+                        "$ref": "#/components/schemas/TipoInscricao"
+                    },
+                    "inscricao": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "BeneficioServico": {
+                "type": "object",
+                "properties": {
+                    "codigoServico": {
+                        "type": "string",
+                        "description": "",
+                        "nullable": true
+                    },
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ParamPostRequest": {
+                "type": "object",
+                "properties": {
+                    "tipoAmbiente": {
+                        "$ref": "#/components/schemas/TipoAmbiente"
+                    },
+                    "paramXmlGZipB64": {
+                        "type": "string",
+                        "description": "PARAM compactado no padrão gZip (base64Binary)",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ParametrosConfiguracaoConvenio": {
+                "type": "object",
+                "properties": {
+                    "tipoConvenioDeserializationSetter": {
+                        "$ref": "#/components/schemas/TipoConvenio"
+                    },
+                    "aderenteAmbienteNacional": {
+                        "$ref": "#/components/schemas/TipoSimNao"
+                    },
+                    "aderenteEmissorNacional": {
+                        "$ref": "#/components/schemas/TipoSimNao"
+                    },
+                    "situacaoEmissaoPadraoContribuintesRFB": {
+                        "$ref": "#/components/schemas/TipoSituacaoEmissaoPadraoContribuintesRFB"
+                    },
+                    "aderenteMAN": {
+                        "$ref": "#/components/schemas/TipoSimNao"
+                    },
+                    "permiteAproveitametoDeCreditos": {
+                        "type": "boolean",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "RegimeEspecial": {
+                "type": "object",
+                "properties": {
+                    "situacao": {
+                        "$ref": "#/components/schemas/TipoConfiguracaoRegimeEspecial"
+                    },
+                    "dataInicio": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFim": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "observacoes": {
+                        "type": "string",
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "ResultadoConsultaAliquotas": {
+                "type": "object",
+                "properties": {
+                    "mensagem": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "aliquotas": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Aliquota"
+                            }
+                        },
+                        "description": "Alíquotas",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Resultado da consulta de alíquotas"
+            },
+            "ResultadoConsultaBeneficio": {
+                "type": "object",
+                "properties": {
+                    "mensagem": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "beneficio": {
+                        "$ref": "#/components/schemas/Beneficio"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Resultado da consulta dos benefícios municipais"
+            },
+            "ResultadoConsultaConfiguracoesConvenio": {
+                "type": "object",
+                "properties": {
+                    "mensagem": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "parametrosConvenio": {
+                        "$ref": "#/components/schemas/ParametrosConfiguracaoConvenio"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Resultado da consulta dos convênios municipais"
+            },
+            "ResultadoConsultaRegimesEspeciais": {
+                "type": "object",
+                "properties": {
+                    "mensagem": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "regimesEspeciais": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/RegimeEspecial"
+                                }
+                            }
+                        },
+                        "description": "Regimes especiais",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Resultado da consulta de regimes especiais"
+            },
+            "ResultadoConsultaRetencoes": {
+                "type": "object",
+                "properties": {
+                    "mensagem": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "retencoes": {
+                        "$ref": "#/components/schemas/Retencoes"
+                    }
+                },
+                "additionalProperties": false,
+                "description": "Resultado da consulta de retenções"
+            },
+            "RetencaoArtigoSexto": {
+                "type": "object",
+                "properties": {
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "RetencaoMunicipal": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string",
+                        "description": "",
+                        "nullable": true
+                    },
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "tiposRetencao": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TipoRetencaoISSQN"
+                        },
+                        "description": "",
+                        "nullable": true
+                    },
+                    "servicos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RetencaoMunicipalPorCodigoServico"
+                        },
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "RetencaoMunicipalPorCodigoServico": {
+                "type": "object",
+                "properties": {
+                    "codigoCompleto": {
+                        "type": "string",
+                        "description": "",
+                        "nullable": true
+                    },
+                    "historico": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RetencaoMunicipalServico"
+                        },
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "RetencaoMunicipalServico": {
+                "type": "object",
+                "properties": {
+                    "dataInicioVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time"
+                    },
+                    "dataFimVigencia": {
+                        "type": "string",
+                        "description": "",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "Retencoes": {
+                "type": "object",
+                "properties": {
+                    "artigoSexto": {
+                        "$ref": "#/components/schemas/RetencoesArtigoSexto"
+                    },
+                    "retencoesMunicipais": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RetencaoMunicipal"
+                        },
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "RetencoesArtigoSexto": {
+                "type": "object",
+                "properties": {
+                    "habilitado": {
+                        "type": "boolean",
+                        "description": ""
+                    },
+                    "historico": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RetencaoArtigoSexto"
+                        },
+                        "description": "",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "description": ""
+            },
+            "TipoAmbiente": {
+                "enum": [1, 2],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoBeneficioMunicipal": {
+                "enum": [1, 2, 3, 4],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoConfiguracaoRegimeEspecial": {
+                "enum": [1, 2, 3],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoConvenio": {
+                "enum": [1, 2],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoInscricao": {
+                "enum": [0, 1, 2, 3, 4],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoReducaoBaseDeCalculo": {
+                "enum": [1, 2],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoRetencaoISSQN": {
+                "enum": [0, 1, 2, 3],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoSimNao": {
+                "enum": [0, 1, -1],
+                "type": "integer",
+                "format": "int32"
+            },
+            "TipoSituacaoEmissaoPadraoContribuintesRFB": {
+                "enum": [0, 1, -1],
+                "type": "integer",
+                "format": "int32"
+            }
+        }
     }
-  },
-  "servers": [
-    {
-      "url": "/parametrizacao"
-    }
-  ],
-  "paths": {
-    "/{codigoMunicipio}/{codigoServico}/{competencia}/aliquota": {
-      "get": {
-        "tags": [
-          "Aliquotas"
-        ],
-        "summary": "Consulta alíquotas",
-        "description": "Retorna uma alíquota do ISSQN parametrizada de um município a partir desta consulta.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "codigoServico",
-            "in": "path",
-            "description": "Código do serviço",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "competencia",
-            "in": "path",
-            "description": "Data de competência",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/{codigoServico}/historicoaliquotas": {
-      "get": {
-        "tags": [
-          "Aliquotas"
-        ],
-        "summary": "Consulta histórico de alíquotas",
-        "description": "Retorna histórico de alíquotas do ISSQN parametrizadas de um município a partir de um código de município e código de serviço.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "codigoServico",
-            "in": "path",
-            "description": "Código do serviço",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaAliquotas"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/{numeroBeneficio}/{competencia}/beneficio": {
-      "get": {
-        "tags": [
-          "Beneficio"
-        ],
-        "summary": "Consulta benefício municipal",
-        "description": "Retorna os parâmetros de um número de benefício municipal a partir desta consulta.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "numeroBeneficio",
-            "in": "path",
-            "description": "Número do benefício municipal",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "competencia",
-            "in": "path",
-            "description": "Data de competência",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaBeneficio"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/beneficiomunicipal/{idManut}": {
-      "post": {
-        "tags": [
-          "Beneficio"
-        ],
-        "summary": "Alteração de parâmetros de benefícios municipais",
-        "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários dos beneficios municipais",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "idManut",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/convenio": {
-      "get": {
-        "tags": [
-          "Convenio"
-        ],
-        "summary": "Consulta convênios municipais",
-        "description": "Retorna os parâmetros do convênio de um município a partir desta consulta.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaConfiguracoesConvenio"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/{codigoServico}/{competencia}/regimes_especiais": {
-      "get": {
-        "tags": [
-          "RegimesEspeciais"
-        ],
-        "summary": "Consulta regimes especiais",
-        "description": "Retorna os parâmetros de regimes especiais de tributação de um município a partir desta consulta.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "codigoServico",
-            "in": "path",
-            "description": "Código do serviço",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "competencia",
-            "in": "path",
-            "description": "Data de competência",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRegimesEspeciais"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/regimes_especiais/{idManut}": {
-      "post": {
-        "tags": [
-          "RegimesEspeciais"
-        ],
-        "summary": "Alteração parâmetros regimes especiais",
-        "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários de regimes especiais",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "idManut",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/{competencia}/retencoes": {
-      "get": {
-        "tags": [
-          "Retencoes"
-        ],
-        "summary": "Consulta retenções município",
-        "description": "Retorna os parâmetros para retenções do ISSQN de um município a partir desta consulta.",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "description": "Código do município",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "competencia",
-            "in": "path",
-            "description": "Data de competencia",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultadoConsultaRetencoes"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/{codigoMunicipio}/retencoes/{idManut}": {
-      "post": {
-        "tags": [
-          "Retencoes"
-        ],
-        "summary": "Alteração de parametros de retenções municipais",
-        "description": "Recepciona um arquivo PARAM para a manutenção de beneficiários das retenções municipais",
-        "parameters": [
-          {
-            "name": "codigoMunicipio",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "idManut",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Estrutura contendo um arquivo PARAM compactado no padrão gZip (base64Binary)",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ParamPostRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Aliquota": {
-        "type": "object",
-        "properties": {
-          "Incidencia": {
-            "type": "string",
-            "nullable": true
-          },
-          "Aliq": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "DtIni": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "DtFim": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Beneficio": {
-        "type": "object",
-        "properties": {
-          "codigoBeneficio": {
-            "type": "string",
-            "nullable": true
-          },
-          "descricao": {
-            "type": "string",
-            "description": "",
-            "nullable": true
-          },
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          },
-          "tipoBeneficio": {
-            "$ref": "#/components/schemas/TipoBeneficioMunicipal"
-          },
-          "tipoReducaoBC": {
-            "$ref": "#/components/schemas/TipoReducaoBaseDeCalculo"
-          },
-          "reducaoPercentualBC": {
-            "type": "number",
-            "description": "",
-            "format": "double",
-            "nullable": true
-          },
-          "aliquotaDiferenciada": {
-            "type": "number",
-            "description": "",
-            "format": "double",
-            "nullable": true
-          },
-          "restritoAoMunicipio": {
-            "type": "boolean",
-            "description": "",
-            "nullable": true
-          },
-          "servicos": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BeneficioServico"
-            },
-            "description": "",
-            "nullable": true
-          },
-          "contribuintes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BeneficioInscricao"
-            },
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "BeneficioInscricao": {
-        "type": "object",
-        "properties": {
-          "tipoInscricao": {
-            "$ref": "#/components/schemas/TipoInscricao"
-          },
-          "inscricao": {
-            "type": "string",
-            "nullable": true
-          },
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "BeneficioServico": {
-        "type": "object",
-        "properties": {
-          "codigoServico": {
-            "type": "string",
-            "description": "",
-            "nullable": true
-          },
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParamPostRequest": {
-        "type": "object",
-        "properties": {
-          "tipoAmbiente": {
-            "$ref": "#/components/schemas/TipoAmbiente"
-          },
-          "paramXmlGZipB64": {
-            "type": "string",
-            "description": "PARAM compactado no padrão gZip (base64Binary)",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ParametrosConfiguracaoConvenio": {
-        "type": "object",
-        "properties": {
-          "tipoConvenioDeserializationSetter": {
-            "$ref": "#/components/schemas/TipoConvenio"
-          },
-          "aderenteAmbienteNacional": {
-            "$ref": "#/components/schemas/TipoSimNao"
-          },
-          "aderenteEmissorNacional": {
-            "$ref": "#/components/schemas/TipoSimNao"
-          },
-          "situacaoEmissaoPadraoContribuintesRFB": {
-            "$ref": "#/components/schemas/TipoSituacaoEmissaoPadraoContribuintesRFB"
-          },
-          "aderenteMAN": {
-            "$ref": "#/components/schemas/TipoSimNao"
-          },
-          "permiteAproveitametoDeCreditos": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "RegimeEspecial": {
-        "type": "object",
-        "properties": {
-          "situacao": {
-            "$ref": "#/components/schemas/TipoConfiguracaoRegimeEspecial"
-          },
-          "dataInicio": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFim": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          },
-          "observacoes": {
-            "type": "string",
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "ResultadoConsultaAliquotas": {
-        "type": "object",
-        "properties": {
-          "mensagem": {
-            "type": "string",
-            "nullable": true
-          },
-          "aliquotas": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/Aliquota"
-              }
-            },
-            "description": "Alíquotas",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "Resultado da consulta de alíquotas"
-      },
-      "ResultadoConsultaBeneficio": {
-        "type": "object",
-        "properties": {
-          "mensagem": {
-            "type": "string",
-            "nullable": true
-          },
-          "beneficio": {
-            "$ref": "#/components/schemas/Beneficio"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Resultado da consulta dos benefícios municipais"
-      },
-      "ResultadoConsultaConfiguracoesConvenio": {
-        "type": "object",
-        "properties": {
-          "mensagem": {
-            "type": "string",
-            "nullable": true
-          },
-          "parametrosConvenio": {
-            "$ref": "#/components/schemas/ParametrosConfiguracaoConvenio"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Resultado da consulta dos convênios municipais"
-      },
-      "ResultadoConsultaRegimesEspeciais": {
-        "type": "object",
-        "properties": {
-          "mensagem": {
-            "type": "string",
-            "nullable": true
-          },
-          "regimesEspeciais": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/RegimeEspecial"
-                }
-              }
-            },
-            "description": "Regimes especiais",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "Resultado da consulta de regimes especiais"
-      },
-      "ResultadoConsultaRetencoes": {
-        "type": "object",
-        "properties": {
-          "mensagem": {
-            "type": "string",
-            "nullable": true
-          },
-          "retencoes": {
-            "$ref": "#/components/schemas/Retencoes"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Resultado da consulta de retenções"
-      },
-      "RetencaoArtigoSexto": {
-        "type": "object",
-        "properties": {
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "RetencaoMunicipal": {
-        "type": "object",
-        "properties": {
-          "descricao": {
-            "type": "string",
-            "description": "",
-            "nullable": true
-          },
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          },
-          "tiposRetencao": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TipoRetencaoISSQN"
-            },
-            "description": "",
-            "nullable": true
-          },
-          "servicos": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RetencaoMunicipalPorCodigoServico"
-            },
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "RetencaoMunicipalPorCodigoServico": {
-        "type": "object",
-        "properties": {
-          "codigoCompleto": {
-            "type": "string",
-            "description": "",
-            "nullable": true
-          },
-          "historico": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RetencaoMunicipalServico"
-            },
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "RetencaoMunicipalServico": {
-        "type": "object",
-        "properties": {
-          "dataInicioVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time"
-          },
-          "dataFimVigencia": {
-            "type": "string",
-            "description": "",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "Retencoes": {
-        "type": "object",
-        "properties": {
-          "artigoSexto": {
-            "$ref": "#/components/schemas/RetencoesArtigoSexto"
-          },
-          "retencoesMunicipais": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RetencaoMunicipal"
-            },
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "RetencoesArtigoSexto": {
-        "type": "object",
-        "properties": {
-          "habilitado": {
-            "type": "boolean",
-            "description": ""
-          },
-          "historico": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RetencaoArtigoSexto"
-            },
-            "description": "",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": ""
-      },
-      "TipoAmbiente": {
-        "enum": [
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoBeneficioMunicipal": {
-        "enum": [
-          1,
-          2,
-          3,
-          4
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoConfiguracaoRegimeEspecial": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoConvenio": {
-        "enum": [
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoInscricao": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoReducaoBaseDeCalculo": {
-        "enum": [
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoRetencaoISSQN": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoSimNao": {
-        "enum": [
-          0,
-          1,
-          -1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TipoSituacaoEmissaoPadraoContribuintesRFB": {
-        "enum": [
-          0,
-          1,
-          -1
-        ],
-        "type": "integer",
-        "format": "int32"
-      }
-    }
-  }
 }

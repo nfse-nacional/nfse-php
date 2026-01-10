@@ -16,11 +16,11 @@
     ],
     "require": {
         "php": "^8.4",
+        "cuyz/valinor": "^2.3",
         "guzzlehttp/guzzle": "^7.9",
         "illuminate/support": "^12.0",
         "illuminate/translation": "^12.0",
-        "illuminate/validation": "^12.0",
-        "spatie/data-transfer-object": "^3.9"
+        "illuminate/validation": "^12.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -79,7 +79,7 @@
             "*.tar",
             "*.gz",
             "*.rar",
-            ".DS_Store"
+            "*.DS_Store"
         ]
     },
     "minimum-stability": "dev",

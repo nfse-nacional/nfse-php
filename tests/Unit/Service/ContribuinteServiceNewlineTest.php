@@ -1,6 +1,6 @@
 <?php
 
-use Nfse\Dto\Http\EmissaoNfseResponse;
+use Nfse\Http\Dto\EmissaoNfseResponse;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Client\AdnClient;
@@ -49,7 +49,7 @@ it('removes newlines from signed xml before emission', function () {
 
     // Setup input data
     $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.00'],
         'infDPS' => [
             '@attributes' => ['Id' => $idDps],

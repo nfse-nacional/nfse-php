@@ -22,7 +22,7 @@ class MunicipioService
     /**
      * ADN Município - Baixa arrecadação e notas do município via NSU
      */
-    public function baixarDfe(int $nsu, ?TipoNsu $tipoNSU = null, bool $lote = true): \Nfse\Dto\Http\DistribuicaoDfeResponse
+    public function baixarDfe(int $nsu, ?TipoNsu $tipoNSU = null, bool $lote = true): \Nfse\Http\Dto\DistribuicaoDfeResponse
     {
         return $this->adnClient->baixarDfeMunicipio($nsu, $tipoNSU, $lote);
     }
@@ -43,17 +43,17 @@ class MunicipioService
     /**
      * ADN Parâmetros Municipais
      */
-    public function consultarParametrosConvenio(string $codigoMunicipio): \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse
+    public function consultarParametrosConvenio(string $codigoMunicipio): \Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse
     {
         return $this->adnClient->consultarParametrosConvenio($codigoMunicipio);
     }
 
-    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
+    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarAliquota($codigoMunicipio, $codigoServico, $competencia);
     }
 
-    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarHistoricoAliquotas($codigoMunicipio, $codigoServico);
     }

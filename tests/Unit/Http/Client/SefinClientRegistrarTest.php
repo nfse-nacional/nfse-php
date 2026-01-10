@@ -8,7 +8,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Nfse\Dto\Http\RegistroEventoResponse;
+use Nfse\Http\Dto\RegistroEventoResponse;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Client\SefinClient;
 use Nfse\Http\Exceptions\NfseApiException;

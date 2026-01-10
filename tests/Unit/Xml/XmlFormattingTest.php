@@ -31,7 +31,7 @@ test('XmlSigner should not contain newlines, carriage returns or tabs', function
 
 test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', function () {
     $builder = new DpsXmlBuilder;
-    $dpsData = new DpsData([
+    DpsData::from([
         'versao' => '1.00',
         'infDPS' => [
             'Id' => 'DPS123',

@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('serializes dps data to xml correctly', function () {
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],

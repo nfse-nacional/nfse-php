@@ -6,8 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Nfse\Dto\Http\ConsultaNfseResponse;
-use Nfse\Dto\Http\EmissaoNfseResponse;
+use Nfse\Http\Dto\ConsultaNfseResponse;
+use Nfse\Http\Dto\EmissaoNfseResponse;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Client\SefinClient;
 use Nfse\Http\NfseContext;
@@ -108,7 +108,7 @@ class SefinClientTest extends TestCase
 
         $response = $client->consultarDps('DPS123');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ConsultaDpsResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ConsultaDpsResponse::class, $response);
         $this->assertEquals('DPS123', $response->idDps);
     }
 
@@ -127,7 +127,7 @@ class SefinClientTest extends TestCase
 
         $response = $client->registrarEvento('CHAVE123', 'payload');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\RegistroEventoResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\RegistroEventoResponse::class, $response);
         $this->assertEquals('base64', $response->eventoXmlGZipB64);
     }
 
@@ -146,7 +146,7 @@ class SefinClientTest extends TestCase
 
         $response = $client->consultarEvento('CHAVE123', 101101, 1);
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\RegistroEventoResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\RegistroEventoResponse::class, $response);
     }
 
     public function test_listar_eventos()

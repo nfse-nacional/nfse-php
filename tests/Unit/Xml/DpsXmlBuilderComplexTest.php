@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml with complex structures', function () {
-    $dpsData = new DpsData([
+    DpsData::from([
         '@versao' => '1.0',
         'infDPS' => [
             '@Id' => 'DPS123',
@@ -130,7 +130,7 @@ it('can build xml with complex structures', function () {
 });
 
 it('can build xml with indicadorTotalTributos', function () {
-    $dpsData = new DpsData([
+    DpsData::from([
         '@versao' => '1.0',
         'infDPS' => [
             '@Id' => 'DPS123',
@@ -162,7 +162,7 @@ it('can build xml with indicadorTotalTributos', function () {
 });
 
 it('can build xml with percentualTotalTributosSN', function () {
-    $dpsData = new DpsData([
+    DpsData::from([
         '@versao' => '1.0',
         'infDPS' => [
             '@Id' => 'DPS123',

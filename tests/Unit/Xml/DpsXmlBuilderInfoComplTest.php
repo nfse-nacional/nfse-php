@@ -9,7 +9,7 @@ use Nfse\Xml\DpsXmlBuilder;
 it('adds infoCompl element when informacoesComplementares is provided', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
             '@attributes' => ['Id' => $id],
@@ -95,7 +95,7 @@ it('adds infoCompl element when informacoesComplementares is provided', function
 it('does not add infoCompl element when descricaoInformacoesComplementares is null', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
             '@attributes' => ['Id' => $id],

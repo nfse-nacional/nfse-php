@@ -49,7 +49,7 @@ class AdnClientTest extends TestCase
 
         $response = $client->consultarParametrosConvenio('3550308');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse::class, $response);
         $this->assertEquals('Sucesso', $response->mensagem);
         $this->assertEquals(1, $response->parametrosConvenio->aderenteAmbienteNacional);
     }
@@ -70,7 +70,7 @@ class AdnClientTest extends TestCase
 
         $response = $client->baixarDfeContribuinte(100);
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\DistribuicaoDfeResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\DistribuicaoDfeResponse::class, $response);
         $this->assertEquals(100, $response->ultimoNsu);
     }
 
@@ -113,7 +113,7 @@ class AdnClientTest extends TestCase
 
         $response = $client->baixarDfeMunicipio(100);
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\DistribuicaoDfeResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\DistribuicaoDfeResponse::class, $response);
         $this->assertEquals(100, $response->ultimoNsu);
     }
 
@@ -147,7 +147,7 @@ class AdnClientTest extends TestCase
 
         $response = $client->consultarAliquota('3550308', '01.01.00.001', '2025-01-01');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ResultadoConsultaAliquotasResponse::class, $response);
         $this->assertArrayHasKey('01.01.00.001', $response->aliquotas);
         $this->assertEquals(5.0, $response->aliquotas['01.01.00.001'][0]->aliquota);
     }
@@ -165,7 +165,7 @@ class AdnClientTest extends TestCase
 
         $response = $client->consultarHistoricoAliquotas('3550308', '01.01.00.001');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ResultadoConsultaAliquotasResponse::class, $response);
     }
 
     public function test_consultar_beneficio()

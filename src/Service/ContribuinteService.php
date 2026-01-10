@@ -82,7 +82,7 @@ class ContribuinteService
         return $parser->parse($nfseXml);
     }
 
-    public function consultarDps(string $idDps): \Nfse\Dto\Http\ConsultaDpsResponse
+    public function consultarDps(string $idDps): \Nfse\Http\Dto\ConsultaDpsResponse
     {
         return $this->sefinClient->consultarDps($idDps);
     }
@@ -97,12 +97,12 @@ class ContribuinteService
         return $this->sefinClient->verificarDps($idDps);
     }
 
-    public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): \Nfse\Dto\Http\RegistroEventoResponse
+    public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): \Nfse\Http\Dto\RegistroEventoResponse
     {
         return $this->sefinClient->registrarEvento($chaveAcesso, $eventoXmlGZipB64);
     }
 
-    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Dto\Http\RegistroEventoResponse
+    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Http\Dto\RegistroEventoResponse
     {
         return $this->sefinClient->consultarEvento($chaveAcesso, $tipoEvento, $numSeqEvento);
     }
@@ -119,7 +119,7 @@ class ContribuinteService
     /**
      * ADN Contribuinte - Baixa documentos via NSU
      */
-    public function baixarDfe(int $nsu, ?string $cnpjConsulta = null, bool $lote = true): \Nfse\Dto\Http\DistribuicaoDfeResponse
+    public function baixarDfe(int $nsu, ?string $cnpjConsulta = null, bool $lote = true): \Nfse\Http\Dto\DistribuicaoDfeResponse
     {
         return $this->adnClient->baixarDfeContribuinte($nsu, $cnpjConsulta, $lote);
     }
@@ -132,17 +132,17 @@ class ContribuinteService
         return $this->adnClient->consultarEventosContribuinte($chaveAcesso);
     }
 
-    public function consultarParametrosConvenio(string $codigoMunicipio): \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse
+    public function consultarParametrosConvenio(string $codigoMunicipio): \Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse
     {
         return $this->adnClient->consultarParametrosConvenio($codigoMunicipio);
     }
 
-    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
+    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarAliquota($codigoMunicipio, $codigoServico, $competencia);
     }
 
-    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse
     {
         return $this->adnClient->consultarHistoricoAliquotas($codigoMunicipio, $codigoServico);
     }

@@ -2,8 +2,8 @@
 
 namespace Nfse\Tests\Unit\Service;
 
-use Nfse\Dto\Http\ConsultaNfseResponse;
-use Nfse\Dto\Http\EmissaoNfseResponse;
+use Nfse\Http\Dto\ConsultaNfseResponse;
+use Nfse\Http\Dto\EmissaoNfseResponse;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Client\AdnClient;
@@ -51,7 +51,7 @@ class ContribuinteServiceTest extends TestCase
     public function test_emitir_nfse_success()
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
-        $dpsData = new DpsData([
+        DpsData::from([
             '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
                 '@attributes' => ['Id' => $idDps],
@@ -165,7 +165,7 @@ class ContribuinteServiceTest extends TestCase
     public function test_consultar_dps_success()
     {
         $idDps = 'DPS123';
-        $responseDto = new \Nfse\Dto\Http\ConsultaDpsResponse([
+        $responseDto = new \Nfse\Http\Dto\ConsultaDpsResponse([
             'tpAmb' => 2,
             'verAplic' => '1.0',
             'dhProc' => '2023-10-27T10:00:00',
@@ -198,7 +198,7 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_baixar_dfe_contribuinte()
     {
-        $responseDto = new \Nfse\Dto\Http\DistribuicaoDfeResponse(['ultNSU' => 100, 'lNSU' => []]);
+        $responseDto = new \Nfse\Http\Dto\DistribuicaoDfeResponse(['ultNSU' => 100, 'lNSU' => []]);
         $this->adnClientMock->expects($this->once())
             ->method('baixarDfeContribuinte')
             ->with(100)
@@ -211,9 +211,9 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_consultar_parametros_convenio()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse([
+        $response = new \Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse([
             'mensagem' => 'Sucesso',
-            'parametrosConvenio' => new \Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto(['tpConv' => 1]),
+            'parametrosConvenio' => new \Nfse\Http\Dto\ParametrosConfiguracaoConvenioDto(['tpConv' => 1]),
         ]);
 
         $this->adnClientMock->expects($this->once())
@@ -223,15 +223,15 @@ class ContribuinteServiceTest extends TestCase
 
         $result = $this->service->consultarParametrosConvenio('3550308');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse::class, $result);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse::class, $result);
         $this->assertEquals('Sucesso', $result->mensagem);
     }
 
     public function test_consultar_aliquota()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse([
+        $response = new \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse([
             'mensagem' => 'Sucesso',
-            'aliquotas' => ['01.01.00.001' => [new \Nfse\Dto\Http\AliquotaDto(['Aliq' => 5.0])]],
+            'aliquotas' => ['01.01.00.001' => [new \Nfse\Http\Dto\AliquotaDto(['Aliq' => 5.0])]],
         ]);
 
         $this->adnClientMock->expects($this->once())
@@ -241,13 +241,13 @@ class ContribuinteServiceTest extends TestCase
 
         $result = $this->service->consultarAliquota('3550308', '01.01.00.001', '2025-01-01T12:00:00');
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\ResultadoConsultaAliquotasResponse::class, $result);
+        $this->assertInstanceOf(\Nfse\Http\Dto\ResultadoConsultaAliquotasResponse::class, $result);
         $this->assertEquals('Sucesso', $result->mensagem);
     }
 
     public function test_registrar_evento()
     {
-        $response = new \Nfse\Dto\Http\RegistroEventoResponse([
+        $response = new \Nfse\Http\Dto\RegistroEventoResponse([
             'tpAmb' => 2,
             'verAplic' => '1.0',
             'dhProc' => '2023-10-27T10:00:00',
@@ -265,7 +265,7 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_consultar_evento()
     {
-        $response = new \Nfse\Dto\Http\RegistroEventoResponse([
+        $response = new \Nfse\Http\Dto\RegistroEventoResponse([
             'tpAmb' => 2,
             'verAplic' => '1.0',
             'dhProc' => '2023-10-27T10:00:00',
@@ -319,7 +319,7 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_consultar_historico_aliquotas()
     {
-        $response = new \Nfse\Dto\Http\ResultadoConsultaAliquotasResponse([
+        $response = new \Nfse\Http\Dto\ResultadoConsultaAliquotasResponse([
             'mensagem' => 'Sucesso',
             'aliquotas' => [],
         ]);
@@ -373,7 +373,7 @@ class ContribuinteServiceTest extends TestCase
     public function test_emitir_nfse_com_erros()
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
-        $dpsData = new DpsData([
+        DpsData::from([
             '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
                 '@attributes' => ['Id' => $idDps],
@@ -408,7 +408,7 @@ class ContribuinteServiceTest extends TestCase
     public function test_emitir_nfse_sem_xml()
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
-        $dpsData = new DpsData([
+        DpsData::from([
             '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
                 '@attributes' => ['Id' => $idDps],

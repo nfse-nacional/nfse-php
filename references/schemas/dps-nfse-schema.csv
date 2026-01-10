@@ -1,0 +1,1003 @@
+#,CAMINHO NO XML,CAMPO,"REGRAS DE NEGÓCIO PARA A NOTA FISCAL DE SERVIÇO ELETRÔNICA DO 
+SISTEMA NACIONAL NFS-e",,,,,,"NÍVEL
+DA REGRA","EMISSORES PÚBLICOS NACIONAIS NFS-e
+(SEFIN, WEB, APP)",,ADN NFS-e,,OBSERVAÇÕES DE NEGÓCIO
+,,,"Nível 1 - Regras de negócio para consistência do Leiaute NFS-e
+
+Nível 2 - Regras de Negócio gerais para todos os municípios aderentes ao SN NFS-e
+
+Nível 3 - Regras de Negócio específicas conforme legislação municipal do município parametrizada no SN NFS-e",,,,,,,"RNs EXECUTADAS NA RECEPÇÃO DE DPS EVIADAS PELOS EMITENTES (V),
+RNs EXECUTADAS NA GERAÇÃO DAS INFORMAÇÕES DE NFS-e PELOS EMISSORES PÚBLICOS NACIONAIS (V) E
+RNs NÃO EXECUTADAS (X)","NFS-e EMITIDA SOB CONDIÇÕES DE 
+DECISÃO JUDICIAL OU ADMINISTRATIVA (cStat = 102)
+RNs EXECUTADAS NA GERAÇÃO DE NFS-e PELOS
+EMISSORES PÚBLICOS NACIONAIS (SEFIN, WEB, APP)
+RNs EXECUTADAS (V)
+RNs NÃO EXECUTADAS (X)","RNs EXECUTADAS 
+NA RECEPÇÃO DE NFS-e COMPARTILHADAS 
+PELOS MUNICÍPIOS COM O 
+ADN NFS-e (V) 
+E
+RNs NÃO EXECUTADAS (X)","NFS-e EMITIDAS SOB CONDIÇÕES DE DECISÃO JUDICIAL OU ADMINISTRATIVA (cStat = 102)
+RNs EXECUTADAS 
+NA RECEPÇÃO DE NFS-e COMPARTILHADAS 
+PELOS MUNICÍPIOS COM O 
+ADN NFS-e (V) E
+RNs NÃO EXECUTADAS (X)",
+,,,REGRAS DE NEGÓCIO,,APLIC.,EFEITO,CÓD. ERRO,MSG. ERRO,,,,,,
+1,-,NFS-e,-,,-,-,-,-,-,-,-,-,-,-
+2,NFSe/,versao,Prazo de aceitação da versão do leiaute NFS-e ultrapassado.,,Obrig.,Rej.,E1260,O prazo de aceitação da versão do leiaute da NFS-e expirou.,1,V,V,V,V,-
+3,NFSe/,infNFSe,-,,-,-,-,-,-,-,-,-,-,-
+4,NFSe/infNFSe/,id,"O identificador da NFS-e é formado conforme a concatenação dos seguintes campos:
+""NFS"" + Cód.Mun. (7) + Amb.Ger. (1) + Tipo de Inscrição Federal (1) + Inscrição Federal (14 - CPF completar com 000 à esquerda) + nNFSe (13) + AnoMes Emis. (4) + Cód.Num. (9) + DV (1)
+
+Verificar se tipo de inscrição e inscrição, informados no identificador da NFS-e, estão corretamente correspondidos conforme o seguinte:
+
+Tipo de inscrição Federal = 1 / Inscrição Federal = CPF emitente da NFS-e;
+Tipo de inscrição Federal = 2 / Inscrição Federal = CNPJ emitente da NFS-e;
+
+Cód.Mun.Emi. é o código do município do endereço do emitente da NFS-e.""",,Obrig.,Rej.,E1263,Conteúdo informado no identificador da NFS-e difere da concatenação dos campos correspondentes que formam o identificador.,1,V,V,V,V,-
+5,,,Chave a acesso da NFS-e enviada já existe no ADN.,,Obrig.,Rej.,E1268,Chave de acesso informada para a NFS-e já foi compartilhada com o ADN.,1,V,V,V,V,-
+6,NFSe/infNFSe/,xLocEmi,-,,-,-,-,-,-,-,-,-,-,-
+7,NFSe/infNFSe/,xLocPrestacao,-,,-,-,-,-,-,-,-,-,-,-
+8,NFSe/infNFSe/,nNFSe,-,,-,-,-,-,-,-,-,-,-,-
+9,NFSe/infNFSe/,cLocIncid,"Não é permitido informar o código do local de incidência quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E1301,"Não é permitido informar o código do local de incidência quando o campo referente à tributação do ISSQN indicar imunidade, exportação ou não incidência.",1,V,X,V,X,-
+10,,,"É obrigatório informar o código do local de incidência quando o serviço prestado for uma operação tributável, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""1 - Operação Tributável"", (tribISSQN = 1).",,Obrig.,Rej.,E1305,É obrigatório informar o código do local de incidência quando o campo referente à tributação do ISSQN indicar Operação Tributável.,1,V,V,V,V,-
+11,,,"Se o código da localidade de incidência for informado na NFS-e, então ele deve existir nas tabelas
+de municípios do IBGE ou tabela de concessões de rodovia ou tabela de localidade geral do arquivo 
+ANEXO_A-MUNICIPIO_IBGE-PAISES_ISO2-SNNFSe.",,Obrig.,Rej.,E1309,O código do local de incidência do ISSQN não existe conforme a tabela de municípios IBGE ou tabela de concessões de rodovia ou tabela de localidade geral no ANEXO_A-MUNICIPIO_IBGE-PAISES_ISO2-SNNFSe.,1,V,V,V,V,-
+12,,,"Se o código de tributação nacional (cTribNac) corresponder a um subitem diferente de 200101 e 
+o local da prestação do serviço (cLocPrestacao) ""Águas Marítmas"" (código 0000000), 
+então o local de incidência (cLocIncid) deve ser igual ao código do município do endereço do prestador do serviço 
+(NFSe/infNFSe/DPS/infDPS/prest/end/endNac/cMun).",,Obrig.,Rej.,E1313,"A localidade de incidência para o ISSQN deve corresponder ao município do estabelecimento/domicílio do prestador do serviço, quando não for informado o código de tributação nacional (cTribNac) 200101, da lista nacional de serviços do Sistema Nacional NFS-e, e a localidade de prestação do serviço corresponder a ""Águas Marítimas"" (0000000).",2,V,X,V,X,-
+13,,,"Se o código de tributação nacional informado corresponder a um dos seguintes códigos: 
+030501, 070201, 070202, 070401, 070501, 070502, 070901, 070902, 071001, 071002, 071101, 071102, 071201, 071601, 071701, 071801, 071901, 110101, 110102, 110201, 110301, 110401, 110402, 120101, 120201, 120301, 120401, 120501, 120601, 120701, 120801, 120901, 120902, 120903, 121001, 121101, 121201, 121401, 121501, 121601, 121701, 160102, 160103, 160104, 160201, 171001, 171002, 
+então o codigo da localidade de incidência do ISSQN deve ser igual ao código do local de prestação do serviço informado na NFS-e depelo município.
+
+Exceto para os casos de Imunidade, Exportação de Serviço e Não Incidência (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E1317,"O local de incidência do ISSQN deve ser igual ao município da prestação do serviço (NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao)
+ do serviço informado na NFS-e compartilhada pelo município, quando informado qualquer código de tributação nacional cuja regra de incidência indique o local da prestação, conforme a tabela MUN.INCID_INFO.SERV. do ANEXO_I-SEFIN_ADN-DPS_NFSe-SNNFSe.",2,V,X,V,X,-
+14,,,"Se o código de tributação nacional informado corresponder a um dos seguintes códigos: 
+170501, 
+então o codigo do local de incidência do ISSQN deve ser igual ao código do município do endereço do tomador 
+(NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun) 
+ do serviço informado na NFS-e compartilhada pelo município.",,Obrig.,Rej.,E1321,O local de incidência do ISSQN deve ser igual ao município do endereço do tomador do serviço informado na NFS-e compartilhada pelo município (NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun).,2,V,X,V,X,-
+15,,,"Excetuados os códigos de tributação nacional:
+030501, 070201, 070202, 070401, 070501, 070502, 070901, 070902, 071001, 071002, 071101, 071102, 071201, 071601, 071701, 071801, 071901, 110101, 110102, 110201, 110301, 110401, 110402, 120101, 120201, 120301, 120401, 120501, 120601, 120701, 120801, 120901, 120902, 120903, 121001, 121101, 121201, 121401, 121501, 121601, 121701, 160102, 160103, 160104, 160201, 171001, 171002, 170501 e 990101,
+para os demais códigos de tributação, de acordo com a tabela MUN.INCID_INFO.SERV. do ANEXO_I-SEFIN_ADN-DPS_NFSe-SNNFSe, 
+o codigo da localidade de incidência do ISSQN deve ser igual ao
+código do município do endereço do emitente da NFS-e (NFSe/infNFSe/emit/endNac/cMun), 
+quanto o emitente for o prestador do serviço (tpEmit = 1),
+ ou código do município do endereço do prestador do serviço da DPS (NFSe/infNFSe/DPS/infDPS/prest/end/endNac/cMun),
+quando o emitente da NFS-e for o tomador ou intermediário (tpEmit = 2 ou 3).",,Obrig.,Rej.,E1325,"O local de incidência do ISSQN deve ser igual ao município do endereço do prestador (NFSe/infNFSe/DPS/infDPS/prest/end/endNac/cMun)
+do serviço informado na NFS-e compartilhada pelo município, quando informado qualquer código de tributação nacional cuja regra de incidência indique o município do estabelecimento do prestador, conforme a tabela MUN.INCID_INFO.SERV. do ANEXO_I-SEFIN_ADN-DPS_NFSe-SNNFSe.",2,V,X,V,X,-
+16,NFSe/infNFSe/,xLocIncid,-,,-,-,-,-,-,-,-,-,-,-
+17,NFSe/infNFSe/,xTribNac,-,,-,-,-,-,-,-,-,-,-,-
+18,NFSe/infNFSe/,xTribMun,-,,-,-,-,-,-,-,-,-,-,-
+19,NFSe/infNFSe/,xNBS,-,,-,-,-,-,-,-,-,-,-,-
+20,NFSe/infNFSe/,verAplic,-,,-,-,-,-,-,-,-,-,-,-
+21,NFSe/infNFSe/,ambGer,"Verificar se o ambiente gerador da NFS-e está de acordo com a definição:
+1- Sistema Próprio do Município, para as NFS-e compartilhadas pelo município para o ADN, ou
+2 - Sefin Nacional NFS-e, para as NFS-e emitidas pela Sefin ou recepcionadas via API ""Bypass"".",,Obrig.,Rej.,E1274,O ambiente gerador da NFS-e não está de acordo com a definição 1 (Sistema Próprio do Município) ou 2 (Sefin Nacional).,1,V,V,V,V,-
+22,NFSe/infNFSe/,tpEmis,-,,-,-,-,-,-,-,-,-,-,-
+23,NFSe/infNFSe/,procEmi,"Os emissores públicos nacionais devem gerar a NFS-e informando qual o processo de emissão:
+
+1 - Emissão com aplicativo do contribuinte (via Web Service);
+2 - Emissão com aplicativo disponibilizado pelo fisco (Web);
+3 - Emissão com aplicativo disponibilizado pelo fisco (App);
+
+Verificar se a NFS-e compartilhada pelo município preencheu alguma informação para o processo de emissão. 
+Este campo não deve ser informado em NFS-e compartilhada com o ADN NFS-e.",,Obrig.,Rej.,E1276,A informação do processo de emissão de NFS-e é exclusiva para notas emitidas pela Sefin Nacional NFS-e. O município não deve informar este campo nas NFS-e compartilhadas com o ADN NFS-e.,1,V,V,V,V,-
+24,NFSe/infNFSe/,cStat,-,,-,-,-,-,-,-,-,-,-,-
+25,NFSe/infNFSe/,dhProc,A data e hora do processamento (geração) da NFS-e deve ser anterior ou igual à data e hora da sua recepção pelo Sistema Nacional NFS-e.,,Obrig.,Rej.,E1278,A data e hora do processamento (geração) da NFS-e deve ser anterior ou igual à data da recepção pelo Sistema Nacional NFS-e.,1,V,V,V,V,-
+26,NFSe/infNFSe/,nDFe,-,,-,-,-,-,-,-,-,-,-,-
+27,NFSe/infNFSe/,emit,-,,-,-,-,-,-,,-,,-,-
+28,NFSe/infNFSe/emit/,CNPJ,Verificar se o CNPJ informado para o emitente da NFS-e é válido (verificar DV).,,Obrig.,Rej.,E1280,CNPJ informado para o emitente da NFS-e é inválido (verificar DV).,1,V,V,V,V,-
+29,,,"Verificar se o CNPJ do emitente corresponde ao CNPJ informado para prestador ou tomador ou intermediário, conforme o valor do campo tpEmit informado na DPS.
+tpemit = 1 - Prestador, tpemit = 2 - Tomador, tpemit = 3 - Intermediário,",,Obrig.,Rej.,E1282,O CNPJ do emitente não corresponde ao CNPJ do informado conforme o tipo de emitente informado na DPS.,1,V,V,V,V,
+30,,,Verificar se CNPJ é MEI na data de Competência.,,Obrig.,Rej.,E1281,CNPJ não é MEI na data de competência informada.,2,V,X,V,X,-
+31,NFSe/infNFSe/emit/,CPF,Verificar se o CPF informado para o emitente da NFS-e é válido (verificar DV).,,Obrig.,Rej.,E1284,CPF informado para o emitente da NFS-e é inválido (verificar DV).,1,V,V,V,V,-
+32,,,"Verificar se o CPF do emitente corresponde ao CPF informado para prestador ou tomador ou intermediário, conforme o valor do campo tpEmit informado na DPS.
+tpemit = 1 - Prestador, tpemit = 2 - Tomador, tpemit = 3 - Intermediário,",,Obrig.,Rej.,E1285,O CPF do emitente não corresponde ao CPF do informado conforme o tipo de emitente informado na DPS.,1,V,V,V,V,
+33,NFSe/infNFSe/emit/,IM,-,,-,-,-,-,-,-,-,-,-,-
+34,NFSe/infNFSe/emit/,xNome,-,,-,-,-,-,-,-,-,-,-,-
+35,NFSe/infNFSe/emit/,xFant,-,,-,-,-,-,-,-,-,-,-,-
+36,NFSe/infNFSe/emit/,enderNac,-,,-,-,-,-,-,,-,,-,-
+37,NFSe/infNFSe/emit/enderNac/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+38,NFSe/infNFSe/emit/enderNac/,nro,-,,-,-,-,-,-,-,-,-,-,-
+39,NFSe/infNFSe/emit/enderNac/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+40,NFSe/infNFSe/emit/enderNac/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+41,NFSe/infNFSe/emit/enderNac/,cMun,Verificar se o código do município do emitente da NFS-e corresponde ao código do município emissor (cLocEmi) informado na NFS-e.,,Obrig.,Rej.,E1286,O código do município do emitente da NFS-e difere do código do municipio emissor informado na NFS-e.,1,V,V,V,V,-
+42,NFSe/infNFSe/emit/enderNac/,UF,-,,-,-,-,-,-,-,-,-,-,-
+43,NFSe/infNFSe/emit/enderNac/,CEP,-,,-,-,-,-,-,-,-,-,-,-
+44,NFSe/infNFSe/emit/,fone,-,,-,-,-,-,-,-,-,-,-,-
+45,NFSe/infNFSe/emit/,email,-,,-,-,-,-,-,-,-,-,-,-
+46,NFSe/infNFSe/,valores,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando o prestador é optante do simples nacional do tipo MEI (opSimpNac = 2).",,Obrig.,Rej.,E1302,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores para prestador de serviço optante do simples nacional do tipo MEI.",1,V,X,V,X,
+,,,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E1303,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando o campo referente à tributação do ISSQN indicar imunidade, exportação ou não incidência.",1,V,X,V,X,
+,,,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando o prestador de serviço tiver um regime especial de tributação, ou seja, o campo que indica o regime especial de tributação é diferente de 0, (regEspTrib = 1, 2, 3, 4, 5 ou 6).",,Obrig.,Rej.,E1307,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando o prestador de serviço possui algum regime especial de tributação.",1,V,X,V,X,
+,,,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente, ou seja, o campo que indica a suspensão da exigibilidade está informado na DPS (tpSUSP = 1 ou 2).",,Obrig.,Rej.,E1311,"Exceto para o campo vLiq, não é permitido informar os demais campos do grupo valores quando a exigibilidade da tributação do ISSQN estiver suspensa por decisão judicial ou administrativa.",1,V,X,V,X,
+47,NFSe/infNFSe/valores/,vCalcDR,"vCalcDR é o valor monetário calculado a partir do percentual de dedução/redução da BC do ISSQN, informado pelo emitente no campo pDR da DPS. Este percentual é calculado sobre valor do serviço informado na DPS e o resultado calculado é o valor deste campo do leiaute NFS-e
+ou
+a soma dos valores de dedução/redução da BC do ISSQN, quando um ou mais documentos são informados nos campos vDeducaoReducao pelo emitente na DPS. Neste caso, o resultado do somatório é o valor deste campo do leiaute NFS-e.",,Obrig.,Rej.,E1287,"O valor calculado de dedução/redução não corresponde aos valores de (valor do serviço x percentual de dedução/redução), quando pDR é informado na DPS ou ao somatório dos valores do campo vDeducaoReducao, quando um ou mais documentos são informados para dedução/redução da base de cálculo do ISSQN.",1,V,X,V,X,-
+48,NFSe/infNFSe/valores/,tpBM,-,,-,-,-,-,-,-,-,-,-,-
+49,NFSe/infNFSe/valores/,vCalcBM,"vCalcBM é o valor mmonetário calculado a partir do percentual de BM, que foi informada no campo pRedBCBM da DPS. Neste caso o percentual é aplicado sobre o valor do serviço informado na DPS e o resultado calculado é o valor deste campo do leiaute NFS-e.",,Obrig.,Rej.,E1288,"O valor calculado do percentual de reduçãõ da base de cálculo por Benefício Municipal não corresponde aos valores de (valor do serviço x percentual de benefício municipal), quando pRedBCBM é informado na DPS.",1,V,X,V,X,-
+50,NFSe/infNFSe/valores/,vBC,"O valor da base de cálculo do ISSQN (vBC) é calculado a partir de valores informados na NFS-e:
+
+Valor da BC = Valor do serviço - Desconto incondicionado - Valores monetário de Dedução Redução - Valor monetário de Benerfício Municipal.
+
+vBC = vServ - vDescIncond - (vDR ou vDeducaoReducao ou vCalcDR) - (vRedBCBM ou vCalcBM)",,Obrig.,Rej.,E1295,"O valor da base cálculo deve ser igual ao valor do serviço menos desconto incondicionado e, valores monetários de dedução/redução e benefício municipal, informados na NFS-e.",1,V,X,V,X,-
+51,,,"O valor BC calculado não pode estar reduzida de forma que resulte para valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E1297,"O valor BC calculado não pode estar reduzida de forma que resulte para valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,V,X,
+52,NFSe/infNFSe/valores/,pAliqAplic,Não é permitido informar alíquota aplicada superior a 5%.,,Obrig.,Rej.,E1300,Não é permitido informar alíquota aplicada superior a 5%.,1,V,X,V,X,-
+53,NFSe/infNFSe/valores/,vISSQN,O valor do ISSQN informado na NFS-e (vISSQN) deve ser igual ao produto da base de cálculo pela alíquota aplicada (vBC x pAliqAPlic).,,Obrig.,Rej.,E1289,"O produto do valor da base de cálculo pela alíquota aplicada, ambos informados na NFS-e compartilhada, não está de acordo com o resultado cálculado pelo sistema (vBC x pAliAplic).",1,V,X,V,X,-
+54,NFSe/infNFSe/valores/,vTotalRet,-,,-,-,-,-,-,-,-,-,-,-
+55,NFSe/infNFSe/valores/,vLiq,"O valor líquido da NFS-e não pode ser inferior a zero.
+
+O valor líquido da NFS-e é calculado a partir de valores que constam na DPS através do seguinte cálculo:
+
+Valor líquido = Valor do serviço - Desconto condicionado - Desconto incondicionado - Valores retidos (CP, IRRF, CSLL) - 
+Valores (ISSQN, PIS, COFINS), se retidos.",,Obrig.,Rej.,E1508,O valor líquido da NFS-e não pode ser inferior a zero.,1,V,X,V,X,-
+56,NFSe/infNFSe/,xOutInf,-,,-,-,-,-,-,-,-,-,-,-
+60,NFSe/infNFSe/,DPS,-,,-,-,-,-,-,-,-,-,-,-
+61,NFSe/infNFSe/DPS/,versao,Prazo de aceitação da versão do leiaute DPS ultrapassado.,,Obrig.,Rej.,E0001,O prazo de aceitação da versão do leiaute da DPS expirou.,1,V,V,V,V,-
+62,NFSe/infNFSe/DPS/,infDPS,-,,-,-,-,-,-,-,-,-,-,-
+63,NFSe/infNFSe/DPS/infDPS/,id,"O identificador da DPS é formado conforme a concatenação dos seguintes campos:
+""DPS"" + Cód.Mun.Emi. + Tipo de Inscrição Federal + Inscrição Federal + Série DPS + Núm. DPS
+
+Campo identificador da DPS inválido.
+Identificador da DPS difere da concatenação dos campos correspondentes.
+""DPS"" + Cód.Mun.Emi. + Tipo de Inscrição Federal + Inscrição Federal + Série DPS + Núm. DPS 
+
+Verificar se tipo de inscrição e inscrição, informados no identificador da DPS, estão corretamente correspondidos conforme o seguinte:
+
+Tipo de inscrição Federal = 1 / Inscrição Federal = CPF emitente da DPS;
+Tipo de inscrição Federal = 2 / Inscrição Federal = CNPJ emitente da DPS;
+
+Cód.Mun.Emi. é o código do município do endereço do emitente da DPS.",,Obrig.,Rej.,E0004,Conteúdo do identificador informado na DPS difere da concatenação dos campos correspondentes.,1,V,V,V,V,-
+64,NFSe/infNFSe/DPS/infDPS/,tpAmb,Ambiente informado diverge do ambiente de recebimento para o qual o emitente enviou a DPS.,,Obrig.,Rej.,E0006,Ambiente informado diverge do ambiente de recebimento para o qual o emitente enviou a DPS.,1,V,V,V,V,-
+65,NFSe/infNFSe/DPS/infDPS/,dhEmi,A data de emissão da DPS deve ser anterior ou igual à data e hora do seu processamento (dhProc) pelo Sistema Nacional NFS-e.,,Obrig.,Rej.,E0008,A data e hora de emissão da DPS deve ser anterior ou igual à data do seu processamento (dhProc) pelo Sistema Nacional NFS-e.,1,V,V,V,V,-
+66,,,A data de compartilhamento do DF-e não pode ser posterior à há mais de 6 anos de sua emissão.,,Obrig.,Rej.,E1294,Prazo para entrega da DF-e excedido.,1,X,X,V,X,-
+67,NFSe/infNFSe/DPS/infDPS/,verAplic,-,,-,-,-,-,-,-,-,-,-,-
+68,NFSe/infNFSe/DPS/infDPS/,serie,A série informada na DPS não pertence à faixa definida para o tipo de emissor utilizado para a sua emissão.,,Obrig.,Rej.,E0010,A série informada na DPS não pertence à faixa definida para o tipo de emissor utilizado para a sua emissão.,1,V,V,X,X,"Faixas de utilização da série da DPS:
+
+00001 a 49999 - Emissão com aplicativo pŕoprio;
+50000 a 69999 - Emissor Móvel;
+70000 a 79999 - Emissor Web;
+80000 a 89999 - Emissão com *transcrissão manual (Web);
+
+*O emitente deve informar o número de série (transcrever o número de série) que foi repassado ao não emitente da NFS-e."
+69,,,"Conjunto de Série, Número, Código do Município Emissor e CNPJ/CPF informado nesta DPS já existe em uma NFS-e gerada a partir de uma DPS enviada anteriormente.",,Obrig.,Rej.,E0014,"Conjunto de Série, Número, Código do Município Emissor e CNPJ/CPF informado nesta DPS já existe em uma NFS-e gerada a partir de uma DPS enviada anteriormente.",1,V,V,V,V,-
+70,NFSe/infNFSe/DPS/infDPS/,nDPS,,,,,,,,,,,,
+71,NFSe/infNFSe/DPS/infDPS/,dCompet,A data de competência informada na DPS deve ser anterior ou igual à data de emissão (dhEmi) da DPS.,,Obrig.,Rej.,E0015,A data de competência informada na DPS não pode ser posterior à data de emissão (dhEmi) da DPS.,1,V,V,V,V,-
+72,,,"A data de competência deve ser igual ou posterior à data de ativação do convênio do município emissor informado na DPS.
+
+Exceto quando o emitente da DPS for MEI (opSimpNac = 2) na data de competência da emissão da NFS-e.",,Obrig.,Rej.,E0016,"A data de competência deve ser igual ou posterior à data de ativação do convênio do município emissor informado na DPS, exceto quando o emitente for MEI na data de competëncia informada.",1,V,V,X,X,"Regras idênticas mas aplicadas em sistemas diferentes. 
+A primeira é realizada apenas na Sefin e 
+a segunda é realizada apena no ADN."
+73,,,"A data de competência deve ser igual ou posterior à data de ativação do convênio do município emissor informado na DPS.
+A situação do convêncio do município emissor informado na DPS deve ser ATIVO.",,Obrig.,Rej.,E1270,A data de competência deve ser igual ou posterior à data de ativação do convênio do município emissor informado na DPS.,1,X,X,V,V,
+74,,,A data de competência informada na DPS deve ser igual ou posterior à data de inscrição do CNPJ do emitente.,,Obrig.,Rej.,E0018,A data de competência informada na DPS deve ser igual ou posterior à data de inscrição do CNPJ do emitente no cadastro CNPJ.,1,V,V,V,V,-
+75,,,A data de competência informada na DPS deve ser igual ou posterior à data de inscrição do CPF do emitente.,,Obrig.,Rej.,E0020,A data de competência informada na DPS deve ser igual ou posterior à data de inscrição do CPF do emitente no cadastro CPF.,1,V,V,V,V,-
+76,,,"A data de competência informada na DPS deve ser igual ou posterior à data do indicador municipal, se houver registro complementar do contribuinte (CNPJ ou CPF + IM do emitente da DPS), com situação ""Ativo"", no CNC do município correspondente ao município emissor da DPS (cLocEmi).",,Obrig.,Rej.,E0023,"A data de competência informada na DPS deve ser igual ou posterior à data do indicador municipal, registrada no CNC do município correspondente ao município emissor da DPS (cLocEmi).",1,V,X,X,X,-
+77,NFSe/infNFSe/DPS/infDPS/,tpEmit,"Se a DPS for emitida pelo tomador ou intermendiário (tpEmit = 2 ou 3), então a DPS deve ser rejeitada pelo sistema.",,Obrig.,Rej.,E9996,"Nesta versão da aplicação, não é permitida a emissão de NFS-e pelo tomador ou intermediário.",1,V,V,V,V,-
+78,NFSe/infNFSe/DPS/infDPS/,cMotivoEmisTI,"Se o emitente for o prestador de serviço (tpEmit = 1), então este campo não deve ser preenchido.",,Obrig.,Rej.,E0029,O motivo da emissão não pode ser preenchido se o emitente for o prestador de serviço.,1,V,V,V,V,-
+79,,,"Para o tomador emitente da DPS, estabelecido em município diferente do município de incidência do ISSQN, então não pode haver retenção (tpRetISSQN tem que ser igual a 1).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0031",Não pode haver retenção do ISSQN pelo tomador quando o município de incidência não for o do tomador.,2,X,X,X,X,-
+80,,,"Para o intermediário emitente da DPS, estabelecido em município diferente do município de incidência do ISSQN, então não pode haver retenção (tpRetISSQN tem que ser igual a 1).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0032",Não pode haver retenção do ISSQN pelo intermediário quando o município de incidência não for o do intermediário.,2,X,X,X,X,-
+81,NFSe/infNFSe/DPS/infDPS/,chNFSeRej,Somente é permitido o preencimento deste campo se o emitente da DPS for o Tomador ou Intermediário (tpEmit igual a 2 ou 3) e o motivo da emissão for a rejeição de NFS-e emitida pelo Prestador (cMotivoEmisTI igual a 4).,,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0034",Somente é permitido o preenchimento do campo de chave de acesso de NFS-e rejeitada se o tipo de emitente for Tomador ou Intermediário e o motivo da emissao for por rejeição de NFS-e emitida pelo prestador.,1,X,X,X,X,-
+82,,,Verificar se a NFS-e informada possui Evento de Manifestação de Rejeição de NFS-e do Tomador ou Intermediario cujo autor do evento seja o mesmo emitente (Tomador ou Intermediário) desta DPS.,,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0035",A chave de acesso de NFS-e informada nesta DPS não possui a ela vinculada o evento de manifestação de rejeição emitido pelo mesmo emitente desta DPS.,1,X,X,X,X,-
+83,NFSe/infNFSe/DPS/infDPS/,cLocEmi,"O código do município emissor informado na DPS deve existir no cadastro de convênio municipal do sistema nacional.
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,E0037,O código do município emissor informado na DPS é inexistente no cadastro de convênio municipal do sistema nacional.,1,V,V,X,X,-
+84,,,"A situação do convênio do município emissor informado na DPS deve ser ""ATIVO"" no cadastro de convênio municipal do sistema nacional.
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,E0038,"A situação do convênio do município emissor informado na DPS deve ser ""ATIVO"" no cadastro de convênio municipal do sistema nacional.",1,V,V,X,X,-
+85,,,"Se tpEmit for igual a 1 (prestador) e a opção pelo simples nacional for igual a 2 (MEI), 
+então o município emissor deve corresponder ao município do endereço do emitente no cadastro CNPJ.",,Obrig.,Rej.,E0041,O município emissor não corresponde ao município do emitente MEI no CNPJ.,1,V,V,X,X,-
+86,,,"Verificar se o código do município emissor da NFS-e existe, conforme TAB.MUN_IBGE do ANEXO_A-MUNICIPIO_IBGE-PAISES_ISO2-SNNFSe, e corresponde ao mesmo município que está compartilhando a NFS-e.",,Obrig.,Rej.,E1304,O código do município emissor da NFS-e não existe conforme tabela do IBGE ou difere do código do municipio que está compartilhando o documento com o ADN do Sistema Nacional NFS-e.,1,X,X,V,V,-
+87,,,O código do município informado deve existir e estar ativo no cadastro de convênio municipal na data de processamento do compartilhamento com o ADN.,,Obrig.,Rej.,E1272,O código do município informado não existe ou não está ativo no convênio municipal na data de processamento de compartilhamento com o ADN.,1,X,X,V,V,Compartilhamento e Distribuição devem serguir esta regra
+88,NFSe/infNFSe/DPS/infDPS/,subst,-,,-,-,-,-,-,-,-,-,-,-
+89,NFSe/infNFSe/DPS/infDPS/subst,chSubstda,"Chave de NFS-e a ser substituída é inválida.
+
+1 - Verificar DV da chave de NFS-e a ser substituída informada nesta DPS;
+2 - Verificar a correspondência exata dos campos (Cód.Mun. / Tipo de Inscrição / Inscrição) da chave de NFS-e a ser substituída informada e o id desta DPS;",,Obrig.,Rej.,E0042,Chave de NFS-e a ser substituída é inválida.,1,V,V,V,V,-
+90,,,NFS-e inexistente.,,Obrig.,Rej.,E0044,NFS-e não existe na base de dados do autorizador de NFS-e nacional. Informe uma chave de NFS-e existente.,1,V,V,V,V,-
+91,,,NFS-e cancelada não pode ser substituída.,,Obrig.,Rej.,E0046,Uma NFS-e cancelada não pode ser substituída. Informe uma chave de NFS-e não cancelada anteriormente.,1,V,V,V,V,-
+92,,,"Não poderá ocorrer a substituição de NFS-e fora do prazo permitido, conforme parametrização do município emissor da NFS-e, exceto quando a justificativa para substituição de NFS-e for Desenquadramento ou Enquadramento de NFS-e no Simples Nacional (cMotivo = 1 ou 2).",,Obrig.,Rej.,E0050,Uma NFS-e não pode ser substituída fora do prazo estabelecido pelo município emissor da NFS-e.,3,V,X,X,X,-
+93,,,"Não poderá ocorrer a substituição de NFS-e que não contenha identificação do tomador, conforme parametrização do município emissor da NFS-e.",,Obrig.,Rej.,E0056,NFS-e não pode ser substituída pois não possui identificação do tomador.,3,V,X,X,X,-
+94,,,"Não poderá ocorrer a substituição de NFS-e com alteração da identificação do não emitente, conforme parametrização do município emissor da NFS-e.",,Obrig.,Rej.,E0058,"Não poderá ocorrer a substituição de NFS-e com alteração da identificação do não emitente, conforme parametrização do município emissor da NFS-e.",3,V,X,X,X,-
+95,,,"Os campos data de competência, subitem da lista nacional de serviços, código complementar municipal e local da prestação não podem ser alterados quando a opção do simples nacional for Não Optante (opSimpNac = 1).",,Obrig.,Rej.,E0060,"Os campos data de competência, subitem da lista nacional de serviços, código complementar municipal e local da prestação não podem ser alterados.",2,V,X,X,X,-
+,,,"Os campos identificação do Tomador (se identificado na DPS), data de competência (dCompet), e valor do serviço (vServ), não podem ser alterados quando a opção do simples nacional for MEI (opSimpNac = 2) ou ME/EPP (opSimpNac = 3).",,Obrig.,Rej.,E0060,"Os campos data de competência, subitem da lista nacional de serviços, código complementar municipal e local da prestação não podem ser alterados.",2,V,X,X,X,-
+96,,,Não poderá ocorrer a substituição de NFS-e que tenha sido gerada em ambientes geradores difentes.,,Obrig.,Rej.,E0065,Não é possível substituição da NFS-e que tenha sido gerada em ambientes geradores diferentes.,1,V,V,V,V,-
+97,,,Não é possível a substituição desta NFS-e pois a mesma possui registro de Evento de Solicitação de Análise Fiscal para Cancelamento de NFS-e aguardando resposta.,,Obrig.,Rej.,E0068,"Não é possível a substituição desta NFS-e pois a mesma possui registro de Evento de Solicitação de Análise Fiscal para Cancelamento de NFS-e aguardando resposta. Para mais informações, consultar a Administração Tributária Municipal do município emissor da NFS-e.",1,V,V,V,V,-
+98,,,Não poderá ocorrer a substituição de NFS-e que tenha registro de Evento de Manifestação de Confirmação da NFS-e.,,Obrig.,Rej.,E0070,"Não é possível a substituição desta NFS-e pois já ocorreu uma manifestação de confirmação de serviço. Para mais informações, consultar a Administração Tributária Municipal do município emissor da NFS-e.",2,V,X,X,X,-
+100,,,Não poderá ocorrer a substituição de NFS-e que tenha registro de Evento de Manifestação de Confirmação Tácita da NFS-e.,,Obrig.,Rej.,E0072,"Não é possível a substituição desta NFS-e pois já ocorreu uma manifestação tácita da NFS-e. Para mais informações, consultar a Administração Tributária Municipal do município emissor da NFS-e.",2,V,X,V,X,-
+101,,,"Não é permitido realizar a substituição para NFS-e que possua Evento de Tributos Recolhidos vinculado, conforme parametrização do município de incidência do ISSQN.",,Obrig.,Rej.,E0074,"Não é permitido realizar a substituição para NFS-e que possua Evento de Tributos Recolhidos vinculado, conforme parametrização do município de incidência do ISSQN. Para mais informações, consultar a Administração Tributária Municipal do município emissor da NFS-e.",3,V,X,X,X,Aguarda para Implementar no Contexto do MAN.
+102,,,Não é permitido realizar a substituição para NFS-e que possua Evento de Bloqueio de Ofício para o Evento de Cancelamento de NFS-e por Substituição vigente.,,Obrig.,Rej.,E0076,Não é permitido realizar a substituição para NFS-e que possua Evento de Bloqueio de Ofício para o Evento de Cancelamento de NFS-e por Substituição vigente.,1,V,V,V,V,-
+103,,,"Uma NFS-e substituta não pode ser compartilhada com o ADN pelo município conveniado antes que a NFS-e substituída tenha sido compartilhada anteriormente.
+
+Obs: Verificar se já houve o compartilhamento com o ADN da NFS-e substituída, quando uma NFS-e que está sendo compartilhada possuir uma chave de NFS-e válida informada no leiaute.",,Obrig.,Rej.,E1306,NFS-e a ser substituída não existe na base de dados do ambiente nacional.,1,X,X,V,V,-
+104,,,"Uma NFS-e substituta não pode ser compartilhada com o ADN pelo município conveniado antes que o cancelamento por sustituição de NFS-e da nota a ser substituída tenha sido compartilhada anteriormente.
+
+Obs: Verificar se já houve o compartilhamento com o ADN do cancelamento por substituição de NFS-e, quando uma NFS-e que está sendo compartilhada possuir uma chave de NFS-e válida informada no leiaute.",,Obrig.,Rej.,E1308,NFS-e a ser substituída não possui um evento de Cancelamento por substituição compartilhado com o ADN e por isso não pode ser substituída.,1,X,X,V,V,-
+105,,,"Uma NFS-e substituta não pode ser compartilhada com o ADN pelo município conveniado antes que o evento de cancelamento por sustituição de NFS-e, compartilhado anteriormente, contenha a referência ao identificador da NFS-e substituta que está sendo conpartilhada.
+
+Obs: 
+Obs: Verificar se o identificador da NFS-e substituta corresponde à chave de acesso informada no campo evento/pedRegEvento/infPedReg/e105102/chSubstituta do evento de cancelamento por sustituição da NFS-e substituída;",,Obrig.,Rej.,E1310,O identificador desta NFS-e substituta não está referenciado no evento de Cancelamento por substituição da NFS-e substituída.,1,X,X,V,V,-
+106,NFSe/infNFSe/DPS/infDPS/subst,cMotivo,-,,-,-,-,-,-,-,-,-,-,-
+107,NFSe/infNFSe/DPS/infDPS/subst,xMotivo,"Quando o campo cMotivo = 99, o campo xMotivo deve informado obrigatoriamente.",,Obrig.,Rej.,E0078,"Quando o campo cMotivo = 99, o campo xMotivo deve informado obrigatoriamente.",1,V,X,V,X,-
+108,NFSe/infNFSe/DPS/infDPS/,prest,-,,-,-,-,-,-,V,-,-,-,-
+109,NFSe/infNFSe/DPS/infDPS/prest/,CNPJ,CNPJ informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0080,CNPJ do prestador informado na DPS é inválido.,1,V,V,V,V,-
+110,,,CNPJ do prestador não existe no cadastro CNPJ na data de competência informada na DPS.,,Obrig.,Rej.,E0082,CNPJ do emitente prestador não encontrado no cadastro CNPJ na data de competência.,2,V,X,X,X,-
+111,,,"Para este CNPJ, se o emitente for o prestador de serviço (tpEmit = 1), na data de competência informada na DPS, o município emissor deve corresponder:
+1) ao município do endereço registrado no cadastro CNPJ, se a situação padrão para emissão dos contribuintes, com endereço no município, do cadastro CNPJ da RFB for habilitada ou;
+2) ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CNPJ + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,E0084,"CNPJ do emitente prestador não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastros CNPJ e CNC NFS-e.",2,V,X,X,X,-
+112,NFSe/infNFSe/DPS/infDPS/prest/,CPF,CPF informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0096,CPF do prestador informado na DPS é inválido.,1,V,V,V,V,-
+113,,,CPF do prestador não existe no cadastro CPF na data de competência informada na DPS.,,Obrig.,Rej.,E0098,CPF do emitente prestador não encontrado no cadastro CPF na data de competência.,2,V,X,X,X,-
+114,,,"Para este CPF, se o emitente for o prestador de serviço (tpEmit = 1), na data de competência informada na DPS, o município emissor deve corresponder ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CPF + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,E0099,"CPF do emitente prestador não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastro nacional complementar NFS-e (cLocEmi + CPF + IM informados na DPS para o prestador devem existir no CNC NFS-e).",2,V,X,X,X,-
+115,NFSe/infNFSe/DPS/infDPS/prest/,NIF,"Se o campo tpEmit for ígual a 1, então NIF do prestador não pode ser informado.",,Obrig.,Rej.,E0112,"O prestador de serviço, quando emitente da DPS, não pode ser identificado pelo NIF.",1,V,X,V,X,-
+116,,,Se o grupo de informações de endereço no exterior do prestador de serviços foi informado então o NIF ou cNaoNIF do prestador deve ser informado.,,Obrig.,Rej.,E0113,O NIF ou cNaoNIF do prestador deve ser informado quando o grupo de informações de endereço no exterior do prestador de serviços foi informado.,1,V,X,V,X,-
+117,NFSe/infNFSe/DPS/infDPS/prest/,cNaoNIF,,,,,,,,,,,,
+118,,,"Se o campo tpEmit for ígual a 1, então cNaoNIF do prestador não pode ser informado.",,Obrig.,Rej.,E0114,"O prestador de serviço, quando emitente da DPS, somente pode ser identificado pelo CNPJ ou CPF.",1,V,X,V,X,-
+119,,,"Se o valor do campo cNaoNIF do prestador, informado na DPS, for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0115,Valor 0 para o motivo da não informação do NIF do prestador não é permitido na Sefin do Sistema Nacional NFS-e.,1,V,X,V,X,-
+120,NFSe/infNFSe/DPS/infDPS/prest/,CAEPF,-,,-,-,-,-,-,-,-,-,-,-
+121,NFSe/infNFSe/DPS/infDPS/prest/,IM,"Se o emitente for o prestador de serviço (tpEmit = 1) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço e o codigo do município emissor (cLocEmi), ambos informados na DPS, para identificar as ocorrências no CNC NFS-e. Se houver pelo menos uma ocorrência, então o emitente da DPS deve informar o IM correspondente registrado no CNC NFS-e, que identifique unicamente o registro complementar.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,E0116,"A IM deve ser informada para o emitente prestador do serviço na DPS, conforme informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+122,,,"Verificar se o IM informado está autorizado a emitir NFS-e na data de processamento desta DPS, se o emitente for o prestador de serviço (tpEmit = 1) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,E0119,"IM do emitente prestador não está autorizado a emitir NFS-e, conforme informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+123,,,"Se o emitente for o prestador de serviço (tpEmit = 1) e, se não houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então o IM não deve ser informado na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.",,Obrig.,Rej.,E0120,"IM do prestador não deve ser informado, pois não existem informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+124,,,"Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Para o emitente prestador de serviço (tpEmit = 1), verificar se o IM informado nesta DPS está Inativo (cStat) no CNC do município emissor na data de competência informada.
+ 
+Se todos os registros complementares estiverem inativos, utilizar as informações dos cadastros RFB (CNPJ ou CPF), conforme identificador federal utilizado para identificar o emitente da DPS.",,Obrig.,Rej.,E0124,O IM informado está inativo no CNC NFS-e do município emissor para a data de competência informada na DPS.,2,V,X,X,X,-
+125,NFSe/infNFSe/DPS/infDPS/prest/,xNome,"Se o emitente da DPS for o prestador de serviço (tpEmit for igual a 1), então o nome ou razão social não deve ser informado.",,Obrig.,Rej.,E0121,O nome ou razão social do prestador não deve ser informado quando o emitente da DPS for o próprio prestador.,2,V,X,V,X,-
+126,,,"Se o emitente da DPS não for o prestador de serviço (tpEmit for igual a 2 ou 3), então o nome ou razão social deve ser informado.",,Obrig.,Rej.,E0122,O nome ou razão social do prestador deve ser informado quando o emitente da DPS não for o próprio prestador.,2,V,X,V,X,-
+127,,,Se NIF do prestador for preenchido então o campo xNome deve ser preenchido obrigatoriamente.,,Obrig.,Rej.,E0123,O preenchimento do nome empresarial é obrigatório quando o prestador for identificado com NIF.,1,V,X,V,X,-
+128,NFSe/infNFSe/DPS/infDPS/prest/,end,Se o emitente da DPS for o tomador ou intermediário (tpEmit = 2 ou 3) o grupo de informações do endereço do prestador de serviço deve ser informado na DPS obrigatoriamente.,,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0129",O endereço do prestador deve ser informado na DPS quando o prestador não for o emitente da DPS.,1,V,X,V,X,-
+129,,,"Se o emitente da DPS é o prestador do serviço (tpEmit = 1), então o grupo de informações do endereço do prestador de serviço não deve ser informado na DPS.",,Obrig.,Rej.,E0128,O endereço do prestador do serviço não deve ser informado na DPS quando o próprio prestador for o emitente da DPS.,1,V,X,V,X,-
+130,NFSe/infNFSe/DPS/infDPS/prest/,endNac,"Se o CNPJ ou CPF do prestador de serviço foi informado e o emitente da DPS não for o prestador (tpEmit = 2 ou 3), então o grupo de informações de endereço nacional do prestador do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0125",O endereço nacional do prestador do serviço deve ser informado na DPS quando for identificado pelo CNPJ ou CPF e o emitente da DPS for o tomador ou intermediário.,1,V,X,V,X,-
+131,NFSe/infNFSe/DPS/infDPS/prest/end/endNac/,cMun,"O código do município para o endereço do prestador do serviço não existe, conforme TAB.MUN_IBGE do ANEXO_A-MUNICIPIO_IBGE-PAISES_ISO2-SNNFSe.",,Obrig.,Rej.,E0130,O código do município para o endereço do prestador do serviço não existe conforme tabela de município do IBGE.,1,V,X,V,X,-
+132,,,"Quando o endereço nacional do prestador for informado na DPS e o mesmo for identificado pelo CNPJ, o código do município do endereço do prestador, deve existir e corresponder ao município do seu endereço no cadastro CNPJ ou do endereço registrado em suas informações complementares no CNC NFS-e, na data de competência informada na DPS.",,Obrig.,Rej.,E0132,"O código do município informado na DPS para o endereço do prestador do serviço, identificado pelo CNPJ, não corresponde ao município registrado em seus cadastros na data de competência informada na DPS.",2,V,X,X,X,-
+133,,,"Quando o endereço nacional do prestador for informado na DPS e o mesmo for identificado pelo CPF, o código do município do endereço do prestador, deve existir e corresponder ao município do seu endereço no cadastro CPF ou do endereço registrado em suas informações complementares no CNC NFS-e, na data de competência informada na DPS.",,Obrig.,Rej.,E0134,"O código do município informado na DPS para o endereço do prestador do serviço, identificado pelo CPF, não corresponde ao município registrado em seus cadastros na data de competência informada na DPS.",2,V,X,X,X,-
+134,NFSe/infNFSe/DPS/infDPS/prest/end/endNac/,CEP,O CEP informado deve existir e pertencer ao município correspondente ao código do município informado para o endereço do prestador do serviço.,,Obrig.,Rej.,E0138,O CEP informado para o endereço nacional do prestador do serviço não existente ou não pertence ao município informado na DPS. Informe um CEP existente e que pertença ao município informado para o endereço do prestador do serviço na DPS.,1,V,X,V,X,-
+135,NFSe/infNFSe/DPS/infDPS/prest/end/,endExt,"Se o NIF do prestador de serviço foi informado e o emitente da DPS, tomador ou intermedirio (tpEmit = 2 ou 3), for identificado por CNPJ, então o grupo de informações de endereço no exterior do prestador do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0142,O grupo de informações de endereço no exterior deve ser informado obrigatoriamente quando o prestador for identificado pelo NIF e o emitente por CNPJ.,1,V,X,V,X,-
+136,NFSe/infNFSe/DPS/infDPS/prest/end/endExt/,cPais,"O código de país informado para o endereço no exterior do prestador do serviço deve existir e ser diferente de Brasil (BR), conforme a tabela ISO2.",,Obrig.,Rej.,E0146,"O código de país informado para o endereço no exterior do prestador do serviço não existe ou é igual ao código do Brasil. Informe um código de país existente e diferente do codigo do Brasil (BR) para o endereço no exterior do prestador do serviço, conforme tabela de país ISO2.",1,V,X,V,X,-
+137,NFSe/infNFSe/DPS/infDPS/prest/end/endExt/,cEndPost,-,,-,-,-,-,-,-,-,-,-,-
+138,NFSe/infNFSe/DPS/infDPS/prest/end/endExt/,xCidade,-,,-,-,-,-,-,-,-,-,-,-
+139,NFSe/infNFSe/DPS/infDPS/prest/end/endExt/,xEstProvReg,-,,-,-,-,-,-,-,-,-,-,-
+140,NFSe/infNFSe/DPS/infDPS/prest/end/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+141,NFSe/infNFSe/DPS/infDPS/prest/end/,nro,-,,-,-,-,-,-,-,-,-,-,-
+142,NFSe/infNFSe/DPS/infDPS/prest/end/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+143,NFSe/infNFSe/DPS/infDPS/prest/end/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+144,NFSe/infNFSe/DPS/infDPS/prest/,fone,-,,-,-,-,-,-,-,-,-,-,-
+145,NFSe/infNFSe/DPS/infDPS/prest/,email,"Email deve ser informado conforme estrutura (conter @, ponto etc.).",,Obrig.,Rej.,E0148,Email inválido.,2,V,X,V,X,-
+146,NFSe/infNFSe/DPS/infDPS/prest/,regTrib,-,,-,-,-,-,-,-,-,-,-,-
+147,NFSe/infNFSe/DPS/infDPS/prest/regTrib/,opSimpNac,"Opção de situação perante o Simples Nacional do prestador, informada na DPS, não está de acordo com o cadastro Simples Nacional na data de competência informada na DPS.
+Se CNPJ do prestador não consta no cadastro então opSimpNac é igual a 1;",,Obrig.,Rej.,E0160,"No mês de competência da NFS-e, a opção de situação perante o Simples Nacional, do prestador, informada na DPS não está de acordo com o cadastro Simples Nacional.",2,V,X,X,X,-
+148,,,Quando o emitente for MEI a NFS-e poderá ser compartilhada pelo município com o ADN somente se a data de competência for igual ou menor que 31/08/2023.,,Obrig.,Rej.,E0161,"NFS-e cujo emitente for MEI somente poderá ser compartilhada pelo município com o ADN se a data de competência, informada na NFS-e, for menor ou igual a 31/08/2023.",2,X,X,V,V,-
+149,NFSe/infNFSe/DPS/infDPS/prest/regTrib/,regApTribSN,"O regime de apuração dos tributos para o optante do Simples Nacional (ME/EPP) não pode ser preenchido quando o prestador de serviço não for optante do simples nacional ou for MEI, ou seja, o campo opSimpNac = 1 ou 2.",,Obrig.,Rej.,E0162,Não é permitido ao não optante do Simples Nacional e o MEI preencherem o campo de indicação do regime de apuração dos tributos apurados.,2,V,X,V,X,-
+150,,,"O regime de apuração dos tributos para o optante do Simples Nacional (ME/EPP) deve ser preenchido obrigatoriamente quando o prestador de serviço for optante do simples nacional (ME/EPP), ou seja, o campo opSimpNac = 3.",,Obrig.,Rej.,E0166,É obrigatorio o preenchimento do campo de regime de apuração dos tributos do SN para o optante do Simples Nacional ME/EPP.,2,V,X,V,X,-
+151,NFSe/infNFSe/DPS/infDPS/prest/regTrib/,regEspTrib,"Não é permitido informar Regime Especial de Tributação, ou seja, regEspTrib deve ser igual a 0 (Nenhum), quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", 
+(tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E0172,"O Regime Especial de Tributação deve ser ""Nenhum"" (regEspTrib = 0) quando o serviço prestado for diferente de Tributável (tribISSQN = 1), ou seja, tribISSQN = 2, 3 ou 4.",2,V,X,V,X,-
+152,,,"O tipo de regime especial de tributação deve ser ""Nenhum"", quando o prestador for MEI (opSimpNac = 2).",,Obrig.,Rej.,E0174,"Quando o prestador da NFS-e é MEI (opSimpNac = 2) o regime especial de tributação deve ser ""Nenhum"" (regEspTrib = 0).",2,V,X,V,X,-
+153,,,"O tipo de regime especial de tributação deve ser ""Nenhum"" (regEspTrib = 0) quando o prestador for optante do Simples Nacional ME/EPP (opSimpNac = 3) e o regime de apuração dos tributos federais e municipal ocorrer pelo SN (regApTribSN = 1).",,Obrig.,Rej.,E0175,"Quando o prestador optante pelo Simples Nacional tiver o regime de apuração dos tributos ocorrendo também pelo Simples Nacional, o regime especial de tributação do ISSQN deve ser ""Nenhum"" (regEspTrib = 0).",2,V,X,V,X,-
+154,,,Verificar se o Regime Especial de Tributação informado na DPS é admitido na parametrização do municipio de Incidência do ISSQN.,,Obrig.,Rej.,E0177,Regime especial de tributação informado na DPS não é admitido na parametrização do município de incidência do ISSQN.,2,V,X,X,X,-
+155,,,"Quando o município de incidência do ISSQN é diferente do município emissor da NFS-e (cLocIncid é diferente de cLocEmi), somente é permitidos os seguintes valores para Regime Especial de Tributação para o prestador de serviço: ""Nenhum"" (regEspTrib = 0) ou ""Profissional Autônomo"" (regEspTrib = 5).",,Obrig.,Rej.,E0176,"É permitido informar na DPS somente ""Nenhum"" (regEspTrib = 0) ou ""Profissional Autônomo"" (regEspTrib = 5) para o regime especial de tributação do prestador de serviço quando o município de incidência do ISSQN é diferente do município emissor da NFS-e (cLocIncid é diferente de cLocEmi).",2,V,X,V,X,-
+156,,,"Verificar se é permitido para o prestador de serviço o regime especial de tributação associado ao com o código de tributação na data de competência, informados na DPS, de acordo com a parametrização do município de incidência do ISSQN. 
+
+Obs : Além do regime especial de tributação parametrizado pelo município de incidência o ISSQN para o prestador de serviço, 
+o valor 0 (0 - Nenhum) também é permitido.",,Obrig.,Rej.,E0178,"Regime especial de tributação não permitido para o prestador do serviço com código de tributação na data de competência, informados na DPS, conforme parametrização do município de incidência do ISSQN.",2,V,X,X,X,-
+157,NFSe/infNFSe/DPS/infDPS/,toma,-,,-,-,-,-,-,-,-,-,-,-
+158,NFSe/infNFSe/DPS/infDPS/toma/,CNPJ,CNPJ informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0188,CNPJ do tomador informado na DPS é inválido.,1,V,V,V,V,-
+159,,,CNPJ do tomador não existe no cadastro CNPJ na data de competência informada na DPS.,,Obrig.,Rej.,E0190,CNPJ do tomador não encontrado no cadastro CNPJ.,2,V,X,X,X,-
+160,,,"Para este CNPJ, se o emitente for o tomador de serviço (tpEmit = 2), na data de competência informada na DPS o município emissor deve corresponder:
+1) ao município do endereço registrado no cadastro CNPJ ou;
+2) ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CNPJ + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0194","CNPJ do emitente tomador não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastros CNPJ e CNC NFS-e.",2,V,X,X,X,Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3).
+161,,,"CNPJ do tomador é igual ao CNPJ do prestador. Para efeitos desta regra comparar a raíz dos CNPJ (8 primeiros dígitos).
+Obs: Considera-se a raiz do CNPJ, incluindo todos os estabelecimentos.",,Obrig.,Rej.,E0202,Na emissão da NFS-e não é permitido que o prestador do serviço seja igual ao tomador do serviço.,2,V,X,X,X,-
+162,,,"Se a DPS indicar retenção pelo tomador (tpRetISSQN = 2), então o tomador deve ser identificado por CNPJ ou CPF.",,Obrig.,Rej.,E0204,"CNPJ ou CPF do tomador não foi informado, mas existe uma indicação para retenção do ISSQN na DPS no campo de tipo de ""Retenção do ISSQN"".",2,V,X,V,X,-
+163,NFSe/infNFSe/DPS/infDPS/toma/,CPF,,,,,,,,,,,,
+164,,,CPF informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0206,CPF do tomador informado na DPS é inválido.,1,V,V,V,V,-
+165,,,CPF do tomador inexistente no cadastro CPF na data de competência informada na DPS.,,Obrig.,Rej.,E0207,CPF do tomador não encontrado no cadastro CPF.,2,V,X,X,X,-
+166,,,"Para este CPF, se o emitente for o tomador de serviço (tpEmit = 2), na data de competência informada na DPS o município emissor deve corresponder ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CPF + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0212","CPF do emitente tomador não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastros CPF e CNC NFS-e.",2,V,X,X,X,-
+167,NFSe/infNFSe/DPS/infDPS/toma/,NIF,"Se o campo tpEmit for ígual a 2, então NIF do tomador não pode ser informado.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0222","O tomador de serviço, quando emitente da DPS, não pode ser identificado pelo NIF.",2,V,X,X,X,-
+168,,,Se o grupo de informações de endereço no exterior do tomador de serviços foi informado então o NIF ou cNaoNIF do tomador deve ser informado.,,Obrig.,Rej.,E0223,O NIF ou cNaoNIF do tomador deve ser informado quando o grupo de informações de endereço no exterior do tomador de serviços foi informado.,2,V,X,V,X,-
+169,NFSe/infNFSe/DPS/infDPS/toma/,cNaoNIF,,,,,,,,,,,,
+170,,,"Se o campo tpEmit for ígual a 2, então cNaoNIF do tomador não pode ser informado.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0224","O tomador de serviço, quando emitente da DPS, somente pode ser identificado pelo CNPJ ou CPF.",2,V,X,X,X,-
+171,,,"Se o valor do campo cNaoNIF do tomador, informado na DPS, for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0226,Valor 0 para o motivo da não informação do NIF do tomador não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+172,NFSe/infNFSe/DPS/infDPS/toma/,CAEPF,-,,-,-,-,-,-,-,-,-,,-
+173,NFSe/infNFSe/DPS/infDPS/toma/,IM,"Se o emitente for o prestador de serviço (tpEmit = 2) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do tomador de serviço e o codigo do município emissor (cLocEmi), ambos informados na DPS, para identificar as ocorrências no CNC NFS-e. Se houver pelo menos uma ocorrência então o emitente da DPS deve informar o IM correspondente registrado no CNC NFS-e, que identifique unicamente o registro complementar.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0228","A IM deve ser informada para o emitente tomador do serviço na DPS, conforme informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+174,,,"Verificar se o IM informado na DPS está autorizado a emitir NFS-e na data de processamento desta DPS, se o emitente for o tomador de serviço (tpEmit = 2) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do tomador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0231","IM do emitente tomador não está autorizado a emitir NFS-e, conforme informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+175,,,"Se o emitente for o tomador de serviço (tpEmit = 2) e, se não houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então o IM não deve ser informado na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do tomador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0232","IM do tomador não deve ser informado, pois não existem informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+176,,,"Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Para o emitente tomador de serviço (tpEmit = 2), verificar se o IM informado nesta DPS está Inativo (cStat) no CNC do município emissor na data de competência informada.
+ 
+Se todos os registros complementares estiverem inativos, utilizar as informações dos cadastros RFB (CNPJ ou CPF), conforme identificador federal utilizado para identificar o emitente da DPS.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0229",O IM informado está inativo no CNC NFS-e do município emissor para a data de competência informada na DPS.,2,V,X,X,X,-
+177,NFSe/infNFSe/DPS/infDPS/toma/,xNome,Se NIF for preenchido então o campo xNome deve ser preenchido obrigatoriamente.,,Obrig.,Rej.,E0233,O nome tomador deve ser preenchido obrigatoriamente quando o NIF do tomador for preenchido.,1,V,X,V,X,-
+178,NFSe/infNFSe/DPS/infDPS/toma/,end,"Quando o emitente da DPS informar um subitem da lista de serviço cuja incidência do ISSQN ocorra no local do estabelecimento/endereço do tomador, conforme planilha MUN.INCID_INFO.SERV., o endereço do tomador deve ser obrigatoriamente informado.",,Obrig.,Rej.,E0234,O endereço do tomador é obrigatório quando a incidência do ISSQN definida para o serviço prestado ocorrer no local do estabelecimento/domicílio do tomador.,2,V,V,V,V,-
+179,NFSe/infNFSe/DPS/infDPS/toma/end/,endNac,"Se o tpEmit é igual a 1 e o tomador foi identificado pelo CNPJ, então o grupo de informações de endereço nacional do tomador do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0235,O endereço nacional do tomador do serviço deve ser informado na DPS quando o tomador for identificado pelo CNPJ.,1,X,X,V,X,-
+180,,,"Se o emitente da DPS é o tomador do serviço (tpEmit = 2), então o grupo de informações do endereço nacional do tomador não deve ser informado na DPS.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0236",O endereço nacional do tomador do serviço não deve ser informado na DPS quando o próprio tomador do serviço for o emitente da DPS.,1,V,X,V,X,-
+181,,,"Se o valor do ISSQN deve ser retido pelo tomador do serviço (tpRetISSQN = 2), então o grupo de informações do endereço nacional deve ser informado na DPS obrigatoriamente, exceto se o emitente da DPS é o tomador do serviço (tpEmit = 2).",,Obrig.,Rej.,E0237,"O endereço nacional do tomador do serviço deve ser informado na DPS quando o valor do ISSQN for retido pelo tomador, exceto se o emitente da DPS é o próprio tomador do serviço.",1,V,X,V,X,-
+182,NFSe/infNFSe/DPS/infDPS/toma/end/endNac/,cMun,"O código do município informado para o endereço do tomador do serviço não existe, conforme tabela de municípios do IBGE.",,Obrig.,Rej.,E0238,O código do município informado na DPS para o endereço do tomador do serviço não existe conforme tabela de município do IBGE.,1,V,V,V,V,-
+183,NFSe/infNFSe/DPS/infDPS/toma/end/endNac/,CEP,O CEP informado deve existir e pertencer ao município correspondente ao código do município informado para o endereço do tomador do serviço.,,Obrig.,Rej.,E0240,O CEP informado para o endereço nacional do tomador do serviço não existe ou não pertence ao município do endereço do tomador.,1,V,X,V,X,-
+184,NFSe/infNFSe/DPS/infDPS/toma/end/,endExt,"Se o NIF do tomador de serviço foi informado e o emitente da DPS for identificado por CNPJ, então o grupo de informações de endereço no exterior do tomador do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0242,O grupo de informações de endereço no exterior deve ser informado obrigatoriamente quando o tomador for identificado pelo NIF e o emitente por CNPJ.,1,V,X,V,X,-
+185,NFSe/infNFSe/DPS/infDPS/toma/end/endExt/,cPais,"O código de país informado para o endereço no exterior do tomador do serviço deve existir e ser diferente de Brasil (BR), conforme a tabela ISO2.",,Obrig.,Rej.,E0246,"O código de país informado para o endereço no exterior do tomador do serviço não existe ou é igual ao código do Brasil. Informe um código de país existente e diferente do codigo do Brasil (BR) para o endereço no exterior do tomador do serviço, conforme tabela de país ISO2.",1,V,V,V,V,-
+186,NFSe/infNFSe/DPS/infDPS/toma/end/endExt/,cEndPost,-,,-,-,-,-,-,-,-,-,-,-
+187,NFSe/infNFSe/DPS/infDPS/toma/end/endExt/,xCidade,-,,-,-,-,-,-,-,-,-,-,-
+188,NFSe/infNFSe/DPS/infDPS/toma/end/endExt/,xEstProvReg,-,,-,-,-,-,-,-,-,-,-,-
+189,NFSe/infNFSe/DPS/infDPS/toma/end/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+190,NFSe/infNFSe/DPS/infDPS/toma/end/,nro,-,,-,-,-,-,-,-,-,-,-,-
+191,NFSe/infNFSe/DPS/infDPS/toma/end/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+192,NFSe/infNFSe/DPS/infDPS/toma/end/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+193,NFSe/infNFSe/DPS/infDPS/toma/,fone,-,,-,-,-,-,-,-,-,-,-,-
+194,NFSe/infNFSe/DPS/infDPS/toma/,email,"Email deve ser informado conforme estrutura (conter @, ponto etc.).",,Obrig.,Rej.,E0247,Email inválido.,2,V,X,V,X,-
+195,NFSe/infNFSe/DPS/infDPS/,interm,-,,-,-,,-,-,-,-,-,-,-
+196,NFSe/infNFSe/DPS/infDPS/interm/,CNPJ,CNPJ informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0248,CNPJ do intermediário informado na DPS é inválido.,1,V,V,V,V,-
+197,,,CNPJ do intermediário não existe no cadastro CNPJ na data de competência informada na DPS.,,Obrig.,Rej.,E0250,CNPJ do intermediário não encontrado no cadastro CNPJ.,2,V,-,X,-,-
+198,,,"Para este CNPJ, se o emitente for o intermediário do serviço (tpEmit = 3), na data de competência informada na DPS o município emissor deve corresponder:
+1) ao município do endereço registrado no cadastro CNPJ ou;
+2) ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CNPJ + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0254","CNPJ do emitente intermediário não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastros CNPJ e CNC NFS-e.",2,V,X,X,X,-
+199,,,CNPJ do intermediário é igual ao CNPJ do prestador. Para efeitos desta regra comparar a raíz dos CNPJ (8 primeiros dígitos).,,Obrig.,Rej.,E0262,Na emissão da NFS-e não é permitido que o prestador do serviço seja igual ao intermediário do serviço.,2,V,X,X,X,-
+200,,,"Se a DPS indicar retenção pelo intermediário (tpRetISSQN = 3), então o intermediário deve ser identificado por CNPJ ou CPF.",,Obrig.,Rej.,E0264,"CNPJ ou CPF do intermediário não foi informado, mas existe uma indicação para retenção do ISSQN na DPS no campo de tipo de ""Retenção do ISSQN"".",2,V,X,X,X,-
+201,NFSe/infNFSe/DPS/infDPS/interm/,CPF,,,,,,,,V,X,X,X,-
+202,,,CPF informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0266,CPF do intermediário informado na DPS é inválido.,1,V,V,V,V,-
+203,,,CPF intermediário inexistente no cadastro CPF na data de competência informada na DPS.,,Obrig.,Rej.,E0268,CPF do intermediário não encontrado no cadastro CPF.,2,V,X,X,X,-
+204,,,"Para este CPF, se o emitente for o intermediário do serviço (tpEmit = 3), na data de competência informada na DPS o município emissor (cLocEmi) deve corresponder ao município do endereço registrado no cadastro nacional complementar NFS-e. (cLocEmi + CPF + IM informados na DPS para o prestador devem existir no CNC NFS-e);",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0272","CPF do emitente intermediário não possui estabelecimento ou domicílio em um município correspondente ao município emissor, na data de competência informada na DPS, conforme cadastros CPF e CNC NFS-e.",2,V,X,X,X,-
+205,NFSe/infNFSe/DPS/infDPS/interm/,NIF,"Se o campo tpEmit for ígual a 3, então NIF do intermediário não pode ser informado.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0280","O intermediário de serviço, quando emitente da DPS, não pode ser identificado pelo NIF.",2,V,X,X,X,-
+206,,,Se o grupo de informações de endereço no exterior do intermediário de serviços foi informado então o NIF ou cNaoNIF do intermediário deve ser informado.,,Obrig.,Rej.,E0281,O NIF ou cNaoNIF do intermediário deve ser informado quando o grupo de informações de endereço no exterior do intermediário de serviços foi informado.,2,V,X,V,X,-
+207,NFSe/infNFSe/DPS/infDPS/interm/,cNaoNIF,,,,,,,,,,,,
+208,,,"Se o campo tpEmit for ígual a 3, então cNaoNIF do intermediário não pode ser informado.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0284","O intermediário de serviço, quando emitente da DPS, somente pode ser identificado pelo CNPJ ou CPF.",2,V,X,X,X,-
+209,,,"Se o valor do campo cNaoNIF do intermediário, informado na DPS, for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0286,Valor 0 para o motivo da não informação do NIF do intermediário não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+210,NFSe/infNFSe/DPS/infDPS/interm/,CAEPF,-,,-,-,-,-,-,-,-,-,-,-
+211,NFSe/infNFSe/DPS/infDPS/interm/,IM,"Se o emitente for o prestador de serviço (tpEmit = 3) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço e o codigo do município emissor (cLocEmi), ambos informados na DPS, para identificar as ocorrências no CNC NFS-e. Se houver pelo menos uma ocorrência então o emitente da DPS deve informar o IM correspondente registrado no CNC NFS-e, que identifique unicamente o registro complementar.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0287",A IM não foi informada para o emitente intermediário do serviço na DPS.,2,V,X,X,X,-
+212,,,"Verificar se o IM informado na DPS está autorizado a emitir NFS-e na data de processamento desta DPS, se o emitente for o intermediário de serviço (tpEmit = 3) e, se houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então a IM deve ser informada na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do intermediário de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Exceto quando o emitente da DPS for MEI na data de competência da emissão da NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0289","IM do emitente intermediário não está autorizado a emitir NFS-e, conforme informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+213,,,"Se o emitente for o intermediário de serviço (tpEmit = 3) e, se não houver registro complementar do contribuinte no CNC do município correspondente ao município emissor da DPS, então o IM não deve ser informado na DPS.
+
+Utilizar o identificador federal (CNPJ ou CPF) do intermediário de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0290","IM do intermediário não deve ser informado, pois não existem informações complementares registradas no CNC NFS-e do município emissor informado na DPS.",2,V,X,X,X,-
+214,,,"Utilizar o identificador federal (CNPJ ou CPF) do prestador de serviço, o codigo do município emissor (cLocEmi) e o IM, informados na DPS, para identificar o registro complementar no CNC NFS-e.
+
+Para o emitente intermediário de serviço (tpEmit = 3), verificar se o IM informado nesta DPS está Inativo (cStat) no CNC do município emissor na data de competência informada.
+ 
+Se todos os registros complementares estiverem inativos, utilizar as informações dos cadastros RFB (CNPJ ou CPF), conforme identificador federal utilizado para identificar o emitente da DPS.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0288",O IM informado está inativo no CNC NFS-e do município emissor para a data de competência informada na DPS.,2,V,X,X,X,-
+215,NFSe/infNFSe/DPS/infDPS/interm/,xNome,Se NIF for preenchido então o campo xNome deve ser preenchido obrigatoriamente.,,Obrig.,Rej.,E0292,O nome intermediário deve ser preenchido obrigatoriamente quando o NIF do intermediário for preenchido.,1,V,-,V,-,-
+216,NFSe/infNFSe/DPS/infDPS/interm/,end,-,,-,-,-,-,-,-,-,-,-,-
+217,NFSe/infNFSe/DPS/infDPS/interm/end/,endNac,"Se o tpEmit é igual a 1 e o intermediário foi identificado pelo CNPJ, então o grupo de informações de endereço nacional do intermediário do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,E1388,O endereço nacional do intermediário do serviço deve ser informado na DPS quando o intermediário for identificado pelo CNPJ.,1,X,X,V,X,-
+218,,,"Se o emitente da DPS é o intermediário do serviço (tpEmit = 3), então o grupo de informações do endereço nacional do intermediário não deve ser informado na DPS.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0291",O endereço nacional do intermediário do serviço não deve ser informado na DPS quando o próprio tomador do serviço for o emitente da DPS.,1,V,X,V,X,-
+219,,,"Se o valor do ISSQN deve ser retido pelo intermediário do serviço (tpRetISSQN = 3), então o grupo de informações do endereço nacional deve ser informado na DPS obrigatoriamente, exceto se o emitente da DPS é o intermediário do serviço (tpEmit = 3).",,Obrig.,Rej.,E0293,"O endereço nacional do intermediário do serviço deve ser informado na DPS quando o valor do ISSQN for retido pelo intermediário, exceto se o emitente da DPS é o intermediário do serviço.",1,V,X,V,X,-
+220,NFSe/infNFSe/DPS/infDPS/interm/end/endNac/,cMun,"O código do município informado para o endereço do intermediário do serviço não existe, conforme tabela de municípios do IBGE.",,Obrig.,Rej.,E0294,O código do município informado na DPS para o endereço do intermediário do serviço não existe conforme tabela de município do IBGE.,1,V,V,V,V,-
+221,NFSe/infNFSe/DPS/infDPS/interm/end/endNac/,CEP,O CEP informado deve existir e pertencer ao município correspondente ao código do município informado para o endereço do intermediário do serviço.,,Obrig.,Rej.,E0296,O CEP informado para o endereço nacional do intermediário do serviço não existe ou não pertence ao município do endereço do intermediário.,1,V,X,V,X,-
+222,NFSe/infNFSe/DPS/infDPS/interm/end/,endExt,"Se o NIF do intermediário de serviço foi informado e o emitente da DPS for identificado por CNPJ, então o grupo de informações de endereço no exterior do tomador do serviço deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0298,O grupo de informações de endereço no exterior deve ser informado obrigatoriamente quando o intermediário for identificado pelo NIF e o emitente por CNPJ.,1,V,X,V,X,-
+223,NFSe/infNFSe/DPS/infDPS/interm/end/endExt/,cPais,"O código de país informado para o endereço no exterior do intermediário do serviço deve existir e ser diferente de Brasil (BR), conforme a tabela ISO2.",,Obrig.,Rej.,E0299,"O código de país informado para o endereço no exterior do intermediário do serviço não existe ou é igual ao código do Brasil. Informe um código de país existente e diferente do codigo do Brasil (BR) para o endereço no exterior do intermediário do serviço, conforme tabela de país ISO2.",1,V,V,V,V,-
+224,NFSe/infNFSe/DPS/infDPS/interm/end/endExt/,cEndPost,-,,-,-,-,-,-,-,-,-,-,-
+225,NFSe/infNFSe/DPS/infDPS/interm/end/endExt/,xCidade,-,,-,-,-,-,-,-,-,-,-,-
+226,NFSe/infNFSe/DPS/infDPS/interm/end/endExt/,xEstProvReg,-,,-,-,-,-,-,-,-,-,-,-
+227,NFSe/infNFSe/DPS/infDPS/interm/end/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+228,NFSe/infNFSe/DPS/infDPS/interm/end/,nro,-,,-,-,-,-,-,-,-,-,-,-
+229,NFSe/infNFSe/DPS/infDPS/interm/end/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+230,NFSe/infNFSe/DPS/infDPS/interm/end/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+231,NFSe/infNFSe/DPS/infDPS/interm/,fone,-,,-,-,-,-,-,-,-,-,-,-
+232,NFSe/infNFSe/DPS/infDPS/interm/,email,"Email deve ser informado conforme estrutura (conter @, ponto etc.).",,Obrig.,Rej.,E0300,Email inválido.,2,V,X,V,X,-
+233,NFSe/infNFSe/DPS/infDPS/,serv,-,,-,-,,-,-,-,-,-,-,-
+234,NFSe/infNFSe/DPS/infDPS/serv/,locPrest,-,,-,-,,-,-,-,-,-,-,-
+235,NFSe/infNFSe/DPS/infDPS/serv/locPrest/,cLocPrestacao,"Se informado, o código do município deve existir na tabela de municípios do IBGE ou possuir a codificação 0000000, que representa ""Águas Marítimas"".",,Obrig.,Rej.,E0302,O código do local da prestação do serviço não existe conforme a tabela de municípios IBGE disponibilizada no ANEXO_A-MUNICIPIO_IBGE-PAISES_ISO2-SNNFSe.,1,V,V,V,V,-
+236,,,"Se informado o subitem 200101 para o código de tributação nacional (cTribNac), 
+então não é permitido informar 0000000, que representa ""Águas Marítimas"", para o local de prestação do serviço (cLocPrestacao).",,Obrig.,Rej.,E1402,"Quando é informado o subitem 200101 para o código de tributação nacional (cTribNac), não é permitido informar 0000000, que representa ""Águas Marítimas"", para o local de prestação do serviço (cLocPrestacao).",,X,X,V,X,"Para atender o dispositivo do Art 3º, § 2º,
+(No caso dos serviços a que se refere o subitem 22.01 da lista anexa, considera-se ocorrido o fato gerador e devido o imposto em cada Município em cujo território haja extensão de rodovia explorada.)
+o Sistema Nacional NFS-e considera o trecho de concessão de exploração de rodovia como uma localidade de prestação de serviço, assim como qualquer município brasileiro.
+
+Para atender o dispositivo do Art 3º, § 3º,
+(Considera-se ocorrido o fato gerador do imposto no local do estabelecimento prestador nos serviços executados em águas marítimas, excetuados os serviços descritos no subitem 20.01)
+o Sistema Nacional NFS-e ""Águas Marítimas"" como uma localidade de prestação de serviço, assim como qualquer município brasileiro.
+
+cLocPrestacao poderá assumir: qualquer código que represente um município da tabela de códigos de municípios do IBGE, qualquer código quer represente um trecho de concessão de exploração de rodovias do cadastro próprio do Sistema Nacional NFS-e ou 0000000, que representa ""Águas Marítimas""."
+237,NFSe/infNFSe/DPS/infDPS/serv/locPrest/,cPaisPrestacao,"Se informado, o código do país deve existir na tabela de país ISO2 e ser diferente de Brasil (BR).",,Obrig.,Rej.,E0304,"Informe um código de país existente diferente de Brasil (BR), conforme tabela de país ISO2.",1,V,V,V,V,-
+238,NFSe/infNFSe/DPS/infDPS/serv/,cServ,,,,,,,-,-,-,-,-,-
+239,NFSe/infNFSe/DPS/infDPS/serv/cServ/,cTribNac,"Verificar se o código de tributação nacional informado existe e está administrado pelo município de incidência do ISSQN na data de competência informada na DPS, conforme a lista de serviços nacional do Sistema Nacional NFS-e.",,Obrig.,Rej.,E0310,"O código de tributação nacional informado não existe ou não está administrado pelo município de incidência do ISSQN na data de competência informada na DPS, 
+conforme a lista de serviços nacional do Sistema Nacional NFS-e.",2,V,X,X,X,-
+240,NFSe/infNFSe/DPS/infDPS/serv/cServ/,cTribMun,Verificar se o código de tributação municipal informado existe e está administrado pelo município de incidência do ISSQN na data de competência informada na DPS.,,Obrig.,Rej.,E0314,"O código de tributação municipal informado não existe ou não está administrado pelo município de incidência do ISSQN na data de competência informada na DPS,",3,V,X,X,X,-
+241,NFSe/infNFSe/DPS/infDPS/serv/cServ/,xDescServ,-,,-,-,-,-,-,-,-,-,-,-
+242,NFSe/infNFSe/DPS/infDPS/serv/cServ/,cNBS,"O código da lista NBS informado na DPS não existe, conforme tabela NBS do ANEXO_B-NBS2-LISTA_SERVICO_NACIONAL-SNNFSe do Manual Integrado do Sistema Nacional NFS-e.",,Obrig.,Rej.,E0316,Código da lista NBS informado inexistente tabela de NBS do sistema.,2,V,X,V,X,-
+243,,,"Se o emitente for o prestador (tpEmit = 1) e qualquer um dos campos abaixo for informado na DPS,
+
+País no exterior do endereço do tomador do serviço ou
+País no exterior do endereço do intermediário do serviço ou
+cPaisPrestacao é informado,
+
+então é obrigatório informar na DPS um item da NBS.",,Obrig.,Rej.,E0318,É obrigatório informar na DPS um item da NBS para casos de exportação de serviço.,2,V,X,V,X,-
+244,,,"Se o emitente for o tomador (tpEmit = 2) ou o intermediário de serviço (tpEmit = 3), e qualquer um dos campos abaixo for informado na DPS
+
+País no exterior do endereço do prestador do serviço ou
+cPaisPrestacao é informado,
+
+então é obrigatório informar na DPS um item da NBS.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0320",É obrigatório informar na DPS um item da NBS para casos de importação de serviço.,2,V,X,V,X,-
+245,NFSe/infNFSe/DPS/infDPS/serv/cServ/,cIntContrib,-,,-,-,-,-,-,-,-,-,-,-
+246,NFSe/infNFSe/DPS/infDPS/serv/,comExt,"EXPORTAÇÃO DE SERVIÇO
+
+Se o emitente for o prestador (tpEmit = 1), e qualquer um dos campos abaixo for informado na DPS 
+
+País no exterior do endereço do tomador do serviço,
+País no exterior do endereço do intermediário do serviço ou
+cPaisPrestacao é informado ou 
+tribISSQN for Exportação de serviço (tribISSQN = 3),
+
+então o grupo de informações de comércio exterior devem ser informado.",,Obrig.,Rej.,E0330,É obrigatório prestar informações de comércio exterior para as situações de exportação de serviços.,1,V,X,V,X,-
+247,,,"IMPORTAÇÃO DE SERVIÇO 
+
+Se o emitente for o tomador (tpEmit = 2) ou o intermediário de serviço (tpEmit = 3), e qualquer um dos campos abaixo for informado na DPS
+
+País no exterior do endereço do prestador do serviço ou
+cPaisPrestacao é informado,
+
+então o grupo de informações de comércio exterior devem ser informados.",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0331",É obrigatório prestar informações de comércio exterior para as situações de importação de serviços.,1,V,X,V,X,-
+248,NFSe/infNFSe/DPS/infDPS/serv/comExt/,mdPrestacao,"Se o valor do campo mdPrestacao for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0333,Valor 0 para o modo de prestação não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+249,NFSe/infNFSe/DPS/infDPS/serv/comExt/,vincPrest,-,,-,-,-,-,-,-,-,-,-,-
+250,NFSe/infNFSe/DPS/infDPS/serv/comExt/,tpMoeda,-,,-,-,-,-,-,-,-,-,-,-
+251,NFSe/infNFSe/DPS/infDPS/serv/comExt/,vServMoeda,-,,-,-,-,-,-,-,-,-,-,-
+252,NFSe/infNFSe/DPS/infDPS/serv/comExt/,mecAFComexP,"Se o valor do campo mecAFComexP for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0341,Valor 0 para o Mecanismo de apoio/fomento ao Comércio Exterior utilizado pelo prestador do serviço não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+253,NFSe/infNFSe/DPS/infDPS/serv/comExt/,mecAFComexT,"Se o valor do campo mecAFComexT for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0343,Valor 0 para o Mecanismo de apoio/fomento ao Comércio Exterior utilizado pelo tomador do serviço não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+254,NFSe/infNFSe/DPS/infDPS/serv/comExt/,movTempBens,"Se o valor do campo movTempBens for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0345,Valor 0 para o Vínculo da Operação à Movimentação Temporária de Bens não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+255,NFSe/infNFSe/DPS/infDPS/serv/comExt/,nDI,"Se movTempBens = 2, então o preenchimento de nDI é obrigatório",,Obrig.,Rej.,E0352,O preenchimento do campo nDI (Número da Declaração de Importação) é obrigatório quando o campo (movTempBens) Vínculo da Operação à Movimentação Temporária de Bens for igual a 2.,2,V,X,X,X,-
+256,,,"Se movTempBens = 1, então o preenchimento de nDI e nRE não é permitido",,Obrig.,Rej.,E0354,O preenchimento dos campos nDI (Número da Declaração de Importação) ou do nRE (úmero do Registro de Exportação) não é permitido quando o campo (movTempBens) Vínculo da Operação à Movimentação Temporária de Bens for igual a 1.,2,V,X,X,X,-
+257,NFSe/infNFSe/DPS/infDPS/serv/comExt/,nRE,,,,,,,2,V,X,X,X,-
+258,,,"Se movTempBens = 3, então o preenchimento de nRE é obrigatório",,Obrig.,Rej.,E0356,O preenchimento do campo nRE (úmero do Registro de Exportação) é obrigatório quando o campo (movTempBens) Vínculo da Operação à Movimentação Temporária de Bens for igual a 3.,2,V,X,X,X,-
+259,NFSe/infNFSe/DPS/infDPS/serv/comExt/,mdic,-,,-,-,,-,-,-,-,-,-,-
+260,NFSe/infNFSe/DPS/infDPS/serv,obra,"Se o código de tributação nacional pertencer a um dos subitens, 07.02.01, 07.02.02, 07.04.01, 07.05,01, 07.05.02, 07.06.01, 07.06.02, 07.07.01, 07.08.01, 07.17.01 e 07.19.01 da lista de serviços, então o grupo de informações de obra é obrigatório.",,Obrig.,Rej.,E0370,"O grupo de informações de obra é obrigatório quando o código de tributação nacional pertencer a um dos subitens 07.02.01, 07.02.02, 07.04.01, 07.05,01, 07.05.02, 07.06.01, 07.06.02, 07.07.01, 07.08.01, 07.17.01 e 07.19.01 da lista de serviços.",1,V,X,V,X,-
+261,,,"Se o código de tributação nacional não pertencer a algum dos subitens 07.02.01, 07.02.02, 07.04.01, 07.05,01, 07.05.02, 07.06.01, 07.06.02, 07.07.01, 07.08.01, 07.17.01 e 07.19.01 da lista de serviços, então o grupo de informações de obra não é permitido.
+*Exceção: O grupo de informações de obra pode ser informado se o código de tributação nacional for o 99.01.01.",,Obrig.,Rej.,E0372,"O grupo de informações de obra não é permitido quando o código de tributação nacional não pertencer a algum dos subitens 07.02.01, 07.02.02, 07.04.01, 07.05,01, 07.05.02, 07.06.01, 07.06.02, 07.07.01, 07.08.01, 07.17.01 e 07.19.01 da lista de serviços, com exceção do código 99.01.01.",1,V,X,V,X,-
+262,NFSe/infNFSe/DPS/infDPS/serv/obra/,inscImobFisc,-,,-,-,-,-,-,-,-,-,-,-
+263,NFSe/infNFSe/DPS/infDPS/serv/obra/,cObra,-,,-,-,-,-,-,-,-,-,-,-
+264,NFSe/infNFSe/DPS/infDPS/serv/obra/,end,-,,-,-,-,-,-,-,-,-,-,-
+265,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,CEP,O CEP a ser informa para endereço da obra deve pertencer ao município que foi informado como local da prestação do serviço.,,Obrig.,Rej.,E0380,Informe um CEP correspondente ao município do local da prestação do serviço informado nesta DPS para indicar corretamente o endereço da obra.,1,V,X,V,X,-
+266,,,"Se o pais da prestação do serviço de obra foi informado (cPaisPrestacao foi informado), então o CEP não pode ser informado.",,Obrig.,Rej.,E0382,O CEP não deve ser informado quando o endereço da obra ocorrer no exterior do país.,1,V,X,V,X,-
+267,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,endExt,"Se o pais local da prestação do serviço de obra foi informado (cPaisPrestacao foi informado), então o grupo de informações de endereço no exterior deve ser informado.",,Obrig.,Rej.,E0384,O grupo de informações de endereço da atividade de obra ocorrido no exterior deve ser informado quando o país do local da prestação for informado na DPS.,1,V,X,V,X,-
+268,,,"Se o município local da prestação do serviço de obra foi informado (cMunPrestacao foi informado), então o grupo de informações de endereço no exterior não pode ser informado.",,Obrig.,Rej.,E0386,O grupo de informações de endereço da atividade de obra ocorrido no exterior não deve ser informado quando o município do local da prestação for informado na DPS.,1,V,X,V,X,-
+269,NFSe/infNFSe/DPS/infDPS/serv/obra/end/endExt/,cEndPost,-,,-,-,-,,-,-,-,-,-,-
+270,NFSe/infNFSe/DPS/infDPS/serv/obra/end/endExt/,xCidade,-,,-,-,-,,-,-,-,-,-,-
+271,NFSe/infNFSe/DPS/infDPS/serv/obra/end/endExt/,xEstProvReg,-,,-,-,-,,-,-,-,-,-,-
+272,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,xLgr,-,,-,-,-,,-,-,-,-,-,-
+273,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,nro,-,,-,-,-,,-,-,-,-,-,-
+274,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,xCpl,-,,-,-,-,,-,-,-,-,-,-
+275,NFSe/infNFSe/DPS/infDPS/serv/obra/end/,xBairro,-,,-,-,-,,-,-,-,-,-,-
+276,NFSe/infNFSe/DPS/infDPS/serv/,atvEvento,"Se o código de tributação nacional pertencer ao item 12 da lista de serviços, então o grupo de informações de Atividade/Evento é obrigatório.",,Obrig.,Rej.,E0390,O grupo de informações de Atividade/Evento é obrigatório quando o código de tributação nacional pertencer ao item 12 da lista de serviços.,1,V,X,V,X,-
+277,,,"Se o código de tributação nacional não pertencer ao item 12 da lista de serviços, então o grupo de informações de Atividade/Evento não é permitido.
+*Exceção: O grupo de informações de Atividade/Evento pode ser informado se o código de tributação nacional for o 99.01.01.",,Obrig.,Rej.,E0392,"O grupo de informações de Atividade/Evento não é permitido quando o código de tributação nacional não pertencer ao item 12 da lista de serviços, com exceção do código 99.01.01.",1,V,X,V,X,-
+278,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/,xNome,-,,-,-,-,-,-,-,-,-,-,-
+279,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/,dtIni,-,,-,-,-,-,-,-,-,-,-,-
+280,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/,dtFim,-,,-,-,-,-,-,-,-,-,-,-
+281,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/,idAtvEvt,-,,-,-,-,-,-,-,-,-,-,-
+282,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/,end,-,,-,-,-,-,-,-,-,-,-,-
+283,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,CEP,"Se o município local da prestação da atividade de evento foi informado (cMunPrestacao foi informado), então o CEP deve ser informado e pertencer a este município.",,Obrig.,Rej.,E0398,Informe um CEP correspondente ao município do local da prestação do serviço informado nesta DPS para indicar corretamente o endereço da atividade ou evento.,1,V,X,V,X,-
+284,,,"Se o pais local da prestação da atividade de evento foi informado (cPaisPrestacao foi informado), então o CEP não deve ser informado.",,Obrig.,Rej.,E0400,O CEP não deve ser informado quando o endereço da atividade de evento ocorrer no exterior do país.,1,V,X,V,X,-
+285,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,endExt,"Se o pais da prestação da atividade de evento foi informado (cPaisPrestacao foi informado), então o grupo de informações do endereço no exterior deve ser informado.",,Obrig.,Rej.,E0402,O grupo de informações de endereço da atividade de evento ocorrido no exterior deve ser informado quando o país do local da prestação for informado na DPS.,1,V,X,V,X,-
+286,,,"Se o município local da prestação da atividade de evento foi informado (cMunPrestacao foi informado), então o grupo de informações do endereço no exterior não deve ser informado.",,Obrig.,Rej.,E0404,O grupo de informações de endereço da atividade de evento ocorrido no exterior não deve ser informado quando o município do local da prestação for informado na DPS.,1,V,X,V,X,-
+287,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/endExt/,cEndPost,-,,-,-,-,-,-,-,-,-,-,-
+288,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/endExt/,xCidade,-,,-,-,-,-,-,-,-,-,-,-
+289,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/endExt/,xEstProvReg,-,,-,-,-,-,-,-,-,-,-,-
+290,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+291,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,nro,-,,-,-,-,-,-,-,-,-,-,-
+292,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+293,NFSe/infNFSe/DPS/infDPS/serv/atvEvento/end/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+294,NFSe/infNFSe/DPS/infDPS/serv,infoComplem,-,,-,-,-,-,-,-,-,-,-,-
+295,NFSe/infNFSe/DPS/infDPS/serv/,idDocTec,-,,-,-,-,-,-,-,-,-,-,-
+296,NFSe/infNFSe/DPS/infDPS/serv/,docRef,"Quando o emitente da DPS for o tomador ou o intermediário do serviço (tpEmit = 2 ou 3, respectivamente) este campo deve ser obrigatoriamente informado.",,Obrig.,Rej.,E0420,O documento de referência deve ser obrigatoriamente informado quando o emitente da DPS for o tomador ou intermediário do serviço.,1,V,X,V,X,-
+297,NFSe/infNFSe/DPS/infDPS/serv/,xInfComp,-,,-,-,,-,-,-,-,-,-,-
+298,NFSe/infNFSe/DPS/infDPS/,valores,-,,-,-,,-,-,-,-,-,-,-
+299,NFSe/infNFSe/DPS/infDPS/valores/,vServPrest,-,,-,-,,-,-,-,-,-,-,-
+300,NFSe/infNFSe/DPS/infDPS/valores/vServPrest/,vReceb,O valor recebido deve ser informado na DPS quando o intermediário do serviço for o emitente da DPS (tpEmit = 3).,,Obrig.,Rej.,E0423,O valor recebido deve ser informado na DPS quando o intermediário do serviço for o emitente da DPS.,1,V,X,V,X,-
+301,,,"O valor recebido não deve ser informado na DPS quando o prestador ou tomador do serviço for o emitente da DPS 
+(tpEmit = 1 ou tpEmit = 2).",,Obrig.,Rej.,E0424,O valor recebido não deve ser informado na DPS quando o prestador ou tomador do serviço for o emitente da DPS.,1,V,X,V,X,-
+302,,,O valor recebido não pode ser menor que o valor do serviço informado na DPS.,,Obrig.,Rej.,E0425,O valor recebido não pode ser menor que o valor do serviço informado na DPS.,1,V,X,V,X,-
+303,NFSe/infNFSe/DPS/infDPS/valores/vServPrest/,vServ,"vDR é:
+um valor informado pelo emitente para dedução/redução da BC do ISSQN;
+
+vCalcDR é:
+o cálculo do valor de dedução/redução da BC do ISSQN:
+
+1) Quando o valor de dedução/redução for apurado a partir de um percentual informado na DPS, calcular este percentual sobre o valor do serviço já abatido o valor do desconto incondicionado.
+Ex: 
+Valor de dedução/redução = (Valor do serviço - valor desconto incodicional) x 
+% de dedução/redução.
+
+VServ >= desconto incondicionado + Valor de dedução/redução
+
+2) Quando um ou mais documentos são informados pelo emitente na DPS para dedução/redução da BC do ISSQN. 
+Neste caso o resultado do somatório é o valor deste campo do leiaute NFS-e;
+
+---------------------------
+
+vInfoBM é:
+um valor informado pelo emitente para reduzir a BC do ISSQN;
+
+VCalcBM é:
+o cálculo do valor de redução da BC do ISSQN a partir de benefício municipal:
+
+1) Quando o valor do benefício municipal for apurado a partir de um percentual parametrizado para redução da base de cálculo, aplicar o percentual parametrizado sobre o valor do serviço já abatidos os valores do desconto incondicionado e dedução/redução.
+
+Ex: 
+Valor de benefício municipal = (Valor do serviço - valor desconto incodicional - valor de dedução/redução) x % de benefício municipal.
+
+VServ >= desconto incondicionado + Valor de dedução/redução + valor de benefício municipal.
+
+2) Quando um valor monetário de benefício municipal é informado pelo emitente na DPS para redução da BC do ISSQN.","O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.
+
+Valor do Serviço >= Desconto Incondicionado + Deduções/Reduções + Benefício Municipal
+
+vServ >= descIncond + (vDR ou vCalcDR) + (vRedBCBM ou VCalcBM)",Obrig.,Rej.,E0427,"O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.",2,V,X,V,X,-
+304,,,,"O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Desconto Condicionado, Deduções/Reduções, Benefício Municipal, valores de tributos devidos (CP, IRRF, CSLL), e valores dos tributos se retidos (PIS, COFINS, ISSQN).
+
+Valor do serviço >= Desconto condicionado + Desconto incondicionado + (CP, IRRF, CSLL)* + Valores, se retidos (ISSQN, PIS, COFINS)**
+
+vServ >= vDescIncond + vDescCond + (vRetCP + vRetIRRF + vRetCSLL)* + Se Retidos (vISSQN + vPIS + vCOFINS)**
+
+*Para o resultado do Valor Líquido o CP, IRRF e CSLL serão sempre subtraídos, se constarem na DPS, pois sempre são retidos.
+
+**Para o resultado do Valor Líquido o ISSQN, PIS e COFINS somente serão subtraídos quando forem retidos.",Obrig.,Rej.,E0428,"O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Desconto Condicionado, Deduções/Reduções, Benefício Municipal, valores de tributos devidos (CP, IRRF, CSLL), e valores dos tributos se retidos (PIS, COFINS, ISSQN).",2,V,X,V,X,-
+305,,,,"O ISSQN não pode ser objeto de redução de base de cálculo que resulte em carga tributária menor que a decorrente da aplicação da alíquota mínima de 2,0% do valor do serviço, exceto para os serviços a que se referem os subitens 7.02, 7.05 e 16.01 da lista anexa a LC 116/03.
+
+O valor da base de cálculo do ISSQN da NFS-e é encontrada a partir de valores que constam na DPS através do seguinte cálculo:
+
+Valor da Base de Cálculo do ISSQN = Valor do Serviço - Desconto Incondicionado - Deduções/Reduções - Benefício Municipal
+
+vBC = vServ - descIncond - (vDR ou vCalcDR) - (vInfoBM ou VCalcBM)",Obrig.,Rej.,E0429,"O ISSQN não pode ser objeto de redução de base de cálculo que resulte em carga tributária menor que a decorrente da aplicação da alíquota mínima de 2,0% do valor do serviço, exceto para os serviços a que se referem os subitens 7.02, 7.05 e 16.01 da lista anexa a LC 116/03.""",2,V,X,V,X,-
+306,NFSe/infNFSe/DPS/infDPS/valores/,vDescCondIncond,-,,-,-,-,-,-,-,-,-,-,-
+307,NFSe/infNFSe/DPS/infDPS/valores/vDescCondIncond/,vDescIncond,Verificar o valor do desconto incondicionado informado na DPS que deve ser menor que o valor do serviço e maior que zero.,,Obrig.,Rej.,E0431,O valor do desconto incondicionado informado na DPS deve ser menor que o valor do serviço e maior que zero.,2,V,X,V,X,-
+308,,,"O valor do desconto incondicionado informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E0430,"O valor do desconto incondicionado municipal informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,X,X,
+309,NFSe/infNFSe/DPS/infDPS/valores/vDescCondIncond/,vDescCond,Verificar se o valor do desconto condicionado informado na DPS deve ser menor que o valor do serviço e maior que zero.,,Obrig.,Rej.,E0432,O valor do desconto condicionado informado na DPS deve ser menor que o valor do serviço e maior que zero.,2,V,X,V,X,-
+310,NFSe/infNFSe/DPS/infDPS/valores/,vDedRed,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução para o ISSQN quando ocorrer ""Imunidade"" (tribISSQN = 2), ""Exportação de serviço"" (tribISSQN = 3) ou ""Não incidência"" (tribISSQN = 4), ou seja, tpRetISSQN tem que ser igual a 1 (tpRetISSQN = 1).",,Obrig.,Rej.,E0435,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução do ISSQN quando ocorrer Imunidade, Exportação do serviço ou Não incidência.",2,V,X,V,X,-
+311,,,Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução para o ISSQN quando o prestador do serviço é MEI (opSimpNac = 2).,,Obrig.,Rej.,E0436,Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução do ISSQN quando o prestador de serviço é MEI.,2,V,X,V,X,-
+312,,,"Não é permitidoo preenchimento dos campos do grupo de informações relativas à Dedução/Redução para o ISSQN, quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente, ou seja, o campo que indica a suspensão da exigibilidade está informado na DPS (tpSUSP = 1 ou 2).",,Obrig.,Rej.,E0437,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução do ISSQN, quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente.",2,V,X,V,X,-
+313,,,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução para o ISSQN, quando o prestador de serviço tiver um regime especial de tributação, ou seja, o campo que indica o regime especial de tributação é diferente de 0, (regEspTrib = 1, 2, 3, 4, 5 ou 6).",,Obrig.,Rej.,E0438,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução do ISSQN, quando o prestador de serviço tiver algum regime especial de tributação.",2,V,X,V,X,-
+314,,,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução para o ISSQN, quando o benefício municipal informado na DPS for do tipo ""Isenção"".",,Obrig.,Rej.,E0439,"Não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução do ISSQN, quando o benefício municipal informado na DPS for do tipo ""Isenção"".",2,V,X,V,X,-
+315,,,"Se o prestador de serviço não for optante do Simples Nacional (opSimpNac = 1) e a situação do convênio do município de incidência do ISSQN no Sistema Nacional NFS-e for ""Ativo"", então o sistema permite informações de dedução/redução, conforme admissões dos tipos de dedução/redução nas parametrizações dos respectivos códigos de serviço administrado pelo municipio de incidência do ISSQN no Sistema Nacional NFS-e.",,Obrig.,Rej.,E0440,"O tipo de dedução/redução informado na DPS não é permitida pelo município de incidência do ISSQN, conforme parametrizações do código de serviço do município de incidência.",2,V,X,X,X,-
+316,,,"Se o prestador do serviço é ME/EPP (opSimpNac = 3), o regime de apuração ocorre pelo SN (regApTribSN = 1) e o municipio de incidência está ""Ativo"", 
+então não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução, 
+exceto quando o código de tributação nacional (cTribNac) corresponder aos subitens 06.01, 06.02, 07.02 e 07.05. 
+
+Neste cenário, o sistema verifica a parametrização e permite o preenchimento das informações conforme admissões dos tipos de dedução/redução nas parametrizações destes respectivos códigos de serviço (06.01, 06.02, 07.02 e 07.05), administradas pelo municipio de incidência do ISSQN no Sistema Nacional NFS-e.",,Obrig.,Rej.,E0441,"Não é permitido o preenchimento de informações relativas à Dedução/Redução para o prestador de serviço ME/EPP, apurando pelo SN conforme parametrização do código de serviço admnistrado pelo municipio de incidência do ISSQN.",2,V,X,X,X,-
+317,,,"Se o prestador do serviço é ME/EPP (opSimpNac = 3), o regime de apuração ocorre pelo SN (regApTribSN = 1) e o municipio de incidência não está ""Ativo"", 
+então não é permitido o preenchimento dos campos do grupo de informações relativas à Dedução/Redução, 
+exceto quando o código de tributação nacional (cTribNac) corresponder aos subitens 06.01, 06.02, 07.02 e 07.05.",,Obrig.,Rej.,E0442,"O tipo de dedução/redução informado na DPS não é permitida para o prestador de serviço ME/EPP, apurando pelo SN.",2,V,X,V,X,-
+319,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/,pDR,"Se informado, o valor percentual para dedução/redução deve ser maior 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0453,O valor percentual para dedução/redução deve ser maior que 0 e menor ou igual a 100%.,1,V,X,V,X,-
+320,,,"Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por percentual, conforme parametrização do município de incidência conveniado ao Sistema Nacional NFS-e.",,Obrig.,Rej.,E0454,Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por percentual.,3,V,X,X,X,-
+Err:504,,,"O valor percentual de dedução/redução informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E0444,"O valor percentual de dedução/redução informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,X,X,-
+321,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/,vDR,"Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por valor monetário, conforme parametrização do município de incidência conveniado ao Sistema Nacional NFS-e.",,Obrig.,Rej.,E0446,Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por valor monetário.,3,V,X,X,X,-
+322,,,"O valor de dedução/redução informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E0447,"O valor de dedução/redução informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,X,X,-
+323,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/,documentos,"Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por documentos, conforme parametrização do município de incidência conveniado ao Sistema Nacional NFS-e.",,Obrig.,Rej.,E0449,Código de serviço informado na DPS não permite dedução/redução na base de cálculo do ISSQN por documento informado.,3,V,X,X,X,-
+324,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos,docDedRed,-,,-,-,-,-,-,-,-,-,-,-
+325,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,chNFSe,"Chave de NFS-e inválida.
+
+1 - Verificar DV da chave de NFS-e informada neste campo desta DPS;",,Obrig.,Rej.,E0455,Informe uma chave de NFS-e válida.,1,V,X,V,X,-
+326,,,Chave de NFS-e inexistente.,,Obrig.,Rej.,E0456,NFS-e não existe na base de dados do autorizador de NFS-e nacional. Informe uma chave de NFS-e existente.,1,V,X,V,X,-
+327,,,NFS-e da chave informada está cancelada.,,Obrig.,Rej.,E0458,Uma NFS-e cancelada não pode ser informada para dedução/redução.,2,V,X,X,X,-
+328,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,chNFe,"Chave de NF-e inválida.
+
+1 - Verificar DV da chave de NF-e informada neste campo desta DPS;",,Obrig.,Rej.,E0460,Informe uma chave de NF-e válida.,1,V,X,V,X,-
+329,,,Chave de NF-e inexistente.,,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0462",NF-e não existe na base de dados do autorizador de NF-e nacional. Informe uma chave de NF-e existente.,2,V,X,X,X,-
+330,,,NF-e da chave informada está cancelada.,,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0464",Uma NF-e cancelada não pode ser informada para dedução/redução.,2,V,X,X,X,-
+331,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,NFSeMun,-,,-,-,,-,-,-,-,-,-,-
+332,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFSeMun/,cMunNFSeMun,"O código do município informado para o documento de nota não existe, conforme tabela de municípios do IBGE.",,Obrig.,Rej.,E0466,"Informe um código de município existente para o documento de nota, conforme tabela de municípios do IBGE.",1,V,V,V,V,-
+333,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFSeMun/,nNFSeMun,-,,-,-,,-,-,-,-,-,-,-
+334,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFSeMun/,cVerifNFSeMun,-,,-,-,,-,-,-,-,-,-,-
+335,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,NFNFS,-,,-,-,,-,-,-,-,-,-,-
+336,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFNFS/,nNFS,-,,-,-,,-,-,-,-,-,-,-
+337,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFNFS/,modNFS,-,,-,-,,-,-,-,-,-,-,-
+338,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/NFNFS/,serieNFS,-,,-,-,,-,-,-,-,-,-,-
+339,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,nDocFisc,,,-,-,,-,-,-,-,-,-,-
+340,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,nDoc,-,,-,-,,-,-,-,-,-,-,-
+341,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,tpDedRed,-,,-,-,,-,-,-,-,-,-,-
+342,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,xDescOutDed,O campo de descrição deve ser informado no caso de tpDedRed igual a 99 – Outras deduções.,,Obrig.,Rej.,E0468,"Informar, obrigatoriamente, o campo de descrição no caso ideDedRed igual a 99 – Outras deduções.",2,V,X,V,X,-
+343,,,O campo de descrição não deve ser informado no caso de tpDedRed diferente de 99 – Outras deduções.,,Obrig.,Rej.,E0470,Não informar o campo de descrição no caso ideDedRed diferente a 99 – Outras deduções.,2,V,X,V,X,-
+344,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,dEmiDoc,A data de emissão do documento informado na DPS não pode ser posterior à data de competência da DPS.,,Obrig.,Rej.,E0472,A data de emissão do documento informado na DPS não pode ser posterior à data de competência da DPS.,1,V,X,V,X,-
+345,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,vDedutivelRedutivel,-,,-,-,-,-,-,-,-,-,-,-
+346,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,vDeducaoReducao,O valor de dedução/redução não pode ser superior ao valor dedutível/redutível.,,Obrig.,Rej.,E0474,O valor de dedução/redução não pode ser superior ao valor dedutível/redutível.,2,V,X,V,X,-
+347,,,O valor de dedução/redução informado na DPS não pode ser superior ao valor do serviço.,,Obrig.,Rej.,E0476,O valor de dedução/redução informado na DPS não pode ser superior ao valor do serviço.,2,V,X,V,X,-
+348,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/,fornec,"O grupo de informações para o fornecedor deve ser informado obrigatoriamente para todos os tipos de documentos informados, exceto para os tipos de documentos NFS-e e NF-e padrões nacionais.",,Obrig.,Rej.,E0477,O grupo de informações para o fornecedor deve ser informado obrigatoriamente para o tipo de documento de dedução/redução informado na DPS.,2,V,X,V,X,-
+349,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,CNPJ,CNPJ informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0478,CNPJ do fornecedor informado na DPS é inválido.,1,V,V,V,V,-
+350,,,CNPJ informado na DPS é inexistente no cadastro CNPJ.,,Obrig.,Rej.,E0482,CNPJ do fornecedor informado na DPS não encontrado no cadastro CNPJ.,1,V,X,X,X,-
+351,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,CPF,CPF informado na DPS é inválido (verificar DV).,,Obrig.,Rej.,E0484,CPF do fornecedor informado na DPS é inválido.,1,V,V,V,V,-
+352,,,CPF informado na DPS é inexistente no cadastro CPF.,,Obrig.,Rej.,E0488,CPF do fornecedor informado na DPS não encontrado no cadastro CPF.,1,V,X,X,X,-
+353,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,NIF,-,,-,-,-,-,-,-,-,-,-,-
+354,,,Se o grupo de informações de endereço no exterior do fornecedor de serviços foi informado então o NIF ou cNaoNIF do fornecedor deve ser informado.,,Obrig.,Rej.,E1538,O NIF ou cNaoNIF do fornecedor deve ser informado quando o grupo de informações de endereço no exterior do fornecedor de serviços for informado.,1,V,X,V,X,-
+355,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,cNaoNIF,,,,,,,,,,,,-
+356,,,"Se o valor do campo cNaoNIF do fornecedor, informado na DPS, for 0, então a DPS deve ser rejeitada.",,Obrig.,Rej.,E0490,Valor 0 para o motivo da não informação do NIF do fornecedor não é permitido na Sefin do Sistema Nacional NFS-e.,2,V,X,X,X,-
+357,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,CAEPF,-,,-,-,-,-,-,-,-,-,-,-
+358,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,IM,-,,-,-,-,-,-,-,-,-,-,-
+359,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,xNome,-,,-,-,-,-,-,-,-,-,-,-
+360,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,endFornec,-,,-,-,-,-,-,-,-,-,-,-
+361,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/,endNac,"Se CNPJ ou CPF do fornecedor for informado, então o grupo de informaçoes de endereço nacional do fornecedor deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0492,O grupo de informações de endereço nacional deve ser informado obrigatoriamente quando o fornecedor for identificado pelo CPF ou CNPJ.,1,V,X,V,X,-
+362,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endNac/,cMun,"O código do município informado para o endereço do fornecedor não existe, conforme tabela de municípios do IBGE.",,Obrig.,Rej.,E0494,O código do município informado na DPS para o endereço do fornecedor do serviço não existe conforme tabela de município do IBGE.,1,V,V,V,V,-
+363,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endNac/,CEP,O CEP informado deve existir e pertencer ao município correspondente ao código do município informado para o endereço do fornecedor.,,Obrig.,Rej.,E0496,O CEP informado para o endereço nacional do fornecedor não existe ou não pertence ao município do endereço do fornecedor.,1,V,X,V,X,-
+364,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/,endExt,"Se o NIF do fornecedor foi informado, então o grupo de informações de endereço no exterior do fornecedor deve ser informado obrigatoriamente.",,Obrig.,Rej.,E0498,O grupo de informações de endereço no exterior deve ser informado obrigatoriamente quando o fornecedor for identificado pelo NIF.,1,V,X,V,X,-
+365,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endExt/,cPais,"O código de país informado para o endereço no exterior do fornecedor deve existir e ser diferente de Brasil (BR), conforme a tabela ISO2.",,Obrig.,Rej.,E0499,"O código de país informado para o endereço no exterior do fornecedor não existe ou é igual ao código do Brasil. Informe um código de país existente e diferente do codigo do Brasil (BR) para o endereço no exterior do fornecedor, conforme tabela de país ISO2.",1,V,V,V,V,-
+366,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endExt/,cEndPost,-,,-,-,-,-,-,-,-,-,-,-
+367,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endExt/,xCidade,-,,-,-,-,-,-,-,-,-,-,-
+368,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/end/endExt/,xEstProvReg,-,,-,-,-,-,-,-,-,-,-,-
+369,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/endFornec/,xLgr,-,,-,-,-,-,-,-,-,-,-,-
+370,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/endFornec/,nro,-,,-,-,-,-,-,-,-,-,-,-
+371,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/endFornec/,xCpl,-,,-,-,-,-,-,-,-,-,-,-
+372,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/endFornec/,xBairro,-,,-,-,-,-,-,-,-,-,-,-
+373,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,fone,-,,-,-,,-,-,-,-,-,-,-
+374,NFSe/infNFSe/DPS/infDPS/valores/vDedRed/documentos/docDedRed/fornec/,email,-,,-,-,,-,-,-,-,-,-,-
+375,NFSe/infNFSe/DPS/infDPS/valores/,trib,-,,-,-,-,-,-,-,-,-,-,-
+376,NFSe/infNFSe/DPS/infDPS/valores/trib/,tribMun,-,,-,-,-,-,-,-,-,-,-,-
+377,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,tribISSQN,"Não é permitido ao emitente informar se tratar de uma situação de exportação de serviço (tribISSQN = 3) para os cenários 6, 10, 34, 38, 66, 80, conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",,Obrig.,Rej.,E0529,O sistema considera este cenário para a prestação de serviço informada na DPS uma operação tributável. Não é permitido ao emitente da DPS informar que a prestação de serviço se trata de uma exportação de serviço.,2,V,X,V,X,"Os campos a serem verificados conforme os cenários são:
+6
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+10
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = LP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+34
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+38
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = LP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+66
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = LP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+80
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = LP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)"
+378,,,,,,,,,,,,,,
+379,,,"Não é permitido ao emitente informar se tratar de uma situação de operação tributável (tribISSQN = 1) para os cenários 26, 54, 92, 96, 106, 110, conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",,Obrig.,Rej.,E0530,O sistema considera este cenário para a prestação de serviço informada na DPS uma exportação de serviço. Não é permitido ao emitente da DPS informar que a prestação de serviço se trata de uma operação tributável.,2,V,X,V,X,"Os campos a serem verificados conforme os cenários são:
+
+26
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+54
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+92
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+96
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+106
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+110
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)"
+380,,,,,,,,,,,,,,
+381,,,Quando o serviço prestado for 99.01.01 - Serviços sem a incidência de ISSQN e ICMS não há incidência do ISSQN (tribISSQN = 4).,,Obrig.,Rej.,E0532,"O campo que informa sobre a tributação do ISSQN deve ser ""4 - Não Incidência"", quando houver o serviço prestado for 99.01.01 - Serviços sem a incidência de ISSQN e ICMS.",2,V,X,V,X,-
+382,,,"Quando qualquer subitem da lista de serviço nacional for incidente, conforme a parametrização do município de incidência do ISSQN, não é permitido informar não incidência do ISSQN, ou seja, os valores permitidos para o campo tribISSQN são: tribISSQN = 1, 2 ou 3.",,Obrig.,Rej.,E0539,"Não é permitido informar não incidência do ISSQN = 4 (Não Incidência) para qualquer subitem da lista nacional de serviço informado na DPS, se o subitem for incidente, conforme a parametrização do município de incidência do ISSQN.",2,V,X,X,X,
+383,,,"Quando qualquer subitem da lista de serviço nacional for não incidente, conforme a parametrização do município de incidência do ISSQN, é obrigatório informar não incidência do ISSQN, ou seja, o valor permitido para o campo tribISSQN é: tribISSQN = 4.",,Obrig.,Rej.,E0540,"Não há incidência do ISSQN (tribISSQN = 4) pois a parametrização do muncípio de incidência do ISSQN indica que o código de serviço prestado, informado na DPS, não é incidente neste município.",2,V,X,V,X,-
+384,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,cPaisResult,"Se, a tributação do ISSQN é igual à Exportação de serviço e Local da Prestação do Serviço é no Brasil e o Serviço prestado tem incidência no Local do Estabelecimento do Prestador, conforme LC 116/03,
+ou
+Se, a tributação do ISSQN é igual à Exportação de serviço e Local da Prestação do Serviço é no Brasil e o Serviço prestado tem incidência no Local do Estabelecimento do Tomador, conforme LC 116/03, e o Endereço do Tomador do serviço é no Exterior ou não informado,
+Então,
+é obrigatório informar o código do país onde ocorreu o resultado do serviço prestado.
+
+obs: todos os cenários iguais a 2, 30, 58, 62, 72, 76, conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",,Obrig.,Rej.,E0590,"É obrigatório informar o código do país onde ocorreu o resultado do serviço prestado para os cenários 2, 30, 58, 62, 72, 76, conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",2,V,X,V,X,"Os campos a serem verificados conforme os cenários são:
+2
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+30
+NFSe/infNFSe/DPS/infDPS/toma/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+58
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP 
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+62
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endNac/cMun
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+72
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = EP
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)
+
+76
+NFSe/infNFSe/DPS/infDPS/toma/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/interm/end/endExt/cPais
+NFSe/infNFSe/DPS/infDPS/serv/locPrest/cLocPrestacao
+NFSe/infNFSe/DPS/infDPS/serv/cServ/cTribNac
+Resultado do local de incidência = ET
+NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/tribISSQN
+tribISSQN = 3 (Exportação de Serviço)"
+384,,,"Se a tributação do ISSQN é diferente de Exportação de serviço ou Local da Prestação do Serviço é no Exterior ou o Serviço prestado tem incidência no Local de Prestação, conforme LC 116/03,
+ou
+Se a tributação do ISSQN é igual à Exportação de serviço e Local da Prestação do Serviço é no Brasil e o Serviço prestado tem incidência no Local do Estabelecimento do Tomador, conforme LC 116/03, e o Endereço do Tomador do serviço é no Brasil.
+
+Não é permitido informar o código do país onde ocorreu o resultado do serviço prestado.
+
+obs: todos os cenários diferentes de 2, 30, 58, 62, 72, 76, conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",,Obrig.,Rej.,E0591,"Não é permitido informar o código do país onde ocorreu o resultado do serviço prestado para os cenários diferentes de 2, 30, 58, 62, 72, 76 conforme a planilha ""EXPORTACAO_EMISSÃO_NFS-e"".",2,V,X,V,X,
+385,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,tpImunidade,Obrigatório e informado somente quando o campo referente à tributação do ISSQN for igual a 2 (tribISSQN = 2).,,Obrig.,Rej.,E0592,"O tipo de imunidade é obrigatório e deve ser informado somente quando o campo referente à tributação do ISSQN for igual a ""2 - Imunidade"".",2,V,X,V,X,-
+386,,,"Não permitido o valor ""0 - Imunidade (tipo não informado na nota de origem)"" na DPS quando utilizado os Emissores Públicos Nacionais para emissão de NFS-e.",,Obrig.,Rej.,E0593,"Não permitido o valor ""0 - Imunidade (tipo não informado na nota de origem)"" na DPS quando utilizado os Emissores Públicos Nacionais para emissao de NFS-e.",2,V,X,X,X,-
+387,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,exigSusp,"Não é permitido informar suspensão da exigibilidade do ISSQN por decisão judicial ou administrativa, quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E0585,"Somente é permitido informar suspensão de exigibilidade quando a opção da tributação do ISSQN for uma operação tributável 
+(tribISSQN = 1).",2,V,X,V,X,-
+388,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/exigSusp/,tpSusp,-,,-,-,-,-,-,-,-,-,-,-
+389,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/exigSusp/,nProcesso,-,,-,-,-,-,-,-,-,-,-,-
+390,NFSe/infNFSe/DPS/valores/trib/tribMun/,BM,"Não é permitido informar BM quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,,E0533,"Não é permitido informar Benefício Municipal (BM deve ser nulo) quando o serviço prestado diferente de Tributável (tribISSQN = 1), ou seja, tribISSQN = 2, 3 ou 4.",2,V,X,V,X,-
+391,,,Não é permitido o preenchimento dos campos do grupo de informações relativas ao Benefício Municipal quando o prestador do serviço é MEI (opSimpNac = 2).,,Obrig.,,E0534,Não é permitido o preenchimento de informações relativas à benefício municipal para o prestador de serviço MEI.,2,V,X,V,X,-
+392,,,"Não é permitido informar benefício municipal quando o prestador de serviço tiver um regime especial de tributação, ou seja, o campo que indica o regime especial de tributação é diferente de 0, (regEspTrib = 1, 2, 3, 4, 5 ou 6).",,Obrig.,,E0535,"Não é permitido informar benefício municipal quando o prestador de serviço tiver um regime especial de tributação, ou seja, o campo que indica o regime especial de tributação é diferente de 0, (regEspTrib = 1, 2, 3, 4, 5 ou 6).",2,V,X,V,X,-
+393,,,"Não é permitido informar benefício municipal quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente, ou seja, o campo que indica a suspensão da exigibilidade está informado na DPS (tpSUSP = 1 ou 2).",,Obrig.,,E0538,"Não é permitido informar benefício municipal quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente, ou seja, o campo que indica a suspensão da exigibilidade está informado na DPS (tpSUSP = 1 ou 2).",2,V,X,V,X,-
+394,,,"Se o município de incidência do ISSQN não está ""Ativo"" no Sistema Nacional NFS-e, então não é permitido informar benefício municipal.",,Obrig.,,E0537,"Não é permitido informar benefício municipal (BM deve ser nulo) quando o município de incidência do ISSQN não está ""Ativo"" no Sistema Nacional NFS-e.",2,V,X,V,X,-
+395,,,"Se o emitente da DPS for ME/EPP (opSimpNac = 3), apurando o ISSQN pelo Simples Nacional (regApTribSN = 1) e o município de incidência do ISSQN está ""Ativo"" no Sistema Nacional NFS-e, então não é permitido informar benefício municipal, ou seja, (nBM = nulo).
+
+Obs: Exceto quando o código de tributação nacional corresponder aos subitens 07.02 e 07.05 da lista de serviços do sistema nacional NFS-e. Cenário em que o sistema verifica se há parametrização de BM para o emitente da DPS.",,Obrig.,,E0536,"Não é permitido o preenchimento de informações relativas à benefício municipal para o prestador de serviço ME/EPP, apurando pelo SN, conforme parametrização do código de serviço admnistrado pelo municipio de incidência do ISSQN.",3,V,X,V,X,-
+397,NFSe/infNFSe/DPS/valores/trib/tribMun/BM/,nBM,O código de identificação do Benefício Municipal não existente para municipio de incidência do ISSQN.,,Obrig.,Rej.,E0541,Não existe o código de identificação do benefício municipal informado na DPS para o municipío de incidência do ISSQN.,3,V,X,X,X,-
+398,,,O código de identificação de Benefício Municipal do municipío de incidência do ISSQN não está vigente na data de competência informada na DPS.,,Obrig.,Rej.,E0544,Período de vigência expirado para o código de identificação do Benefício Municipal no municipío de incidência do ISSQN para a data de competência informada na DPS.,3,V,X,X,X,-
+399,,,O código de indentificação de Benefício Municipal informado na DPS é restrita à prestadores de serviço estabelecidos no município de incidência do ISSQN.,,Obrig.,Rej.,E0548,O Benefício Municipal informado na DPS não permite benefício para prestadores de serviço que não estejam estabelecidos no município de incidência do ISSQN.,3,V,X,X,X,-
+400,,,"O código de indentificação de Benefício Municipal, informada na DPS, não permite benefício para o código de tributação e/ou prestador (CPF ou CNPJ) informado na DPS, conforme parametrização do município de incidência do ISSQN.",,Obrig.,Rej.,E0550,"O código de identificação de Benefício Municipal, informada na DPS, não permite benefício para o código de tributação e/ou prestador (CPF ou CNPJ) informado na DPS, conforme parametrização do município de incidência do ISSQN.",3,V,X,X,X,-
+401,NFSe/infNFSe/DPS/valores/trib/tribMun/BM/,vRedBCBM,Somente é permitido informar vRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por Valor Monetário.,,Obrig.,Rej.,E0565,"Não é permitido informar um valor monetário de redução de base de cálculo do ISSQN por benefício municipal, se o código de identificação do Benefício Municipal não corresponder ao tipo de redução por valor monetário.",3,V,X,X,X,-
+402,,,É obrigatório informar vRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por Valor Monetário.,,Obrig.,Rej.,E0567,É obrigatório informar vRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por Valor Monetário.,3,V,X,X,X,-
+403,,,O valor monetário do benefício municipal informado na DPS não pode ser superior ao valor do preço serviço.,,Obrig.,Rej.,E0574,O valor monetário do benefício municipal informado na DPS não pode ser superior ao valor do serviço.,3,V,X,X,X,-
+404,,,"O valor monetário do benefício municipal informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E0575,"O valor monetário do benefício municipal informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,X,X,-
+405,NFSe/infNFSe/DPS/valores/trib/tribMun/BM/,pRedBCBM,Somente é permitido informar pRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por percentual.,,Obrig.,Rej.,E0577,"Não é permitido informar um valor percentual de redução de base de cálculo do ISSQN por benefício municipal, se o código de identificação do Benefício Municipal não corresponder ao tipo de redução por valor percentual.",3,V,X,X,X,-
+406,,,É obrigatório informar pRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por percentual.,,Obrig.,Rej.,E0579,É obrigatório informar pRedBCBM quando o código de identificação do Benefício Municipal (nBM) for um benefício do tipo Redução de Base de Cálculo por percentual.,3,V,X,X,X,-
+407,,,O valor percentual para redução da base de cálculo deve ser maior que 0 e menor ou igual ao percentual parametrizado pelo município de incidência do ISSQN.,,Obrig.,Rej.,E0586,O valor percentual para redução da base de cálculo deve ser maior que 0 e menor ou igual ao percentual parametrizado pelo município de incidência do ISSQN.,3,V,X,X,X,-
+408,,,"O valor percentual do benefício municipal informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",,Obrig.,Rej.,E0587,"O valor percentual do benefício municipal informado na DPS não pode reduzir o valor da BC de forma que resulte no valor do ISSQN a uma alíquota efetiva menor que 2%, exceto para os códigos relativos aos serviços 7.02, 7.05 e 16.01.",2,V,X,X,X,-
+409,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,tpRetISSQN,"Não é permitido haver retenção do ISSQN (tpRetISSQN = 2 ou 3) quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo tpRetISSQ = 1 quando o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E0580,"Não é permitido haver retenção quando o campo referente à tributação do ISSQN indicar imunidade, exportação ou não incidência.",2,V,X,V,X,-
+410,,,"Se o prestador do serviço tiver opção perante o Simples Nacional MEI (opSimpNac = 2) na data de competência informada na DPS, então não é permitido ocorrer retenção do ISSQN (tpRetISSQN igual a 2 ou 3), ou seja, tpRetISSQN tem que ser igual a 1 (tpRetISSQN = 1).",,Obrig.,Rej.,E0583,Não é permitido retenção do ISSQN para o prestador do serviço que seja MEI na data de competência informada na DPS.,2,V,X,X,X,-
+411,,,"Se o prestador do serviço tiver um regime especial de tributação (regEspTrib = 1, 2, 3, 4, 5 ou 6) na data de competência informada na DPS, então não é permitido ocorrer retenção do ISSQN (tpRetISSQN igual a 2 ou 3), ou seja, tpRetISSQN tem que ser igual a 1 (tpRetISSQN = 1).",,Obrig.,Rej.,E0588,Não é permitido retenção do ISSQN para o prestador do serviço que tenha algum regime especial de tributação na data de competência informada na DPS.,2,V,X,V,X,-
+412,,,"Se o prestador do serviço tiver a exibilidade do ISSQN suspensa administrativamente ou judicialmente (tpSUSP = 1 ou 2) na data de competência informada na DPS, então não é permitido ocorrer retenção do ISSQN (tpRetISSQN igual a 2 ou 3), ou seja, tpRetISSQN tem que ser igual a 1 (tpRetISSQN = 1).",,Obrig.,Rej.,E0589,Não é permitido retenção do ISSQN quando existe suspensão da exigibilidade por Decisao Judicial ou Administrativa.,2,V,X,V,X,-
+413,,,"Quando o benefício municipal informado na DPS for do tipo ""Isenção"", não poderá ocorrer retenção do ISSQN 
+(tpRetISSQN igual a 2 ou 3) ou seja, tpRetISSQN tem que ser igual a 1.",,Obrig.,Rej.,E0594,Não é permitido retenção do ISSQN quando houver Benefício Municipal do tipo Isenção.,2,V,X,V,X,-
+414,,,"Quando o codigo de tributação nacional corresponder ao subitem 220101 da lista de serviços do Sistema Nacional NFS-e, não poderá ocorrer retenção do ISSQN (tpRetISSQN igual a 2 ou 3) ou seja, tpRetISSQN tem que ser igual a 1.",,Obrig.,Rej.,E0596,Não é permitido retenção do ISSQN quando o serviço prestado corresponder ao subitem 220101 - Serviço de exploração de rodovia da lista de serviços do Sistema Nacional NFS-e.,2,V,X,V,X,-
+415,,,"Se o emitente da DPS for o tomador de serviço (tpEmit = 2) e o prestador for identificado por NIF ou, 
+na falta do NIF informado, o endereço for no exterior e local da prestação no território brasileiro 
+(cLocPrestacao é preenchido), então a retenção do imposto devido deve ser realizada obrigatoriamente 
+pelo tomador (tpRetISSQN = 2).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0650","Em caso de importação de serviço pelo tomador, o ISSQN deve ser retido pelo tomador.",2,V,X,V,X,-
+416,,,"Se o emitente da DPS for o intermediário de serviço (tpEmit = 3) e o prestador for identificado por NIF ou, 
+na falta do NIF informado, o endereço for no exterior e local da prestação no território brasileiro 
+(cLocPrestacao é preenchido), então a retenção do imposto devido deve ser realizada obrigatoriamente 
+pelo tomador (tpRetISSQN = 3).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0652","Em caso de importação de serviço pelo intermediário, o ISSQN deve ser retido pelo intermediário.",2,V,X,V,X,-
+417,,,Verificar se o CPF informado como tomador na DPS (NFSe/infNFSe/DPS/infDPS/toma/CPF) está previamente cadastrado para retenção do ISSQN na parametrização do município de incidência do imposto.,,Obrig.,Rej.,E0667,Município da incidência do ISSQN não autoriza que o CPF do tomador informado na DPS seja indicado para retenção deste imposto.,3,V,X,X,X,-
+418,,,Verificar se o CPF informado como intermediário na DPS (NFSe/infNFSe/DPS/infDPS/interm/CPF) está previamente cadastrado para retenção na parametrização do município de incidência do imposto.,,Obrig.,Rej.,E0670,Município da incidência do ISSQN não autoriza que o CPF do intermediário informado na DPS seja indicado para retenção deste imposto.,3,V,X,X,X,-
+419,,,"Se o tomador emitente da DPS (tpEmit = 2) for estabelecido em município diferente do município de incidência do ISSQN, então não pode haver retenção (tpRetISSQN deve ser igual a 1).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0672",Não pode haver retenção do ISSQN se e o tomador for o emitente da DPS e estiver estabelecido em município diferente do município de incidência do ISSQN.,2,V,X,V,X,-
+420,,,"Se o intermediário emitente da DPS (tpEmit = 3) for estabelecido em município diferente do município de incidência do ISSQN, então não pode haver retenção (tpRetISSQN deve ser igual a 1).",,Obrig.,Rej.,"[Threaded comment] Your version of Excel allows you to read this threaded comment; however, any edits to it will get removed if the file is opened in a newer version of Excel. Learn more: https://go.microsoft.com/fwlink/?linkid=870924 Comment: Regra executada somente quando o emitente da DPS for o tomador ou intermediário do serviço (tpEmit = 2 ou 3). E0673",Não pode haver retenção do ISSQN se e o intermediário for o emitente da DPS e estiver estabelecido em município diferente do município de incidência do ISSQN.,2,V,X,V,X,-
+421,NFSe/infNFSe/DPS/infDPS/valores/trib/tribMun/,pAliq,Não é permitido informar alíquota superior a 5%.,,Obrig.,Rej.,E0595,Não é permitido informar alíquota superior a 5%.,2,V,X,V,X,-
+422,,,Não é permitido informar alíquota quando o prestador é optante do simples nacional do tipo MEI (opSimpNac = 2).,,Obrig.,Rej.,E0600,Não é permitido informar a alíquota para prestador de serviço optante do simples nacional do tipo MEI.,2,V,X,V,X,-
+423,,,"Não é permitido informar alíquota quando o serviço prestado for imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN) é igual a ""2 - Imunidade, ""3 - Exportação de Serviço"" ou ""4 - Não Incidência"", (tribISSQN = 2, 3 ou 4).",,Obrig.,Rej.,E0602,"Não é permitido informar alíquota quando o campo referente à tributação do ISSQN indicar imunidade, exportação ou não incidência.",2,V,X,V,X,-
+424,,,"Não é permitido informar alíquota quando o prestador de serviço tiver um regime especial de tributação, ou seja, o campo que indica o regime especial de tributação é diferente de 0, (regEspTrib = 1, 2, 3, 4, 5 ou 6).",,Obrig.,Rej.,E0604,Não é permitido informar alíquota quando o prestador de serviço possui algum regime especial de tributação.,2,V,X,V,X,-
+425,,,"Não é permitido informar alíquota quando estiver indicado na DPS que a tributação do ISSQN está com sua exigibilidade suspensa, seja administrativamente ou judicialmente, ou seja, o campo que indica a suspensão da exigibilidade está informado na DPS (tpSUSP = 1 ou 2).",,Obrig.,Rej.,E0606,Não é permitido informar a alíquota quando a exigibilidade da tributação do ISSQN estiver suspensa por decisão judicial ou administrativa.,2,V,X,V,X,-
+426,,,"Não é permitido informar alíquota quando o benefício municipal for informado na DPS for do tipo ""Isenção"" ou ""Alíquota Diferenciada"".",,Obrig.,Rej.,E0612,"Não é permitido informar alíquota quando o benefício municipal informado na DPS for do tipo ""Isenção"" ou ""Alíquota Diferenciada"".",3,V,X,X,X,-
+427,,,"Não é permitido o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) o prestador de serviço seja não optante do Simples Nacional (opSimpNac = 1) 
+na data de competência informada na DPS, e
+2) o convênio do município de incidência do ISSQN está ativo na data de competência informada na DPS;",,Obrig.,Rej.,E0617,"Não é permitido informar alíquota quando o prestador de serviço não é optante do simples nacional (opSimpNac = 1) na data de competência informada na DPS, com o município de incidência do ISSQN com situação ""ATIVO"" no Sistema Nacional NFS-e.",3,V,X,X,X,-
+428,,,"É obrigatório o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) o prestador de serviço seja não optante do Simples Nacional (opSimpNac = 1) 
+na data de competência informada na DPS, e
+2) o convênio do município de incidência do ISSQN não está ""Ativo"" na data de competência informada na DPS, e
+3) nenhum regime especial de tributação para o prestador de serviço (regEspTrib = 0);",,Obrig.,Rej.,E0619,"É obrigatório informar alíquota quando o prestador de serviço não é optante do simples nacional (opSimpNac = 1) na data de competência informada na DPS, o município de incidência do ISSQN não está com situação ""ATIVO"" no Sistema Nacional NFS-e e não haja algum regime especial de tributaçao para o prestador.",3,V,X,X,X,-
+429,,,"É obrigatorio o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) O prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência de emissão da DPS e; 
+2) a apuração do ISSQN seja pelo SN (regApTribSN = 1) e;
+3) o convênio do município de incidência do ISSQN está ""Ativo"" na data de competência informada na DPS, 
+4) não haja benefício municipal ou, se houver, seja diferente de ""Isenção"" e ""Alíquota diferenciada"", e
+5) haja retenção do ISSQN (tpRetISSQN = 2 ou 3);
+
+Obs: neste cenário, o percentual da alíquota mínima informada permitida é 1,8%.",,Obrig.,Rej.,E0621,"É obrigatório informar alíquota quando há indicação de retenção do ISSQN (tpRetISSQN = 2 ou 3) para o prestador de serviço ME/EPP (opSimpNac = 3) na data de competência informada na DPS, com apuração do ISSQN pelo simples nacional (regApTribISSQN = 1), sem benefício municipal ou, se houver, seja diferente de isenção ou alíquota diferenciada, cujo município de incidência esteja Ativo no Sistema Nacional NFS-e. Obs: neste cenário, o percentual da alíquota mínima informada permitida é 1,8%.",3,V,X,X,X,-
+430,,,"Não é permitido o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) O prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência de emissão da DPS e; 
+2) a apuração do ISSQN seja pelo SN (regApTribSN = 1) e;
+3) o convênio do município de incidência do ISSQN está ""Ativo"" na data de competência informada na DPS, 
+4) não haja benefício municipal ou, se houver, seja diferente de ""Isenção"" e ""Alíquota diferenciada"", e
+5) não haja retenção do ISSQN (tpRetISSQN = 1);",,Obrig.,Rej.,E0625,"Não é permitido informar alíquota quando não há indicação de retenção do ISSQN (tpRetISSQN = 1) para o prestador de serviço ME/EPP (opSimpNac = 3) na data de competência informada na DPS, com apuração do ISSQN pelo simples nacional (regApTribISSQN = 1), sem benefício municipal ou, se houver, seja diferente de isenção ou alíquota diferenciada, cujo município de incidência esteja Ativo no Sistema Nacional NFS-e.",3,V,X,X,X,-
+431,,,"É obrigatório o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) O prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência de emissão da DPS e; 
+2) a apuração do ISSQN seja pelo SN (regApTribSN = 1) e;
+3) o convênio do município de incidência do ISSQN não está ""Ativo"" na data de competência informada na DPS, e
+4) haja retenção do ISSQN (tpRetISSQN = 2 ou 3);
+
+Obs: neste cenário, o percentual da alíquota mínima informada permitida é 1,8%.",,Obrig.,Rej.,E0628,"É obrigatório informar alíquota quando o município de incidência do ISSQN não está Ativo no Sistema Nacional NFS-e, para o prestador de serviço ME/EPP (opSimpNac = 3) na data de competência informada na DPS, com apuração do ISSQN pelo simples nacional (regApTribISSQN = 1), com retenção do ISSQN (tpRetISSQN = 2 ou 3). Obs: neste cenário, o percentual da alíquota mínima informada permitida é 1,8%.",3,V,X,X,X,-
+432,,,"Não é permitido o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) O prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência de emissão da DPS e; 
+2) a apuração do ISSQN seja pelo SN (regApTribSN = 1) e;
+3) o convênio do município de incidência do ISSQN não está ""Ativo"" na data de competência informada na DPS, e
+4) não haja retenção do ISSQN (tpRetISSQN = 1);",,Obrig.,Rej.,E0631,"Não é permitido informar alíquota quando o município de incidência do ISSQN não está Ativo no Sistema Nacional NFS-e, para o prestador de serviço ME/EPP (opSimpNac = 3) na data de competência informada na DPS, com apuração do ISSQN pelo simples nacional (regApTribISSQN = 1) sem retenção do ISSQN (tpRetISSQN = 1).",3,V,X,X,X,-
+433,,,"Não é permitido o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) o prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência informada na DPS, e
+2) a apuração do ISSQN fora do Simples Nacional, ou seja, pela alíquota do município 
+para o serviço prestado (regApTribSN = 2 ou 3) e;
+3) o convênio do município de incidência do ISSQN está ativo na data de competência informada na DPS;",,Obrig.,Rej.,E0635,"Não é permitido informar alíquota quando o convênio do município de incidência do ISSQN está ativo na data de competência informada na DPS, para o prestador de serviço ME/EPP (opSimpNac = 3) com a apuração do ISSQN fora do Simples Nacional, ou seja, pela alíquota do município para o serviço prestado (regApTribSN = 2 ou 3).",3,V,X,X,X,-
+434,,,"É obrigatorio o preenchimento do campo pAliq quando ocorrer as condições abaixo simultaneamente:
+
+1) O prestador de serviço seja optante do Simples Nacional ME/EPP (opSimpNac = 3) 
+na data de competência de emissão da DPS e; 
+2) a apuração do ISSQN fora do Simples Nacional, ou seja, pela alíquota do município 
+para o serviço prestado (regApTribSN = 2 ou 3) e;
+3) o convênio do município de incidência do ISSQN não está ""Ativo"" na data de competência informada na DPS.",,Obrig.,Rej.,E0640,"É obrigatório informar alíquota quando o prestador de serviço ME/EPP (opSimpNac = 3) na data de competência informada na DPS, com apuração do ISSQN fora do Simples Nacional (regApTribISSQN = 2 ou 3), ou seja, pela alíquota do município para o serviço prestado, cujo município de incidência não esteja ""Ativo"" no Sistema Nacional NFS-e.",3,V,X,X,X,-
+435,NFSe/infNFSe/DPS/infDPS/valores/trib/,tribFed,Não é permitido o preenchimento das informações relativas aos tributos federais quando o emitente da DPS for identificado por uma pessoa física (CPF).,,Obrig.,Obrig.,E0675,Não é permitido a prestação de informações relativas aos tributos federais quando o emitente da DPS for identificado por um pessoa física (CPF).,1,V,X,V,X,-
+436,,,Não é permitido o preenchimento das informações relativas aos tributos federais quando o emitente for identificado como MEI na data de competência informada na DPS.,,Obrig.,Obrig.,E0676,Não é permitido o preenchimento das informações relativas aos tributos federais quando o emitente for identificado como MEI na data de competência informada na DPS.,1,V,X,X,X,-
+437,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/,pisconfins,-,,-,-,,-,-,-,-,-,-,-
+438,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,CST,-,,-,-,,-,-,-,-,-,-,-
+439,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,vBCPisCofins,O valor da BC para Pis/Cofins deve ser menor ou igual ao valor do serviço informado na DPS.,,Obrig.,Obrig.,E0677,O valor da BC para Pis/Cofins deve ser menor ou igual ao valor do serviço informado na DPS.,1,V,X,V,X,-
+440,,,"Se CST for diferente de ""0 - Nenhum"", ""8 - Operação sem Incidência da Contribuição"", ""9 - Operação com Suspensão da Contribuição"", o valor BC do Pis/Cofins deve ser informado.",,Obrig.,Rej.,E0678,"O valor BC do Pis/Cofins deve ser informado quando o CST for diferente de 0, 8 ou 9.",1,V,X,V,X,-
+441,,,"Se CST for diferente de ""0 - Nenhum"", ""8 - Operação sem Incidência da Contribuição"", ""9 - Operação com Suspensão da Contribuição"", o valor BC do Pis/Cofins deve ser maior que zero e menor que o valor do serviço informado na DPS.",,Obrig.,Rej.,E0680,O valor BC do Pis/Cofins informado deve ser maior que zero e menor que o valor do serviço informado na DPS.,1,V,X,V,X,-
+442,,,"Se CST for igual a ""0 - Nenhum"", ""8 - Operação sem Incidência da Contribuição"", ""9 - Operação com Suspensão da Contribuição"", o valor BC do Pis/Cofins não pode ser informado.",,Obrig.,Rej.,E0682,"O valor BC do Pis/Cofins não pode ser informado quando o valor de CST for igual a 0, 8 ou 9.",1,V,X,V,X,-
+443,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,pAliqPis,"Se o valor da base de cálculo do Pis/Cofins (vBCPisCofins) for informado, então a alíquota do Pis deve ser informada.",,Obrig.,Rej.,E0684,A alíquota do Pis deve ser informada quando a base de cálculo deste imposto for informada.,1,V,X,V,X,-
+444,,,"Se a alíquota do Pis (pAliqPis) for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0686,A alíquota do Pis deve ser igual ou maior que 0 e menor ou igual a 100%.,1,V,X,V,X,-
+445,,,"Se CST for ""4 - Operação Tributável monofásica - Revenda a Alíquota Zero"" ou ""6 - Operação Tributável a Alíquota Zero"", o valor das alíquotas para Pis e Cofins devem ser preenchidas com zero (0,00%).",,Obrig.,Rej.,E0688,"Para os CST for ""4 - Operação Tributável monofásica - Revenda a Alíquota Zero"" ou ""6 - Operação Tributável a Alíquota Zero"", o valor das alíquotas para Pis e Cofins devem ser preenchidas com zero (0,00%).",1,V,X,V,X,-
+446,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,pAliqCofins,,,,,,,,,,,,-
+447,,,"Se o valor da base de cálculo do Pis/Cofins (vBCPisCofins) for informado, então a alíquota do Cofins deve ser informada.",,Obrig.,Rej.,E0690,A alíquota do Cofins deve ser informada quando a base de cálculo deste imposto for informada.,1,V,X,V,X,-
+448,,,"Se a alíquota do Cofins (pAliqCofins) for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0692,A alíquota do Cofins deve ser igual ou maior que 0 e menor ou igual a 100%.,1,V,X,V,X,-
+449,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,vPis,"Se o valor da alíquota do Pis (pAliqPis) for informado, então o valor do Pis informado na DPS deve ser igual ao valor da base de cálculo do Pis/Cofins x alíquota do Pis, que foram informados na DPS.",,Obrig.,Rej.,E0694,"O valor do Pis informado não corresponde ao resultado da BC Pis/Cofins x Alíquota Pis, que foram informados na DPS.",1,V,X,V,X,-
+450,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,vCofins,"Se o valor da alíquota do Cofins (pAliqCofins) for informado, então o valor Cofins informado na DPS deve ser igual ao valor da base de cálculo do Pis/Cofins x alíquota do Cofins , que foram informados na DPS.",,Obrig.,Rej.,E0696,"O valor do Cofins informado não corresponde ao resultado da BC Pis/Cofins x Alíquota Cofins, que foram informados na DPS.",1,V,X,V,X,-
+451,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/piscofins/,tpRetPisCofins,"Se CST for diferende de ""0 - Nenhum"", ""8 - Operação sem Incidência da Contribuição"", ""9 - Operação com Suspensão da Contribuição"", o tipo de retenção para Pis/Cofins deve ser informado.",,Obrig.,Rej.,E0698,"Se CST informado for diferente de 0, 8 ou 9, o tipo de retenção para Pis/Cofins deve ser informado.",1,V,X,V,X,-
+452,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/,vRetCP,"Se o valor do tributo CP for informado, então deve ser maior que zero e menor que o valor do serviço informado na DPS.",,Obrig.,Rej.,E0699,O valor do tributo CP deve ser maior que zero e menor que o valor do serviço informado na DPS.,1,V,X,V,X,-
+453,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/,vRetIRRF,"Se o valor do tributo IRRF for informado, então deve ser maior que zero e menor que o valor do serviço informado na DPS.",,Obrig.,Rej.,E0700,O valor do tributo IRRF deve ser maior que zero e menor que o valor do serviço informado na DPS.,1,V,X,V,X,-
+454,NFSe/infNFSe/DPS/infDPS/valores/trib/tribFed/,vRetCSLL,"Se o valor do tributo CSLL for informado, então deve ser maior que zero e menor que o valor do serviço informado na DPS.",,Obrig.,Rej.,E0701,O valor do tributo CSLL deve ser maior que zero e menor que o valor do serviço informado na DPS.,1,V,X,V,X,-
+455,NFSe/infNFSe/DPS/infDPS/valores/trib/,totTrib,-,,-,-,-,-,-,-,-,-,-,-
+456,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib,vTotTrib,-,,-,-,-,-,-,-,-,-,-,-
+457,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/vTotTrib,vTotTribFed,"Se valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",,Obrig.,Rej.,E0702,"Se o valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",1,V,X,V,X,-
+458,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/vTotTrib,vTotTribEst,"Se valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",,Obrig.,Rej.,E0703,"Se o valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",1,V,X,V,X,-
+459,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/vTotTrib,vTotTribMun,"Se valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",,Obrig.,Rej.,E0704,"Se o valor for informado, então deve ser igual ou maior que 0 e menor ou igual o valor do serviço.",1,V,X,V,X,-
+460,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib,pTotTrib,-,,-,-,-,-,-,-,-,-,-,-
+461,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/pTotTrib,pTotTribFed,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0706,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",1,V,X,V,X,-
+462,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/pTotTrib,pTotTribEst,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0707,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",1,V,X,V,X,-
+463,NFSe/infNFSe/DPS/infDPS/valores/trib/totalTrib/pTotTrib,pTotTribMun,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",,Obrig.,Rej.,E0708,"Se a alíquota for informada, então deve ser igual ou maior que 0 e menor ou igual a 100%.",1,V,X,V,X,-
+464,NFSe/infNFSe/DPS/infDPS/valores/trib/totTrib/,indTotTrib,"Se a situação do emitente da DPS perante o Simples Nacional na data de competência informada for MEI, somente um dos 3 grupos abaixo poderá ser informado. 
+vTotTrib ou pTotTrib ou indTotTrib.",,Obrig.,Rej.,E0710,"Para MEI somente um dos 3 poderá ser informado: 
+grupo vTotTrib ou pTotTrib ou indTotTrib;",1,V,X,X,X,-
+465,NFSe/infNFSe/DPS/infDPS/valores/trib/totTrib/,pTotTribSN,"Se a situação do emitente da DPS perante o Simples Nacional na data de competência informada for ME/EPP, somente um dos 3 grupos abaixo poderá ser informado: 
+vTotTrib ou pTotTrib ou pTotTribSN.",,Obrig.,Rej.,E0712,"Para ME/EPP somente um dos 3 poderá ser informado: 
+grupo vTotTrib ou pTotTrib ou pTotTribSN;",1,V,X,V,X,-
+466,NFSe/infNFSe/DPS/,Signature,A assinatura da DPS deve ser válida.,,Obrig.,Rej.,E0714,Arquivo enviado com erro na assinatura.,1,V,X,X,X,-
+467,,,"Certificado Digital da assintura inválido:
+
+- Validade do Certificado (data início e data fim);
+- Verifica a Cadeia de Certificação;
+- Certificado do Transmissor revogado;
+- LCR indisponível ou inválida.",,Obrig.,Rej.,E0715,Certificado Digital da assinatura inválido.,1,V,X,X,X,-
+468,,,"Certificado Digital da assinatura fora do padrão estabelecido pelo projeto NFS-e:
+
+- Versão diferente de 3;
+- Se informado, Basic Constraint deve ser true (não pode ser Certificado de AC);
+- KeyUsage não define 'Assinatura Digital' e 'Não Recusa';
+- Falta a extensão de CNPJ (OtherName - OID=2.16.76.1.3.3) ou CPF (OtherName - OID=2.16.76.1.3.1);
+- Certificado Raiz difere da 'ICP-Brasil'.",,Obrig.,Rej.,E0716,Certificado Digital fora do padrão estabelecido.,1,V,X,X,X,-
+469,,,É obrigatória a existência da assinatura da DPS quando for enviado para Web Service.,,Obrig.,Rej.,E0717,A assinatura é obrigatória quando for enviado para o Web Service.,1,V,X,X,X,-
+470,,,A assinatura deve ser feita com o certificado digital do emitente da DPS.,,Obrig.,Rej.,E0718,A assinatura deve ser feita com o certificado digital do emitente da DPS.,1,V,X,X,X,-
+471,NFSe/,Signature,A assinatura da NFS-e deve ser válida.,,Obrig.,Rej.,E1630,Arquivo enviado com erro na assinatura.,1,V,V,V,V,-
+472,,,"Certificado Digital da assintura inválido:
+
+- Validade do Certificado (data início e data fim);
+- Verifica a Cadeia de Certificação;
+- Certificado do Transmissor revogado;
+- LCR indisponível ou inválida.",,Obrig.,Rej.,E1632,Certificado Digital da assinatura inválido.,1,V,V,V,V,-
+473,,,"Certificado Digital da assinatura fora do padrão estabelecido pelo Sistema Nacional NFS-e:
+
+- Versão diferente de 3;
+- Se informado, Basic Constraint deve ser true (não pode ser Certificado de AC);
+- KeyUsage não define 'Assinatura Digital' e 'Não Recusa';
+- Falta a extensão de CNPJ (OtherName - OID=2.16.76.1.3.3) ou CPF (OtherName - OID=2.16.76.1.3.1);
+- Certificado Raiz difere da 'ICP-Brasil'.",,Obrig.,Rej.,E1634,Certificado Digital fora do padrão estabelecido.,1,V,V,V,V,-
+474,,,É obrigatória a existência da assinatura da NFS-e quando for enviado para API.,,Obrig.,Rej.,E1636,A assinatura é obrigatória quando for enviado paraa API.,1,V,V,V,V,-
+475,,,A assinatura deve ser feita com o certificado digital do município emissor da NFS-e.,,Obrig.,Rej.,E1638,A assinatura deve ser feita com o certificado digital do municiípio emissor da NFS-e.,1,X,X,V,V,-

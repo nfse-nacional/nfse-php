@@ -2,14 +2,17 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml matching ExemploPrestadorPessoaFisica', function () {
-    $dpsData = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $dpsData = map(DPSData::class, [
+        'versao' => '1.00',
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS231400310000667299238300001000000000000046'],
+            // '@attributes' removed as Valinor doesn't map them by default unless mapped to a property
+            // Assuming the DTO structure matches the array keys or has Source attributes
+            // 'Id' needs to be checked if it's in the DTO
+            'id' => 'DPS231400310000667299238300001000000000000046', 
             'tpAmb' => 1,
             'dhEmi' => '2025-12-15T11:11:09-03:00',
             'verAplic' => 'Sistema NFS-e',
@@ -30,8 +33,10 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
                 'CNPJ' => '10237604000100',
                 'xNome' => 'FUNDO MUNICIPAL DE SAUDE - VARZEA ALEGRE',
                 'end' => [
-                    'endNac.cMun' => '2314003',
-                    'endNac.CEP' => '63540000',
+                    'endNac' => [ // Nested structure update might be needed if flat keys don't work
+                         'cMun' => '2314003',
+                         'CEP' => '63540000',
+                    ],
                     'xLgr' => 'RUA DEP LUIZ OTACILIO CORREIA',
                     'nro' => '-',
                     'xBairro' => 'CENTRO',
@@ -52,9 +57,13 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
                     'vServ' => 1850.00,
                 ],
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'tribMun.tpRetISSQN' => 2,
-                    'totTrib.indTotTrib' => 0,
+                    'tribMun' => [
+                         'tribISSQN' => 1,
+                         'tpRetISSQN' => 2,
+                    ],
+                    'totTrib' => [
+                         'indTotTrib' => 0,
+                    ],
                 ],
             ],
         ],

@@ -1,152 +1,50 @@
 <?php
 
-if (! function_exists('app')) {
-    function app($abstract = null)
-    {
-        static $container = [];
+use CuyZ\Valinor\MapperBuilder;
 
-        if ($abstract === null) {
-            return $container;
-        }
+/*
+|--------------------------------------------------------------------------
+| Test Case
+|--------------------------------------------------------------------------
+|
+| The closure you provide to your test functions is always bound to a specific PHPUnit
+| test case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
+| need to change it using the "uses()" function to bind a different classes or traits.
+|
+*/
 
-        if (isset($container[$abstract])) {
-            return $container[$abstract];
-        }
+// uses(Tests\TestCase::class)->in('Feature');
 
-        // Manual overrides for complex cases or interfaces
-        if ($abstract === \Illuminate\Contracts\Validation\Factory::class || $abstract === 'validator') {
-            if (isset($container[\Illuminate\Contracts\Validation\Factory::class])) {
-                return $container[$abstract] = $container[\Illuminate\Contracts\Validation\Factory::class];
-            }
+/*
+|--------------------------------------------------------------------------
+| Expectations
+|--------------------------------------------------------------------------
+|
+| When you're writing tests, you often need to check that values meet certain conditions. The
+| "expect()" function gives you access to a set of "expectations" methods that you can use
+| to assert different things. Of course, you may extend the Expectation API at any time.
+|
+*/
 
-            return $container[$abstract] = $container[\Illuminate\Contracts\Validation\Factory::class] = new \Illuminate\Validation\Factory(
-                new \Illuminate\Translation\Translator(
-                    new \Illuminate\Translation\ArrayLoader,
-                    'en'
-                )
-            );
-        }
+// expect()->extend('toBeOne', function () {
+//    return $this->toBe(1);
+// });
 
-        if ($abstract === \Spatie\LaravelData\Support\DataConfig::class) {
-            return $container[$abstract] = new \Spatie\LaravelData\Support\DataConfig(
-                ruleInferrers: array_map(fn ($class) => app($class), config('data.rule_inferrers'))
-            );
-        }
+/*
+|--------------------------------------------------------------------------
+| Functions
+|--------------------------------------------------------------------------
+|
+| While Pest is very powerful, you may create your own helper functions to make your tests
+| more expressive. This is useful for sharing code inside your tests.
+|
+*/
 
-        if (class_exists($abstract)) {
-            $reflection = new ReflectionClass($abstract);
-            $constructor = $reflection->getConstructor();
-
-            if ($constructor === null) {
-                return $container[$abstract] = new $abstract;
-            }
-
-            $parameters = $constructor->getParameters();
-            $dependencies = [];
-
-            foreach ($parameters as $parameter) {
-                $type = $parameter->getType();
-                if ($type instanceof ReflectionNamedType && ! $type->isBuiltin()) {
-                    $dependencies[] = app($type->getName());
-                } elseif ($parameter->isDefaultValueAvailable()) {
-                    $dependencies[] = $parameter->getDefaultValue();
-                } else {
-                    // Try to provide empty array for array parameters if they are not optional
-                    if ($type instanceof ReflectionNamedType && $type->getName() === 'array') {
-                        $dependencies[] = [];
-                    } else {
-                        $dependencies[] = null;
-                    }
-                }
-            }
-
-            return $container[$abstract] = $reflection->newInstanceArgs($dependencies);
-        }
-
-        return null;
-    }
-}
-
-// Set facade application
-\Illuminate\Support\Facades\Facade::setFacadeApplication(new class implements ArrayAccess
+function map(string $class, array $source): object
 {
-    public function make($abstract)
-    {
-        return app($abstract);
-    }
-
-    public function bound($abstract)
-    {
-        return isset(app()[$abstract]);
-    }
-
-    public function offsetExists($offset): bool
-    {
-        return isset(app()[$offset]);
-    }
-
-    public function offsetGet($offset): mixed
-    {
-        return app($offset);
-    }
-
-    public function offsetSet($offset, $value): void
-    {
-        app()[$offset] = $value;
-    }
-
-    public function offsetUnset($offset): void
-    {
-        unset(app()[$offset]);
-    }
-});
-
-if (! function_exists('config')) {
-    function config($key = null, $default = null)
-    {
-        $config = [
-            'data' => [
-                'date_format' => 'Y-m-d\TH:i:sP',
-                'transformers' => [],
-                'casts' => [],
-                'mappers' => [],
-                'rules' => [],
-                'rule_inferrers' => [
-                    \Spatie\LaravelData\RuleInferrers\RequiredRuleInferrer::class,
-                    \Spatie\LaravelData\RuleInferrers\BuiltInTypesRuleInferrer::class,
-                    \Spatie\LaravelData\RuleInferrers\AttributesRuleInferrer::class,
-                    \Spatie\LaravelData\RuleInferrers\NullableRuleInferrer::class,
-                    \Spatie\LaravelData\RuleInferrers\SometimesRuleInferrer::class,
-                ],
-                'normalizers' => [
-                    \Spatie\LaravelData\Normalizers\ArrayNormalizer::class,
-                    \Spatie\LaravelData\Normalizers\ObjectNormalizer::class,
-                ],
-                'validation_strategy' => 'always',
-            ],
-        ];
-
-        if ($key === null) {
-            return $config;
-        }
-
-        $parts = explode('.', $key);
-        $current = $config;
-
-        foreach ($parts as $part) {
-            if (! isset($current[$part])) {
-                return $default;
-            }
-            $current = $current[$part];
-        }
-
-        return $current;
-    }
-}
-
-if (! function_exists('resolve')) {
-    function resolve($abstract = null)
-    {
-        return app($abstract);
-    }
+    return (new MapperBuilder())
+        ->allowScalarValueCasting()
+        ->allowSuperfluousKeys()
+        ->mapper()
+        ->map($class, $source);
 }

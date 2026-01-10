@@ -9,7 +9,7 @@ use Nfse\Xml\DpsXmlBuilder;
 it('can build xml from dps data', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
             '@attributes' => ['Id' => $id],
@@ -117,7 +117,7 @@ it('can build xml from dps data', function () {
 it('can build xml with pAliq and correct tribMun order', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    $dpsData = new DpsData([
+    DpsData::from([
         '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
             '@attributes' => ['Id' => $id],

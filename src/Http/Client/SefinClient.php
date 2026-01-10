@@ -5,11 +5,11 @@ namespace Nfse\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
-use Nfse\Dto\Http\ConsultaDpsResponse;
-use Nfse\Dto\Http\ConsultaNfseResponse;
-use Nfse\Dto\Http\EmissaoNfseResponse;
-use Nfse\Dto\Http\MensagemProcessamentoDto;
-use Nfse\Dto\Http\RegistroEventoResponse;
+use Nfse\Http\Dto\ConsultaDpsResponse;
+use Nfse\Http\Dto\ConsultaNfseResponse;
+use Nfse\Http\Dto\EmissaoNfseResponse;
+use Nfse\Http\Dto\MensagemProcessamentoDto;
+use Nfse\Http\Dto\RegistroEventoResponse;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
@@ -23,9 +23,15 @@ class SefinClient implements SefinNacionalInterface
 
     private Client $httpClient;
 
+    private \CuyZ\Valinor\Mapper\TreeMapper $mapper;
+
     public function __construct(private NfseContext $context)
     {
         $this->httpClient = $this->createHttpClient();
+        $this->mapper = (new \CuyZ\Valinor\MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->allowScalarValueCasting()
+            ->mapper();
     }
 
     private function createHttpClient(): Client
@@ -95,42 +101,21 @@ class SefinClient implements SefinNacionalInterface
     {
         $response = $this->post('nfse', ['dpsXmlGZipB64' => $dpsXmlGZipB64]);
 
-        return new EmissaoNfseResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            idDps: $response['idDps'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null,
-            nfseXmlGZipB64: $response['nfseXmlGZipB64'] ?? null,
-            alertas: $this->mapMensagens($response['alertas'] ?? []),
-            erros: $this->mapMensagens($response['erros'] ?? [])
-        );
+        return $this->mapper->map(EmissaoNfseResponse::class, $response);
     }
 
     public function consultarNfse(string $chaveAcesso): ConsultaNfseResponse
     {
         $response = $this->get("nfse/{$chaveAcesso}");
 
-        return new ConsultaNfseResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null,
-            nfseXmlGZipB64: $response['nfseXmlGZipB64'] ?? null
-        );
+        return $this->mapper->map(ConsultaNfseResponse::class, $response);
     }
 
     public function consultarDps(string $idDps): ConsultaDpsResponse
     {
         $response = $this->get("dps/{$idDps}");
 
-        return new ConsultaDpsResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            idDps: $response['idDps'] ?? null,
-            chaveAcesso: $response['chaveAcesso'] ?? null
-        );
+        return $this->mapper->map(ConsultaDpsResponse::class, $response);
     }
 
     public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): RegistroEventoResponse
@@ -139,26 +124,15 @@ class SefinClient implements SefinNacionalInterface
             'pedidoRegistroEventoXmlGZipB64' => $eventoXmlGZipB64,
         ]);
 
-        return new RegistroEventoResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            eventoXmlGZipB64: $response['eventoXmlGZipB64'] ?? null
-        );
+        return $this->mapper->map(RegistroEventoResponse::class, $response);
     }
 
     public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): RegistroEventoResponse
     {
         $response = $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}/{$numSeqEvento}");
 
-        return new RegistroEventoResponse(
-            tipoAmbiente: $response['tipoAmbiente'] ?? null,
-            versaoAplicativo: $response['versaoAplicativo'] ?? null,
-            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            eventoXmlGZipB64: $response['eventoXmlGZipB64'] ?? null
-        );
+        return $this->mapper->map(RegistroEventoResponse::class, $response);
     }
-
     public function verificarDps(string $idDps): bool
     {
         try {
@@ -181,16 +155,5 @@ class SefinClient implements SefinNacionalInterface
     public function listarEventosPorTipo(string $chaveAcesso, int $tipoEvento): array
     {
         return $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}");
-    }
-
-    private function mapMensagens(array $mensagens): array
-    {
-        return array_map(fn ($m) => new MensagemProcessamentoDto(
-            mensagem: $m['mensagem'] ?? null,
-            parametros: $m['parametros'] ?? null,
-            codigo: $m['codigo'] ?? null,
-            descricao: $m['descricao'] ?? null,
-            complemento: $m['complemento'] ?? null
-        ), $mensagens);
     }
 }

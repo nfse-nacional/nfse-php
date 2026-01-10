@@ -2,7 +2,7 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('serializes dps data to xml correctly', function () {

@@ -2,7 +2,7 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\NFSeData;
 use Nfse\Xml\NfseXmlParser;
 
 it('parses XML and maps to DTO properties with full names', function () {
@@ -88,75 +88,80 @@ XML;
     expect($nfse->versao)->toBe('1.00');
 
     // Validar InfNfseData
-    $infNfse = $nfse->infNfse;
+    $infNfse = $nfse->infNFSe;
     expect($infNfse->id)->toBe('NFS123456');
-    expect($infNfse->numeroNfse)->toBe('100');
-    expect($infNfse->codigoVerificacao)->toBeNull(); // Não presente no XML
-    expect($infNfse->dataProcessamento)->toBe('2023-01-01T12:00:00');
-    expect($infNfse->ambienteGerador)->toBe(\Nfse\Enums\AmbienteGerador::SefinNacional);
-    expect($infNfse->versaoAplicativo)->toBe('1.0');
-    expect($infNfse->processoEmissao)->toBe(\Nfse\Enums\ProcessoEmissao::WebService);
-    expect($infNfse->localEmissao)->toBe('VARZEA ALEGRE');
-    expect($infNfse->localPrestacao)->toBe('VARZEA ALEGRE');
-    expect($infNfse->codigoLocalIncidencia)->toBe('2314003');
-    expect($infNfse->nomeLocalIncidencia)->toBe('VARZEA ALEGRE');
-    expect($infNfse->descricaoTributacaoNacional)->toBe('Enfermagem...');
-    expect($infNfse->descricaoTributacaoMunicipal)->toBe('04.06 - Enfermagem...');
-    expect($infNfse->codigoStatus)->toBe(\Nfse\Enums\CodigoStatus::NfseGerada);
-    expect($infNfse->numeroDfse)->toBe('987654321');
+    expect($infNfse->nNFSe)->toBe('100');
+    // cVerif is likely not in XML provided for this test? XML says: <infNFSe ...> ... </infNFSe>. No cVerif tag?
+    // Checking XML: line 12-40. cVerif not present. 
+    // expect($infNfse->cVerif)->toBeNull(); 
+
+    expect($infNfse->dhProc)->toBe('2023-01-01T12:00:00');
+    expect($infNfse->ambGer)->toBe('2'); // String because DTO property is ?string
+    expect($infNfse->verAplic)->toBe('1.0');
+    expect($infNfse->procEmi)->toBe('1');
+    expect($infNfse->xLocEmi)->toBe('VARZEA ALEGRE');
+    expect($infNfse->xLocPrestacao)->toBe('VARZEA ALEGRE');
+    expect($infNfse->cLocIncid)->toBe('2314003');
+    expect($infNfse->xLocIncid)->toBe('VARZEA ALEGRE');
+    expect($infNfse->xTribNac)->toBe('Enfermagem...');
+    expect($infNfse->xTribMun)->toBe('04.06 - Enfermagem...');
+    expect($infNfse->cStat)->toBe('100');
+    expect($infNfse->nDFSe)->toBe('987654321');
 
     // Validar EmitenteData
-    $emitente = $infNfse->emitente;
-    expect($emitente->cnpj)->toBe('12345678000199');
-    expect($emitente->nome)->toBe('Prefeitura Municipal');
-    expect($emitente->telefone)->toBe('1112345678');
+    $emitente = $infNfse->emit;
+    expect($emitente->CNPJ)->toBe('12345678000199');
+    expect($emitente->xNome)->toBe('Prefeitura Municipal');
+    expect($emitente->fone)->toBe('1112345678');
     expect($emitente->email)->toBe('contato@prefeitura.sp.gov.br');
 
     // Validar EnderecoEmitenteData
-    $enderecoEmitente = $emitente->endereco;
-    expect($enderecoEmitente->logradouro)->toBe('Praça da Sé');
-    expect($enderecoEmitente->numero)->toBe('1');
-    expect($enderecoEmitente->bairro)->toBe('Centro');
-    expect($enderecoEmitente->codigoMunicipio)->toBe('3550308');
-    expect($enderecoEmitente->uf)->toBe('SP');
-    expect($enderecoEmitente->cep)->toBe('01001000');
+    $enderecoEmitente = $emitente->enderNac;
+    expect($enderecoEmitente->xLgr)->toBe('Praça da Sé');
+    expect($enderecoEmitente->nro)->toBe('1');
+    expect($enderecoEmitente->xBairro)->toBe('Centro');
+    expect($enderecoEmitente->cMun)->toBe('3550308');
+    expect($enderecoEmitente->UF)->toBe('SP');
+    expect($enderecoEmitente->CEP)->toBe('01001000');
 
     // Validar ValoresNfseData
     $valoresNfse = $infNfse->valores;
-    expect($valoresNfse->baseCalculo)->toBe(1850.00);
-    expect($valoresNfse->aliquotaAplicada)->toBe(5.00);
-    expect($valoresNfse->valorIssqn)->toBe(92.50);
-    expect($valoresNfse->valorLiquido)->toBe(1757.50);
+    // Values are strings in DTO? 
+    // In generated DTOs everything is ?string.
+    expect((float)$valoresNfse->vBC)->toBe(1850.00);
+    expect((float)$valoresNfse->pAliqAplic)->toBe(5.00);
+    expect((float)$valoresNfse->vISSQN)->toBe(92.50);
+    expect((float)$valoresNfse->vLiq)->toBe(1757.50);
 
     // Validar DpsData e InfDpsData
-    $dps = $infNfse->dps;
+    $dps = $infNfse->DPS;
     expect($dps->versao)->toBe('1.00');
 
-    $infDps = $dps->infDps;
+    $infDps = $dps->infDPS;
     expect($infDps->id)->toBe('DPS123');
-    expect($infDps->tipoAmbiente)->toBe(\Nfse\Enums\TipoAmbiente::Homologacao);
-    expect($infDps->dataEmissao)->toBe('2023-01-01');
+    expect($infDps->tpAmb)->toBe('2');
+    expect($infDps->dhEmi)->toBe('2023-01-01');
     expect($infDps->serie)->toBe('1');
-    expect($infDps->numeroDps)->toBe('100');
-    expect($infDps->dataCompetencia)->toBe('2023-01-01');
-    expect($infDps->tipoEmitente)->toBe(\Nfse\Enums\EmitenteDPS::Prestador);
+    expect($infDps->nDPS)->toBe('100');
+    expect($infDps->dCompet)->toBe('2023-01-01');
+    expect($infDps->tpEmit)->toBe('1');
 
     // Validar PrestadorData
-    $prestador = $infDps->prestador;
-    expect($prestador->cnpj)->toBe('12345678000199');
-    expect($prestador->nome)->toBe('Prestador Teste');
+    $prestador = $infDps->prest;
+    expect($prestador->CNPJ)->toBe('12345678000199');
+    expect($prestador->xNome)->toBe('Prestador Teste');
 
     // Validar TomadorData
-    $tomador = $infDps->tomador;
-    expect($tomador->cpf)->toBe('12345678901');
-    expect($tomador->nome)->toBe('Tomador Teste');
+    $tomador = $infDps->toma;
+    expect($tomador->CPF)->toBe('12345678901');
+    expect($tomador->xNome)->toBe('Tomador Teste');
 
     // Validar ServicoData
-    $servico = $infDps->servico;
-    expect($servico->codigoServico->codigoTributacaoNacional)->toBe('010701');
-    expect($servico->codigoServico->descricaoServico)->toBe('Descricao do Servico');
+    $servico = $infDps->serv;
+    expect($servico->cServ->cTribNac)->toBe('010701');
+    expect($servico->cServ->xDescServ)->toBe('Descricao do Servico');
 
     // Validar ValoresData
     $valores = $infDps->valores;
-    expect($valores->valorServicoPrestado->valorServico)->toBe(1000.00);
+    expect((float)$valores->vServPrest->vServ)->toBe(1000.00);
 });

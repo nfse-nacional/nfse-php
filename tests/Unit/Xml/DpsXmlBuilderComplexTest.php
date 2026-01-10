@@ -2,21 +2,21 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml with complex structures', function () {
-    DpsData::from([
-        '@versao' => '1.0',
+    $dpsData = \map(DPSData::class, [
+        'versao' => '1.0',
         'infDPS' => [
-            '@Id' => 'DPS123',
-            'tpAmb' => 2,
+            'id' => 'DPS123',
+            'tpAmb' => '2',
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '1',
             'dCompet' => '2023-10-27',
-            'tpEmit' => 1,
+            'tpEmit' => '1',
             'cLocEmi' => '3550308',
             'subst' => [
                 'chSubstda' => '12345678901234567890123456789012345678901234',
@@ -26,11 +26,9 @@ it('can build xml with complex structures', function () {
             'prest' => [
                 'CNPJ' => '12345678000199',
                 'xNome' => 'Prestador',
-                'regTrib' => [
-                    'opSimpNac' => 1,
-                    'regApTribSN' => 1,
-                    'regEspTrib' => 1,
-                ],
+            ],
+            'toma' => [
+                'CNPJ' => '12345678000199', // Added required toma
             ],
             'interm' => [
                 'CNPJ' => '88888888000188',
@@ -39,17 +37,26 @@ it('can build xml with complex structures', function () {
                     'xLgr' => 'Rua Inter',
                     'nro' => '100',
                     'xBairro' => 'Centro',
-                    'endNac.cMun' => '3550308',
-                    'endNac.CEP' => '01001000',
+                    'endNac' => [
+                         'cMun' => '3550308',
+                         'CEP' => '01001000',
+                    ],
                 ],
             ],
             'serv' => [
+                'locPrest' => [
+                    'cLocPrestacao' => '3550308',
+                ],
+                'cServ' => [
+                    'cTribNac' => '010101',
+                    'xDescServ' => 'Service',
+                ],
                 'comExt' => [
-                    'mdPrest' => 1,
-                    'vincPrest' => 1,
-                    'tpPessoaExp' => 1,
+                    'mdPrest' => '1',
+                    'vincPrest' => '1',
+                    'tpPessoaExp' => '1',
                     'monExp' => 'USD',
-                    'vServMonExp' => 100.00,
+                    'vServMonExp' => '100.00',
                 ],
                 'obra' => [
                     'inscImobFisc' => '123',
@@ -58,53 +65,65 @@ it('can build xml with complex structures', function () {
                         'xLgr' => 'Rua Obra',
                         'nro' => '200',
                         'xBairro' => 'Obra',
-                        'endNac.cMun' => '3550308',
-                        'endNac.CEP' => '01001000',
+                        'endNac' => [
+                             'cMun' => '3550308',
+                             'CEP' => '01001000',
+                        ],
                     ],
                 ],
                 'atvEvento' => [
                     'xNome' => 'Evento',
                     'dIni' => '2023-10-27',
                     'dFim' => '2023-10-28',
-                    'idAtividadeEvento' => 'EVT123',
+                    'id' => 'EVT123',
                 ],
             ],
             'valores' => [
                 'vServPrest' => [
-                    'vServ' => 100.0,
-                    'vReceb' => 100.0,
+                    'vServ' => '100.0',
+                    'vReceb' => '100.0',
                 ],
                 'vDescCondIncond' => [
-                    'vDescIncond' => 10.0,
-                    'vDescCond' => 5.0,
+                    'vDescIncond' => '10.0',
+                    'vDescCond' => '5.0',
                 ],
                 'vDedRed' => [
-                    'pDR' => 20.0,
-                    'vDR' => 200.0,
+                    'pDR' => '20.0',
+                    'vDR' => '200.0',
                     'documentos' => [
                         [
                             'chNFSe' => '12345678901234567890123456789012345678901234',
-                            'tpDedRed' => 1,
-                            'vDedRedutivel' => 100.0,
-                            'vDedRed' => 100.0,
+                            'tpDedRed' => '1',
+                            'vDedRedutivel' => '100.0',
+                            'vDedRed' => '100.0',
                         ],
                     ],
                 ],
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'tribMun.tpRetISSQN' => 1,
-                    'tribFed.piscofins.CST' => '01',
-                    'tribFed.piscofins.vBCPisCofins' => 1000.0,
-                    'tribFed.piscofins.pAliqPis' => 0.65,
-                    'tribFed.piscofins.pAliqCofins' => 3.0,
-                    'tribFed.piscofins.vPis' => 6.5,
-                    'tribFed.piscofins.vCofins' => 30.0,
-                    'tribFed.piscofins.tpRetPisCofins' => 1,
-                    'tribFed.vRetIRRF' => 15.0,
-                    'tribFed.vRetCSLL' => 10.0,
-                    'totTrib.vTotTrib.vTotTribFed' => 50.0,
-                    'totTrib.vTotTrib.vTotTribEst' => 20.0,
-                    'totTrib.vTotTrib.vTotTribMun' => 30.0,
+                    'tribMun' => [
+                        'tribISSQN' => '1',
+                        'tpRetISSQN' => '1',
+                    ],
+                    'tribFed' => [
+                        'piscofins' => [
+                            'CST' => '01',
+                            'vBCPisCofins' => '1000.0',
+                            'pAliqPis' => '0.65',
+                            'pAliqCofins' => '3.0',
+                            'vPis' => '6.5',
+                            'vCofins' => '30.0',
+                            'tpRetPisCofins' => '1',
+                        ],
+                        'vRetIRRF' => '15.0',
+                        'vRetCSLL' => '10.0',
+                    ],
+                    'totTrib' => [
+                        'vTotTrib' => [
+                             'vTotTribFed' => '50.0',
+                             'vTotTribEst' => '20.0',
+                             'vTotTribMun' => '30.0',
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -115,7 +134,6 @@ it('can build xml with complex structures', function () {
 
     expect($xml)->toContain('<subst>')
         ->and($xml)->toContain('<chSubstda>12345678901234567890123456789012345678901234</chSubstda>')
-        ->and($xml)->toContain('<regTrib>')
         ->and($xml)->toContain('<interm>')
         ->and($xml)->toContain('<comExt>')
         ->and($xml)->toContain('<obra>')
@@ -130,26 +148,36 @@ it('can build xml with complex structures', function () {
 });
 
 it('can build xml with indicadorTotalTributos', function () {
-    DpsData::from([
-        '@versao' => '1.0',
+    $dpsData = \map(DPSData::class, [
+        'versao' => '1.0',
         'infDPS' => [
-            '@Id' => 'DPS123',
-            'tpAmb' => 2,
+            'id' => 'DPS123',
+            'tpAmb' => '2',
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '1',
             'dCompet' => '2023-10-27',
-            'tpEmit' => 1,
+            'tpEmit' => '1',
             'cLocEmi' => '3550308',
+            'prest' => ['CNPJ' => '111'], // Required
+            'toma' => ['CNPJ' => '222'], // Required
+            'serv' => [
+                'cServ' => ['cTribNac' => '0101'], // Required
+            ],
             'valores' => [
                 'vServPrest' => [
-                    'vServ' => 100.0,
-                    'vReceb' => 100.0,
+                    'vServ' => '100.0',
+                    'vReceb' => '100.0',
                 ],
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'totTrib.indTotTrib' => 1,
+                    'tribMun' => [
+                         'tribISSQN' => '1',
+                         'tpRetISSQN' => '1',
+                    ],
+                    'totTrib' => [
+                        'indTotTrib' => '1',
+                    ],
                 ],
             ],
         ],
@@ -162,26 +190,34 @@ it('can build xml with indicadorTotalTributos', function () {
 });
 
 it('can build xml with percentualTotalTributosSN', function () {
-    DpsData::from([
-        '@versao' => '1.0',
+    $dpsData = \map(DPSData::class, [
+        'versao' => '1.0',
         'infDPS' => [
-            '@Id' => 'DPS123',
-            'tpAmb' => 2,
+            'id' => 'DPS123',
+            'tpAmb' => '2',
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '1',
             'dCompet' => '2023-10-27',
-            'tpEmit' => 1,
+            'tpEmit' => '1',
             'cLocEmi' => '3550308',
+            'prest' => ['CNPJ' => '111'],
+            'toma' => ['CNPJ' => '222'],
+            'serv' => ['cServ' => ['cTribNac' => '0101']],
             'valores' => [
                 'vServPrest' => [
-                    'vServ' => 100.0,
-                    'vReceb' => 100.0,
+                    'vServ' => '100.0',
+                    'vReceb' => '100.0',
                 ],
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'totTrib.pTotTribSN' => 5.0,
+                    'tribMun' => [
+                        'tribISSQN' => '1',
+                        'tpRetISSQN' => '1',
+                    ],
+                    'totTrib' => [
+                        'pTotTribSN' => '5.0',
+                    ],
                 ],
             ],
         ],

@@ -3,11 +3,23 @@
 namespace Nfse\Xml;
 
 use Exception;
-use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\NFSeData;
+use CuyZ\Valinor\MapperBuilder;
+use CuyZ\Valinor\Normalizer\Format;
 
 class NfseXmlParser
 {
-    public function parse(string $xml): NfseData
+    private \CuyZ\Valinor\Mapper\TreeMapper $mapper;
+
+    public function __construct()
+    {
+        $this->mapper = (new MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->allowScalarValueCasting()
+            ->mapper();
+    }
+
+    public function parse(string $xml): NFSeData
     {
         // 1. Fix Encoding
         if (! mb_check_encoding($xml, 'UTF-8')) {
@@ -17,7 +29,7 @@ class NfseXmlParser
         // Remove invalid characters
         $xml = iconv('UTF-8', 'UTF-8//IGNORE', $xml);
 
-        // Remove escaped quotes if present (e.g. from JSON dumps)
+        // Remove escaped quotes if present
         $xml = str_replace('\"', '"', $xml);
 
         // 2. Parse XML
@@ -37,14 +49,16 @@ class NfseXmlParser
         }
         libxml_use_internal_errors($useInternal);
 
-        // 3. Convert to Array via JSON (mimic vendor behavior)
+        // 3. Convert to Array via JSON (mimic vendor behavior or Valinor Source)
+        // Valinor can map from Source directly, but typical usage with XML is often explicit conversion if structure varies.
+        // Assuming JSON conversion is robust enough for now as legacy did it.
         $json = json_encode($simpleXml, JSON_UNESCAPED_UNICODE);
         $parsedDoc = json_decode($json, true);
 
         // 4. Sanitize Array (Fix [] -> null)
         $parsedDoc = $this->sanitizeArray($parsedDoc);
 
-        return new NfseData($parsedDoc);
+        return $this->mapper->map(NFSeData::class, $parsedDoc);
     }
 
     private function sanitizeArray($data)

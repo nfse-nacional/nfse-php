@@ -19,9 +19,4 @@ class DPSData
      */
     public ?\Nfse\Dto\NFSe\InfNFSe\DPS\InfDPSData $infDPS = null;
 
-    /**
-     * @var \Nfse\Dto\NFSe\InfNFSe\DPS\ValoresData|null
-     */
-    public ?\Nfse\Dto\NFSe\InfNFSe\DPS\ValoresData $valores = null;
-
 }

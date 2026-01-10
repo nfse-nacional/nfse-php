@@ -2,19 +2,19 @@
 
 namespace Nfse\Validator;
 
-use Nfse\Dto\Nfse\DpsData;
-use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
+use Nfse\Dto\NFSe\InfNFSe\DPS\InfDPSData;
 use Nfse\Enums\EmitenteDPS;
 
 class DpsValidator
 {
-    public function validate(DpsData $dps): ValidationResult
+    public function validate(DPSData $dps): ValidationResult
     {
         $errors = [];
-        $infDps = $dps->infDps;
+        $infDps = $dps->infDPS;
 
         if ($infDps === null) {
-            return ValidationResult::failure(['InfDpsData is required.']);
+            return ValidationResult::failure(['InfDPSData is required.']);
         }
 
         $this->validatePrestador($infDps, $errors);
@@ -29,10 +29,10 @@ class DpsValidator
         return ValidationResult::success();
     }
 
-    private function validatePrestador(InfDpsData $infDps, array &$errors): void
+    private function validatePrestador(InfDPSData $infDps, array &$errors): void
     {
-        $prestador = $infDps->prestador;
-        $tpEmit = $infDps->tipoEmitente;
+        $prestador = $infDps->prest;
+        $tpEmit = $infDps->tpEmit;
 
         if ($prestador === null) {
             $errors[] = 'Prestador data is required.';
@@ -42,8 +42,8 @@ class DpsValidator
 
         // Rule: If Prestador is NOT the emitter, address is required.
         // Schema Rule E0129
-        if ($tpEmit !== EmitenteDPS::Prestador) {
-            if ($prestador->endereco === null) {
+        if ($tpEmit !== (string) EmitenteDPS::Prestador->value) {
+            if ($prestador->end === null) {
                 $errors[] = 'Endereço do prestador é obrigatório quando o prestador não for o emitente.';
             }
         }
@@ -53,46 +53,52 @@ class DpsValidator
         // Let's stick to "Required" checks for now as per user request.
     }
 
-    private function validateTomador(InfDpsData $infDps, array &$errors): void
+    private function validateTomador(InfDPSData $infDps, array &$errors): void
     {
-        $tomador = $infDps->tomador;
+        $tomador = $infDps->toma;
 
         if ($tomador === null) {
             return;
         }
 
         // User Rule: "se o tomador for identificado o endereço dele é obg"
-        $isIdentified = $tomador->cpf || $tomador->cnpj || $tomador->nif;
+        $isIdentified = $tomador->CPF || $tomador->CNPJ || $tomador->NIF;
 
         if ($isIdentified) {
-            if ($tomador->endereco === null) {
+            if ($tomador->end === null) {
                 $errors[] = 'Endereço do tomador é obrigatório quando o tomador é identificado.';
 
                 return;
             }
 
-            if ($tomador->nif !== null) {
-                if ($tomador->endereco->enderecoExterior === null) {
+            if ($tomador->NIF !== null) {
+                if ($tomador->end->endExt === null) {
                     $errors[] = 'Endereço no exterior do tomador é obrigatório quando identificado por NIF.';
                 }
             } else {
-                if ($tomador->endereco->codigoMunicipio === null) {
+                if ($tomador->end->endNac === null || $tomador->end->endNac->cMun === null) {
                     $errors[] = 'Código do município do tomador é obrigatório para endereço nacional.';
                 }
             }
         }
     }
 
-    private function validateValores(InfDpsData $infDps, array &$errors): void
+    private function validateValores(InfDPSData $infDps, array &$errors): void
     {
         $valores = $infDps->valores;
         if ($valores === null) {
             return;
         }
 
-        $vServ = $valores->valorServicoPrestado ? ($valores->valorServicoPrestado->valorServico ?? 0) : 0;
-        $vDescIncond = $valores->desconto ? ($valores->desconto->valorDescontoIncondicionado ?? 0) : 0;
-        $vDescCond = $valores->desconto ? ($valores->desconto->valorDescontoCondicionado ?? 0) : 0;
+        $vServ = $valores->vServPrest ? (float)($valores->vServPrest->vServ ?? 0) : 0.0;
+        
+        $vDescIncond = 0.0;
+        $vDescCond = 0.0;
+        
+        if ($valores->vDescCondIncond) {
+            $vDescIncond = (float)($valores->vDescCondIncond->vDescIncond ?? 0);
+            $vDescCond = (float)($valores->vDescCondIncond->vDescCond ?? 0);
+        }
 
         // Rule 307: vDescIncond < vServ
         if ($vDescIncond > 0 && $vDescIncond >= $vServ) {
@@ -105,10 +111,10 @@ class DpsValidator
         }
 
         // Rule 303: vServ >= descIncond + vDR + vRedBCBM
-        $vDR = $valores->deducaoReducao ? ($valores->deducaoReducao->valorDeducaoReducao ?? 0) : 0;
-        $vRedBCBM = 0;
-        if ($valores->tributacao && $valores->tributacao->beneficioMunicipal) {
-            $vRedBCBM = $valores->tributacao->beneficioMunicipal->valorReducaoBcBm ?? 0;
+        $vDR = $valores->vDedRed ? (float)($valores->vDedRed->vDedRed ?? 0) : 0.0;
+        $vRedBCBM = 0.0;
+        if ($valores->trib && $valores->trib->tribMun && $valores->trib->tribMun->bm) {
+             $vRedBCBM = (float)($valores->trib->tribMun->bm->vRedBCBM ?? 0);
         }
 
         if ($vServ < ($vDescIncond + $vDR + $vRedBCBM)) {
@@ -116,14 +122,14 @@ class DpsValidator
         }
     }
 
-    private function validateServico(InfDpsData $infDps, array &$errors): void
+    private function validateServico(InfDPSData $infDps, array &$errors): void
     {
-        $servico = $infDps->servico;
+        $servico = $infDps->serv;
         if ($servico === null) {
             return;
         }
 
-        $cTribNac = $servico->codigoServico?->codigoTributacaoNacional;
+        $cTribNac = $servico->cServ?->cTribNac;
 
         // Rule 260: obra is required for construction services
         $constructionCodes = [
@@ -136,7 +142,7 @@ class DpsValidator
         }
 
         // Rule 276: atvEvento is required for item 12
-        if (str_starts_with($cTribNac ?? '', '12') && $servico->atividadeEvento === null) {
+        if (str_starts_with($cTribNac ?? '', '12') && $servico->atvEvento === null) {
             $errors[] = 'O grupo de informações de Atividade/Evento é obrigatório para o serviço informado.';
         }
     }

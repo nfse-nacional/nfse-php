@@ -1,35 +1,57 @@
 <?php
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Validator\DpsValidator;
 
-it('validates a valid DPS', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+function createValidDpsData(array $overrides = []): array {
+    $base = [
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
+            'id' => 'DPS123',
+            'tpAmb' => '2',
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '100',
             'dCompet' => '2023-01-01',
-            'tpEmit' => 1, // Prestador
+            'tpEmit' => '1',
             'cLocEmi' => '1234567',
             'prest' => [
                 'CNPJ' => '12345678000199',
                 'IM' => '12345',
                 'xNome' => 'Prestador Teste',
                 'end' => [
-                    'endNac.cMun' => '1234567',
-                    'endNac.CEP' => '12345678',
+                    'endNac' => [
+                        'cMun' => '1234567',
+                        'CEP' => '12345678',
+                    ],
                     'xLgr' => 'Rua Teste',
                     'nro' => '100',
                     'xBairro' => 'Centro',
                 ],
             ],
+            'toma' => [
+                 'CPF' => '12345678901',
+                 'xNome' => 'Tomador Teste',
+                 'end' => [
+                      'endNac' => ['cMun' => '1234567', 'CEP' => '12345678'],
+                  ]
+            ],
+            'serv' => [
+                'cServ' => ['cTribNac' => '010101', 'xDescServ' => 'Teste']
+            ],
+            'valores' => [
+                'vServPrest' => ['vServ' => '100.00']
+            ]
         ],
-    ]);
+        'versao' => '1.00' // Attribute
+    ];
+
+    return array_replace_recursive($base, $overrides);
+}
+
+it('validates a valid DPS', function () {
+    $data = createValidDpsData();
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -39,21 +61,8 @@ it('validates a valid DPS', function () {
 });
 
 it('fails when Prestador is missing', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
-        'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => null, // Missing
-        ],
-    ]);
+    $data = createValidDpsData(['infDPS' => ['prest' => null]]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -63,26 +72,13 @@ it('fails when Prestador is missing', function () {
 });
 
 it('fails when Prestador address is missing and not emitter', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 2, // Tomador is emitter
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-                'end' => null, // Missing address
-            ],
-        ],
+            'tpEmit' => '2', // Tomador is emitter
+            'prest' => ['end' => null]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -92,37 +88,15 @@ it('fails when Prestador address is missing and not emitter', function () {
 });
 
 it('fails when Tomador is identified but address is missing', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-                'end' => [
-                    'endNac.cMun' => '1234567',
-                    'endNac.CEP' => '12345678',
-                    'xLgr' => 'Rua Teste',
-                    'nro' => '100',
-                    'xBairro' => 'Centro',
-                ],
-            ],
             'toma' => [
-                'CPF' => '12345678901', // Identified
-                'xNome' => 'Tomador Teste',
-                'end' => null, // Missing address
-            ],
-        ],
+                'CPF' => '12345678901',
+                'end' => null
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -132,39 +106,27 @@ it('fails when Tomador is identified but address is missing', function () {
 });
 
 it('fails when Tomador has NIF but missing foreign address', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-                'end' => [
-                    'endNac.cMun' => '1234567',
-                    'endNac.CEP' => '12345678',
-                    'xLgr' => 'Rua Teste',
-                    'nro' => '100',
-                    'xBairro' => 'Centro',
-                ],
-            ],
             'toma' => [
-                'NIF' => 'NIF123', // Foreign
-                'xNome' => 'Tomador Estrangeiro',
+                'NIF' => 'NIF123',
+                // Remove CPF/CNPJ from recursive merge if needed, but Valinor just maps what's there. 
+                // But createValidDpsData has CPF. If we pass NIF, it has NIF, but still CPF if we don't unset it.
+                // Assuming NIF implies identified.
                 'end' => [
-                    'endExt' => null, // Missing foreign address
-                ],
-            ],
-        ],
+                    'endExt' => null,
+                    'endNac' => null 
+                ]
+            ]
+        ]
     ]);
+    
+    // Unset CPF manually to force Just NIF identification logic if validator distinguishes.
+    // But validator checks: $isIdentified = $tomador->cpf || ...
+    // If CPF is set, it checks address. Foreign address check is if NIF !== null.
+    // So even if CPF is there, if NIF is there, foreign address is required.
+    
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -174,79 +136,36 @@ it('fails when Tomador has NIF but missing foreign address', function () {
 });
 
 it('fails when Tomador has CPF but missing national address', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-                'end' => [
-                    'endNac.cMun' => '1234567',
-                    'endNac.CEP' => '12345678',
-                    'xLgr' => 'Rua Teste',
-                    'nro' => '100',
-                    'xBairro' => 'Centro',
-                ],
-            ],
             'toma' => [
-                'CPF' => '12345678901', // National
-                'xNome' => 'Tomador Nacional',
+                'CPF' => '12345678901',
                 'end' => [
-                    'endNac.cMun' => null, // Missing cMun
-                ],
-            ],
-        ],
+                    'endNac' => null
+                ]
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
 
+    // If endNac is null, it fails.
     expect($result->isValid)->toBeFalse();
     expect($result->errors)->toContain('Código do município do tomador é obrigatório para endereço nacional.');
 });
 
-// ============================================
-// Testes de Validação de Valores (Rule 307, 309, 303)
-// ============================================
-
 it('fails when unconditional discount is equal to service value', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'valores' => [
-                'vServPrest' => [
-                    'vServ' => 1000.00,
-                ],
-                'vDescCondIncond' => [
-                    'vDescIncond' => 1000.00, // Equal to service value - invalid
-                ],
-            ],
-        ],
+                'vServPrest' => ['vServ' => '1000.00'],
+                'vDescCondIncond' => ['vDescIncond' => '1000.00']
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -256,33 +175,15 @@ it('fails when unconditional discount is equal to service value', function () {
 });
 
 it('fails when conditional discount is greater than service value', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'valores' => [
-                'vServPrest' => [
-                    'vServ' => 1000.00,
-                ],
-                'vDescCondIncond' => [
-                    'vDescCond' => 1500.00, // Greater than service value - invalid
-                ],
-            ],
-        ],
+                'vServPrest' => ['vServ' => '1000.00'],
+                'vDescCondIncond' => ['vDescCond' => '1500.00']
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -291,44 +192,22 @@ it('fails when conditional discount is greater than service value', function () 
     expect($result->errors)->toContain('O valor do desconto condicionado deve ser menor que o valor do serviço.');
 });
 
-it('fails when service value is less than sum of deductions', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+it('fails when soervice value is less than sum of deductions', function () {
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'valores' => [
-                'vServPrest' => [
-                    'vServ' => 1000.00,
-                ],
-                'vDescCondIncond' => [
-                    'vDescIncond' => 300.00,
-                ],
-                'vDedRed' => [
-                    'vDR' => 500.00,
-                ],
+                'vServPrest' => ['vServ' => '1000.00'], // vServ
+                'vDescCondIncond' => ['vDescIncond' => '300.00'], // + 300
+                'vDedRed' => ['vDedRed' => '500.00'], // + 500 = 800
                 'trib' => [
                     'tribMun' => [
-                        'BM' => [
-                            'vRedBCBM' => 300.00, // Total: 300 + 500 + 300 = 1100 > 1000
-                        ],
-                    ],
-                ],
-            ],
-        ],
+                        'BM' => [ 'vRedBCBM' => '300.00' ] // + 300 = 1100 > 1000
+                    ]
+                ]
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -338,44 +217,21 @@ it('fails when service value is less than sum of deductions', function () {
 });
 
 it('validates DPS with valid discount values', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'valores' => [
-                'vServPrest' => [
-                    'vServ' => 1000.00,
-                ],
-                'vDescCondIncond' => [
-                    'vDescIncond' => 100.00, // Valid
-                    'vDescCond' => 50.00, // Valid
-                ],
-                'vDedRed' => [
-                    'vDR' => 200.00,
-                ],
+                'vServPrest' => ['vServ' => '1000.00'],
+                'vDescCondIncond' => ['vDescIncond' => '100.00', 'vDescCond' => '50.00'],
+                'vDedRed' => ['vDedRed' => '200.00'],
                 'trib' => [
                     'tribMun' => [
-                        'BM' => [
-                            'vRedBCBM' => 150.00, // Total: 100 + 200 + 150 = 450 < 1000
-                        ],
-                    ],
-                ],
-            ],
-        ],
+                        'BM' => [ 'vRedBCBM' => '150.00' ] // 100+200+150 = 450 < 1000
+                    ]
+                ]
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -384,36 +240,16 @@ it('validates DPS with valid discount values', function () {
     expect($result->errors)->toBeEmpty();
 });
 
-// ============================================
-// Testes de Validação de Serviço (Rule 260, 276)
-// ============================================
-
 it('fails when construction service is missing obra information', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'serv' => [
-                'cServ' => [
-                    'cTribNac' => '070201', // Construction service
-                ],
-                'obra' => null, // Missing obra - invalid
-            ],
-        ],
+                'cServ' => ['cTribNac' => '070201'],
+                'obra' => null
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -423,31 +259,15 @@ it('fails when construction service is missing obra information', function () {
 });
 
 it('fails when service item 12 is missing activity/event information', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'serv' => [
-                'cServ' => [
-                    'cTribNac' => '120101', // Service item 12
-                ],
-                'atvEvt' => null, // Missing activity/event - invalid
-            ],
-        ],
+                'cServ' => ['cTribNac' => '120101'],
+                'atvEvento' => null
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);
@@ -457,33 +277,15 @@ it('fails when service item 12 is missing activity/event information', function 
 });
 
 it('validates DPS with construction service and obra information', function () {
-    $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+    $data = createValidDpsData([
         'infDPS' => [
-            '@attributes' => ['Id' => 'DPS123'],
-            'tpAmb' => 2,
-            'dhEmi' => '2023-01-01',
-            'verAplic' => '1.0',
-            'serie' => '1',
-            'nDPS' => '100',
-            'dCompet' => '2023-01-01',
-            'tpEmit' => 1,
-            'cLocEmi' => '1234567',
-            'prest' => [
-                'CNPJ' => '12345678000199',
-                'IM' => '12345',
-                'xNome' => 'Prestador Teste',
-            ],
             'serv' => [
-                'cServ' => [
-                    'cTribNac' => '070501', // Construction service
-                ],
-                'obra' => [
-                    'cObra' => '12345',
-                ],
-            ],
-        ],
+                'cServ' => ['cTribNac' => '070501'],
+                'obra' => ['cObra' => '12345']
+            ]
+        ]
     ]);
+    $dps = \map(DPSData::class, $data);
 
     $validator = new DpsValidator;
     $result = $validator->validate($dps);

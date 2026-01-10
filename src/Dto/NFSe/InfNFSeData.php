@@ -106,7 +106,7 @@ class InfNFSeData
     /**
      * -
      */
-    public ?string $nDFe = null;
+    public ?string $nDFSe = null;
 
     /**
      * -

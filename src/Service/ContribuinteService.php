@@ -2,8 +2,8 @@
 
 namespace Nfse\Service;
 
-use Nfse\Dto\Nfse\DpsData;
-use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
+use Nfse\Dto\NFSeData;
 use Nfse\Http\Client\AdnClient;
 use Nfse\Http\Client\SefinClient;
 use Nfse\Http\Contracts\SefinNacionalInterface;
@@ -30,7 +30,7 @@ class ContribuinteService
     /**
      * Emite uma NFS-e a partir de um DPS.
      */
-    public function emitir(DpsData $dps): NfseData
+    public function emitir(DPSData $dps): NFSeData
     {
         $builder = new DpsXmlBuilder;
         $xml = $builder->build($dps);
@@ -63,7 +63,7 @@ class ContribuinteService
         return $parser->parse($nfseXml);
     }
 
-    public function consultar(string $chave): ?NfseData
+    public function consultar(string $chave): ?NFSeData
     {
         try {
             $response = $this->sefinClient->consultarNfse($chave);

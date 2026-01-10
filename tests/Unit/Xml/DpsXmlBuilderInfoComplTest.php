@@ -2,7 +2,7 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Support\IdGenerator;
 use Nfse\Xml\DpsXmlBuilder;
 

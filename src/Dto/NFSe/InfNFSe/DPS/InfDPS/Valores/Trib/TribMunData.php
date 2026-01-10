@@ -34,19 +34,6 @@ class TribMunData
     public ?string $tpImunidade = null;
 
     /**
-     * Não é permitido haver retenção do ISSQN (tpRetISSQN = 2 ou 3) quando o serviço prestado for
-     * imune, exportação de serviço ou não incidência do ISSQN sobre o serviço prestado, ou seja, o
-     * campo tpRetISSQ = 1 quando o campo referente à tributação do ISSQN (tribISSQN) é igual a "2 -
-     * Imunidade, "3 - Exportação de Serviço" ou "4 - Não Incidência", (tribISSQN = 2, 3 ou 4).
-     */
-    public ?string $tpRetISSQN = null;
-
-    /**
-     * Não é permitido informar alíquota superior a 5%.
-     */
-    public ?string $pAliq = null;
-
-    /**
      * Não é permitido informar suspensão da exigibilidade do ISSQN por decisão judicial ou
      * administrativa, quando o serviço prestado for imune, exportação de serviço ou não incidência
      * do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN (tribISSQN)
@@ -55,5 +42,14 @@ class TribMunData
      * @var \Nfse\Dto\NFSe\InfNFSe\DPS\InfDPS\Valores\Trib\TribMun\ExigSuspData|null
      */
     public ?\Nfse\Dto\NFSe\InfNFSe\DPS\InfDPS\Valores\Trib\TribMun\ExigSuspData $exigSusp = null;
+
+    /**
+     * Não é permitido informar BM quando o serviço prestado for imune, exportação de serviço ou não
+     * incidência do ISSQN sobre o serviço prestado, ou seja, o campo referente à tributação do ISSQN
+     * (tribISSQN) é igual a "2 - Imunidade, "3 - Exportação de Serviço" ou "4 - Não Incidência",
+     * (tribISSQN = 2, 3 ou 4).
+     * @var \Nfse\Dto\NFSe\InfNFSe\DPS\InfDPS\Valores\Trib\TribMun\BMData|null
+     */
+    public ?\Nfse\Dto\NFSe\InfNFSe\DPS\InfDPS\Valores\Trib\TribMun\BMData $BM = null;
 
 }

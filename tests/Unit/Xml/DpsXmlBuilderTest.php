@@ -2,105 +2,76 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\NFSe\InfNFSe\DPSData;
 use Nfse\Support\IdGenerator;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml from dps data', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    DpsData::from([
-        '@attributes' => ['versao' => '1.0'],
+    $data = [
         'infDPS' => [
-            '@attributes' => ['Id' => $id],
-            'tpAmb' => 2,
+            'id' => $id,
+            'tpAmb' => '2',
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '1001',
             'dCompet' => '2023-10-27',
-            'tpEmit' => 1,
+            'tpEmit' => '1',
             'cLocEmi' => '3550308',
             'cMotivoEmisTI' => '4',
             'chNFSeRej' => '12345678901234567890123456789012345678901234',
-            'subst' => null,
             'prest' => [
                 'CNPJ' => '12345678000199',
-                'CPF' => null,
-                'NIF' => null,
-                'cNaoNIF' => null,
-                'CAEPF' => null,
                 'IM' => '12345',
                 'xNome' => 'Prestador Exemplo Ltda',
-                'end' => null,
-                'fone' => null,
-                'email' => null,
-                'regTrib' => null,
             ],
             'toma' => [
                 'CPF' => '11122233344',
-                'CNPJ' => null,
-                'NIF' => null,
-                'cNaoNIF' => null,
-                'CAEPF' => null,
-                'IM' => null,
                 'xNome' => 'Tomador Exemplo',
-                'end' => null,
-                'fone' => null,
-                'email' => null,
             ],
-            'interm' => null,
             'serv' => [
                 'locPrest' => [
                     'cLocPrestacao' => '3550308',
                     'cPaisPrestacao' => 'BR',
                 ],
                 'cServ' => [
-                    'cTribNac' => '1.01',
-                    'cTribMun' => null,
+                    'cTribNac' => '010101',
                     'xDescServ' => 'Analise de sistemas',
-                    'cNBS' => null,
-                    'cIntContrib' => null,
-                ],
-                'comExt' => null,
-                'obra' => null,
-                'atvEvento' => null,
-                'infoCompl' => [
-                    'idDocTec' => null,
-                    'docRef' => null,
-                    'xInfComp' => null,
                 ],
             ],
             'valores' => [
                 'vServPrest' => [
-                    'vReceb' => 1000.00,
-                    'vServ' => 1000.00,
+                    'vReceb' => '1000.00',
+                    'vServ' => '1000.00',
                 ],
-                'vDescCondIncond' => null,
-                'vDedRed' => null,
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'tribMun.tpImunidade' => null,
-                    'tribMun.tpRetISSQN' => 1,
-                    'tribMun.exigSusp.tpSusp' => 1,
-                    'tribMun.exigSusp.nProcesso' => '123456',
-                    'tribMun.BM' => [
-                        'pRedBCBM' => 10.0,
-                        'vRedBCBM' => 100.0,
+                    'tribMun' => [
+                        'tribISSQN' => '1',
+                        'tpRetISSQN' => '1',
+                        'exigSusp' => [
+                            'tpSusp' => '1',
+                            'nProcesso' => '123456',
+                        ],
+                        'BM' => [
+                            'pRedBCBM' => '10.00',
+                            'vRedBCBM' => '100.00',
+                        ],
                     ],
-                    'tribFed.piscofins.CST' => null,
-                    'totTrib.pTotTribSN' => null,
-                    'totTrib.indTotTrib' => null,
-                ],
+                ]
             ],
         ],
-    ]);
+        'versao' => '1.0'
+    ];
+
+    $dpsData = \map(DPSData::class, $data);
 
     $builder = new DpsXmlBuilder;
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.0">')
-        ->and($xml)->toContain('<infDPS Id="'.$id.'">')
+        ->and($xml)->toContain('Id="'.$id.'"')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>')
         ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')
@@ -117,92 +88,55 @@ it('can build xml from dps data', function () {
 it('can build xml with pAliq and correct tribMun order', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-    DpsData::from([
-        '@attributes' => ['versao' => '1.0'],
+    $data = [
         'infDPS' => [
-            '@attributes' => ['Id' => $id],
-            'tpAmb' => 2,
+            'id' => $id,
+            'tpAmb' => '2',
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',
             'serie' => '1',
             'nDPS' => '1001',
             'dCompet' => '2023-10-27',
-            'tpEmit' => 1,
+            'tpEmit' => '1',
             'cLocEmi' => '3550308',
             'cMotivoEmisTI' => '4',
-            'chNFSeRej' => null,
-            'subst' => null,
             'prest' => [
                 'CNPJ' => '12345678000199',
-                'CPF' => null,
-                'NIF' => null,
-                'cNaoNIF' => null,
-                'CAEPF' => null,
-                'IM' => '12345',
-                'xNome' => 'Prestador Exemplo Ltda',
-                'end' => null,
-                'fone' => null,
-                'email' => null,
-                'regTrib' => null,
             ],
             'toma' => [
                 'CPF' => '11122233344',
-                'CNPJ' => null,
-                'NIF' => null,
-                'cNaoNIF' => null,
-                'CAEPF' => null,
-                'IM' => null,
-                'xNome' => 'Tomador Exemplo',
-                'end' => null,
-                'fone' => null,
-                'email' => null,
             ],
-            'interm' => null,
             'serv' => [
-                'locPrest' => [
-                    'cLocPrestacao' => '3550308',
-                    'cPaisPrestacao' => 'BR',
-                ],
                 'cServ' => [
-                    'cTribNac' => '1.01',
-                    'cTribMun' => null,
-                    'xDescServ' => 'Analise de sistemas',
-                    'cNBS' => null,
-                    'cIntContrib' => null,
+                    'cTribNac' => '010101',
                 ],
-                'comExt' => null,
-                'obra' => null,
-                'atvEvento' => null,
-                'infocompl' => null,
-                'idDocTec' => null,
-                'docRef' => null,
-                'xInfComp' => null,
             ],
             'valores' => [
                 'vServPrest' => [
-                    'vReceb' => 1000.00,
-                    'vServ' => 1000.00,
+                    'vServ' => '1000.00',
                 ],
-                'vDescCondIncond' => null,
-                'vDedRed' => null,
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'tribMun.tpImunidade' => 0,
-                    'tribMun.tpRetISSQN' => 1,
-                    'tribMun.exigSusp.tpSusp' => 1,
-                    'tribMun.exigSusp.nProcesso' => '123456',
-                    'tribMun.BM' => [
-                        'pRedBCBM' => 10.0,
-                        'vRedBCBM' => 100.0,
+                    'tribMun' => [
+                        'tribISSQN' => '1',
+                        'tpImunidade' => '0',
+                        'tpRetISSQN' => '1',
+                        'pAliq' => '5.00',
+                        'exigSusp' => [
+                            'tpSusp' => '1',
+                            'nProcesso' => '123456',
+                        ],
+                        'BM' => [
+                            'pRedBCBM' => '10.0',
+                            'vRedBCBM' => '100.0',
+                        ],
                     ],
-                    'tribMun.pAliq' => 5.00,
-                    'tribFed.piscofins.CST' => null,
-                    'totTrib.pTotTribSN' => null,
-                    'totTrib.indTotTrib' => null,
                 ],
             ],
         ],
-    ]);
+        'versao' => '1.0'
+    ];
+
+    $dpsData = \map(DPSData::class, $data);
 
     $builder = new DpsXmlBuilder;
     $xml = $builder->build($dpsData);
@@ -217,9 +151,9 @@ it('can build xml with pAliq and correct tribMun order', function () {
     $tpRetIssqnPos = strpos($xml, '<tpRetISSQN>1</tpRetISSQN>');
     $pAliqPos = strpos($xml, '<pAliq>5.00</pAliq>');
 
-    expect($tribIssqnPos)->toBeLessThan($tpImunidadePos)
-        ->and($tpImunidadePos)->toBeLessThan($exigSuspPos)
-        ->and($exigSuspPos)->toBeLessThan($bmPos)
-        ->and($bmPos)->toBeLessThan($tpRetIssqnPos)
-        ->and($tpRetIssqnPos)->toBeLessThan($pAliqPos);
+    expect($tribIssqnPos)->toBeLessThan($tpImunidadePos, 'tribISSQN should occur before tpImunidade')
+        ->and($tpImunidadePos)->toBeLessThan($exigSuspPos, 'tpImunidade should occur before exigSusp')
+        ->and($exigSuspPos)->toBeLessThan($bmPos, 'exigSusp should occur before BM')
+        ->and($bmPos)->toBeLessThan($tpRetIssqnPos, 'BM should occur before tpRetISSQN')
+        ->and($tpRetIssqnPos)->toBeLessThan($pAliqPos, 'tpRetISSQN should occur before pAliq');
 });

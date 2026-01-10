@@ -12,7 +12,7 @@ class DtoTestGenerator
 
     public function handle()
     {
-        $csvFile = __DIR__ . '/../references/nfse-schema.csv';
+        $csvFile = __DIR__ . '/../references/schemas/dps-nfse-schema.csv';
         if (!file_exists($csvFile)) {
             echo "CSV file not found: $csvFile\n";
             exit(1);
@@ -78,9 +78,6 @@ class DtoTestGenerator
     private function generateTest(string $nodeName, array $nodeData, string $namespace, string $outputDir)
     {
         $dtoClassName = Str::studly($nodeName);
-        if (!str_ends_with($dtoClassName, 'Dto')) {
-            $dtoClassName .= 'Dto'; 
-        }
         if (str_ends_with($dtoClassName, 'Dto')) {
              $dtoClassName = substr($dtoClassName, 0, -3);
         }
@@ -100,45 +97,58 @@ class DtoTestGenerator
             
             $this->generateTest($childName, $childNode, $subNamespace, $subOutputDir);
             $childProperties[] = $childName;
+            
+            // Check if child property name matches key or needs case adjustment? 
+            // In DTO generator we kept original name.
         }
 
         // Calculate DTO Class FQCN
         // Test Namespace: Nfse\Tests\Unit\Dto\Generated...
-        // DTO Namespace:  Nfse\Dto...
-        $dtoNamespace = str_replace('Nfse\\Tests\\Unit\\Dto\\Generated', 'Nfse\\Dto\\Generated', $namespace);
+        // DTO Namespace:  Nfse\Dto... (without Generated)
+        // Adjust logical path for DTOs. 
+        // Logic in generate_dtos.php: $baseDetails['namespace'] . $parentNamespaceSuffix
+        // If current namespace is Nfse\Tests\Unit\Dto\Generated\NFSe\InfNFSe
+        // DTO namespace should be Nfse\Dto\NFSe\InfNFSe
+        
+        $dtoNamespace = str_replace('Nfse\\Tests\\Unit\\Dto\\Generated', 'Nfse\\Dto', $namespace);
+        // Handle root namespace case if needed, but recursive usually appends
+        
         $dtoFqcn = $dtoNamespace . '\\' . $dtoClassName;
 
         $content = "<?php\n\n";
         $content .= "namespace {$namespace};\n\n";
         $content .= "use {$dtoFqcn};\n\n";
         
-        $content .= "it('can instantiate {$dtoClassName}', function () {\n";
-        $content .= "    \$dto = new {$dtoClassName}([]);\n";
+        $content .= "it('can instantiate {$dtoClassName} via map helper', function () {\n";
+        // Valinor map requires data
+        $content .= "    \$dto = \map({$dtoClassName}::class, []);\n";
         $content .= "    expect(\$dto)->toBeInstanceOf({$dtoClassName}::class);\n";
         $content .= "});\n\n";
 
         // generate set properties test
-        // Filter out fields that are actually children
         $scalarFields = [];
         foreach ($nodeData['fields'] as $field) {
-            if (!in_array($field['name'], $childProperties)) {
-                $scalarFields[] = $field['name'];
+            $fName = $field['name'];
+            if (!in_array($fName, $childProperties)) {
+                $scalarFields[] = $fName;
             }
         }
 
         if (count($scalarFields) > 0) {
-            $content .= "it('can set properties for {$dtoClassName}', function () {\n";
+            $content .= "it('can map properties for {$dtoClassName}', function () {\n";
             $content .= "    \$data = [\n";
             foreach ($scalarFields as $fName) {
-                // Using a generic value, maybe simplified
+                // Using scalar value string
                 $content .= "        '{$fName}' => 'test',\n";
             }
             $content .= "    ];\n\n";
-            $content .= "    \$dto = new {$dtoClassName}(\$data);\n\n";
+            $content .= "    \$dto = \map({$dtoClassName}::class, \$data);\n\n";
             
             foreach ($scalarFields as $fName) {
-                $propCamel = Str::camel($fName);
-                $content .= "    expect(\$dto->{$propCamel})->toBe('test');\n";
+                // Property name relies on how generate_dtos.php names them. 
+                // In generate_dtos.php: $propName = $fieldName; (original casing)
+                $propName = $fName; 
+                $content .= "    expect(\$dto->{$propName})->toBe('test');\n";
             }
             $content .= "});\n";
         }

@@ -2,7 +2,7 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\NFSeData;
 use Nfse\Xml\NfseXmlBuilder;
 use Nfse\Xml\NfseXmlParser;
 

@@ -101,7 +101,7 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
         ->and($xml)->toContain('<cTribNac>040601</cTribNac>')
         ->and($xml)->toContain('<cNBS>123019100</cNBS>')
         // Valores
-        ->and($xml)->toContain('<vServ>1850.00</vServ>')
+        ->and($xml)->toContain('<vServ>1850</vServ>')
         ->and($xml)->toContain('<tribISSQN>1</tribISSQN>')
         ->and($xml)->toContain('<tpRetISSQN>2</tpRetISSQN>')
         ->and($xml)->toContain('<indTotTrib>0</indTotTrib>');

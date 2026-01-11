@@ -201,6 +201,7 @@ it('fails when soervice value is less than sum of deductions', function () {
                 'vDedRed' => ['vDedRed' => '500.00'], // + 500 = 800
                 'trib' => [
                     'tribMun' => [
+                        'tribISSQN' => '1',
                         'BM' => [ 'vRedBCBM' => '300.00' ] // + 300 = 1100 > 1000
                     ]
                 ]

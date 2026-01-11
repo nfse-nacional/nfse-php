@@ -49,6 +49,9 @@ class XsdDtoGenerator
         // Carregar todos os XSDs
         $this->loadSchemas();
         
+        // Gerar enums a partir de simpleTypes
+        $this->generateEnums();
+        
         // Gerar classes para tipos complexos
         $this->generateComplexTypes();
         
@@ -103,6 +106,113 @@ class XsdDtoGenerator
         echo "Loaded " . count($this->complexTypes) . " complex types\n";
         echo "Loaded " . count($this->simpleTypes) . " simple types\n";
         echo "Loaded " . count($this->elements) . " root elements\n";
+    }
+    
+    private function generateEnums(): void
+    {
+        echo "\nGenerating enums from simpleTypes...\n";
+        
+        $enumsDir = __DIR__ . "/../src/Enums";
+        if (!is_dir($enumsDir)) {
+            mkdir($enumsDir, 0755, true);
+        }
+        
+        $enumsGenerated = 0;
+        
+        foreach ($this->simpleTypes as $typeName => $typeNode) {
+            // Registrar namespace
+            $typeNode->registerXPathNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
+            
+            // Verificar se tem restrições de enumeração
+            $enumerations = $typeNode->xpath('.//xs:restriction/xs:enumeration');
+            
+            if (!empty($enumerations)) {
+                $enumName = Str::studly($typeName);
+                $enumValues = [];
+                
+                foreach ($enumerations as $enum) {
+                    $value = (string)$enum['value'];
+                    
+                    // Buscar documentação
+                    $enum->registerXPathNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
+                    $docNodes = $enum->xpath('.//xs:documentation');
+                    $documentation = !empty($docNodes) ? trim((string)$docNodes[0]) : '';
+                    
+                    $enumValues[] = [
+                        'value' => $value,
+                        'documentation' => $documentation,
+                    ];
+                }
+                
+                // Gerar arquivo do enum
+                $this->generateEnumFile($enumName, $enumValues, $typeName);
+                $enumsGenerated++;
+            }
+        }
+        
+        echo "Generated {$enumsGenerated} enums\n";
+    }
+    
+    private function generateEnumFile(string $enumName, array $values, string $originalName): void
+    {
+        $enumsDir = __DIR__ . "/../src/Enums";
+        $filePath = $enumsDir . '/' . $enumName . '.php';
+        
+        // Determinar tipo do enum (int ou string)
+        $firstValue = $values[0]['value'] ?? '';
+        $isInt = is_numeric($firstValue);
+        $enumType = $isInt ? 'int' : 'string';
+        
+        $content = "<?php\n\n";
+        $content .= "namespace Nfse\\Enums;\n\n";
+        $content .= "/**\n";
+        $content .= " * {$enumName}\n";
+        $content .= " * \n";
+        $content .= " * Gerado automaticamente do schema XSD versão {$this->version}\n";
+        $content .= " * Tipo original: {$originalName}\n";
+        $content .= " */\n";
+        $content .= "enum {$enumName}: {$enumType}\n";
+        $content .= "{\n";
+        
+        foreach ($values as $enumValue) {
+            $value = $enumValue['value'];
+            $doc = $enumValue['documentation'];
+            
+            // Criar nome do case (remover caracteres especiais)
+            $caseName = $this->generateEnumCaseName($value);
+            
+            if (!empty($doc)) {
+                $content .= "    /**\n";
+                $content .= "     * {$doc}\n";
+                $content .= "     */\n";
+            }
+            
+            $valueFormatted = $isInt ? $value : "'{$value}'";
+            $content .= "    case {$caseName} = {$valueFormatted};\n\n";
+        }
+        
+        $content .= "}\n";
+        
+        file_put_contents($filePath, $content);
+        echo "  ✓ {$enumName}\n";
+    }
+    
+    private function generateEnumCaseName(string $value): string
+    {
+        // Se é numérico, prefixar com 'Value'
+        if (is_numeric($value)) {
+            return 'Value' . $value;
+        }
+        
+        // Converter para PascalCase
+        $name = Str::studly(str_replace(['-', '.', ' ', '/'], '_', $value));
+        
+        // Se começar com número, prefixar
+        if (preg_match('/^[0-9]/', $name)) {
+            $name = 'Value' . $name;
+        }
+        
+        return $name;
     }
     
     private function generateComplexTypes(): void

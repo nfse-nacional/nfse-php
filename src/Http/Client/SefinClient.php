@@ -2,99 +2,37 @@
 
 namespace Nfse\Http\Client;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
 use Nfse\Http\Dto\ConsultaDpsResponse;
 use Nfse\Http\Dto\ConsultaNfseResponse;
 use Nfse\Http\Dto\EmissaoNfseResponse;
-use Nfse\Http\Dto\MensagemProcessamentoDto;
 use Nfse\Http\Dto\RegistroEventoResponse;
-use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use GuzzleHttp\Exception\GuzzleException;
 
-class SefinClient implements SefinNacionalInterface
+class SefinClient extends AbstractNfseClient implements SefinNacionalInterface
 {
-    private const URL_PRODUCTION = 'https://sefin.nfse.gov.br/SefinNacional';
-
-    private const URL_HOMOLOGATION = 'https://sefin.producaorestrita.nfse.gov.br/SefinNacional';
-
-    private Client $httpClient;
-
     private \CuyZ\Valinor\Mapper\TreeMapper $mapper;
 
-    public function __construct(private NfseContext $context)
+    public function __construct(NfseContext $context)
     {
-        $this->httpClient = $this->createHttpClient();
+        parent::__construct($context);
+        
         $this->mapper = (new \CuyZ\Valinor\MapperBuilder())
             ->allowSuperfluousKeys()
             ->allowScalarValueCasting()
             ->mapper();
     }
 
-    private function createHttpClient(): Client
+    protected function getProductionUrl(): string
     {
-        $baseUrl = $this->context->ambiente === TipoAmbiente::Producao
-            ? self::URL_PRODUCTION
-            : self::URL_HOMOLOGATION;
-
-        return new Client([
-            'base_uri' => rtrim($baseUrl, '/').'/',
-            'curl' => [
-                CURLOPT_SSLCERTTYPE => 'P12',
-                CURLOPT_SSLCERT => $this->context->certificatePath,
-                CURLOPT_SSLCERTPASSWD => $this->context->certificatePassword,
-                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-                CURLOPT_CONNECTTIMEOUT => 30,
-                CURLOPT_TIMEOUT => 60,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-            ],
-            RequestOptions::HEADERS => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ],
-        ]);
+        return 'https://sefin.nfse.gov.br/SefinNacional';
     }
 
-    private function post(string $endpoint, array $data): array
+    protected function getHomologationUrl(): string
     {
-        try {
-            $response = $this->httpClient->post($endpoint, [
-                RequestOptions::JSON => $data,
-            ]);
-
-            $body = $response->getBody()->getContents();
-            $decoded = json_decode($body, true);
-
-            if (! is_array($decoded)) {
-                throw NfseApiException::responseError('Resposta inválida da API: não foi possível decodificar JSON.');
-            }
-
-            return $decoded;
-        } catch (GuzzleException $e) {
-            // Try to extract error response body
-            $errorBody = '';
-            if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse()) {
-                $errorBody = $e->getResponse()->getBody()->getContents();
-            }
-
-            throw NfseApiException::requestError($e->getMessage().($errorBody ? "\nResposta: ".$errorBody : ''), $e->getCode());
-        }
-    }
-
-    private function get(string $endpoint): array
-    {
-        try {
-            $response = $this->httpClient->get($endpoint);
-
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
+        return 'https://sefin.producaorestrita.nfse.gov.br/SefinNacional';
     }
 
     public function emitirNfse(string $dpsXmlGZipB64): EmissaoNfseResponse
@@ -133,6 +71,7 @@ class SefinClient implements SefinNacionalInterface
 
         return $this->mapper->map(RegistroEventoResponse::class, $response);
     }
+
     public function verificarDps(string $idDps): bool
     {
         try {

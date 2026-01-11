@@ -2,86 +2,16 @@
 
 namespace Nfse\Http\Client;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
-use Nfse\Enums\TipoAmbiente;
-use Nfse\Http\Exceptions\NfseApiException;
-use Nfse\Http\NfseContext;
-
-class CncClient
+class CncClient extends AbstractNfseClient
 {
-    private const URL_PRODUCTION = 'https://adn.nfse.gov.br/cnc';
-
-    private const URL_HOMOLOGATION = 'https://adn.producaorestrita.nfse.gov.br/cnc';
-
-    private Client $httpClient;
-
-    public function __construct(private NfseContext $context)
+    protected function getProductionUrl(): string
     {
-        $this->httpClient = $this->createHttpClient();
+        return 'https://adn.nfse.gov.br/cnc';
     }
 
-    private function createHttpClient(): Client
+    protected function getHomologationUrl(): string
     {
-        $baseUrl = $this->context->ambiente === TipoAmbiente::Producao
-            ? self::URL_PRODUCTION
-            : self::URL_HOMOLOGATION;
-
-        return new Client([
-            'base_uri' => $baseUrl,
-            'curl' => [
-                CURLOPT_SSLCERTTYPE => 'P12',
-                CURLOPT_SSLCERT => $this->context->certificatePath,
-                CURLOPT_SSLCERTPASSWD => $this->context->certificatePassword,
-                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-                CURLOPT_CONNECTTIMEOUT => 30,
-                CURLOPT_TIMEOUT => 60,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-            ],
-            RequestOptions::HEADERS => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ],
-        ]);
-    }
-
-    private function get(string $endpoint): array
-    {
-        try {
-            $response = $this->httpClient->get($endpoint);
-            $content = $response->getBody()->getContents();
-            $decoded = json_decode($content, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw NfseApiException::responseError('Resposta inválida (não é JSON): '.$content);
-            }
-
-            return $decoded;
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
-    }
-
-    private function post(string $endpoint, array $data): array
-    {
-        try {
-            $response = $this->httpClient->post($endpoint, [
-                RequestOptions::JSON => $data,
-            ]);
-            $content = $response->getBody()->getContents();
-            $decoded = json_decode($content, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw NfseApiException::responseError('Resposta inválida (não é JSON): '.$content);
-            }
-
-            return $decoded;
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
+        return 'https://adn.producaorestrita.nfse.gov.br/cnc';
     }
 
     /**

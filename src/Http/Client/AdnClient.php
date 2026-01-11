@@ -2,9 +2,6 @@
 
 namespace Nfse\Http\Client;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
 use Nfse\Http\Dto\AliquotaDto;
 use Nfse\Http\Dto\DistribuicaoDfeResponse;
 use Nfse\Http\Dto\DistribuicaoNsuDto;
@@ -12,73 +9,19 @@ use Nfse\Http\Dto\MensagemProcessamentoDto;
 use Nfse\Http\Dto\ParametrosConfiguracaoConvenioDto;
 use Nfse\Http\Dto\ResultadoConsultaAliquotasResponse;
 use Nfse\Http\Dto\ResultadoConsultaConfiguracoesConvenioResponse;
-use Nfse\Enums\TipoAmbiente;
 use Nfse\Enums\TipoNsu;
 use Nfse\Http\Contracts\AdnDanfseInterface;
-use Nfse\Http\Exceptions\NfseApiException;
-use Nfse\Http\NfseContext;
 
-class AdnClient implements AdnDanfseInterface
+class AdnClient extends AbstractNfseClient implements AdnDanfseInterface
 {
-    private const URL_PRODUCTION = 'https://adn.nfse.gov.br';
-
-    private const URL_HOMOLOGATION = 'https://adn.producaorestrita.nfse.gov.br';
-
-    private Client $httpClient;
-
-    public function __construct(private NfseContext $context)
+    protected function getProductionUrl(): string
     {
-        $this->httpClient = $this->createHttpClient();
+        return 'https://adn.nfse.gov.br';
     }
 
-    private function createHttpClient(): Client
+    protected function getHomologationUrl(): string
     {
-        $baseUrl = $this->context->ambiente === TipoAmbiente::Producao
-            ? self::URL_PRODUCTION
-            : self::URL_HOMOLOGATION;
-
-        return new Client([
-            'base_uri' => $baseUrl,
-            'curl' => [
-                CURLOPT_SSLCERTTYPE => 'P12',
-                CURLOPT_SSLCERT => $this->context->certificatePath,
-                CURLOPT_SSLCERTPASSWD => $this->context->certificatePassword,
-                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-                CURLOPT_CONNECTTIMEOUT => 30,
-                CURLOPT_TIMEOUT => 60,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-            ],
-            RequestOptions::HEADERS => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ],
-        ]);
-    }
-
-    private function get(string $endpoint): array
-    {
-        try {
-            $response = $this->httpClient->get($endpoint);
-            $content = $response->getBody()->getContents();
-            $decoded = json_decode($content, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw NfseApiException::responseError('Resposta inválida (não é JSON): '.$content);
-            }
-
-            return $decoded;
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
+        return 'https://adn.producaorestrita.nfse.gov.br';
     }
 
     /**
@@ -90,13 +33,13 @@ class AdnClient implements AdnDanfseInterface
         if ($cnpjConsulta) {
             $queryParams['cnpjConsulta'] = $cnpjConsulta;
         }
-        if (! $lote) {
+        if (!$lote) {
             $queryParams['lote'] = 'false';
         }
 
         $url = "/contribuintes/DFe/{$nsu}";
-        if (! empty($queryParams)) {
-            $url .= '?'.http_build_query($queryParams);
+        if (!empty($queryParams)) {
+            $url .= '?' . http_build_query($queryParams);
         }
 
         $response = $this->get($url);
@@ -118,13 +61,13 @@ class AdnClient implements AdnDanfseInterface
         if ($tipoNSU) {
             $queryParams['tipoNSU'] = $tipoNSU->value;
         }
-        if (! $lote) {
+        if (!$lote) {
             $queryParams['lote'] = 'false';
         }
 
         $url = "/municipios/DFe/{$nsu}";
-        if (! empty($queryParams)) {
-            $url .= '?'.http_build_query($queryParams);
+        if (!empty($queryParams)) {
+            $url .= '?' . http_build_query($queryParams);
         }
 
         $response = $this->get($url);
@@ -137,24 +80,9 @@ class AdnClient implements AdnDanfseInterface
      */
     public function enviarLote(string $xmlZipB64): array
     {
-        try {
-            $response = $this->httpClient->post('/adn/DFe', [
-                RequestOptions::JSON => [
-                    'LoteXmlGZipB64' => [$xmlZipB64],
-                ],
-            ]);
-
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
+        return $this->post('/adn/DFe', [
+            'LoteXmlGZipB64' => [$xmlZipB64],
+        ]);
     }
 
     /**
@@ -215,20 +143,7 @@ class AdnClient implements AdnDanfseInterface
      */
     public function obterDanfse(string $chaveAcesso): string
     {
-        try {
-            $response = $this->httpClient->get("/danfse/{$chaveAcesso}");
-
-            return $response->getBody()->getContents();
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
-        } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
-        }
+        return $this->getRaw("/danfse/{$chaveAcesso}");
     }
 
     private function mapDistribuicaoResponse(array $response): DistribuicaoDfeResponse
@@ -242,7 +157,7 @@ class AdnClient implements AdnDanfseInterface
         $ultimoNsu = $response['UltimoNSU'] ?? null;
         $maiorNsu = $response['MaiorNSU'] ?? null;
 
-        if (empty($ultimoNsu) && ! empty($listaNsu)) {
+        if (empty($ultimoNsu) && !empty($listaNsu)) {
             $nsus = array_map(fn ($item) => $item->nsu, $listaNsu);
             $maxNsu = max($nsus);
             $ultimoNsu = $maxNsu;

@@ -1,0 +1,30 @@
+<?php
+
+namespace NFSe\Dto\V1_0_1\DPS\InfDPS\InfoValores\InfoDedRed\ListaDocDedRed\DocDedRed;
+
+use NFSe\Dto\Attributes\MapFrom;
+
+/**
+ * DocNFNFS
+ * 
+ * Gerado automaticamente do schema XSD versão 1.0.1
+ * Tipo original: TCDocNFNFS
+ */
+class DocNFNFS 
+{
+    /**
+     * Número da Nota Fiscal NF ou NFS
+     */
+    public string $nNFS;
+
+    /**
+     * Modelo da Nota Fiscal NF ou NFS
+     */
+    public string $modNFS;
+
+    /**
+     * Série Nota Fiscal NF ou NFS
+     */
+    public string $serieNFS;
+
+}

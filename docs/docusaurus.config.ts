@@ -99,20 +99,8 @@ const config: Config = {
                     title: "Documentação",
                     items: [
                         {
-                            label: "Visão Geral",
-                            to: "/docs/overview",
-                        },
-                        {
-                            label: "DTOs e Validações",
-                            to: "/docs/dtos",
-                        },
-                        {
-                            label: "Assinatura Digital",
-                            to: "/docs/digital-signature",
-                        },
-                        {
-                            label: "Utilitários",
-                            to: "/docs/utilities/id-generator",
+                            label: "Início Rápido",
+                            to: "/docs/quickstart",
                         },
                     ],
                 },
@@ -131,10 +119,6 @@ const config: Config = {
                             label: "Changelog",
                             href: "https://github.com/nfse-nacional/nfse-php/releases",
                         },
-                        {
-                            label: "Roadmap",
-                            to: "/#roadmap",
-                        },
                     ],
                 },
                 {
@@ -151,10 +135,6 @@ const config: Config = {
                         {
                             label: "Discussões",
                             href: "https://github.com/nfse-nacional/nfse-php/discussions",
-                        },
-                        {
-                            label: "Contribuir",
-                            href: "https://github.com/nfse-nacional/nfse-php/blob/main/CONTRIBUTING.md",
                         },
                     ],
                 },
@@ -178,7 +158,7 @@ const config: Config = {
             ],
             copyright: `
                 <div style="margin-top: 1rem;">
-                    <p>Copyright © ${new Date().getFullYear()} NFSe PHP. Construído com ❤️ usando Docusaurus.</p>
+                    <p>Copyright © ${new Date().getFullYear()} NFSe PHP.</p>
                     <p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">
                         Projeto open-source sob licença MIT. Não afiliado ao governo brasileiro.
                     </p>

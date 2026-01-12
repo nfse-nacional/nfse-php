@@ -1,0 +1,30 @@
+<?php
+
+namespace NFSe\Dto\V1_0_0\DPS\InfDPS\InfoValores\InfoTributacao\TribTotal;
+
+use NFSe\Dto\Attributes\MapFrom;
+
+/**
+ * TribTotalPercent
+ * 
+ * Gerado automaticamente do schema XSD versão 1.0.0
+ * Tipo original: TCTribTotalPercent
+ */
+class TribTotalPercent 
+{
+    /**
+     * Valor percentual total aproximado dos tributos federais (%).
+     */
+    public string $pTotTribFed;
+
+    /**
+     * Valor percentual total aproximado dos tributos estaduais (%).
+     */
+    public string $pTotTribEst;
+
+    /**
+     * Valor percentual total aproximado dos tributos municipais (%).
+     */
+    public string $pTotTribMun;
+
+}

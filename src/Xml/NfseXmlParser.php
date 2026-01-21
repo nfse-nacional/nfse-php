@@ -22,10 +22,17 @@ class NfseXmlParser
 
         // 2. Parse XML
         $useInternal = libxml_use_internal_errors(true);
+
+        $options = \LIBXML_NOCDATA | \LIBXML_NOBLANKS;
+
+        if (defined('LIBXML_RECOVER')) {
+            $options |= \LIBXML_RECOVER;
+        }
+
         $simpleXml = simplexml_load_string(
             $xml,
             'SimpleXMLElement',
-            LIBXML_NOCDATA | LIBXML_NOBLANKS | LIBXML_RECOVER
+            $options
         );
 
         if ($simpleXml === false) {

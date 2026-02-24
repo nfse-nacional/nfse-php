@@ -98,33 +98,56 @@ class TributacaoData extends Dto
     public ?float $aliquotaCofins = null;
 
     /**
-     * Valor PIS.
+     * Valor PIS (R$).
+     *
+     * NT 007/2026: este campo registra o valor de PIS como débito de apuração
+     * própria do prestador. Não deve ser usado para informar valores retidos.
+     * Para retenção, consolidar no campo vRetCSLL.
      */
     #[MapFrom('tribFed.piscofins.vPis')]
     public ?float $valorPis = null;
 
     /**
-     * Valor COFINS.
+     * Valor COFINS (R$).
+     *
+     * NT 007/2026: este campo registra o valor de COFINS como débito de apuração
+     * própria do prestador. Não deve ser usado para informar valores retidos.
+     * Para retenção, consolidar no campo vRetCSLL.
      */
     #[MapFrom('tribFed.piscofins.vCofins')]
     public ?float $valorCofins = null;
 
     /**
-     * Tipo de Retenção PIS/COFINS.
-     * 1 - Não Retido
-     * 2 - Retido
+     * Tipo de Retenção PIS/COFINS e CSLL.
+     *
+     * Códigos 0 e 3-9 definidos pela NT 007/2026. Atualmente o schema
+     * aceita apenas os códigos 1 e 2. Os demais serão habilitados quando
+     * os grupos IBSCBS se tornarem obrigatórios.
+     *
+     * @see TipoRetencaoPisCofins
      */
     #[MapFrom('tribFed.piscofins.tpRetPisCofins'), CastWith(EnumCaster::class, enumType: TipoRetencaoPisCofins::class)]
     public ?TipoRetencaoPisCofins $tipoRetencaoPisCofins = null;
 
     /**
-     * Valor retido de IRRF.
+     * Valor retido de IRRF (R$).
      */
     #[MapFrom('tribFed.vRetIRRF')]
     public ?float $valorRetidoIrrf = null;
 
     /**
-     * Valor retido de CSLL.
+     * Valor retido de contribuições sociais (R$).
+     *
+     * NT 007/2026: se houver retenções de PIS, COFINS e/ou CSLL, elas
+     * devem ser SOMADAS e informadas neste campo, de acordo com o tipo
+     * de retenção indicado em tpRetPisCofins.
+     *
+     * Exemplo: para tpRetPisCofins=1 (PIS/COFINS Retido) com CSLL também
+     * retida, este campo deve conter: PIS retido + COFINS retido + CSLL retida.
+     *
+     * @see TipoRetencaoPisCofins::isRetidoPis()
+     * @see TipoRetencaoPisCofins::isRetidoCofins()
+     * @see TipoRetencaoPisCofins::isRetidoCsll()
      */
     #[MapFrom('tribFed.vRetCSLL')]
     public ?float $valorRetidoCsll = null;

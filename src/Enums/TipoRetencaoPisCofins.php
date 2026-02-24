@@ -77,4 +77,57 @@ enum TipoRetencaoPisCofins: int
     {
         return $this->getDescription();
     }
+
+    /**
+     * Verifica se PIS é retido neste tipo de retenção.
+     *
+     * NT 007/2026: quando retido, o valor de PIS deve ser consolidado
+     * no campo vRetCSLL da DPS.
+     */
+    public function isRetidoPis(): bool
+    {
+        return match ($this) {
+            self::PisCofinsRetido,
+            self::Retidos,
+            self::PisCofinsRetidosCsllNaoRetido,
+            self::PisRetidoCofinsCsllNaoRetido,
+            self::CofinsNaoRetidoPisCsllRetidos => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Verifica se COFINS é retido neste tipo de retenção.
+     *
+     * NT 007/2026: quando retido, o valor de COFINS deve ser consolidado
+     * no campo vRetCSLL da DPS.
+     */
+    public function isRetidoCofins(): bool
+    {
+        return match ($this) {
+            self::PisCofinsRetido,
+            self::Retidos,
+            self::PisCofinsRetidosCsllNaoRetido,
+            self::CofinsRetidoPisCsllNaoRetido,
+            self::PisNaoRetidoCofinsCsllRetidos => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Verifica se CSLL é retida neste tipo de retenção.
+     *
+     * NT 007/2026: quando retida, o valor de CSLL deve ser informado
+     * no campo vRetCSLL da DPS (consolidado com PIS/COFINS retidos).
+     */
+    public function isRetidoCsll(): bool
+    {
+        return match ($this) {
+            self::Retidos,
+            self::PisNaoRetidoCofinsCsllRetidos,
+            self::PisCofinsNaoRetidosCsllRetido,
+            self::CofinsNaoRetidoPisCsllRetidos => true,
+            default => false,
+        };
+    }
 }

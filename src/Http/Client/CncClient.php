@@ -5,6 +5,7 @@ namespace Nfse\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Nfse\Dto\Http\MensagemProcessamentoDto;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
@@ -61,7 +62,7 @@ class CncClient
 
             return $decoded;
         } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
+            $this->handleException($e);
         }
     }
 
@@ -80,7 +81,7 @@ class CncClient
 
             return $decoded;
         } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
+            $this->handleException($e);
         }
     }
 
@@ -106,5 +107,45 @@ class CncClient
     public function atualizarContribuinte(array $dados): array
     {
         return $this->post('', $dados);
+    }
+
+    private function mapMensagens(array $mensagens): array
+    {
+        return array_map(fn ($m) => new MensagemProcessamentoDto([
+            'mensagem' => $m['Mensagem'] ?? $m['mensagem'] ?? null,
+            'parametros' => $m['Parametros'] ?? $m['parametros'] ?? null,
+            'codigo' => $m['Codigo'] ?? $m['codigo'] ?? null,
+            'descricao' => $m['Descricao'] ?? $m['descricao'] ?? null,
+            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null,
+        ]), $mensagens);
+    }
+
+    /**
+     * @param  \Exception|GuzzleException  $e
+     * @param  array  $decoded
+     * @return mixed
+     * @throws NfseApiException
+     */
+    private function handleException(\Exception|GuzzleException $e)
+    {
+        $errorBody = '';
+        if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->hasResponse()) {
+            $errorBody = $e->getResponse()->getBody()->getContents();
+        }
+
+        $parsedErrors = [];
+        if ($errorBody) {
+            $decoded = json_decode($errorBody, true);
+            if (is_array($decoded) && isset($decoded['erros']) && is_array($decoded['erros'])) {
+                $parsedErrors = $this->mapMensagens($decoded['erros']);
+            }
+        }
+
+        throw NfseApiException::requestError(
+            $e->getMessage().($errorBody ? "\nResposta: ".$errorBody : ''),
+            $e->getCode(),
+            $errorBody ?: null,
+            $parsedErrors
+        );
     }
 }

@@ -70,13 +70,7 @@ class SefinClient implements SefinNacionalInterface
 
             return $decoded;
         } catch (GuzzleException $e) {
-            // Try to extract error response body
-            $errorBody = '';
-            if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse()) {
-                $errorBody = $e->getResponse()->getBody()->getContents();
-            }
-
-            throw NfseApiException::requestError($e->getMessage().($errorBody ? "\nResposta: ".$errorBody : ''), $e->getCode());
+            $this->handleException($e);
         }
     }
 
@@ -87,7 +81,7 @@ class SefinClient implements SefinNacionalInterface
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
+            $this->handleException($e);
         }
     }
 
@@ -186,11 +180,39 @@ class SefinClient implements SefinNacionalInterface
     private function mapMensagens(array $mensagens): array
     {
         return array_map(fn ($m) => new MensagemProcessamentoDto(
-            mensagem: $m['mensagem'] ?? null,
-            parametros: $m['parametros'] ?? null,
-            codigo: $m['codigo'] ?? null,
-            descricao: $m['descricao'] ?? null,
-            complemento: $m['complemento'] ?? null
+            mensagem: $m['mensagem'] ?? $m['Mensagem'] ?? null,
+            parametros: $m['parametros'] ?? $m['Parametros'] ?? null,
+            codigo: $m['codigo'] ?? $m['Codigo'] ?? null,
+            descricao: $m['descricao'] ?? $m['Descricao'] ?? null,
+            complemento: $m['complemento'] ?? $m['Complemento'] ?? null
         ), $mensagens);
+    }
+
+    /**
+     * @param  \Exception|GuzzleException  $e
+     * @return mixed
+     * @throws NfseApiException
+     */
+    private function handleException(\Exception|GuzzleException $e)
+    {
+        $errorBody = '';
+        if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse()) {
+            $errorBody = $e->getResponse()->getBody()->getContents();
+        }
+
+        $parsedErrors = [];
+        if ($errorBody) {
+            $decoded = json_decode($errorBody, true);
+            if (is_array($decoded) && isset($decoded['erros']) && is_array($decoded['erros'])) {
+                $parsedErrors = $this->mapMensagens($decoded['erros']);
+            }
+        }
+
+        throw NfseApiException::requestError(
+            $e->getMessage().($errorBody ? "\nResposta: ".$errorBody : ''),
+            $e->getCode(),
+            $errorBody ?: null,
+            $parsedErrors
+        );
     }
 }

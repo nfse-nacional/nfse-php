@@ -154,10 +154,21 @@ class DpsXmlBuilder
     {
         $end = $this->dom->createElement('end');
 
-        $endNac = $this->dom->createElement('endNac');
-        $this->appendElement($endNac, 'cMun', $data->codigoMunicipio);
-        $this->appendElement($endNac, 'CEP', $data->cep);
-        $end->appendChild($endNac);
+        if ($data->codigoMunicipio || $data->cep) {
+            $endNac = $this->dom->createElement('endNac');
+            $this->appendElement($endNac, 'cMun', $data->codigoMunicipio);
+            $this->appendElement($endNac, 'CEP', $data->cep);
+            $end->appendChild($endNac);
+        }
+
+        if ($data->enderecoExterior) {
+            $endExt = $this->dom->createElement('endExt');
+            $this->appendElement($endExt, 'cPais', $data->enderecoExterior->codigoPais);
+            $this->appendElement($endExt, 'cEndPost', $data->enderecoExterior->codigoEnderecamentoPostal);
+            $this->appendElement($endExt, 'xCidade', $data->enderecoExterior->cidade);
+            $this->appendElement($endExt, 'xEstProvReg', $data->enderecoExterior->estadoProvinciaRegiao);
+            $end->appendChild($endExt);
+        }
 
         $this->appendElement($end, 'xLgr', $data->logradouro);
         $this->appendElement($end, 'nro', $data->numero);

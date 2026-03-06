@@ -49,7 +49,7 @@ class ContribuinteService
 
         if (! empty($response->erros)) {
             $msg = 'Erro na emissão: '.json_encode($response->erros);
-            throw NfseApiException::responseError($msg);
+            throw NfseApiException::responseError($msg, 0, null, $response->erros);
         }
 
         if (! $response->nfseXmlGZipB64) {

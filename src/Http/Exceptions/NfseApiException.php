@@ -3,16 +3,41 @@
 namespace Nfse\Http\Exceptions;
 
 use Exception;
+use Nfse\Dto\Http\MensagemProcessamentoDto;
 
 class NfseApiException extends Exception
 {
-    public static function requestError(string $message, int $code = 0): self
+    private ?string $rawResponse = null;
+
+    /** @var MensagemProcessamentoDto[] */
+    private array $errors = [];
+
+    public function getRawResponse(): ?string
     {
-        return new self("Erro na requisição: {$message}", $code);
+        return $this->rawResponse;
     }
 
-    public static function responseError(string $message, int $code = 0): self
+    /** @return MensagemProcessamentoDto[] */
+    public function getErrors(): array
     {
-        return new self("Erro na resposta da API: {$message}", $code);
+        return $this->errors;
+    }
+
+    public static function requestError(string $message, int $code = 0, ?string $rawResponse = null, array $errors = []): self
+    {
+        $exception = new self("Erro na requisição: {$message}", $code);
+        $exception->rawResponse = $rawResponse;
+        $exception->errors = $errors;
+
+        return $exception;
+    }
+
+    public static function responseError(string $message, int $code = 0, ?string $rawResponse = null, array $errors = []): self
+    {
+        $exception = new self("Erro na resposta da API: {$message}", $code);
+        $exception->rawResponse = $rawResponse;
+        $exception->errors = $errors;
+
+        return $exception;
     }
 }

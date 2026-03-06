@@ -70,12 +70,7 @@ class AdnClient implements AdnDanfseInterface
 
             return $decoded;
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
+            $this->handleException($e);
         } catch (GuzzleException $e) {
             throw NfseApiException::requestError($e->getMessage(), $e->getCode());
         }
@@ -146,12 +141,7 @@ class AdnClient implements AdnDanfseInterface
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
+            $this->handleException($e);
         } catch (GuzzleException $e) {
             throw NfseApiException::requestError($e->getMessage(), $e->getCode());
         }
@@ -220,12 +210,7 @@ class AdnClient implements AdnDanfseInterface
 
             return $response->getBody()->getContents();
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $message = $e->getMessage();
-            if ($e->hasResponse()) {
-                $responseBody = $e->getResponse()->getBody()->getContents();
-                $message = "Erro na requisição: {$responseBody}";
-            }
-            throw NfseApiException::requestError($message, $e->getCode());
+            $this->handleException($e);
         } catch (GuzzleException $e) {
             throw NfseApiException::requestError($e->getMessage(), $e->getCode());
         }
@@ -277,11 +262,35 @@ class AdnClient implements AdnDanfseInterface
     private function mapMensagens(array $mensagens): array
     {
         return array_map(fn ($m) => new MensagemProcessamentoDto([
-            'mensagem' => $m['Mensagem'] ?? null,
-            'parametros' => $m['Parametros'] ?? null,
-            'codigo' => $m['Codigo'] ?? null,
-            'descricao' => $m['Descricao'] ?? null,
-            'complemento' => $m['Complemento'] ?? null,
+            'mensagem' => $m['Mensagem'] ?? $m['mensagem'] ?? null,
+            'parametros' => $m['Parametros'] ?? $m['parametros'] ?? null,
+            'codigo' => $m['Codigo'] ?? $m['codigo'] ?? null,
+            'descricao' => $m['Descricao'] ?? $m['descricao'] ?? null,
+            'complemento' => $m['Complemento'] ?? $m['complemento'] ?? null,
         ]), $mensagens);
+    }
+
+    /**
+     * @param  \GuzzleHttp\Exception\RequestException|\Exception  $e
+     * @return mixed
+     * @throws NfseApiException
+     */
+    private function handleException(\GuzzleHttp\Exception\RequestException|\Exception $e)
+    {
+        $responseBody = '';
+        if ($e->hasResponse()) {
+            $responseBody = $e->getResponse()->getBody()->getContents();
+        }
+
+        $parsedErrors = [];
+        if ($responseBody) {
+            $decoded = json_decode($responseBody, true);
+            if (is_array($decoded) && isset($decoded['erros']) && is_array($decoded['erros'])) {
+                $parsedErrors = $this->mapMensagens($decoded['erros']);
+            }
+        }
+
+        $message = $responseBody ? "Erro na requisição: {$responseBody}" : $e->getMessage();
+        throw NfseApiException::requestError($message, $e->getCode(), $responseBody ?: null, $parsedErrors);
     }
 }

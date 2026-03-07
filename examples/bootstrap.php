@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Nfse\Http\NfseContext;
 use Nfse\Nfse;
@@ -25,8 +25,8 @@ $municipioSelecionado = 'FORTALEZA';
 $codigoMunicipio = $municipios[$municipioSelecionado];
 
 // Configurações básicas para os exemplos
-$certificatePath = __DIR__.'/certs/contribuinte.pfx';
-$certificatePassword = 'Maia2040!';
+$certificatePath = __DIR__ . '/certs/contribuinte.pfx';
+$certificatePassword = '[PASSWORD]';
 
 // Se o arquivo de certificado não existir, vamos avisar (apenas para o exemplo)
 if (! file_exists($certificatePath)) {
@@ -35,7 +35,7 @@ if (! file_exists($certificatePath)) {
 }
 
 $context = new NfseContext(
-    ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
+    ambiente: \Nfse\Enums\TipoAmbiente::Producao,
     certificatePath: $certificatePath,
     certificatePassword: $certificatePassword
 );

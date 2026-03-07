@@ -4,6 +4,7 @@ namespace Nfse\Service;
 
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\Nfse\PedRegEventoData;
 use Nfse\Http\Client\AdnClient;
 use Nfse\Http\Client\SefinClient;
 use Nfse\Http\Contracts\SefinNacionalInterface;
@@ -13,6 +14,7 @@ use Nfse\Signer\Certificate;
 use Nfse\Signer\SignerInterface;
 use Nfse\Signer\XmlSigner;
 use Nfse\Xml\DpsXmlBuilder;
+use Nfse\Xml\EventosXmlBuilder;
 use Nfse\Xml\NfseXmlParser;
 
 class ContribuinteService
@@ -48,7 +50,7 @@ class ContribuinteService
         $response = $this->sefinClient->emitirNfse($payload);
 
         if (! empty($response->erros)) {
-            $msg = 'Erro na emissão: '.json_encode($response->erros);
+            $msg = 'Erro na emissão: ' . json_encode($response->erros);
             throw NfseApiException::responseError($msg, 0, null, $response->erros);
         }
 
@@ -100,6 +102,37 @@ class ContribuinteService
     public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): \Nfse\Dto\Http\RegistroEventoResponse
     {
         return $this->sefinClient->registrarEvento($chaveAcesso, $eventoXmlGZipB64);
+    }
+
+    /**
+     * Registra um evento a partir de um DTO.
+     */
+    public function registrarEventoData(PedRegEventoData $evento): \Nfse\Dto\Http\RegistroEventoResponse
+    {
+        $builder = new EventosXmlBuilder;
+        $xml = $builder->buildPedRegEvento($evento);
+
+        $cert = new Certificate($this->context->certificatePath, $this->context->certificatePassword);
+        $signer = $this->createSigner($cert);
+
+        // Assina a tag 'infPedReg'
+        $signedXml = $signer->sign($xml, 'infPedReg');
+
+        // Envelope (GZIP + Base64)
+        $payload = base64_encode(gzencode($signedXml));
+
+        return $this->registrarEvento($evento->infPedReg->chaveNfse, $payload);
+    }
+
+    /**
+     * Atalho para cancelamento de NFS-e (Evento 101101).
+     */
+    public function cancelar(PedRegEventoData $evento): \Nfse\Dto\Http\RegistroEventoResponse
+    {
+        // Garante o código do evento de cancelamento
+        $evento->infPedReg->tipoEvento = '101101';
+
+        return $this->registrarEventoData($evento);
     }
 
     public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Dto\Http\RegistroEventoResponse

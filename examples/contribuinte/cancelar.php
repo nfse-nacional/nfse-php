@@ -34,6 +34,8 @@ try {
             'cnpjAutor' => $cnpjAutor,
             'tipoEvento' => '101101', // Código para Cancelamento
             'e101101' => [
+                // XSD v1.01 (TE101101): valor fixo enumerado para xDesc.
+                'xDesc' => 'Cancelamento de NFS-e',
                 'cMotivo' => '1', // 1 - Erro na emissão
                 'xMotivo' => 'Teste de cancelamento via SDK PHP',
             ],
@@ -43,9 +45,9 @@ try {
     echo "Cancelando NFS-e: $chaveNfse...\n";
 
     /**
-     * Você pode usar o método direto (se disponível no Service) 
+     * Você pode usar o método direto (se disponível no Service)
      * ou montar o processo manualmente caso a versão do SDK seja anterior.
-     * 
+     *
      * Neste exemplo, demonstramos como seria a chamada simplificada:
      */
     $response = $nfse->contribuinte()->cancelar($eventoData);

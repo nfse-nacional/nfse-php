@@ -382,10 +382,9 @@ class DpsXmlBuilder
                 $this->appendElement($pTotTrib, 'pTotTribEst', $data->tributacao->percentualTotalTributosEstaduais !== null ? number_format($data->tributacao->percentualTotalTributosEstaduais, 2, '.', '') : null);
                 $this->appendElement($pTotTrib, 'pTotTribMun', $data->tributacao->percentualTotalTributosMunicipais !== null ? number_format($data->tributacao->percentualTotalTributosMunicipais, 2, '.', '') : null);
                 $totTrib->appendChild($pTotTrib);
-            } elseif (! $isSimplesNacional) {
+            } elseif ($data->tributacao->indicadorTotalTributos !== null) {
                 $totTrib = $this->dom->createElement('totTrib');
-                $indTotTrib = $data->tributacao->indicadorTotalTributos ?? '0';
-                $this->appendElement($totTrib, 'indTotTrib', $indTotTrib);
+                $this->appendElement($totTrib, 'indTotTrib', $data->tributacao->indicadorTotalTributos);
             }
 
             if ($totTrib) {

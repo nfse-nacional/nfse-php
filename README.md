@@ -164,13 +164,35 @@ $context = new NfseContext(
     ambiente: TipoAmbiente::Producao,
     certificatePath: '/path/to/cert.pfx',
     certificatePassword: 'password',
-    codigoMunicipio: '3511102', // Catanduva/SP
     endpoint: new Endpoint([
-        'production' => 'https://164.152.60.237/nota/nacional',
+        'production'   => 'https://164.152.60.237/nota/nacional',
         'homologation' => 'https://catanduva.prefeitura.rlz.com.br/nota/nacional',
     ])
 );
 ```
+
+Ou enviar o código do município homologado pela nfse-nacional/nfse-php através do parâmetro correspondente
+
+```php
+use Nfse\Http\NfseContext;
+use Nfse\Dto\Http\Endpoint;
+use Nfse\Enums\TipoAmbiente;
+
+$context = new NfseContext(
+    ambiente: TipoAmbiente::Producao,
+    certificatePath: '/path/to/cert.pfx',
+    certificatePassword: 'password',
+    codigoMunicipio: '3511102' // Catanduva/SP
+);
+```
+
+## Endpoints por Município
+
+Alguns municípios utilizam endpoints próprios mesmo seguindo o padrão nacional da NFS-e.
+Consulte a lista completa no arquivo:
+
+👉 [Endpoints por Município](endpoints.md)
+
 
 ## 📚 Documentação Completa
 

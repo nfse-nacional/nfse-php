@@ -145,13 +145,16 @@ A biblioteca é compatível com todos os municípios que aderiram ao padrão nac
 
 ### 🚀 Municípios Testados (Mesmo Contrato API)
 
-Alguns municípios utilizam servidores próprios, mas seguem rigorosamente o contrato da API Nacional (DPS). O pacote permite que você informe endpoints customizados para esses casos:
+Alguns municípios utilizam servidores próprios, mas seguem rigorosamente o contrato da API Nacional (DPS). Então resolvemos corretamente os endpoints no pacote. Abaixo temos uma lista de municipios que foram testados nesse contexto.
 
 | Município | UF | Status | Observação |
 | :--- | :--- | :--- | :--- |
 | Catanduva | SP | ✅ Testado | Utiliza infraestrutura própria (RLZ) seguindo contrato nacional. |
 
 #### Exemplo com Endpoint Customizado:
+
+O pacote também permite que você informe endpoints próprios caso você queira usar um servidor diferente.
+
 
 ```php
 use Nfse\Http\NfseContext;

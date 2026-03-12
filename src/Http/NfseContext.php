@@ -11,5 +11,6 @@ final class NfseContext
         public string $certificatePath,
         public string $certificatePassword,
         public ?string $codigoMunicipio = null,
+        public ?\Nfse\Dto\Http\Endpoint $endpoint = null,
     ) {}
 }

@@ -10,32 +10,28 @@ use Nfse\Dto\Http\ConsultaNfseResponse;
 use Nfse\Dto\Http\EmissaoNfseResponse;
 use Nfse\Dto\Http\MensagemProcessamentoDto;
 use Nfse\Dto\Http\RegistroEventoResponse;
-use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Support\SefinEndpointResolver;
 
 class SefinClient implements SefinNacionalInterface
 {
-    private const URL_PRODUCTION = 'https://sefin.nfse.gov.br/SefinNacional';
-
-    private const URL_HOMOLOGATION = 'https://sefin.producaorestrita.nfse.gov.br/SefinNacional';
-
     private Client $httpClient;
+
+    private string $baseUrl;
 
     public function __construct(private NfseContext $context)
     {
+        $resolver = new SefinEndpointResolver();
+        $this->baseUrl = $resolver->resolve($this->context);
         $this->httpClient = $this->createHttpClient();
     }
 
     private function createHttpClient(): Client
     {
-        $baseUrl = $this->context->ambiente === TipoAmbiente::Producao
-            ? self::URL_PRODUCTION
-            : self::URL_HOMOLOGATION;
-
         return new Client([
-            'base_uri' => rtrim($baseUrl, '/').'/',
+            'base_uri' => rtrim($this->baseUrl, '/') . '/',
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->context->certificatePath,
@@ -52,6 +48,7 @@ class SefinClient implements SefinNacionalInterface
                 'Accept' => 'application/json',
             ],
         ]);
+
     }
 
     private function post(string $endpoint, array $data): array

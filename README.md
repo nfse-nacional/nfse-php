@@ -136,6 +136,64 @@ $dps = new DpsData([
 $nfse->contribuinte()->emitir($dps);
 ```
 
+## 🌍 Municípios Atendidos
+
+A biblioteca é compatível com todos os municípios que aderiram ao padrão nacional da NFS-e. Você pode consultar a lista atualizada de municípios conveniados através dos links oficiais:
+
+- [Monitoramento de Adesões (Portal Gov.br)](https://www.gov.br/nfse/pt-br/municipios/monitoramento-adesoes)
+- [Painel Geoestatístico de Adesões (Power BI)](https://app.powerbi.com/view?r=eyJrIjoiNGQ4YTcxNmMtMzdhNC00Mzc5LTllM2EtMjY1MTM3NWQyZDgyIiwidCI6IjZmNDlhYTQzLTgyMmEtNGMyMC05NjcwLWRiNzcwMGJmMWViMCJ9&pageName=608609c2e0a53d7a3c6e)
+
+### 🚀 Municípios Testados (Mesmo Contrato API)
+
+Alguns municípios utilizam servidores próprios, mas seguem rigorosamente o contrato da API Nacional (DPS). Então resolvemos corretamente os endpoints no pacote. Abaixo temos uma lista de municipios que foram testados nesse contexto.
+
+| Município | UF  | Status     | Observação                                                       |
+| :-------- | :-- | :--------- | :--------------------------------------------------------------- |
+| Catanduva | SP  | ✅ Testado | Utiliza infraestrutura própria (RLZ) seguindo contrato nacional. |
+
+#### Exemplo com Endpoint Customizado:
+
+O pacote também permite que você informe endpoints próprios caso você queira usar um servidor diferente.
+
+```php
+use Nfse\Http\NfseContext;
+use Nfse\Dto\Http\Endpoint;
+use Nfse\Enums\TipoAmbiente;
+
+$context = new NfseContext(
+    ambiente: TipoAmbiente::Producao,
+    certificatePath: '/path/to/cert.pfx',
+    certificatePassword: 'password',
+    endpoint: new Endpoint([
+        'production'   => 'https://164.152.60.237/nota/nacional',
+        'homologation' => 'https://catanduva.prefeitura.rlz.com.br/nota/nacional',
+    ])
+);
+```
+
+Ou enviar o código do município homologado pela nfse-nacional/nfse-php através do parâmetro correspondente
+
+```php
+use Nfse\Http\NfseContext;
+use Nfse\Dto\Http\Endpoint;
+use Nfse\Enums\TipoAmbiente;
+
+$context = new NfseContext(
+    ambiente: TipoAmbiente::Producao,
+    certificatePath: '/path/to/cert.pfx',
+    certificatePassword: 'password',
+    codigoMunicipio: '3511102' // Catanduva/SP
+);
+```
+
+## Endpoints por Município
+
+Alguns municípios utilizam endpoints próprios mesmo seguindo o padrão nacional da NFS-e.
+Consulte a lista completa no arquivo:
+
+👉 [Endpoints por Município](endpoints.md)
+
+
 ## 📚 Documentação Completa
 
 Para detalhes profundos sobre cada DTO e configurações avançadas, visite nossa [Documentação Oficial](https://nfse-php.netlify.app/).

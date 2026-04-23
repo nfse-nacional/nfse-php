@@ -23,6 +23,16 @@ class Certificate
         $this->load();
     }
 
+    public static function fromContent(string $pfxContent, string $password): self
+    {
+        $instance = (new \ReflectionClass(static::class))->newInstanceWithoutConstructor();
+        $instance->pfxContent = $pfxContent;
+        $instance->password = $password;
+        $instance->load();
+
+        return $instance;
+    }
+
     private function load(): void
     {
         if (! openssl_pkcs12_read($this->pfxContent, $certs, $this->password)) {

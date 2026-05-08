@@ -26,9 +26,30 @@ class AdnClient implements AdnDanfseInterface
 
     private Client $httpClient;
 
+    private ?string $tempCertFile = null;
+
     public function __construct(private NfseContext $context)
     {
         $this->httpClient = $this->createHttpClient();
+    }
+
+    public function __destruct()
+    {
+        if ($this->tempCertFile !== null && file_exists($this->tempCertFile)) {
+            unlink($this->tempCertFile);
+        }
+    }
+
+    private function resolveCertificatePath(): string
+    {
+        if ($this->context->certificatePath !== null) {
+            return $this->context->certificatePath;
+        }
+
+        $this->tempCertFile = tempnam(sys_get_temp_dir(), 'nfse_cert_');
+        file_put_contents($this->tempCertFile, $this->context->certificateContent);
+
+        return $this->tempCertFile;
     }
 
     private function createHttpClient(): Client
@@ -41,7 +62,7 @@ class AdnClient implements AdnDanfseInterface
             'base_uri' => $baseUrl,
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
-                CURLOPT_SSLCERT => $this->context->certificatePath,
+                CURLOPT_SSLCERT => $this->resolveCertificatePath(),
                 CURLOPT_SSLCERTPASSWD => $this->context->certificatePassword,
                 CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                 CURLOPT_CONNECTTIMEOUT => 30,

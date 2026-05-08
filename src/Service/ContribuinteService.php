@@ -37,7 +37,7 @@ class ContribuinteService
         $builder = new DpsXmlBuilder;
         $xml = $builder->build($dps);
 
-        $cert = new Certificate($this->context->certificatePath, $this->context->certificatePassword);
+        $cert = $this->makeCertificate();
         $signer = $this->createSigner($cert);
 
         // Assina a tag 'infDPS'
@@ -112,7 +112,7 @@ class ContribuinteService
         $builder = new EventosXmlBuilder;
         $xml = $builder->buildPedRegEvento($evento);
 
-        $cert = new Certificate($this->context->certificatePath, $this->context->certificatePassword);
+        $cert = $this->makeCertificate();
         $signer = $this->createSigner($cert);
 
         // Assina a tag 'infPedReg'
@@ -198,5 +198,14 @@ class ContribuinteService
     protected function createSigner(Certificate $certificate): SignerInterface
     {
         return new XmlSigner($certificate);
+    }
+
+    private function makeCertificate(): Certificate
+    {
+        if ($this->context->certificateContent !== null) {
+            return Certificate::fromContent($this->context->certificateContent, $this->context->certificatePassword);
+        }
+
+        return new Certificate($this->context->certificatePath, $this->context->certificatePassword);
     }
 }

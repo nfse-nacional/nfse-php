@@ -8,7 +8,7 @@
 
 [Discussão: modelo arquitetural estável](https://github.com/nfse-nacional/nfse-php/issues/13)
 
-    A bibiloteca se mostrou bastante útil no dia a dia, mas nem tudo que parece **“útil”** é realmente *bom de verdade*. Com o tempo, a gente consegue enxergar com mais clareza o ruído gerado por determinadas interfaces e abstrações.
+> _A bibiloteca se mostrou bastante útil no dia a dia, mas nem tudo que parece **“útil”** é realmente *bom de verdade*. Com o tempo, a gente consegue enxergar com mais clareza o ruído gerado por determinadas interfaces e abstrações._
 
 A experiência real de utilização permitiu identificar pontos da arquitetura que podem ser refinados e simplificados, principalmente nas responsabilidades, interfaces e abstrações entre objetos e classes.
 

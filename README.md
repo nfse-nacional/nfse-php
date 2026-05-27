@@ -4,7 +4,19 @@
 [![Coverage](https://img.shields.io/codecov/c/github/nfse-nacional/nfse-php/main?style=flat-square)](https://codecov.io/gh/nfse-nacional/nfse-php)
 [![Total Downloads](https://img.shields.io/packagist/dt/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
 
-A maneira mais moderna e eficiente de integrar PHP com a NFS-e Nacional.
+## Versão estável aberta para sugestões e melhorias
+
+[Discussão: modelo arquitetural da v2](https://github.com/nfse-nacional/nfse-php/issues/13)
+
+O SDK se mostrou bastante estável no uso prático do dia a dia. Porém, ao longo do tempo, a experiência real de utilização permitiu identificar pontos da arquitetura que podem ser refinados e simplificados, principalmente nas responsabilidades, interfaces e abstrações entre objetos e classes.
+
+Algumas ideias presentes no modelo atual foram úteis durante a evolução do projeto, mas certas decisões arquiteturais acabaram adicionando complexidade e ruído desnecessários em alguns cenários de uso. Esse processo de amadurecimento faz parte da evolução natural do SDK.
+
+A próxima versão será uma oportunidade para consolidar uma arquitetura mais simples, previsível e sustentável no longo prazo, além de tornar a construção de uma versão estável algo mais aberto, democrático e colaborativo com a comunidade.
+
+A ideia é evoluir o projeto sem perder o foco principal: oferecer uma das maneiras mais modernas e eficientes de integrar aplicações PHP com a NFS-e Nacional.
+
+Conto com a ajuda e sugestões de todos para construirmos uma versão estável sólida e sustentável no longo prazo.
 
 ## 📦 Instalação
 
@@ -192,7 +204,6 @@ Alguns municípios utilizam endpoints próprios mesmo seguindo o padrão naciona
 Consulte a lista completa no arquivo:
 
 👉 [Endpoints por Município](endpoints.md)
-
 
 ## 📚 Documentação Completa
 

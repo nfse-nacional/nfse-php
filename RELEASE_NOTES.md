@@ -1,3 +1,22 @@
+# v1.19.0-beta
+
+📅 **Data de Lançamento**: 2026-05-27
+
+## ⚠️ Depreciações
+
+### Geração oficial do DANFSe pelo Ambiente Nacional
+
+-   **Deprecated**: `ContribuinteService::downloadDanfse()` e `MunicipioService::downloadDanfse()` foram marcados como depreciados.
+-   A API oficial do ambiente nacional para geração do Documento Auxiliar da Nota Fiscal de Serviços Eletrônica (DANFSe) será descontinuada em **1º de julho de 2026**.
+-   A emissão passará a ser responsabilidade dos sistemas emissores, ERPs e softwares das próprias empresas.
+-   **Fim da API de Geração**: a interface oficial do governo que gerava o DANFSe será desligada.
+-   **Responsabilidade do Emissor**: ERPs, softwares de gestão e plataformas de contabilidade precisarão gerar o DANFSe internamente e adequar seus layouts.
+-   **Novo Layout**: o documento agora possui um formato padrão obrigatório em folha A4, exigência de QR Code e inclusão de campos para IBS e CBS.
+
+📄 **Nota técnica**: https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/nt-008-se-cgnfse-danfse-20260505.pdf
+
+---
+
 # v1.4.0-beta
 
 📅 **Data de Lançamento**: 2026-01-06

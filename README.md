@@ -6,9 +6,11 @@
 
 ## Versão estável aberta para sugestões e melhorias
 
-[Discussão: modelo arquitetural da v2](https://github.com/nfse-nacional/nfse-php/issues/13)
+[Discussão: modelo arquitetural estável](https://github.com/nfse-nacional/nfse-php/issues/13)
 
-O SDK se mostrou bastante estável no uso prático do dia a dia. Porém, ao longo do tempo, a experiência real de utilização permitiu identificar pontos da arquitetura que podem ser refinados e simplificados, principalmente nas responsabilidades, interfaces e abstrações entre objetos e classes.
+    A bibiloteca se mostrou bastante útil no dia a dia, mas nem tudo que parece **“útil”** é realmente *bom de verdade*. Com o tempo, a gente consegue enxergar com mais clareza o ruído gerado por determinadas interfaces e abstrações.
+
+A experiência real de utilização permitiu identificar pontos da arquitetura que podem ser refinados e simplificados, principalmente nas responsabilidades, interfaces e abstrações entre objetos e classes.
 
 Algumas ideias presentes no modelo atual foram úteis durante a evolução do projeto, mas certas decisões arquiteturais acabaram adicionando complexidade e ruído desnecessários em alguns cenários de uso. Esse processo de amadurecimento faz parte da evolução natural do SDK.
 

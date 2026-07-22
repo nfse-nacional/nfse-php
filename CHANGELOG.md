@@ -2,6 +2,41 @@
 
 All notable changes to `nfse-php` will be documented in this file.
 
+## [Unreleased]
+
+### 🧾 Grupo IBS/CBS (Reforma Tributária sobre o Consumo)
+
+Implementação do grupo `IBSCBS` conforme o pacote de esquemas AnexoVI v1.01.03 (NT 004),
+nos dois sentidos: informações declaradas na DPS e valores calculados pelo Sistema Nacional
+na NFS-e.
+
+### ✨ Funcionalidades
+
+-   `IbscbsData` passa a cobrir o grupo declarado na DPS: `finNFSe`, `indFinal`, `cIndOp`,
+    `tpOper`, `gRefNFSe`, `tpEnteGov`, `indDest`, `dest`, `imovel`, `gReeRepRes` e
+    `gIBSCBS` (CST, cClassTrib, cCredPres, gTribRegular e gDif).
+-   `IbscbsNfseData` expõe o grupo calculado retornado na NFS-e, incluindo alíquotas
+    efetivas, totalizadores de IBS e CBS, crédito presumido, tributação regular e
+    compras governamentais.
+-   Novos DTOs `ImovelData` e `ReembolsoDocumentoData`.
+-   Novos enums `TipoOperacaoRtc`, `TipoEnteGovernamental`, `IndicadorDestinatario`,
+    `TipoChaveDFe` e `TipoReembolsoRepasseRessarcimento`.
+-   `DpsValidator` valida as regras de negócio do grupo que não dependem de tabelas
+    externas (RN 324, 542, 549, 554, 618/619, 621, 622 e 627).
+-   Novo exemplo `examples/contribuinte/emitir_ibscbs.php`.
+
+### 🐛 Correções
+
+-   `cLocEmi` passa a ser serializado depois de `cMotivoEmisTI` e `chNFSeRej`, como exige
+    a sequência do XSD. A ordem anterior invalidava a DPS quando esses campos eram usados.
+-   Grupos repetíveis com uma única ocorrência deixam de ser desmontados na leitura do XML
+    (`ArrayCaster`), o que também corrige `vDedRed/documentos`.
+
+### ⚠️ Breaking changes
+
+-   Removido `IbscbsData::$indicadorZfmAlc` e a emissão do elemento `indZFMALC`. O campo
+    não existe no esquema oficial nem no Anexo I e gerava XML rejeitado.
+
 ## [1.4.0-beta] - 2026-01-06
 
 ### 🎯 Type Safety com Enums

@@ -124,3 +124,44 @@ if (! function_exists('resolve')) {
         return app($abstract);
     }
 }
+
+if (! function_exists('validarContraSchema')) {
+    /**
+     * Valida um XML contra os esquemas oficiais publicados em references/schemas.
+     *
+     * O TSSerieDPS do pacote oficial usa uma expressão regular com lookahead, que não é
+     * aceita pela gramática de expressões do XML Schema e impede o libxml de compilar o
+     * esquema. A cópia usada aqui substitui apenas esse padrão.
+     */
+    function validarContraSchema(string $xml, string $schema): bool
+    {
+        $origem = __DIR__.'/../references/schemas';
+        $destino = sys_get_temp_dir().'/nfse-php-schemas';
+
+        if (! is_dir($destino)) {
+            mkdir($destino, 0777, true);
+        }
+
+        foreach (glob($origem.'/*.xsd') as $arquivo) {
+            $conteudo = str_replace('^(?!0{1,5}$)\d{1,5}$', '[0-9]{1,5}', file_get_contents($arquivo));
+            file_put_contents($destino.'/'.basename($arquivo), $conteudo);
+        }
+
+        $dom = new DOMDocument;
+        $dom->loadXML($xml);
+
+        $anterior = libxml_use_internal_errors(true);
+        $valido = $dom->schemaValidate($destino.'/'.$schema);
+
+        if (! $valido) {
+            foreach (libxml_get_errors() as $erro) {
+                fwrite(STDERR, trim($erro->message).PHP_EOL);
+            }
+        }
+
+        libxml_clear_errors();
+        libxml_use_internal_errors($anterior);
+
+        return $valido;
+    }
+}

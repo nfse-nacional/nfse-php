@@ -43,7 +43,7 @@ try {
     );
 
     $dps = new DpsData([
-        '@attributes' => ['versao' => '1.00'],
+        '@attributes' => ['versao' => '1.01'],
         'infDPS' => [
             '@attributes' => ['Id' => $idDps],
             'tpAmb'    => 2,

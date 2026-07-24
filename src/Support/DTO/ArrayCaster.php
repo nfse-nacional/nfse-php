@@ -18,6 +18,11 @@ class ArrayCaster implements Caster
             return $value;
         }
 
+        // Grupos com ocorrência única chegam do XML como array associativo
+        if (! array_is_list($value)) {
+            $value = [$value];
+        }
+
         return array_map(
             function ($data) {
                 if (is_array($data)) {

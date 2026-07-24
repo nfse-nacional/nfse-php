@@ -5,6 +5,8 @@ namespace Nfse\Validator;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\EmitenteDPS;
+use Nfse\Enums\IndicadorDestinatario;
+use Nfse\Enums\TipoReembolsoRepasseRessarcimento;
 
 class DpsValidator
 {
@@ -21,6 +23,7 @@ class DpsValidator
         $this->validateTomador($infDps, $errors);
         $this->validateValores($infDps, $errors);
         $this->validateServico($infDps, $errors);
+        $this->validateIbscbs($infDps, $errors);
 
         if (count($errors) > 0) {
             return ValidationResult::failure($errors);
@@ -138,6 +141,60 @@ class DpsValidator
         // Rule 276: atvEvento is required for item 12
         if (str_starts_with($cTribNac ?? '', '12') && $servico->atividadeEvento === null) {
             $errors[] = 'O grupo de informações de Atividade/Evento é obrigatório para o serviço informado.';
+        }
+    }
+
+    private function validateIbscbs(InfDpsData $infDps, array &$errors): void
+    {
+        $ibscbs = $infDps->ibscbs;
+        if ($ibscbs === null) {
+            return;
+        }
+
+        // Rule 542: IBS/CBS só pode ser declarado a partir da competência 01/01/2026
+        if ($infDps->dataCompetencia !== null && $infDps->dataCompetencia < '2026-01-01') {
+            $errors[] = 'As informações de IBS/CBS só podem ser declaradas a partir da data de competência 01/01/2026.';
+        }
+
+        // Rule 324: cNBS é obrigatório quando o grupo de IBS/CBS é informado
+        if ($infDps->servico?->codigoServico?->codigoNbs === null) {
+            $errors[] = 'O item da NBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
+        }
+
+        // Rule 549: gRefNFSe é obrigatório quando tpOper = 2 ou 3
+        if ($ibscbs->tipoOperacao?->exigeNfseReferenciada() && empty($ibscbs->chavesNfseReferenciadas)) {
+            $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
+        }
+
+        // Rule 554: o destinatário só deve ser identificado quando indDest = 1
+        if ($ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
+            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        }
+
+        // Rule 627: os 3 primeiros dígitos do cClassTrib devem corresponder ao CST
+        if ($ibscbs->cst !== null && $ibscbs->codigoClassificacaoTributaria !== null
+            && ! str_starts_with($ibscbs->codigoClassificacaoTributaria, $ibscbs->cst)) {
+            $errors[] = 'O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.';
+        }
+
+        $vServ = $infDps->valores?->valorServicoPrestado?->valorServico ?? 0;
+
+        foreach ($ibscbs->documentosReembolso ?? [] as $documento) {
+            // Rule 621: xTpReeRepRes só deve ser informado quando tpReeRepRes = 99
+            if ($documento->descricaoTipoReembolso !== null && $documento->tipoReembolso !== TipoReembolsoRepasseRessarcimento::Outros) {
+                $errors[] = 'A descrição do tipo de reembolso, repasse e ressarcimento só deve ser informada quando o tipo for 99.';
+            }
+
+            // Rule 618/619: a data de emissão deve ser igual ou posterior à data de competência
+            if ($documento->dataEmissaoDocumento !== null && $documento->dataCompetenciaDocumento !== null
+                && $documento->dataEmissaoDocumento < $documento->dataCompetenciaDocumento) {
+                $errors[] = 'A data de emissão do documento de reembolso deve ser igual ou posterior à sua data de competência.';
+            }
+
+            // Rule 622: o valor do reembolso deve ser menor ou igual ao valor do serviço prestado
+            if ($documento->valorReembolso !== null && $documento->valorReembolso > $vServ) {
+                $errors[] = 'O valor de reembolso, repasse e ressarcimento deve ser menor ou igual ao valor do serviço prestado.';
+            }
         }
     }
 }

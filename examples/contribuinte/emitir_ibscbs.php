@@ -46,7 +46,7 @@ try {
             'verAplic' => 'SDK-PHP-1.0',
             'serie' => $serie,
             'nDPS' => $numero,
-            'dCompet' => date('Y-m-d'),
+            'dCompet' => date('Y-m-d'), // O grupo IBSCBS só é aceito a partir de 01/01/2026
             'tpEmit' => 1, // Prestador
             'cLocEmi' => $codigoMunicipio,
 
@@ -60,14 +60,10 @@ try {
                     ],
                     'xLgr' => 'Rua Teste',
                     'nro' => '123',
-                    'xCpl' => 'Sala 1',
                     'xBairro' => 'Centro',
                 ],
-                'fone' => '85999999999',
-                'email' => 'teste@empresa.com.br',
                 'regTrib' => [
-                    'opSimpNac' => 1, // Não Optante 2 optante (MEI) 3-Optante (ME/EPP)
-                    'regApTribSN' => null,
+                    'opSimpNac' => 1, // Não Optante
                     'regEspTrib' => 0, // Nenhum
                 ],
             ],
@@ -82,6 +78,8 @@ try {
                 'cServ' => [
                     'cTribNac' => '010101',
                     'xDescServ' => 'Desenvolvimento de Software',
+                    // O item da NBS é obrigatório quando o grupo IBSCBS é informado
+                    'cNBS' => '112011000',
                 ],
             ],
             'valores' => [
@@ -93,25 +91,43 @@ try {
                         'tribISSQN' => 1,
                         'tpRetISSQN' => 1,
                     ],
-                    'tribFed' => [
-                        'piscofins' => [
-                            'CST' => '08',
-                        ],
-                    ],
                     'totTrib' => [
                         'indTotTrib' => 0,
+                    ],
+                ],
+            ],
+            'IBSCBS' => [
+                'finNFSe' => '0', // NFS-e regular
+                'cIndOp' => '010101', // Código indicador da operação (Anexo VII)
+                'indDest' => 0, // O destinatário é o próprio tomador
+                'valores' => [
+                    'trib' => [
+                        'gIBSCBS' => [
+                            'CST' => '000', // Tributação integral
+                            'cClassTrib' => '000001',
+                        ],
                     ],
                 ],
             ],
         ],
     ]);
 
-    echo "Emitindo NFS-e para a DPS: $idDps...\n";
+    echo "Emitindo NFS-e com IBS/CBS para a DPS: $idDps...\n";
 
     $nfseData = $nfse->contribuinte()->emitir($dps);
 
     echo "NFS-e emitida com sucesso!\n";
     echo 'Chave de Acesso: '.$nfseData->infNfse->id."\n";
+
+    $ibscbs = $nfseData->infNfse->ibscbs;
+
+    if ($ibscbs) {
+        echo 'Localidade de incidência: '.$ibscbs->nomeLocalidadeIncidencia."\n";
+        echo 'Base de cálculo IBS/CBS: '.$ibscbs->baseCalculo."\n";
+        echo 'IBS total: '.$ibscbs->valorTotalIbs."\n";
+        echo 'CBS: '.$ibscbs->valorCbs."\n";
+        echo 'Valor total da nota com os tributos por fora: '.$ibscbs->valorTotalNota."\n";
+    }
 
 } catch (\Exception $e) {
     echo 'Erro: '.$e->getMessage()."\n";

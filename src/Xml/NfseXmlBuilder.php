@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use Nfse\Dto\Nfse\EmitenteData;
 use Nfse\Dto\Nfse\EnderecoEmitenteData;
+use Nfse\Dto\Nfse\IbscbsNfseData;
 use Nfse\Dto\Nfse\InfNfseData;
 use Nfse\Dto\Nfse\NfseData;
 use Nfse\Dto\Nfse\ValoresNfseData;
@@ -69,6 +70,10 @@ class NfseXmlBuilder
             $this->buildValores($parent, $data->valores);
         }
 
+        if ($data->ibscbs) {
+            $this->buildIbscbs($parent, $data->ibscbs);
+        }
+
         if ($data->dps) {
             // The DpsXmlBuilder creates a full XML, we need to import the 'DPS' element
             $dpsXml = $this->dpsBuilder->build($data->dps);
@@ -116,12 +121,112 @@ class NfseXmlBuilder
     private function buildValores(DOMElement $parent, ValoresNfseData $data): void
     {
         $valores = $this->dom->createElement('valores');
-        $this->appendElement($valores, 'vBC', $data->baseCalculo !== null ? number_format($data->baseCalculo, 2, '.', '') : null);
-        $this->appendElement($valores, 'pAliqAplic', $data->aliquotaAplicada !== null ? number_format($data->aliquotaAplicada, 2, '.', '') : null);
-        $this->appendElement($valores, 'vISSQN', $data->valorIssqn !== null ? number_format($data->valorIssqn, 2, '.', '') : null);
-        $this->appendElement($valores, 'vTotalRet', $data->valorTotalRetido !== null ? number_format($data->valorTotalRetido, 2, '.', '') : null);
-        $this->appendElement($valores, 'vLiq', $data->valorLiquido !== null ? number_format($data->valorLiquido, 2, '.', '') : null);
+        $this->appendElement($valores, 'vBC', $this->formatValue($data->baseCalculo));
+        $this->appendElement($valores, 'pAliqAplic', $this->formatValue($data->aliquotaAplicada));
+        $this->appendElement($valores, 'vISSQN', $this->formatValue($data->valorIssqn));
+        $this->appendElement($valores, 'vTotalRet', $this->formatValue($data->valorTotalRetido));
+        $this->appendElement($valores, 'vLiq', $this->formatValue($data->valorLiquido));
         $parent->appendChild($valores);
+    }
+
+    private function buildIbscbs(DOMElement $parent, IbscbsNfseData $data): void
+    {
+        $ibscbs = $this->dom->createElement('IBSCBS');
+        $this->appendElement($ibscbs, 'cLocalidadeIncid', $data->codigoLocalidadeIncidencia);
+        $this->appendElement($ibscbs, 'xLocalidadeIncid', $data->nomeLocalidadeIncidencia);
+        $this->appendElement($ibscbs, 'pRedutor', $this->formatValue($data->percentualRedutor));
+
+        $valores = $this->dom->createElement('valores');
+        $this->appendElement($valores, 'vBC', $this->formatValue($data->baseCalculo));
+        $this->appendElement($valores, 'vCalcReeRepRes', $this->formatValue($data->valorCalculadoReembolso));
+
+        $uf = $this->dom->createElement('uf');
+        $this->appendElement($uf, 'pIBSUF', $this->formatValue($data->aliquotaIbsUf));
+        $this->appendElement($uf, 'pRedAliqUF', $this->formatValue($data->percentualReducaoAliquotaUf));
+        $this->appendElement($uf, 'pAliqEfetUF', $this->formatValue($data->aliquotaEfetivaUf));
+        $valores->appendChild($uf);
+
+        $mun = $this->dom->createElement('mun');
+        $this->appendElement($mun, 'pIBSMun', $this->formatValue($data->aliquotaIbsMunicipal));
+        $this->appendElement($mun, 'pRedAliqMun', $this->formatValue($data->percentualReducaoAliquotaMunicipal));
+        $this->appendElement($mun, 'pAliqEfetMun', $this->formatValue($data->aliquotaEfetivaMunicipal));
+        $valores->appendChild($mun);
+
+        $fed = $this->dom->createElement('fed');
+        $this->appendElement($fed, 'pCBS', $this->formatValue($data->aliquotaCbs));
+        $this->appendElement($fed, 'pRedAliqCBS', $this->formatValue($data->percentualReducaoAliquotaCbs));
+        $this->appendElement($fed, 'pAliqEfetCBS', $this->formatValue($data->aliquotaEfetivaCbs));
+        $valores->appendChild($fed);
+
+        $ibscbs->appendChild($valores);
+
+        $totCIBS = $this->dom->createElement('totCIBS');
+        $this->appendElement($totCIBS, 'vTotNF', $this->formatValue($data->valorTotalNota));
+
+        $gIBS = $this->dom->createElement('gIBS');
+        $this->appendElement($gIBS, 'vIBSTot', $this->formatValue($data->valorTotalIbs));
+
+        if ($data->valorCreditoPresumidoIbs !== null) {
+            $gIBSCredPres = $this->dom->createElement('gIBSCredPres');
+            $this->appendElement($gIBSCredPres, 'pCredPresIBS', $this->formatValue($data->aliquotaCreditoPresumidoIbs));
+            $this->appendElement($gIBSCredPres, 'vCredPresIBS', $this->formatValue($data->valorCreditoPresumidoIbs));
+            $gIBS->appendChild($gIBSCredPres);
+        }
+
+        $gIBSUFTot = $this->dom->createElement('gIBSUFTot');
+        $this->appendElement($gIBSUFTot, 'vDifUF', $this->formatValue($data->valorDiferimentoUf));
+        $this->appendElement($gIBSUFTot, 'vIBSUF', $this->formatValue($data->valorIbsUf));
+        $gIBS->appendChild($gIBSUFTot);
+
+        $gIBSMunTot = $this->dom->createElement('gIBSMunTot');
+        $this->appendElement($gIBSMunTot, 'vDifMun', $this->formatValue($data->valorDiferimentoMunicipal));
+        $this->appendElement($gIBSMunTot, 'vIBSMun', $this->formatValue($data->valorIbsMunicipal));
+        $gIBS->appendChild($gIBSMunTot);
+
+        $totCIBS->appendChild($gIBS);
+
+        $gCBS = $this->dom->createElement('gCBS');
+
+        if ($data->valorCreditoPresumidoCbs !== null) {
+            $gCBSCredPres = $this->dom->createElement('gCBSCredPres');
+            $this->appendElement($gCBSCredPres, 'pCredPresCBS', $this->formatValue($data->aliquotaCreditoPresumidoCbs));
+            $this->appendElement($gCBSCredPres, 'vCredPresCBS', $this->formatValue($data->valorCreditoPresumidoCbs));
+            $gCBS->appendChild($gCBSCredPres);
+        }
+
+        $this->appendElement($gCBS, 'vDifCBS', $this->formatValue($data->valorDiferimentoCbs));
+        $this->appendElement($gCBS, 'vCBS', $this->formatValue($data->valorCbs));
+        $totCIBS->appendChild($gCBS);
+
+        if ($data->valorTributacaoRegularCbs !== null) {
+            $gTribRegular = $this->dom->createElement('gTribRegular');
+            $this->appendElement($gTribRegular, 'pAliqEfeRegIBSUF', $this->formatValue($data->aliquotaEfetivaRegularIbsUf));
+            $this->appendElement($gTribRegular, 'vTribRegIBSUF', $this->formatValue($data->valorTributacaoRegularIbsUf));
+            $this->appendElement($gTribRegular, 'pAliqEfeRegIBSMun', $this->formatValue($data->aliquotaEfetivaRegularIbsMunicipal));
+            $this->appendElement($gTribRegular, 'vTribRegIBSMun', $this->formatValue($data->valorTributacaoRegularIbsMunicipal));
+            $this->appendElement($gTribRegular, 'pAliqEfeRegCBS', $this->formatValue($data->aliquotaEfetivaRegularCbs));
+            $this->appendElement($gTribRegular, 'vTribRegCBS', $this->formatValue($data->valorTributacaoRegularCbs));
+            $totCIBS->appendChild($gTribRegular);
+        }
+
+        if ($data->valorCompraGovCbs !== null) {
+            $gTribCompraGov = $this->dom->createElement('gTribCompraGov');
+            $this->appendElement($gTribCompraGov, 'pIBSUF', $this->formatValue($data->aliquotaCompraGovIbsUf));
+            $this->appendElement($gTribCompraGov, 'vIBSUF', $this->formatValue($data->valorCompraGovIbsUf));
+            $this->appendElement($gTribCompraGov, 'pIBSMun', $this->formatValue($data->aliquotaCompraGovIbsMunicipal));
+            $this->appendElement($gTribCompraGov, 'vIBSMun', $this->formatValue($data->valorCompraGovIbsMunicipal));
+            $this->appendElement($gTribCompraGov, 'pCBS', $this->formatValue($data->aliquotaCompraGovCbs));
+            $this->appendElement($gTribCompraGov, 'vCBS', $this->formatValue($data->valorCompraGovCbs));
+            $totCIBS->appendChild($gTribCompraGov);
+        }
+
+        $ibscbs->appendChild($totCIBS);
+        $parent->appendChild($ibscbs);
+    }
+
+    private function formatValue(?float $value): ?string
+    {
+        return $value !== null ? number_format($value, 2, '.', '') : null;
     }
 
     private function appendElement(DOMElement $parent, string $name, mixed $value): void

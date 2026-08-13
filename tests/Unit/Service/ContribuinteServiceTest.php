@@ -149,17 +149,10 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_download_danfse_success()
     {
-        $chave = '12345678901234567890123456789012345678901234567890';
-        $pdfContent = '%PDF-1.4 content...';
+        $xml = file_get_contents(__DIR__.'/../../fixtures/nfse.xml');
+        $result = $this->service->downloadDanfse($xml);
 
-        $this->adnClientMock->expects($this->once())
-            ->method('obterDanfse')
-            ->with($chave)
-            ->willReturn($pdfContent);
-
-        $result = $this->service->downloadDanfse($chave);
-
-        $this->assertEquals($pdfContent, $result);
+        $this->assertStringStartsWith('%PDF-', $result);
     }
 
     public function test_consultar_dps_success()

@@ -10,6 +10,7 @@ use Nfse\Http\Client\SefinClient;
 use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Pdf\DanfseGenerator;
 use Nfse\Signer\Certificate;
 use Nfse\Signer\SignerInterface;
 use Nfse\Signer\XmlSigner;
@@ -101,9 +102,14 @@ class ContribuinteService
      * padrão obrigatório em folha A4, exigência de QR Code e inclusão de campos para IBS e CBS.
      * Nota técnica: https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/nt-008-se-cgnfse-danfse-20260505.pdf
      */
-    public function downloadDanfse(string $chaveAcesso): string
+    public function downloadDanfse(string|NfseData $nfse): string
     {
-        return $this->adnClient->obterDanfse($chaveAcesso);
+        if (is_string($nfse) && ! str_contains(ltrim($nfse), '<')) {
+            $nfse = $this->consultar($nfse)
+                ?? throw NfseApiException::responseError('NFS-e não encontrada para geração do DANFSe.');
+        }
+
+        return (new DanfseGenerator)->generate($nfse);
     }
 
     public function verificarDps(string $idDps): bool

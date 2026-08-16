@@ -13,6 +13,7 @@ use Nfse\Dto\Http\RegistroEventoResponse;
 use Nfse\Http\Contracts\SefinNacionalInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Http\Retry;
 use Nfse\Support\SefinEndpointResolver;
 
 class SefinClient implements SefinNacionalInterface
@@ -53,6 +54,7 @@ class SefinClient implements SefinNacionalInterface
     {
         return new Client([
             'base_uri' => rtrim($this->baseUrl, '/') . '/',
+            'handler' => Retry::stack(),
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->resolveCertificatePath(),

@@ -17,6 +17,7 @@ use Nfse\Enums\TipoNsu;
 use Nfse\Http\Contracts\AdnDanfseInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Http\Retry;
 use Nfse\Support\SefinEndpointResolver;
 
 class AdnClient implements AdnDanfseInterface
@@ -61,6 +62,7 @@ class AdnClient implements AdnDanfseInterface
 
         return new Client([
             'base_uri' => $baseUrl,
+            'handler' => Retry::stack(),
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->resolveCertificatePath(),

@@ -2,20 +2,12 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.sped.fazenda.gov.br/nfse" xmlns="http://www.sped.fazenda.gov.br/nfse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="TVerNFSe">
     <xs:annotation>
-      <xs:documentation>Tipo Versão da NF-e - 1.01</xs:documentation>
+      <xs:documentation>Tipo Versão da NF-e - 1.00|1.01</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
       <xs:whiteSpace value="preserve"/>
-      <xs:pattern value="1\.01"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TVerCNC">
-    <xs:annotation>
-      <xs:documentation>Tipo Versão do CNC - 1.00</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:whiteSpace value="preserve"/>
-      <xs:pattern value="1\.00"/>
+      <xs:pattern value="1\.00|1\.01"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSString">
@@ -65,7 +57,9 @@
   <xs:simpleType name="TSTipoAmbiente">
     <xs:annotation>
       <xs:documentation>
-        Tipos de ambiente do Sistema Nacional NFS-e: 1 - Produção; 2 - Homologação;
+        Tipos de ambiente do Sistema Nacional NFS-e: 
+        1 - Produção; 
+        2 - Homologação;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -164,7 +158,7 @@
   <xs:simpleType name="TSSerieDPS">
     <xs:restriction base="xs:string">
       <xs:maxLength value="5"/>
-      <xs:pattern value="^(?!0{1,5}$)\d{1,5}$"/>
+      <xs:pattern value="^0{0,4}\d{1,5}$"/>
       <xs:whiteSpace value="preserve"/>
     </xs:restriction>
   </xs:simpleType>
@@ -621,7 +615,7 @@
         4 - Matriz;
         5 - Filial ou sucursal;
         6 - Outro vínculo;
-        9 - Desconhecido;
+        9 - Desconhecido (tipo não informado na nota de origem);
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -926,10 +920,13 @@
 	Identificação da Dedução/Redução:
         1 – Alimentação e bebidas/frigobar;
         2 – Materiais;
+        3 - Produção Externa;
+        4 - Reembolso de despesas;
         5 – Repasse consorciado;
         6 – Repasse plano de saúde;
         7 – Serviços;
         8 – Subempreitada de mão de obra;
+        9 - Profissional parceiro;
         99 – Outras deduções;
       </xs:documentation>
     </xs:annotation>
@@ -937,10 +934,13 @@
       <xs:whiteSpace value="preserve"/>
       <xs:enumeration value="1"/>
       <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
       <xs:enumeration value="5"/>
       <xs:enumeration value="6"/>
       <xs:enumeration value="7"/>
       <xs:enumeration value="8"/>
+      <xs:enumeration value="9"/>
       <xs:enumeration value="99"/>
     </xs:restriction>
   </xs:simpleType>
@@ -1015,7 +1015,7 @@
         Opção para que o contribuinte optante pelo Simples Nacional ME/EPP (opSimpNac = 3) possa indicar, ao emitir o documento fiscal, em qual regime de apuração os tributos federais e municipal estão inseridos, caso tenha ultrapassado algum sublimite ou limite definido para o Simples Nacional.
         1 – Regime de apuração dos tributos federais e municipal pelo SN;
         2 – Regime de apuração dos tributos federais pelo SN e ISSQN  por fora do SN conforme respectiva legislação municipal do tributo;
-        3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legilações federal e municipal de cada tributo;
+        3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legislações federal e municipal de cada tributo;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1050,6 +1050,7 @@
         4 - Notário ou Registrador;
         5 - Profissional Autônomo;
         6 - Sociedade de Profissionais;
+        9 - Outros;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1061,6 +1062,7 @@
       <xs:enumeration value="4"/>
       <xs:enumeration value="5"/>
       <xs:enumeration value="6"/>
+      <xs:enumeration value="9"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSTribISSQN">
@@ -1145,9 +1147,33 @@
         04 - Operação Tributável monofásica - Revenda a Alíquota Zero;
         05 - Operação Tributável por Substituição Tributária;
         06 - Operação Tributável a Alíquota Zero;
-        07 - Operação Tributável da Contribuição;
+        07 - Operação Isenta da Contribuição;
         08 - Operação sem Incidência da Contribuição;
         09 - Operação com Suspensão da Contribuição;
+        49 - Outras Operações de Saída;
+        50 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Tributada no Mercado Interno;
+        51 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno;
+        52 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita de Exportação;
+        53 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno;
+        54 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas no Mercado Interno e de Exportação;
+        55 - Operação com Direito a Crédito – Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação;
+        56 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação;
+        60 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno;
+        61 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno;
+        62 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação;
+        63 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno;
+        64 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação;
+        65 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação;
+        66 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação;
+        67 - Crédito Presumido – Outras Operações;
+        70 - Operação de Aquisição sem Direito a Crédito;
+        71 - Operação de Aquisição com Isenção;
+        72 - Operação de Aquisição com Suspensão;
+        73 - Operação de Aquisição a Alíquota Zero;
+        74 - Operação de Aquisição sem Incidência da Contribuição;
+        75 - Operação de Aquisição por Substituição Tributária;
+        98 - Outras Operações de Entrada;
+        99 - Outras Operações;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1162,6 +1188,30 @@
       <xs:enumeration value="07"/>
       <xs:enumeration value="08"/>
       <xs:enumeration value="09"/>
+      <xs:enumeration value="49"/>
+      <xs:enumeration value="50"/>
+      <xs:enumeration value="51"/>
+      <xs:enumeration value="52"/>
+      <xs:enumeration value="53"/>
+      <xs:enumeration value="54"/>
+      <xs:enumeration value="55"/>
+      <xs:enumeration value="56"/>
+      <xs:enumeration value="60"/>
+      <xs:enumeration value="61"/>
+      <xs:enumeration value="62"/>
+      <xs:enumeration value="63"/>
+      <xs:enumeration value="64"/>
+      <xs:enumeration value="65"/>
+      <xs:enumeration value="66"/>
+      <xs:enumeration value="67"/>
+      <xs:enumeration value="70"/>
+      <xs:enumeration value="71"/>
+      <xs:enumeration value="72"/>
+      <xs:enumeration value="73"/>
+      <xs:enumeration value="74"/>
+      <xs:enumeration value="75"/>
+      <xs:enumeration value="98"/>
+      <xs:enumeration value="99"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSOpConsumServ">
@@ -1182,14 +1232,30 @@
     <xs:annotation>
       <xs:documentation>
         Tipo de retencao do Pis/Cofins:
-        1 - Retido;
-        2 - Não Retido;
+	0 - PIS/COFINS/CSLL Não Retidos;
+	1 - PIS/COFINS Retidos;
+	2 - PIS/COFINS Não Retidos;
+	3 - PIS/COFINS/CSLL Retidos;
+	4 - PIS/COFINS Retidos, CSLL Não Retido;
+	5 - PIS Retido, COFINS/CSLL Não Retido;
+	6 - COFINS Retido, PIS/CSLL Não Retido;
+	7 - PIS Não Retido, COFINS/CSLL Retidos;
+	8 - PIS/COFINS Não Retidos, CSLL Retido;
+	9 - COFINS Não Retido, PIS/CSLL Retidos;
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:whiteSpace value="preserve"/>
+      <xs:enumeration value="0"/>
       <xs:enumeration value="1"/>
       <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="6"/>
+      <xs:enumeration value="7"/>
+      <xs:enumeration value="8"/>
+      <xs:enumeration value="9"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSTipoIndTotTrib">
@@ -1228,7 +1294,6 @@
       <xs:documentation>
         Situações possíveis:
         100 - NFS-e Gerada;
-        101 - NFS-e de Substituição Gerada;
         102 - NFS-e de Decisão Judicial;
         103 - NFS-e Avulsa;
         107 - NFS-e MEI;
@@ -1237,7 +1302,6 @@
     <xs:restriction base="xs:string">
       <xs:whiteSpace value="preserve"/>
       <xs:enumeration value="100"/>
-      <xs:enumeration value="101"/>
       <xs:enumeration value="102"/>
       <xs:enumeration value="103"/>
       <xs:enumeration value="107"/>
@@ -1441,7 +1505,7 @@
       <xs:pattern value="[0-9]{15}"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="TSIdPedRefEvt">
+  <xs:simpleType name="TSIdPedRegEvt">
     <xs:annotation>
       <xs:documentation>
         O identificador do pedido de registro do evento é formado conforme a concatenação dos seguintes campos:
@@ -1450,14 +1514,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:whiteSpace value="preserve"/>
-      <xs:maxLength value="62"/>
-      <xs:pattern value="PRE[0-9]{59}"/>
+      <xs:maxLength value="59"/>
+      <xs:pattern value="PRE[0-9]{56}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSIdEvento">
     <xs:annotation>
       <xs:documentation>
-		  Identificador do evento: "EVT" + Chave de acesso(50) Tipo do evento (6) + Pedido de Registro do Evento(3) (nPedRegEvento)
+	Identificador do evento: "EVT" + Chave de acesso(50) Tipo do evento (6) + Pedido de Registro do Evento(3) (nPedRegEvento)
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1469,7 +1533,7 @@
   <xs:simpleType name="TSCodigoEventoNFSe">
     <xs:annotation>
       <xs:documentation>
-		  Código de evento da NFS-e
+	Código de evento da NFS-e
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1478,14 +1542,12 @@
       <xs:enumeration value="e105104"/>
       <xs:enumeration value="e105105"/>
       <xs:enumeration value="e305101"/>
-      <xs:enumeration value="e907202"/>
-      <xs:enumeration value="e967203"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TSIdNumEvento">
     <xs:annotation>
       <xs:documentation>
-		  Referência ao Id "Manifestação de rejeição da NFS-e" que originou o presente evento de anulação.
+	Referência ao Id "Manifestação de rejeição da NFS-e" que originou o presente evento de anulação.
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1496,7 +1558,7 @@
   <xs:simpleType name="TSNumDFe">
     <xs:annotation>
       <xs:documentation>
-		  Número sequencial do documento gerado por ambiente gerador de DFe do município.
+	Número sequencial do documento gerado por ambiente gerador de DFe do município.
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -1506,7 +1568,9 @@
   </xs:simpleType>
   <xs:simpleType name="TSSituacaoCadastroContribuinte">
     <xs:annotation>
-      <xs:documentation>Identificação da situação do cadastro do contribuinte</xs:documentation>
+      <xs:documentation>
+        Identificação da situação do cadastro do contribuinte
+      </xs:documentation>
     </xs:annotation>
     <xs:restriction base="TSString">
       <xs:minLength value="1"/>
@@ -1515,7 +1579,9 @@
   </xs:simpleType>
   <xs:simpleType name="TSMotivoSituacaoCadastroContribuinte">
     <xs:annotation>
-      <xs:documentation>Motivo pelo qual o contribuinte se enquadra na situação informada</xs:documentation>
+      <xs:documentation>
+        Motivo pelo qual o contribuinte se enquadra na situação informada
+      </xs:documentation>
     </xs:annotation>
     <xs:restriction base="TSString">
       <xs:minLength value="1"/>
@@ -1524,7 +1590,7 @@
   <xs:simpleType name="TSSituacaoEmissaoNFSE">
     <xs:annotation>
       <xs:documentation>
-		  Situação Emissão NFS-e:
+	Situação Emissão NFS-e:
         0 - Não Habilitado;
         1 - Habilitado;
       </xs:documentation>
@@ -1538,7 +1604,7 @@
   <xs:simpleType name="TSCategoriaServico">
     <xs:annotation>
       <xs:documentation>
-		  Categorias do serviço:
+	Categorias do serviço:
         1 - Locação;
         2 - Sublocação;
         3 - Arrendamento;
@@ -1579,7 +1645,9 @@
   </xs:simpleType>
   <xs:simpleType name="TSExtensaoTotal">
     <xs:annotation>
-      <xs:documentation>Extensão total da ferrovia, rodovia, cabos, dutos ou condutos</xs:documentation>
+      <xs:documentation>
+        Extensão total da ferrovia, rodovia, cabos, dutos ou condutos
+      </xs:documentation>
     </xs:annotation>
     <xs:restriction base="TSString">
       <xs:minLength value="1"/>

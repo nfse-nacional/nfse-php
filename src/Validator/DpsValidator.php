@@ -19,6 +19,7 @@ class DpsValidator
             return ValidationResult::failure(['InfDpsData is required.']);
         }
 
+        $this->validateVersao($dps, $errors);
         $this->validatePrestador($infDps, $errors);
         $this->validateTomador($infDps, $errors);
         $this->validateValores($infDps, $errors);
@@ -30,6 +31,22 @@ class DpsValidator
         }
 
         return ValidationResult::success();
+    }
+
+    /**
+     * TVerNFSe do schema: padrão 1.00|1.01, atributo obrigatório.
+     */
+    private function validateVersao(DpsData $dps, array &$errors): void
+    {
+        if ($dps->versao === null || $dps->versao === '') {
+            $errors[] = 'O atributo versao da DPS é obrigatório (1.00 ou 1.01).';
+
+            return;
+        }
+
+        if (! preg_match('/^1\.0[01]$/', $dps->versao)) {
+            $errors[] = 'A versão da DPS deve ser 1.00 ou 1.01 conforme o schema (TVerNFSe).';
+        }
     }
 
     private function validatePrestador(InfDpsData $infDps, array &$errors): void

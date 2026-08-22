@@ -491,3 +491,54 @@ it('validates DPS with construction service and obra information', function () {
     expect($result->isValid)->toBeTrue();
     expect($result->errors)->toBeEmpty();
 });
+
+it('rejects a DPS with a missing versao attribute', function () {
+    $dps = new DpsData([
+        'infDPS' => [
+            'tpAmb' => 2,
+            'dhEmi' => '2023-10-27T10:00:00',
+            'verAplic' => '1.0',
+            'serie' => '1',
+            'nDPS' => '1',
+            'dCompet' => '2023-10-27',
+            'tpEmit' => 1,
+            'cLocEmi' => '1234567',
+            'prest' => [
+                'CNPJ' => '12345678000199',
+                'IM' => '12345',
+                'xNome' => 'Prestador Teste',
+            ],
+        ],
+    ]);
+
+    $result = (new DpsValidator)->validate($dps);
+
+    expect($result->isValid)->toBeFalse()
+        ->and($result->errors)->toContain('O atributo versao da DPS é obrigatório (1.00 ou 1.01).');
+});
+
+it('rejects a DPS with an invalid versao attribute', function () {
+    $dps = new DpsData([
+        '@attributes' => ['versao' => '1.0'],
+        'infDPS' => [
+            'tpAmb' => 2,
+            'dhEmi' => '2023-10-27T10:00:00',
+            'verAplic' => '1.0',
+            'serie' => '1',
+            'nDPS' => '1',
+            'dCompet' => '2023-10-27',
+            'tpEmit' => 1,
+            'cLocEmi' => '1234567',
+            'prest' => [
+                'CNPJ' => '12345678000199',
+                'IM' => '12345',
+                'xNome' => 'Prestador Teste',
+            ],
+        ],
+    ]);
+
+    $result = (new DpsValidator)->validate($dps);
+
+    expect($result->isValid)->toBeFalse()
+        ->and($result->errors)->toContain('A versão da DPS deve ser 1.00 ou 1.01 conforme o schema (TVerNFSe).');
+});

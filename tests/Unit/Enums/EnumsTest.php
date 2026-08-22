@@ -6,6 +6,7 @@ use Nfse\Enums\CodigoStatus;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\MovimentacaoTemporariaBens;
 use Nfse\Enums\ProcessoEmissao;
+use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Enums\TipoDeducaoReducao;
 
@@ -242,5 +243,23 @@ describe('CodigoStatus', function () {
             ->and(CodigoStatus::NfseAvulsa->value)->toBe(103)
             ->and(CodigoStatus::NfseMei->value)->toBe(107)
             ->and(CodigoStatus::tryFrom(101))->toBeNull();
+    });
+});
+
+describe('RegimeEspecialTributacao', function () {
+    it('has only the values of TSRegEspTrib from schema 1.01', function () {
+        expect(RegimeEspecialTributacao::cases())->toHaveCount(8)
+            ->and(RegimeEspecialTributacao::Nenhum->value)->toBe('0')
+            ->and(RegimeEspecialTributacao::AtoCooperado->value)->toBe('1')
+            ->and(RegimeEspecialTributacao::Estimativa->value)->toBe('2')
+            ->and(RegimeEspecialTributacao::MicroempresaMunicipal->value)->toBe('3')
+            ->and(RegimeEspecialTributacao::NotarioOuRegistrador->value)->toBe('4')
+            ->and(RegimeEspecialTributacao::ProfissionalAutonomo->value)->toBe('5')
+            ->and(RegimeEspecialTributacao::SociedadeDeProfissionais->value)->toBe('6')
+            ->and(RegimeEspecialTributacao::Outros->value)->toBe('9')
+            ->and(RegimeEspecialTributacao::Outros->getDescription())->toBe('Outros')
+            ->and(RegimeEspecialTributacao::tryFrom('7'))->toBeNull()
+            ->and(RegimeEspecialTributacao::tryFrom('8'))->toBeNull()
+            ->and(RegimeEspecialTributacao::tryFrom('10'))->toBeNull();
     });
 });

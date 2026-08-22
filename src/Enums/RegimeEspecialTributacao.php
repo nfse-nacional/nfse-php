@@ -44,10 +44,11 @@ enum RegimeEspecialTributacao: string
      */
     case SociedadeDeProfissionais = '6';
 
-    case NaoInformadoIdentificado7 = '7';
-    case NaoInformadoIdentificado8 = '8';
-    case NaoInformadoIdentificado9 = '9';
-    case NaoInformadoIdentificado10 = '10';
+    /**
+     * Outros
+     */
+    case Outros = '9';
+
 
     /**
      * Get description for the enum case
@@ -62,10 +63,7 @@ enum RegimeEspecialTributacao: string
             self::NotarioOuRegistrador => 'Notário ou Registrador',
             self::ProfissionalAutonomo => 'Profissional Autônomo',
             self::SociedadeDeProfissionais => 'Sociedade de Profissionais',
-            self::NaoInformadoIdentificado7 => 'Não Informado Identificado 7',
-            self::NaoInformadoIdentificado8 => 'Não Informado Identificado 8',
-            self::NaoInformadoIdentificado9 => 'Não Informado Identificado 9',
-            self::NaoInformadoIdentificado10 => 'Não Informado Identificado 10',
+            self::Outros => 'Outros',
         };
     }
 

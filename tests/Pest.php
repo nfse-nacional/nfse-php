@@ -129,9 +129,9 @@ if (! function_exists('validarContraSchema')) {
     /**
      * Valida um XML contra os esquemas oficiais publicados em references/schemas.
      *
-     * O TSSerieDPS do pacote oficial usa uma expressão regular com lookahead, que não é
-     * aceita pela gramática de expressões do XML Schema e impede o libxml de compilar o
-     * esquema. A cópia usada aqui substitui apenas esse padrão.
+     * Os pacotes oficiais usam expressões regulares com lookahead e âncoras (^/$), que não são
+     * aceitas pela gramática de expressões do XML Schema e impedem o libxml de compilar o
+     * esquema. A cópia usada aqui substitui apenas esses padrões.
      */
     function validarContraSchema(string $xml, string $schema): bool
     {
@@ -143,7 +143,11 @@ if (! function_exists('validarContraSchema')) {
         }
 
         foreach (glob($origem.'/*.xsd') as $arquivo) {
-            $conteudo = str_replace('^(?!0{1,5}$)\d{1,5}$', '[0-9]{1,5}', file_get_contents($arquivo));
+            $conteudo = str_replace(
+                ['^(?!0{1,5}$)\d{1,5}$', '^0{0,4}\d{1,5}$'],
+                '[0-9]{1,5}',
+                file_get_contents($arquivo)
+            );
             file_put_contents($destino.'/'.basename($arquivo), $conteudo);
         }
 

@@ -2,6 +2,7 @@
 
 namespace Nfse\Tests\Unit\Enums;
 
+use Nfse\Enums\CodigoStatus;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\MovimentacaoTemporariaBens;
 use Nfse\Enums\ProcessoEmissao;
@@ -230,5 +231,16 @@ describe('TipoDeducaoReducao', function () {
             ->and(TipoDeducaoReducao::SubempreitadaMaoObra->getDescription())->toBe('Subempreitada de mão de obra')
             ->and(TipoDeducaoReducao::ProfissionalParceiro->getDescription())->toBe('Profissional parceiro')
             ->and(TipoDeducaoReducao::OutrasDeducoes->label())->toBe('Outras deduções');
+    });
+});
+
+describe('CodigoStatus', function () {
+    it('has only the values of TStat from schema 1.01', function () {
+        expect(CodigoStatus::cases())->toHaveCount(4)
+            ->and(CodigoStatus::NfseGerada->value)->toBe(100)
+            ->and(CodigoStatus::NfseDecisaoJudicial->value)->toBe(102)
+            ->and(CodigoStatus::NfseAvulsa->value)->toBe(103)
+            ->and(CodigoStatus::NfseMei->value)->toBe(107)
+            ->and(CodigoStatus::tryFrom(101))->toBeNull();
     });
 });

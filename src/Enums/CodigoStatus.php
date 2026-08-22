@@ -15,11 +15,6 @@ enum CodigoStatus: int
     case NfseGerada = 100;
 
     /**
-     * NFS-e de Substituição Gerada
-     */
-    case NfseSubstituicaoGerada = 101;
-
-    /**
      * NFS-e de Decisão Judicial
      */
     case NfseDecisaoJudicial = 102;
@@ -41,7 +36,6 @@ enum CodigoStatus: int
     {
         return match ($this) {
             self::NfseGerada => 'NFS-e Gerada',
-            self::NfseSubstituicaoGerada => 'NFS-e de Substituição Gerada',
             self::NfseDecisaoJudicial => 'NFS-e de Decisão Judicial',
             self::NfseAvulsa => 'NFS-e Avulsa',
             self::NfseMei => 'NFS-e MEI',

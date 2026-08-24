@@ -165,6 +165,14 @@ Alguns municípios utilizam servidores próprios, mas seguem rigorosamente o con
 | :-------- | :-- | :--------- | :--------------------------------------------------------------- |
 | Catanduva | SP  | ✅ Testado | Utiliza infraestrutura própria (RLZ) seguindo contrato nacional. |
 
+Para esses municípios o `downloadDanfse()` também busca o PDF no servidor da própria prefeitura
+(`{endpoint}/danfse/{chaveAcesso}/pdf`), em vez do ambiente nacional (que frequentemente responde 503).
+A chamada não muda: basta informar o `codigoMunicipio` no `NfseContext`.
+
+Para os demais municípios (que passam pelo ambiente nacional), as consultas e downloads são repetidos
+automaticamente até 2 vezes quando o servidor responde 502/503/504 ou derruba a conexão, com backoff de
+1s e 2s. Envios (POST) nunca são repetidos, para não duplicar NFS-e ou evento.
+
 #### Exemplo com Endpoint Customizado:
 
 O pacote também permite que você informe endpoints próprios caso você queira usar um servidor diferente.

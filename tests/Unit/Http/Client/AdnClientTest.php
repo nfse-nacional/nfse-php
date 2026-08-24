@@ -14,13 +14,15 @@ use ReflectionClass;
 
 class AdnClientTest extends TestCase
 {
-    private function createClientWithMock(array $responses): AdnClient
+    private MockHandler $mock;
+
+    private function createClientWithMock(array $responses, ?NfseContext $context = null): AdnClient
     {
-        $mock = new MockHandler($responses);
-        $handlerStack = HandlerStack::create($mock);
+        $this->mock = new MockHandler($responses);
+        $handlerStack = HandlerStack::create($this->mock);
         $httpClient = new Client(['handler' => $handlerStack]);
 
-        $context = new NfseContext(
+        $context ??= new NfseContext(
             TipoAmbiente::Homologacao,
             'fake/path.pfx',
             'password'
@@ -85,6 +87,30 @@ class AdnClientTest extends TestCase
         $response = $client->obterDanfse('CHAVE123');
 
         $this->assertEquals($pdfContent, $response);
+        $this->assertEquals('/danfse/CHAVE123', (string) $this->mock->getLastRequest()->getUri());
+    }
+
+    public function test_obter_danfse_usa_endpoint_do_municipio()
+    {
+        $pdfContent = '%PDF-1.4';
+
+        $client = $this->createClientWithMock(
+            [new Response(200, [], $pdfContent)],
+            new NfseContext(
+                TipoAmbiente::Producao,
+                'fake/path.pfx',
+                'password',
+                codigoMunicipio: '3511102'
+            )
+        );
+
+        $response = $client->obterDanfse('CHAVE123');
+
+        $this->assertEquals($pdfContent, $response);
+        $this->assertEquals(
+            'https://164.152.60.237/nota/nacional/danfse/CHAVE123/pdf',
+            (string) $this->mock->getLastRequest()->getUri()
+        );
     }
 
     public function test_consultar_eventos_contribuinte()

@@ -17,6 +17,8 @@ use Nfse\Enums\TipoNsu;
 use Nfse\Http\Contracts\AdnDanfseInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Http\Retry;
+use Nfse\Support\SefinEndpointResolver;
 
 class AdnClient implements AdnDanfseInterface
 {
@@ -60,6 +62,7 @@ class AdnClient implements AdnDanfseInterface
 
         return new Client([
             'base_uri' => $baseUrl,
+            'handler' => Retry::stack(),
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->resolveCertificatePath(),
@@ -226,8 +229,13 @@ class AdnClient implements AdnDanfseInterface
      */
     public function obterDanfse(string $chaveAcesso): string
     {
+        // Municípios com endpoint próprio servem o PDF na mesma base do envio.
+        // URI absoluta faz o Guzzle ignorar o base_uri nacional.
+        $url = (new SefinEndpointResolver)->resolveDanfse($this->context, $chaveAcesso)
+            ?? "/danfse/{$chaveAcesso}";
+
         try {
-            $response = $this->httpClient->get("/danfse/{$chaveAcesso}");
+            $response = $this->httpClient->get($url);
 
             return $response->getBody()->getContents();
         } catch (\GuzzleHttp\Exception\RequestException $e) {

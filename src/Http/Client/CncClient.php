@@ -9,6 +9,7 @@ use Nfse\Dto\Http\MensagemProcessamentoDto;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
+use Nfse\Http\Retry;
 
 class CncClient
 {
@@ -52,6 +53,7 @@ class CncClient
 
         return new Client([
             'base_uri' => $baseUrl,
+            'handler' => Retry::stack(),
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->resolveCertificatePath(),

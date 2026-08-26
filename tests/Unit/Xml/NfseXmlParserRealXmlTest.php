@@ -39,6 +39,7 @@ it('parses another world xml 3', function () {
         ->and($nfseData->infEvento)->toBeInstanceOf(\Nfse\Dto\Nfse\InfEventoData::class)
         ->and($nfseData->infEvento->versaoAplicativo)->toBe('EmissorWeb_1.3.0.0')
         ->and($nfseData->infEvento->ambiente)->toBe(2)
+        ->and($nfseData->infEvento->numeroDfse)->toBe('0')
         ->and($nfseData->infEvento->pedRegEvento->infPedReg->e101101->descricao)->toBe('Cancelamento de NFS-e');
 });
 
@@ -65,4 +66,14 @@ it('parses another world xml 5', function () {
         ->and($nfseData->infEvento->versaoAplicativo)->toBe('EmissorWeb_1.3.0.0')
         ->and($nfseData->infEvento->ambiente)->toBe(2)
         ->and($nfseData->infEvento->pedRegEvento->infPedReg->e101101->descricao)->toBe('Cancelamento de NFS-e');
+});
+
+it('parses evento with nDFSe from layout 1.01', function () {
+    $xml = '<?xml version="1.0" encoding="utf-8"?><evento versao="1.01" xmlns="http://www.sped.fazenda.gov.br/nfse"><infEvento Id="EVT23044002257302627000114000000000000524107932661061101101001"><verAplic>EmissorWeb_1.3.0.0</verAplic><ambGer>2</ambGer><nSeqEvento>1</nSeqEvento><dhProc>2026-08-21T10:00:00-03:00</dhProc><nDFSe>42</nDFSe><pedRegEvento versao="1.01" xmlns="http://www.sped.fazenda.gov.br/nfse"><infPedReg Id="PRE23044002257302627000114000000000000524107932661061101101001"><tpAmb>1</tpAmb><verAplic>EmissorWeb_1.3.0.0</verAplic><dhEvento>2026-08-21T10:00:00-03:00</dhEvento><CNPJAutor>57302627000114</CNPJAutor><chNFSe>23044002257302627000114000000000000524107932661061</chNFSe><nPedRegEvento>1</nPedRegEvento><e101101><xDesc>Cancelamento de NFS-e</xDesc><cMotivo>1</cMotivo><xMotivo>Teste</xMotivo></e101101></infPedReg></pedRegEvento></infEvento></evento>';
+
+    $parser = new NfseXmlParser;
+    $nfseData = $parser->parse($xml);
+
+    expect($nfseData->infEvento->numeroDfse)->toBe('42')
+        ->and($nfseData->infEvento->numeroSequencialEvento)->toBe(1);
 });

@@ -35,7 +35,10 @@ function validarDpsComIbscbs(array $ibscbs, array $sobrescritas = []): array
         'IBSCBS' => $ibscbs,
     ], $sobrescritas);
 
-    return (new DpsValidator)->validate(new DpsData(['infDPS' => $infDps]))->errors;
+    return (new DpsValidator)->validate(new DpsData([
+        '@attributes' => ['versao' => '1.01'],
+        'infDPS' => $infDps,
+    ]))->errors;
 }
 
 function ibscbsValido(array $sobrescritas = []): array

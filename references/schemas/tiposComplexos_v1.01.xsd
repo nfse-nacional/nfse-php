@@ -125,13 +125,6 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="xOutInf" type="TSDesc2000" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>
-            Uso da Administração Tributária Municipal.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="valores" type="TCValoresNFSe">
         <xs:annotation>
           <xs:documentation>
@@ -139,6 +132,13 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="xOutInf" type="TSDesc2000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Uso da Administração Tributária Municipal.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>      
       <xs:element name="IBSCBS" type="TCRTCIBSCBS" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
@@ -229,7 +229,6 @@
         <xs:annotation>
           <xs:documentation>
             Tipo Benefício Municipal (BM):
-
             1) Isenção;
             2) Redução da BC em 'ppBM' %;
             3) Redução da BC em R$ 'vInfoBM';
@@ -269,16 +268,16 @@
       <xs:element name="vTotalRet" type="TSDec15V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor total de retenções = Σ(CP + IRRF + CSLL  + ISSQN* +  (PIS + COFINS)**)
-            vTotalRet (R$) = (vRetCP + vRetIRRF + vRetCSLL) + vISSQN* + (vPIS + vCOFINS)**
+            Valor total das retenções de tributos da NFS-e.
+            Valor total de retenções (R$) = Σ(vRetCP + vRetIRRF+ vRetCSLL + ISSQN*)
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="vLiq" type="TSDec15V2">
         <xs:annotation>
           <xs:documentation>
-            Valor líquido = Valor do serviço - Desconto condicionado - Desconto incondicionado - Valores retidos (CP, IRRF, CSLL)* - Valores, se retidos (ISSQN, PIS, COFINS)**
-            Valor Líquido (R$) = vServ – vDescIncond – vDescCond – (vRetCP + vRetIRRF + vRetCSLL)* – (vISSQN - vPIS + vCOFINS)**
+            Valor líquido da NFS-e.
+            Valor líquido (R$) = Valor do serviço - Desconto condicionado - Desconto incondicionado - Valores retidos
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -969,7 +968,7 @@
             Opção para que o contribuinte optante pelo Simples Nacional ME/EPP (opSimpNac = 3) possa indicar, ao emitir o documento fiscal, em qual regime de apuração os tributos federais e municipal estão inseridos, caso tenha ultrapassado algum sublimite ou limite definido para o Simples Nacional.
             1 – Regime de apuração dos tributos federais e municipal pelo SN;
             2 – Regime de apuração dos tributos federais pelo SN e ISSQN  por fora do SN conforme respectiva legislação municipal do tributo;
-            3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legilações federal e municipal de cada tributo;
+            3 – Regime de apuração dos tributos federais e municipal por fora do SN conforme respectivas legislações federal e municipal de cada tributo;
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -984,6 +983,7 @@
             4 - Notário ou Registrador;
             5 - Profissional Autônomo;
             6 - Sociedade de Profissionais;
+            9 - Outros;
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1024,7 +1024,7 @@
       </xs:choice>
       <xs:element name="CAEPF" type="TSCAEPF" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>Número do Cadastro de Atividade Econômica da Pessoa Física (CAEPF) do tomador, intermediário ou fornecedor do serviço.</xs:documentation>
+          <xs:documentation>Número do Cadastro de Atividade Econômica da Pessoa Física (CAEPF)</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="IM" type="TSInscMun" minOccurs="0">
@@ -1301,11 +1301,6 @@
           <xs:documentation>Grupo de informações do DPS relativas à Evento</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="explRod" type="TCExploracaoRodoviaria" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>Grupo de informações relativas a pedágio</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="infoCompl" type="TCInfoCompl" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
@@ -1351,7 +1346,7 @@
           <xs:documentation>Descrição completa do serviço prestado</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="cNBS" type="TSCodNBS">
+      <xs:element name="cNBS" type="TSCodNBS" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Código NBS correspondente ao serviço prestado, seguindo a versão 2.0, conforme Anexo B</xs:documentation>
         </xs:annotation>
@@ -1391,7 +1386,7 @@
             4 - Matriz;
             5 - Filial ou sucursal;
             6 - Outro vínculo;
-            9 - Desconhecido;
+            9 - Desconhecido (tipo não informado na nota de origem);
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -1487,59 +1482,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <!--TIPO COMPLEXO PARA INFORMAÇÕES DE PEDÁGIO-->
-  <xs:complexType name="TCExploracaoRodoviaria">
-    <xs:sequence>
-      <xs:element name="categVeic" type="TSCategVeic">
-        <xs:annotation>
-          <xs:documentation>
-            Categorias de veículos para cobrança:
-            00 - Categoria de veículos (tipo não informado na nota de origem)
-            01 - Automóvel, caminhonete e furgão;
-            02 - Caminhão leve, ônibus, caminhão trator e furgão;
-            03 - Automóvel e caminhonete com semireboque;
-            04 - Caminhão, caminhão-trator, caminhão-trator com semi-reboque e ônibus;
-            05 - Automóvel e caminhonete com reboque;
-            06 - Caminhão com reboque;
-            07 - Caminhão trator com semi-reboque;
-            08 - Motocicletas, motonetas e bicicletas motorizadas;
-            09 - Veículo especial;
-            10 - Veículo Isento;
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="nEixos" type="TSNumEixos">
-        <xs:annotation>
-          <xs:documentation>Número de eixos para fins de cobrança</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="rodagem" type="TSRodagem">
-        <xs:annotation>
-          <xs:documentation>Tipo de rodagem</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sentido" type="TSSentido">
-        <xs:annotation>
-          <xs:documentation>Placa do veículo</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="placa" type="TSPlaca">
-        <xs:annotation>
-          <xs:documentation>Placa do veículo</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="codAcessoPed" type="TSCodAcessoPed">
-        <xs:annotation>
-          <xs:documentation>Código de acesso gerado automaticamente pelo sistema emissor da concessionária.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="codContrato" type="TSCodContrato">
-        <xs:annotation>
-          <xs:documentation>Código de contrato gerado automaticamente pelo sistema nacional no cadastro da concessionária.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <!--TIPO COMPLEXO PARA INFORMAÇÕES DE ATIVIDADE DE EVENTO-->
   <xs:complexType name="TCAtvEvento">
     <xs:sequence>
@@ -1583,8 +1525,8 @@
       <xs:choice minOccurs="1">
         <xs:element name="cObra" type="TSCodObra">
           <xs:annotation>
-            <xs:documentation
-              >Número de identificação da obra.
+            <xs:documentation>
+              Número de identificação da obra.
               Cadastro Nacional de Obras (CNO) ou Cadastro Específico do INSS (CEI).
             </xs:documentation>
           </xs:annotation>
@@ -1827,10 +1769,13 @@
             Identificação da Dedução/Redução:
             1 – Alimentação e bebidas/frigobar;
             2 – Materiais;
+            3 - Produção Externa;
+            4 - Reembolso de despesas;
             5 – Repasse consorciado;
             6 – Repasse plano de saúde;
             7 – Serviços;
             8 – Subempreitada de mão de obra;
+            9 - Profissional parceiro;
             99 – Outras deduções;
           </xs:documentation>
         </xs:annotation>
@@ -2078,60 +2023,92 @@
         <xs:annotation>
           <xs:documentation>
             Código de Situação Tributária do PIS/COFINS (CST):
-            00 - Nenhum;      
+            00 - Nenhum;
             01 - Operação Tributável com Alíquota Básica;
             02 - Operação Tributável com Alíquota Diferenciada;
             03 - Operação Tributável com Alíquota por Unidade de Medida de Produto;
             04 - Operação Tributável monofásica - Revenda a Alíquota Zero;
             05 - Operação Tributável por Substituição Tributária;
             06 - Operação Tributável a Alíquota Zero;
-            07 - Operação Tributável da Contribuição;
+            07 - Operação Isenta da Contribuição;
             08 - Operação sem Incidência da Contribuição;
             09 - Operação com Suspensão da Contribuição;
+            49 - Outras Operações de Saída;
+            50 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Tributada no Mercado Interno;
+            51 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno;
+            52 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita de Exportação;
+            53 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno;
+            54 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas no Mercado Interno e de Exportação;
+            55 - Operação com Direito a Crédito – Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação;
+            56 - Operação com Direito a Crédito – Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação;
+            60 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno;
+            61 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno;
+            62 - Crédito Presumido – Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação;
+            63 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno;
+            64 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação;
+            65 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação;
+            66 - Crédito Presumido – Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação;
+            67 - Crédito Presumido – Outras Operações;
+            70 - Operação de Aquisição sem Direito a Crédito;
+            71 - Operação de Aquisição com Isenção;
+            72 - Operação de Aquisição com Suspensão;
+            73 - Operação de Aquisição a Alíquota Zero;
+            74 - Operação de Aquisição sem Incidência da Contribuição;
+            75 - Operação de Aquisição por Substituição Tributária;
+            98 - Outras Operações de Entrada;
+            99 - Outras Operações;
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="vBCPisCofins" type="TSDec15V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor da Base de Cálculo do PIS/COFINS (R$).
+            Valor da Base de Cálculo do PIS/COFINS, relativo à apuração própria (R$).
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pAliqPis" type="TSDec2V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor da Alíquota do PIS (%).
+            Alíquota do PIS, relativa à apuração própria (%).
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="pAliqCofins" type="TSDec2V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor da Alíquota da COFINS (%).
+            Alíquota da COFINS, relativa à apuração própria (%).
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="vPis" type="TSDec15V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor monetário do PIS (R$).
+            Valor do débito de PIS apuração própria (R$).
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="vCofins" type="TSDec15V2" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Valor monetário do COFINS (R$).
+            Valor do débito de COFINS apuração própria (R$).
           </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="tpRetPisCofins" type="TSTipoRetPISCofins" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Tipo de retencao do Pis/Cofins:
-            1 - Retido;
-            2 - Não Retido;
+            Tipo de retenção do PIS/COFINS:
+            0 - PIS/COFINS/CSLL Não Retidos;
+            1 - PIS/COFINS Retidos;
+            2 - PIS/COFINS Não Retidos;
+            3 - PIS/COFINS/CSLL Retidos;
+            4 - PIS/COFINS Retidos, CSLL Não Retido;
+            5 - PIS Retido, COFINS/CSLL Não Retido;
+            6 - COFINS Retido, PIS/CSLL Não Retido;
+            7 - PIS Não Retido, COFINS/CSLL Retidos;
+            8 - PIS/COFINS Não Retidos, CSLL Retido;
+            9 - COFINS Não Retido, PIS/CSLL Retidos;
           </xs:documentation>
         </xs:annotation>
       </xs:element>

@@ -152,4 +152,15 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:simpleType name="TVerCNC">
+    <xs:annotation>
+      <xs:documentation>Tipo Versão do CNC - 1.00</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve"/>
+      <xs:pattern value="1\.00"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>

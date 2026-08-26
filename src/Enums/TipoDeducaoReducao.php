@@ -5,29 +5,59 @@ namespace Nfse\Enums;
 /**
  * Tipo de dedução/redução
  *
- * Baseado no schema: TSTpDedRed
+ * Baseado no schema: TSIdeDedRed
  */
 enum TipoDeducaoReducao: string
 {
     /**
+     * Alimentação e bebidas/frigobar
+     */
+    case AlimentacaoBebidas = '1';
+
+    /**
      * Materiais
      */
-    case Materiais = '1';
+    case Materiais = '2';
 
     /**
-     * Subempreitada
+     * Produção Externa
      */
-    case Subempreitada = '2';
+    case ProducaoExterna = '3';
 
     /**
-     * Reembolso
+     * Reembolso de despesas
      */
-    case Reembolso = '3';
+    case ReembolsoDespesas = '4';
 
     /**
-     * Outros
+     * Repasse consorciado
      */
-    case Outros = '99';
+    case RepasseConsorciado = '5';
+
+    /**
+     * Repasse plano de saúde
+     */
+    case RepassePlanoSaude = '6';
+
+    /**
+     * Serviços
+     */
+    case Servicos = '7';
+
+    /**
+     * Subempreitada de mão de obra
+     */
+    case SubempreitadaMaoObra = '8';
+
+    /**
+     * Profissional parceiro
+     */
+    case ProfissionalParceiro = '9';
+
+    /**
+     * Outras deduções
+     */
+    case OutrasDeducoes = '99';
 
     /**
      * Get description for the enum case
@@ -35,10 +65,16 @@ enum TipoDeducaoReducao: string
     public function getDescription(): string
     {
         return match ($this) {
+            self::AlimentacaoBebidas => 'Alimentação e bebidas/frigobar',
             self::Materiais => 'Materiais',
-            self::Subempreitada => 'Subempreitada',
-            self::Reembolso => 'Reembolso',
-            self::Outros => 'Outros',
+            self::ProducaoExterna => 'Produção Externa',
+            self::ReembolsoDespesas => 'Reembolso de despesas',
+            self::RepasseConsorciado => 'Repasse consorciado',
+            self::RepassePlanoSaude => 'Repasse plano de saúde',
+            self::Servicos => 'Serviços',
+            self::SubempreitadaMaoObra => 'Subempreitada de mão de obra',
+            self::ProfissionalParceiro => 'Profissional parceiro',
+            self::OutrasDeducoes => 'Outras deduções',
         };
     }
 

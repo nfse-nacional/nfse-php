@@ -2,10 +2,13 @@
 
 namespace Nfse\Tests\Unit\Enums;
 
+use Nfse\Enums\CodigoStatus;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\MovimentacaoTemporariaBens;
 use Nfse\Enums\ProcessoEmissao;
+use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Enums\TipoAmbiente;
+use Nfse\Enums\TipoDeducaoReducao;
 
 describe('TipoAmbiente', function () {
     it('has correct values', function () {
@@ -200,5 +203,63 @@ describe('MovimentacaoTemporariaBens', function () {
         expect(MovimentacaoTemporariaBens::Nenhum->label())->toBe('Nenhum')
             ->and(MovimentacaoTemporariaBens::Nao->label())->toBe('Não');
 
+    });
+});
+
+describe('TipoDeducaoReducao', function () {
+    it('has all values of TSIdeDedRed from schema 1.01', function () {
+        expect(TipoDeducaoReducao::cases())->toHaveCount(10)
+            ->and(TipoDeducaoReducao::AlimentacaoBebidas->value)->toBe('1')
+            ->and(TipoDeducaoReducao::Materiais->value)->toBe('2')
+            ->and(TipoDeducaoReducao::ProducaoExterna->value)->toBe('3')
+            ->and(TipoDeducaoReducao::ReembolsoDespesas->value)->toBe('4')
+            ->and(TipoDeducaoReducao::RepasseConsorciado->value)->toBe('5')
+            ->and(TipoDeducaoReducao::RepassePlanoSaude->value)->toBe('6')
+            ->and(TipoDeducaoReducao::Servicos->value)->toBe('7')
+            ->and(TipoDeducaoReducao::SubempreitadaMaoObra->value)->toBe('8')
+            ->and(TipoDeducaoReducao::ProfissionalParceiro->value)->toBe('9')
+            ->and(TipoDeducaoReducao::OutrasDeducoes->value)->toBe('99');
+    });
+
+    it('can create from value', function () {
+        expect(TipoDeducaoReducao::from('3'))->toBe(TipoDeducaoReducao::ProducaoExterna)
+            ->and(TipoDeducaoReducao::tryFrom('4'))->toBe(TipoDeducaoReducao::ReembolsoDespesas)
+            ->and(TipoDeducaoReducao::tryFrom('10'))->toBeNull();
+    });
+
+    it('returns correct descriptions', function () {
+        expect(TipoDeducaoReducao::AlimentacaoBebidas->getDescription())->toBe('Alimentação e bebidas/frigobar')
+            ->and(TipoDeducaoReducao::SubempreitadaMaoObra->getDescription())->toBe('Subempreitada de mão de obra')
+            ->and(TipoDeducaoReducao::ProfissionalParceiro->getDescription())->toBe('Profissional parceiro')
+            ->and(TipoDeducaoReducao::OutrasDeducoes->label())->toBe('Outras deduções');
+    });
+});
+
+describe('CodigoStatus', function () {
+    it('has only the values of TStat from schema 1.01', function () {
+        expect(CodigoStatus::cases())->toHaveCount(4)
+            ->and(CodigoStatus::NfseGerada->value)->toBe(100)
+            ->and(CodigoStatus::NfseDecisaoJudicial->value)->toBe(102)
+            ->and(CodigoStatus::NfseAvulsa->value)->toBe(103)
+            ->and(CodigoStatus::NfseMei->value)->toBe(107)
+            ->and(CodigoStatus::tryFrom(101))->toBeNull();
+    });
+});
+
+describe('RegimeEspecialTributacao', function () {
+    it('has only the values of TSRegEspTrib from schema 1.01', function () {
+        expect(RegimeEspecialTributacao::cases())->toHaveCount(8)
+            ->and(RegimeEspecialTributacao::Nenhum->value)->toBe('0')
+            ->and(RegimeEspecialTributacao::AtoCooperado->value)->toBe('1')
+            ->and(RegimeEspecialTributacao::Estimativa->value)->toBe('2')
+            ->and(RegimeEspecialTributacao::MicroempresaMunicipal->value)->toBe('3')
+            ->and(RegimeEspecialTributacao::NotarioOuRegistrador->value)->toBe('4')
+            ->and(RegimeEspecialTributacao::ProfissionalAutonomo->value)->toBe('5')
+            ->and(RegimeEspecialTributacao::SociedadeDeProfissionais->value)->toBe('6')
+            ->and(RegimeEspecialTributacao::Outros->value)->toBe('9')
+            ->and(RegimeEspecialTributacao::Outros->getDescription())->toBe('Outros')
+            ->and(RegimeEspecialTributacao::tryFrom('7'))->toBeNull()
+            ->and(RegimeEspecialTributacao::tryFrom('8'))->toBeNull()
+            ->and(RegimeEspecialTributacao::tryFrom('10'))->toBeNull();
     });
 });

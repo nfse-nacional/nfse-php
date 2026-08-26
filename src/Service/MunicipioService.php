@@ -2,10 +2,12 @@
 
 namespace Nfse\Service;
 
+use Nfse\Dto\Nfse\NfseData;
 use Nfse\Enums\TipoNsu;
 use Nfse\Http\Client\AdnClient;
 use Nfse\Http\Client\CncClient;
 use Nfse\Http\NfseContext;
+use Nfse\Pdf\DanfseGenerator;
 
 class MunicipioService
 {
@@ -39,9 +41,13 @@ class MunicipioService
      * padrão obrigatório em folha A4, exigência de QR Code e inclusão de campos para IBS e CBS.
      * Nota técnica: https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/nt-008-se-cgnfse-danfse-20260505.pdf
      */
-    public function downloadDanfse(string $chaveAcesso): string
+    public function downloadDanfse(string|NfseData $nfse): string
     {
-        return $this->adnClient->obterDanfse($chaveAcesso);
+        if (is_string($nfse) && ! str_contains(ltrim($nfse), '<')) {
+            throw new \InvalidArgumentException('No serviço municipal, informe o XML ou NfseData; a chave isolada não contém os dados do DANFSe.');
+        }
+
+        return (new DanfseGenerator)->generate($nfse);
     }
 
     /**

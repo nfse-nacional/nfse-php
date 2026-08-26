@@ -66,10 +66,13 @@ $docs = $service->baixarDfe(nsu: 100);
 
 // 4. Outros métodos úteis
 $service->consultarDps('ID_DPS');
-$service->downloadDanfse('CHAVE_ACESSO'); // Retorna PDF binário
+$service->downloadDanfse($nfseData); // Gera localmente o PDF conforme a NT 008 v1.02
+$service->downloadDanfse('CHAVE_ACESSO'); // Consulta somente o XML e gera o PDF localmente
 $service->registrarEvento('CHAVE_ACESSO', $xmlEvento); // Ex: Cancelamento
 $service->consultarParametrosConvenio('CODIGO_MUNICIPIO');
 ```
+
+O gerador não utiliza a API oficial de DANFSe, suspensa em 3 de agosto de 2026. Para evitar uma nova consulta, prefira passar diretamente o `NfseData` retornado por `emitir()` ou `consultar()`. Também é possível usar `Nfse\Pdf\DanfseGenerator` com o XML autorizado.
 
 ### 🏛️ MunicipioService
 

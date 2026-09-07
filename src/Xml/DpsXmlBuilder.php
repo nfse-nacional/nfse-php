@@ -14,6 +14,7 @@ use Nfse\Dto\Nfse\ServicoData;
 use Nfse\Dto\Nfse\TomadorData;
 use Nfse\Dto\Nfse\ValoresData;
 use Nfse\Enums\OpcaoSimplesNacional;
+use Nfse\Support\SchemaText;
 
 class DpsXmlBuilder
 {
@@ -544,8 +545,12 @@ class DpsXmlBuilder
         }
 
         if ($value !== null && $value !== '') {
+            $text = SchemaText::forSchema((string) $value);
+            if ($text === null || $text === '') {
+                return;
+            }
             $element = $this->dom->createElement($name);
-            $element->appendChild($this->dom->createTextNode((string) $value));
+            $element->appendChild($this->dom->createTextNode($text));
             $parent->appendChild($element);
         }
     }

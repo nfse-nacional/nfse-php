@@ -5,6 +5,7 @@ namespace Nfse\Xml;
 use DOMDocument;
 use DOMElement;
 use Nfse\Dto\Nfse\PedRegEventoData;
+use Nfse\Support\SchemaText;
 
 class EventosXmlBuilder
 {
@@ -63,8 +64,12 @@ class EventosXmlBuilder
         if ($value === null) {
             return;
         }
+        $text = SchemaText::forSchema($value);
+        if ($text === null || $text === '') {
+            return;
+        }
         $el = $this->dom->createElement($name);
-        $el->appendChild($this->dom->createTextNode($value));
+        $el->appendChild($this->dom->createTextNode($text));
         $parent->appendChild($el);
     }
 }

@@ -150,6 +150,47 @@ $dps = new DpsData([
 $nfse->contribuinte()->emitir($dps);
 ```
 
+## 🔎 Preenchimento automático do tomador (CPF/CNPJ)
+
+Para evitar a digitação manual, principal origem de rejeição de schema (endereço com caractere inválido, CEP ou município errados), há um resolver opcional que preenche o `TomadorData` (nome ou razão social, endereço, CEP e código IBGE do município) a partir do CPF ou CNPJ. A fonte de dados fica atrás da interface `Nfse\Support\Contracts\PessoaLookup`, aberta a qualquer provedor. A implementação de referência usa a API da [CPF.CNPJ](https://www.cpfcnpj.com.br).
+
+```php
+use Nfse\Support\TomadorResolver;
+
+$resolver = TomadorResolver::comToken(getenv('CPFCNPJ_TOKEN'));
+
+// Detecta CPF ou CNPJ pelo tamanho; há também porCpf() e porCnpj().
+$tomador = $resolver->porDocumento('44827692000111');
+
+$dps = new DpsData([
+    '@attributes' => ['versao' => '1.01'],
+    'infDPS' => [
+        // ...
+        'toma' => $tomador->toArray(),
+    ],
+]);
+```
+
+### Token de integração
+
+A implementação de referência requer um token da CPF.CNPJ:
+
+1. Crie uma conta em [cpfcnpj.com.br](https://www.cpfcnpj.com.br);
+2. No painel, acesse **API > Tokens** e gere um token (atrelado ao IP de origem da requisição);
+3. Passe-o ao resolver: `TomadorResolver::comToken($token)`.
+
+Para desenvolvimento há um token público de testes que retorna dados fictícios: `5ae973d7a997af13f0aaf2bf60e65803`.
+
+Você pode escolher o pacote de consulta. Para CPF, `1` traz somente o nome e `3` traz nome e endereço. Para CNPJ, `5` traz razão social e endereço e `6` inclui também o Simples Nacional, a situação cadastral e o porte:
+
+```php
+$resolver = TomadorResolver::comToken($token, pacoteCpf: 3, pacoteCnpj: 6);
+```
+
+### Sobre a CPF.CNPJ
+
+A [CPF.CNPJ](https://www.cpfcnpj.com.br) é um serviço brasileiro de consulta cadastral de CPF e CNPJ. Os dados são retornados atualizados em D+0 (no mesmo dia da consulta), com 100% de cobertura dos documentos consultados, diferente das bases mensais que o governo distribui, cuja defasagem média é de cerca de 45 dias. Para PJ, o pacote CNPJ D (`6`) inclui o enquadramento no Simples Nacional e SIMEI, útil para decidir a tributação e a retenção na emissão, já que uma empresa pode mudar de regime a qualquer momento.
+
 ## 🌍 Municípios Atendidos
 
 A biblioteca é compatível com todos os municípios que aderiram ao padrão nacional da NFS-e. Você pode consultar a lista atualizada de municípios conveniados através dos links oficiais:

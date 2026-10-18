@@ -60,20 +60,28 @@ class AdnClient implements AdnDanfseInterface
             ? self::URL_PRODUCTION
             : self::URL_HOMOLOGATION;
 
+        $curlOptions = [
+            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+            CURLOPT_CONNECTTIMEOUT => 30,
+            CURLOPT_TIMEOUT => 60,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ];
+
+        if ($this->context->nssCertificateSelector !== null) {
+            $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
+            $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
+        } else {
+            $curlOptions[CURLOPT_SSLCERTTYPE] = 'P12';
+            $curlOptions[CURLOPT_SSLCERT] = $this->resolveCertificatePath();
+            $curlOptions[CURLOPT_SSLCERTPASSWD] = $this->context->certificatePassword;
+        }
+
         return new Client([
             'base_uri' => $baseUrl,
             'handler' => Retry::stack(),
-            'curl' => [
-                CURLOPT_SSLCERTTYPE => 'P12',
-                CURLOPT_SSLCERT => $this->resolveCertificatePath(),
-                CURLOPT_SSLCERTPASSWD => $this->context->certificatePassword,
-                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-                CURLOPT_CONNECTTIMEOUT => 30,
-                CURLOPT_TIMEOUT => 60,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-            ],
+            'curl' => $curlOptions,
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -300,8 +308,8 @@ class AdnClient implements AdnDanfseInterface
     }
 
     /**
-     * @param  \GuzzleHttp\Exception\RequestException|\Exception  $e
      * @return mixed
+     *
      * @throws NfseApiException
      */
     private function handleException(\GuzzleHttp\Exception\RequestException|\Exception $e)

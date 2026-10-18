@@ -50,7 +50,7 @@ class ContribuinteService
         $response = $this->sefinClient->emitirNfse($payload);
 
         if (! empty($response->erros)) {
-            $msg = 'Erro na emissão: ' . json_encode($response->erros);
+            $msg = 'Erro na emissão: '.json_encode($response->erros);
             throw NfseApiException::responseError($msg, 0, null, $response->erros);
         }
 
@@ -218,6 +218,13 @@ class ContribuinteService
             return Certificate::fromContent($this->context->certificateContent, $this->context->certificatePassword);
         }
 
-        return new Certificate($this->context->certificatePath, $this->context->certificatePassword);
+        if ($this->context->certificatePath !== null) {
+            return new Certificate($this->context->certificatePath, $this->context->certificatePassword);
+        }
+
+        throw new \LogicException(
+            'NSS certificates can authenticate HTTP requests, but XML signing requires a PFX certificate. '
+            .'Provide certificatePath or certificateContent to sign DPS and events.'
+        );
     }
 }

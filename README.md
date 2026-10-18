@@ -46,6 +46,17 @@ $context = new NfseContext(
 $nfse = new Nfse($context);
 ```
 
+Para certificados armazenados em um banco NSS, informe o seletor que o cURL deve usar em vez do caminho do PFX:
+
+```php
+$context = new NfseContext(
+    ambiente: TipoAmbiente::Producao,
+    nssCertificateSelector: 'NSS Certificate DB:Nome do certificado'
+);
+```
+
+O SDK configura esse seletor como certificado `ENG`; o suporte depende do backend TLS e da configuração do cURL instalados no ambiente. O certificado e seu banco NSS permanecem sob responsabilidade da aplicação.
+
 ### 🏢 ContribuinteService
 
 Focado nas necessidades de empresas que emitem notas.

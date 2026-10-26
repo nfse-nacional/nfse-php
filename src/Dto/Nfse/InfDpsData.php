@@ -82,6 +82,13 @@ class InfDpsData extends Dto
     public ?MotivoEmissaoTomadorIntermediario $motivoEmissaoTomadorIntermediario = null;
 
     /**
+     * Indicador da finalidade da emissão de NFS-e (layout de 20/10/2026).
+     * 0 - NFS-e regular (único valor do layout)
+     */
+    #[MapFrom('finNFSe')]
+    public ?string $finalidadeNfse = null;
+
+    /**
      * Chave de acesso da NFS-e rejeitada.
      * Obrigatório se cMotivoEmisTI = 4.
      */

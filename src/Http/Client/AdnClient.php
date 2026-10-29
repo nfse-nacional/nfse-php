@@ -60,28 +60,28 @@ class AdnClient implements AdnDanfseInterface
             ? self::URL_PRODUCTION
             : self::URL_HOMOLOGATION;
 
-        $curlOptions = [
-            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-            CURLOPT_CONNECTTIMEOUT => 30,
-            CURLOPT_TIMEOUT => 60,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0,
-        ];
-
         if ($this->context->nssCertificateSelector !== null) {
-            $curlOptions[CURLOPT_SSLCERTTYPE] = 'ENG';
-            $curlOptions[CURLOPT_SSLCERT] = $this->context->nssCertificateSelector;
+            // O Guzzle exige que a opção `cert` seja um arquivo existente; o seletor NSS não é, então segue cru para o cURL.
+            $certificateOptions = ['curl' => [
+                CURLOPT_SSLCERTTYPE => 'ENG',
+                CURLOPT_SSLCERT => $this->context->nssCertificateSelector,
+            ]];
         } else {
-            $curlOptions[CURLOPT_SSLCERTTYPE] = 'P12';
-            $curlOptions[CURLOPT_SSLCERT] = $this->resolveCertificatePath();
-            $curlOptions[CURLOPT_SSLCERTPASSWD] = $this->context->certificatePassword;
+            $certificateOptions = [
+                RequestOptions::CERT => [$this->resolveCertificatePath(), $this->context->certificatePassword],
+                RequestOptions::CERT_TYPE => 'P12',
+            ];
         }
 
         return new Client([
             'base_uri' => $baseUrl,
             'handler' => Retry::stack(),
-            'curl' => $curlOptions,
+            ...$certificateOptions,
+            RequestOptions::FORCE_IP_RESOLVE => 'v4',
+            RequestOptions::CONNECT_TIMEOUT => 30,
+            RequestOptions::TIMEOUT => 60,
+            RequestOptions::VERSION => '1.1',
+            RequestOptions::VERIFY => false,
             RequestOptions::HEADERS => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',

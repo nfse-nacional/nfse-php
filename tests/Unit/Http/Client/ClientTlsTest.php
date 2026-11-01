@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Client;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Client\AdnClient;
 use Nfse\Http\Client\CncClient;
@@ -7,12 +8,12 @@ use Nfse\Http\Client\SefinClient;
 use Nfse\Http\NfseContext;
 use Nfse\Support\SefinEndpointResolver;
 
-function curlOptionsDoClient(object $client): array
+function httpClientDoClient(object $client): Client
 {
     $property = new ReflectionProperty($client, 'httpClient');
     $property->setAccessible(true);
 
-    return $property->getValue($client)->getConfig('curl');
+    return $property->getValue($client);
 }
 
 function contextoTls(): NfseContext
@@ -21,9 +22,11 @@ function contextoTls(): NfseContext
 }
 
 it('keeps TLS peer and host verification enabled', function (string $clientClass) {
-    $curl = curlOptionsDoClient(new $clientClass(contextoTls()));
+    $httpClient = httpClientDoClient(new $clientClass(contextoTls()));
+    $curl = $httpClient->getConfig('curl');
 
-    expect($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYPEER)
+    expect($httpClient->getConfig('verify'))->toBeTrue()
+        ->and($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYPEER)
         ->and($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYHOST);
 })->with([
     'SEFIN' => [SefinClient::class],
@@ -32,7 +35,7 @@ it('keeps TLS peer and host verification enabled', function (string $clientClass
 ]);
 
 it('pins municipal hosts that used to be called by IP', function (string $clientClass) {
-    $curl = curlOptionsDoClient(new $clientClass(contextoTls()));
+    $curl = httpClientDoClient(new $clientClass(contextoTls()))->getConfig('curl');
 
     expect($curl[CURLOPT_RESOLVE])->toBe(SefinEndpointResolver::pinnedHosts());
 })->with([
@@ -45,9 +48,11 @@ it('keeps TLS verification enabled when using an NSS client certificate', functi
         ambiente: TipoAmbiente::Producao,
         nssCertificateSelector: 'NSS Certificate DB:Test Certificate'
     );
-    $curl = curlOptionsDoClient(new $clientClass($context));
+    $httpClient = httpClientDoClient(new $clientClass($context));
+    $curl = $httpClient->getConfig('curl');
 
-    expect($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYPEER)
+    expect($httpClient->getConfig('verify'))->toBeTrue()
+        ->and($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYPEER)
         ->and($curl)->not->toHaveKey(CURLOPT_SSL_VERIFYHOST);
 })->with([
     'SEFIN' => [SefinClient::class],

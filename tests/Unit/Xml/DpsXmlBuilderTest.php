@@ -35,7 +35,12 @@ it('can build xml from dps data', function () {
                 'end' => null,
                 'fone' => null,
                 'email' => null,
-                'regTrib' => null,
+                'regTrib' => [
+                    'opSimpNac' => 3,
+                    'regApTribSN' => 1,
+                    'regApIBSCBSSN' => 1,
+                    'regEspTrib' => 0,
+                ],
             ],
             'toma' => [
                 'CPF' => '11122233344',
@@ -60,6 +65,7 @@ it('can build xml from dps data', function () {
                     'cTribMun' => null,
                     'xDescServ' => 'Analise de sistemas',
                     'cNBS' => null,
+                    'cAtvSN' => 7,
                     'cIntContrib' => null,
                 ],
                 'comExt' => null,
@@ -103,6 +109,8 @@ it('can build xml from dps data', function () {
         ->and($xml)->toContain('<infDPS Id="'.$id.'">')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>')
+        ->and($xml)->toContain('<regApIBSCBSSN>1</regApIBSCBSSN>')
+        ->and($xml)->toContain('<cAtvSN>7</cAtvSN>')
         ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')
         ->and($xml)->toContain('<chNFSeRej>12345678901234567890123456789012345678901234</chNFSeRej>')
         ->and($xml)->toContain('<tpSusp>1</tpSusp>')

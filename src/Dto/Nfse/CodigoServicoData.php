@@ -3,6 +3,9 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
+use Nfse\Enums\CodigoAtividadeSimplesNacional;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class CodigoServicoData extends Dto
@@ -30,6 +33,12 @@ class CodigoServicoData extends Dto
      */
     #[MapFrom('cNBS')]
     public ?string $codigoNbs = null;
+
+    /**
+     * Código da atividade do Simples Nacional (cAtvSN).
+     */
+    #[MapFrom('cAtvSN'), CastWith(EnumCaster::class, enumType: CodigoAtividadeSimplesNacional::class)]
+    public ?CodigoAtividadeSimplesNacional $codigoAtividadeSimplesNacional = null;
 
     /**
      * Código CNAE (Classificação Nacional de Atividades Econômicas).

@@ -127,6 +127,7 @@ class DpsXmlBuilder
             $regTrib = $this->dom->createElement('regTrib');
             $this->appendElement($regTrib, 'opSimpNac', $data->regimeTributario->opcaoSimplesNacional);
             $this->appendElement($regTrib, 'regApTribSN', $data->regimeTributario->regimeApuracaoTributosSn);
+            $this->appendElement($regTrib, 'regApIBSCBSSN', $data->regimeTributario->regimeApuracaoIbsCbsSn);
             $this->appendElement($regTrib, 'regEspTrib', $data->regimeTributario->regimeEspecialTributacao);
             $prest->appendChild($regTrib);
         }
@@ -215,6 +216,7 @@ class DpsXmlBuilder
                 $this->appendElement($cServ, 'xDescServ', $data->codigoServico->descricaoServico);
             }
             $this->appendElement($cServ, 'cNBS', $data->codigoServico->codigoNbs);
+            $this->appendElement($cServ, 'cAtvSN', $data->codigoServico->codigoAtividadeSimplesNacional);
             $this->appendElement($cServ, 'cIntContrib', $data->codigoServico->codigoInternoContribuinte);
             if ($leiauteNt009) {
                 $this->appendElement($cServ, 'xDescServ', $data->codigoServico->descricaoServico);

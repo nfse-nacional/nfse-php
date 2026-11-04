@@ -4,6 +4,7 @@ namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
 use Nfse\Enums\OpcaoSimplesNacional;
+use Nfse\Enums\RegimeApuracaoIbsCbsSn;
 use Nfse\Enums\RegimeApuracaoSN;
 use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Support\DTO\EnumCaster;
@@ -29,6 +30,17 @@ class RegimeTributarioData extends Dto
      */
     #[MapFrom('regApTribSN'), CastWith(EnumCaster::class, enumType: RegimeApuracaoSN::class)]
     public ?RegimeApuracaoSN $regimeApuracaoTributosSn = null;
+
+    /**
+     * Regime de apuração do IBS e da CBS para optantes do Simples Nacional.
+     * Obrigatório quando opSimpNac = 3 ou 4.
+     *
+     * 1 - IBS e CBS apurados pelo SN;
+     * 2 - CBS apurada pelo SN e IBS pelo regime regular;
+     * 3 - IBS e CBS apurados pelo regime regular.
+     */
+    #[MapFrom('regApIBSCBSSN'), CastWith(EnumCaster::class, enumType: RegimeApuracaoIbsCbsSn::class)]
+    public ?RegimeApuracaoIbsCbsSn $regimeApuracaoIbsCbsSn = null;
 
     /**
      * Regime Especial de Tributação.

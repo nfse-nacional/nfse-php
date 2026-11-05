@@ -137,7 +137,15 @@ class SefinClientTest extends TestCase
             'tipoAmbiente' => 2,
             'versaoAplicativo' => '1.0',
             'dataHoraProcessamento' => '2023-10-27T10:00:00',
-            'eventoXmlGZipB64' => 'base64',
+            'eventos' => [
+                [
+                    'chaveAcesso' => 'CHAVE123',
+                    'tipoEvento' => 101101,
+                    'numeroPedidoRegistroEvento' => 1,
+                    'dataHoraRecebimento' => '2023-10-27T09:59:00.000',
+                    'arquivoXml' => base64_encode(gzencode('<evento/>')),
+                ],
+            ],
         ];
 
         $client = $this->createClientWithMock([
@@ -146,33 +154,29 @@ class SefinClientTest extends TestCase
 
         $response = $client->consultarEvento('CHAVE123', 101101, 1);
 
-        $this->assertInstanceOf(\Nfse\Dto\Http\RegistroEventoResponse::class, $response);
+        $this->assertInstanceOf(\Nfse\Dto\Http\ConsultaEventoResponse::class, $response);
+        $this->assertCount(1, $response->eventos);
+        $this->assertSame(101101, $response->primeiroEvento()->tipoEvento);
     }
 
-    public function test_listar_eventos()
+    public function test_listar_eventos_nao_existe_na_api()
     {
-        $responseData = [['tipoEvento' => 101101]];
+        $client = $this->createClientWithMock([]);
 
-        $client = $this->createClientWithMock([
-            new Response(200, [], json_encode($responseData)),
-        ]);
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('não expõe listagem de eventos');
 
-        $response = $client->listarEventos('CHAVE123');
-
-        $this->assertEquals($responseData, $response);
+        $client->listarEventos('CHAVE123');
     }
 
-    public function test_listar_eventos_por_tipo()
+    public function test_listar_eventos_por_tipo_nao_existe_na_api()
     {
-        $responseData = [['tipoEvento' => 101101]];
+        $client = $this->createClientWithMock([]);
 
-        $client = $this->createClientWithMock([
-            new Response(200, [], json_encode($responseData)),
-        ]);
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('não expõe listagem de eventos');
 
-        $response = $client->listarEventosPorTipo('CHAVE123', 101101);
-
-        $this->assertEquals($responseData, $response);
+        $client->listarEventosPorTipo('CHAVE123', 101101);
     }
 
     public function test_verificar_dps_error_throws_exception()

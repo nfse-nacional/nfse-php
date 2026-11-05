@@ -6,8 +6,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Nfse\Dto\Http\ConsultaDpsResponse;
+use Nfse\Dto\Http\ConsultaEventoResponse;
 use Nfse\Dto\Http\ConsultaNfseResponse;
 use Nfse\Dto\Http\EmissaoNfseResponse;
+use Nfse\Dto\Http\EventoDto;
 use Nfse\Dto\Http\MensagemProcessamentoDto;
 use Nfse\Dto\Http\RegistroEventoResponse;
 use Nfse\Http\Contracts\SefinNacionalInterface;
@@ -176,15 +178,26 @@ class SefinClient implements SefinNacionalInterface
         );
     }
 
-    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): RegistroEventoResponse
+    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): ConsultaEventoResponse
     {
         $response = $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}/{$numSeqEvento}");
 
-        return new RegistroEventoResponse(
+        $eventos = array_map(
+            fn (array $evento): EventoDto => new EventoDto(
+                chaveAcesso: $evento['chaveAcesso'] ?? null,
+                tipoEvento: $evento['tipoEvento'] ?? null,
+                numeroPedidoRegistroEvento: $evento['numeroPedidoRegistroEvento'] ?? null,
+                dataHoraRecebimento: $evento['dataHoraRecebimento'] ?? null,
+                arquivoXml: $evento['arquivoXml'] ?? null
+            ),
+            $response['eventos'] ?? []
+        );
+
+        return new ConsultaEventoResponse(
             tipoAmbiente: $response['tipoAmbiente'] ?? null,
             versaoAplicativo: $response['versaoAplicativo'] ?? null,
             dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
-            eventoXmlGZipB64: $response['eventoXmlGZipB64'] ?? null
+            eventos: $eventos
         );
     }
 
@@ -202,14 +215,27 @@ class SefinClient implements SefinNacionalInterface
         }
     }
 
+    /**
+     * @deprecated A API do Sefin Nacional não expõe listagem de eventos: o
+     *             endpoint `eventos` só aceita POST (registro) e
+     *             `eventos/{tipo}` responde 404. Use {@see self::consultarEvento()}
+     *             com o tipo e a sequência.
+     */
     public function listarEventos(string $chaveAcesso): array
     {
-        return $this->get("nfse/{$chaveAcesso}/eventos");
+        throw new \BadMethodCallException(
+            'A API do Sefin Nacional não expõe listagem de eventos. Use consultarEvento() com o tipo e a sequência do evento.'
+        );
     }
 
+    /**
+     * @deprecated Ver {@see self::listarEventos()}.
+     */
     public function listarEventosPorTipo(string $chaveAcesso, int $tipoEvento): array
     {
-        return $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}");
+        throw new \BadMethodCallException(
+            'A API do Sefin Nacional não expõe listagem de eventos. Use consultarEvento() com o tipo e a sequência do evento.'
+        );
     }
 
     private function mapMensagens(array $mensagens): array

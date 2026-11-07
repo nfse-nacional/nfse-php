@@ -147,11 +147,14 @@ class ContribuinteService
         return $this->registrarEventoData($evento);
     }
 
-    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Dto\Http\RegistroEventoResponse
+    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Dto\Http\ConsultaEventoResponse
     {
         return $this->sefinClient->consultarEvento($chaveAcesso, $tipoEvento, $numSeqEvento);
     }
 
+    /**
+     * @deprecated A API do Sefin Nacional não expõe listagem de eventos.
+     */
     public function listarEventos(string $chaveAcesso, ?int $tipoEvento = null): array
     {
         if ($tipoEvento) {

@@ -31,9 +31,19 @@ na NFS-e.
     a sequência do XSD. A ordem anterior invalidava a DPS quando esses campos eram usados.
 -   Grupos repetíveis com uma única ocorrência deixam de ser desmontados na leitura do XML
     (`ArrayCaster`), o que também corrige `vDedRed/documentos`.
+-   `consultarEvento()` passa a mapear a lista `eventos` retornada pelo Sefin
+    (`EventoDto`). Antes o retorno era sempre vazio: a API não envia
+    `eventoXmlGZipB64` nesse endpoint. `EventoDto::arquivoXmlDecodificado()` descomprime o
+    `arquivoXml`, que vem com duas camadas de base64 sobre gzip.
+-   `listarEventos()` e `listarEventosPorTipo()` falham com `BadMethodCallException`: a API
+    do Sefin não expõe listagem de eventos (o endpoint `eventos` só aceita POST e
+    `eventos/{tipo}` responde 404). Use `consultarEvento()` com tipo e sequência.
 
 ### ⚠️ Breaking changes
 
+-   `SefinClient::consultarEvento()` e `ContribuinteService::consultarEvento()` passam a
+    devolver `ConsultaEventoResponse` (antes `RegistroEventoResponse`, que nunca continha
+    os dados do evento).
 -   Removido `IbscbsData::$indicadorZfmAlc` e a emissão do elemento `indZFMALC`. O campo
     não existe no esquema oficial nem no Anexo I e gerava XML rejeitado.
 

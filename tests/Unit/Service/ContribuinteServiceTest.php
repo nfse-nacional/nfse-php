@@ -262,9 +262,10 @@ class ContribuinteServiceTest extends TestCase
     public function test_registrar_evento()
     {
         $response = new \Nfse\Dto\Http\RegistroEventoResponse([
-            'tpAmb' => 2,
-            'verAplic' => '1.0',
-            'dhProc' => '2023-10-27T10:00:00',
+            'tipoAmbiente' => 2,
+            'versaoAplicativo' => '1.0',
+            'dataHoraProcessamento' => '2023-10-27T10:00:00',
+            'eventoXmlGZipB64' => 'base64',
         ]);
 
         $this->sefinClientMock->expects($this->once())
@@ -279,10 +280,11 @@ class ContribuinteServiceTest extends TestCase
 
     public function test_consultar_evento()
     {
-        $response = new \Nfse\Dto\Http\RegistroEventoResponse([
-            'tpAmb' => 2,
-            'verAplic' => '1.0',
-            'dhProc' => '2023-10-27T10:00:00',
+        $response = new \Nfse\Dto\Http\ConsultaEventoResponse([
+            'tipoAmbiente' => 2,
+            'versaoAplicativo' => '1.0',
+            'dataHoraProcessamento' => '2023-10-27T10:00:00',
+            'eventos' => [],
         ]);
 
         $this->sefinClientMock->expects($this->once())

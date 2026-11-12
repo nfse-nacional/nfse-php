@@ -122,7 +122,11 @@ class AdnClient implements AdnDanfseInterface
     {
         $queryParams = [];
         if ($cnpjConsulta) {
-            $queryParams['cnpjConsulta'] = $cnpjConsulta;
+             if(strlen($cnpjConsulta) == 14){
+                $queryParams['cnpjConsulta'] = $cnpjConsulta;
+            }else if(strlen($cnpjConsulta) == 11){
+                $queryParams['cpfConsulta'] = $cnpjConsulta;
+            }
         }
         if (! $lote) {
             $queryParams['lote'] = 'false';

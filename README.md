@@ -174,7 +174,7 @@ Alguns municípios utilizam servidores próprios, mas seguem rigorosamente o con
 
 | Município | UF  | Status     | Observação                                                       |
 | :-------- | :-- | :--------- | :--------------------------------------------------------------- |
-| Catanduva | SP  | ✅ Testado | Utiliza infraestrutura própria (RLZ) seguindo contrato nacional. |
+| —         | —   | —          | Nenhum no momento. Catanduva/SP migrou para o Emissor Nacional em 09/2026. |
 
 Para esses municípios o `downloadDanfse()` também busca o PDF no servidor da própria prefeitura
 (`{endpoint}/danfse/{chaveAcesso}/pdf`), em vez do ambiente nacional (que frequentemente responde 503).
@@ -198,8 +198,8 @@ $context = new NfseContext(
     certificatePath: '/path/to/cert.pfx',
     certificatePassword: 'password',
     endpoint: new Endpoint([
-        'production'   => 'https://164.152.60.237/nota/nacional',
-        'homologation' => 'https://catanduva.prefeitura.rlz.com.br/nota/nacional',
+        'production'   => 'https://nfse.seumunicipio.exemplo/nota/nacional',
+        'homologation' => 'https://homologacao.nfse.seumunicipio.exemplo/nota/nacional',
     ])
 );
 ```
@@ -215,7 +215,7 @@ $context = new NfseContext(
     ambiente: TipoAmbiente::Producao,
     certificatePath: '/path/to/cert.pfx',
     certificatePassword: 'password',
-    codigoMunicipio: '3511102' // Catanduva/SP
+    codigoMunicipio: '1234567' // código IBGE do município mapeado
 );
 ```
 

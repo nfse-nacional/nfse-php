@@ -23,9 +23,9 @@ Alguns municípios adotam o mesmo padrão da NFS-e nacional, porém disponibiliz
 
 ```
 private const ENDPOINTS = [
-    '3511102' => [
-        'production' => 'https://164.152.60.237/nota/nacional',
-        'homologation' => 'https://catanduva.prefeitura.rlz.com.br/nota/nacional',
+    '1234567' => [
+        'production' => 'https://nfse.seumunicipio.exemplo/nota/nacional',
+        'homologation' => 'https://homologacao.nfse.seumunicipio.exemplo/nota/nacional',
     ],
 ];
 ```
@@ -42,8 +42,8 @@ $context = new NfseContext(
     certificatePath: '/path/to/cert.pfx',
     certificatePassword: 'password',
     endpoint: new Endpoint([
-        'production'   => 'https://164.152.60.237/nota/nacional',
-        'homologation' => 'https://catanduva.prefeitura.rlz.com.br/nota/nacional',
+        'production'   => 'https://nfse.seumunicipio.exemplo/nota/nacional',
+        'homologation' => 'https://homologacao.nfse.seumunicipio.exemplo/nota/nacional',
     ])
 );
 ```
@@ -51,7 +51,7 @@ $context = new NfseContext(
 Lista de municípios homologados
 
 Código IBGE	Município	Produção	Homologação
-3511102	Catanduva/SP	https://164.152.60.237/nota/nacional	https://catanduva.prefeitura.rlz.com.br/nota/nacional
+Nenhum município mapeado no momento. Catanduva/SP (3511102) migrou para o Emissor Nacional em 09/2026 e foi removida.
 
 Observações
 	•	A constante ENDPOINTS foi projetada para receber vários municípios, conforme novas prefeituras homologadas forem identificadas.

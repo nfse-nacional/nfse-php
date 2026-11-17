@@ -90,29 +90,6 @@ class AdnClientTest extends TestCase
         $this->assertEquals('/danfse/CHAVE123', (string) $this->mock->getLastRequest()->getUri());
     }
 
-    public function test_obter_danfse_usa_endpoint_do_municipio()
-    {
-        $pdfContent = '%PDF-1.4';
-
-        $client = $this->createClientWithMock(
-            [new Response(200, [], $pdfContent)],
-            new NfseContext(
-                TipoAmbiente::Producao,
-                'fake/path.pfx',
-                'password',
-                codigoMunicipio: '3511102'
-            )
-        );
-
-        $response = $client->obterDanfse('CHAVE123');
-
-        $this->assertEquals($pdfContent, $response);
-        $this->assertEquals(
-            'https://cidadaoonline.catanduva.sp.gov.br/nota/nacional/danfse/CHAVE123/pdf',
-            (string) $this->mock->getLastRequest()->getUri()
-        );
-    }
-
     public function test_consultar_eventos_contribuinte()
     {
         $responseData = [['tipoEvento' => 101101]];

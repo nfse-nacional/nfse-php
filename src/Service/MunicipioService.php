@@ -38,6 +38,9 @@ class MunicipioService
      * gerar o DANFSe internamente e adequar seus layouts. Novo Layout: o documento agora possui um formato
      * padrão obrigatório em folha A4, exigência de QR Code e inclusão de campos para IBS e CBS.
      * Nota técnica: https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/nt-008-se-cgnfse-danfse-20260505.pdf
+     * Para gerar o PDF localmente, use o pacote nfse-nacional/danfse-php:
+     * `(new \Danfse\Danfse\Danfse)->render($nfseData)`.
+     * @see https://github.com/nfse-nacional/danfse-php
      */
     public function downloadDanfse(string $chaveAcesso): string
     {

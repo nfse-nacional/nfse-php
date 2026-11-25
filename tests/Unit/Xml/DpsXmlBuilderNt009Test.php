@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Support\IdGenerator;
 use Nfse\Xml\DpsXmlBuilder;
 
-function dpsLeiauteNt009(?string $finNfse, ?string $motivoEmisTI = null): DpsData
+function dpsLeiauteNt009(?string $finNfse, ?string $motivoEmisTI = null, ?array $ibscbs = null): DpsData
 {
     return new DpsData([
         '@attributes' => ['versao' => '1.01'],
@@ -53,6 +53,7 @@ function dpsLeiauteNt009(?string $finNfse, ?string $motivoEmisTI = null): DpsDat
                     'totTrib.vTotTrib.vTotTribMun' => 0,
                 ],
             ],
+            'IBSCBS' => $ibscbs,
         ],
     ]);
 }
@@ -76,4 +77,42 @@ it('writes cServ in the 1.01 order even without finNFSe', function () {
     expect($xml)->not->toContain('finNFSe')
         ->and($xml)->toContain('<cNBS>115031000</cNBS><xDescServ>Hospedagem de sites</xDescServ></cServ>')
         ->and($xml)->not->toContain('<cAtvSN>');
+});
+
+function ibscbsBasico(array $gIbscbs = []): array
+{
+    $trib = [
+        'CST' => '000',
+        'cClassTrib' => '000001',
+    ];
+
+    if ($gIbscbs !== []) {
+        $trib['gIBSCBS'] = $gIbscbs;
+    }
+
+    return [
+        'cIndOp' => '100301',
+        'indDest' => 0,
+        'valores' => ['trib' => $trib],
+    ];
+}
+
+it('writes CST and cClassTrib directly in trib in the NT 009 layout', function () {
+    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ibscbsBasico()));
+
+    expect($xml)->toContain('<valores><trib><CST>000</CST><cClassTrib>000001</cClassTrib></trib></valores></IBSCBS>')
+        ->and($xml)->not->toContain('gIBSCBS');
+});
+
+it('keeps only the remaining fields in gIBSCBS in the NT 009 layout', function () {
+    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ibscbsBasico(['cCredPres' => '01'])));
+
+    expect($xml)->toContain('<trib><CST>000</CST><cClassTrib>000001</cClassTrib><gIBSCBS><cCredPres>01</cCredPres></gIBSCBS></trib>');
+});
+
+it('writes finNFSe only in infDPS in the NT 009 layout', function () {
+    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ibscbsBasico()));
+
+    expect(substr_count($xml, '<finNFSe>'))->toBe(1)
+        ->and($xml)->toContain('<IBSCBS><cIndOp>100301</cIndOp>');
 });

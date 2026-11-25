@@ -3,25 +3,29 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
+use Nfse\Support\DTO\ArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class ImovelData extends Dto
 {
     /**
-     * Inscrição imobiliária fiscal fornecida pela Prefeitura Municipal.
+     * Código do município do imóvel (tabela do IBGE).
      */
-    #[MapFrom('inscImobFisc')]
-    public ?string $inscricaoImobiliariaFiscal = null;
+    #[MapFrom('cMun')]
+    public ?string $codigoMunicipio = null;
 
     /**
-     * Código do Cadastro Imobiliário Brasileiro (CIB).
+     * Locação, cessão onerosa ou arrendamento.
      */
-    #[MapFrom('cCIB')]
-    public ?string $codigoCib = null;
+    #[MapFrom('gLocacao')]
+    public ?LocacaoData $locacao = null;
 
     /**
-     * Endereço do imóvel.
+     * Unidades imobiliárias objeto da operação.
+     *
+     * @var UnidadeImovelData[]|null
      */
-    #[MapFrom('end')]
-    public ?EnderecoData $endereco = null;
+    #[MapFrom('gUnidImob'), CastWith(ArrayCaster::class, itemType: UnidadeImovelData::class)]
+    public ?array $unidadesImovel = null;
 }

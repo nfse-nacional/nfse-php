@@ -38,7 +38,6 @@ it('can build xml from dps data', function () {
                 'regTrib' => [
                     'opSimpNac' => 3,
                     'regApTribSN' => 1,
-                    'regApIBSCBSSN' => 1,
                     'regEspTrib' => 0,
                 ],
             ],
@@ -65,7 +64,6 @@ it('can build xml from dps data', function () {
                     'cTribMun' => null,
                     'xDescServ' => 'Analise de sistemas',
                     'cNBS' => null,
-                    'cAtvSN' => 7,
                     'cIntContrib' => null,
                 ],
                 'comExt' => null,
@@ -91,8 +89,8 @@ it('can build xml from dps data', function () {
                     'tribMun.exigSusp.tpSusp' => 1,
                     'tribMun.exigSusp.nProcesso' => '123456',
                     'tribMun.BM' => [
+                        'nBM' => '35503080100001',
                         'pRedBCBM' => 10.0,
-                        'vRedBCBM' => 100.0,
                     ],
                     'tribFed.piscofins.CST' => null,
                     'totTrib.pTotTribSN' => null,
@@ -109,14 +107,15 @@ it('can build xml from dps data', function () {
         ->and($xml)->toContain('<infDPS Id="'.$id.'">')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>')
-        ->and($xml)->toContain('<regApIBSCBSSN>1</regApIBSCBSSN>')
-        ->and($xml)->toContain('<cAtvSN>7</cAtvSN>')
+        ->and($xml)->not->toContain('<regApIBSCBSSN>')
+        ->and($xml)->not->toContain('<cAtvSN>')
         ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')
         ->and($xml)->toContain('<chNFSeRej>12345678901234567890123456789012345678901234</chNFSeRej>')
         ->and($xml)->toContain('<tpSusp>1</tpSusp>')
         ->and($xml)->toContain('<nProcesso>123456</nProcesso>')
+        ->and($xml)->toContain('<nBM>35503080100001</nBM>')
         ->and($xml)->toContain('<pRedBCBM>10.00</pRedBCBM>')
-        ->and($xml)->toContain('<vRedBCBM>100.00</vRedBCBM>')
+        ->and($xml)->not->toContain('<vRedBCBM>')
         ->and($xml)->not()->toContain('<idDocTec></idDocTec>')
         ->and($xml)->not()->toContain('<docRef></docRef>')
         ->and($xml)->not()->toContain('<xInfComp></xInfComp>');
@@ -200,7 +199,7 @@ it('can build xml with pAliq and correct tribMun order', function () {
                     'tribMun.exigSusp.tpSusp' => 1,
                     'tribMun.exigSusp.nProcesso' => '123456',
                     'tribMun.BM' => [
-                        'pRedBCBM' => 10.0,
+                        'nBM' => '35503080100001',
                         'vRedBCBM' => 100.0,
                     ],
                     'tribMun.pAliq' => 5.00,

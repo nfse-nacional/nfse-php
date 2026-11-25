@@ -3,6 +3,7 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
+use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Enums\TipoEnteGovernamental;
 use Nfse\Enums\TipoOperacaoRtc;
@@ -14,13 +15,6 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 class IbscbsData extends Dto
 {
     /**
-     * Indicador da finalidade da emissão de NFS-e.
-     * 0 - NFS-e regular
-     */
-    #[MapFrom('finNFSe')]
-    public ?string $finalidadeNfse = null;
-
-    /**
      * Indica operação de uso ou consumo pessoal (art. 57).
      * 0 - Não
      * 1 - Sim
@@ -29,11 +23,10 @@ class IbscbsData extends Dto
     public ?int $indicadorUsoConsumoPessoal = null;
 
     /**
-     * Código indicador da operação de fornecimento, conforme tabela
-     * "código indicador de operação" (Anexo VII).
+     * Código indicador da operação de fornecimento.
      */
-    #[MapFrom('cIndOp')]
-    public ?string $codigoIndicadorOperacao = null;
+    #[MapFrom('cIndOp'), CastWith(EnumCaster::class, enumType: CodigoIndicadorOperacao::class)]
+    public ?CodigoIndicadorOperacao $codigoIndicadorOperacao = null;
 
     /**
      * Tipo de Operação com Entes Governamentais ou outros serviços sobre bens imóveis.
@@ -70,29 +63,29 @@ class IbscbsData extends Dto
     public ?TomadorData $destinatario = null;
 
     /**
-     * Informações de operações relacionadas a bens imóveis, exceto obras.
+     * Operações relacionadas a bens imóveis, exceto obras.
      */
     #[MapFrom('imovel')]
     public ?ImovelData $imovel = null;
 
     /**
-     * Documentos referenciados de reembolso, repasse ou ressarcimento.
+     * Bens móveis objeto de locação.
      *
-     * @var ReembolsoDocumentoData[]|null
+     * @var BemMovelData[]|null
      */
-    #[MapFrom('valores.gReeRepRes.documentos'), CastWith(ArrayCaster::class, itemType: ReembolsoDocumentoData::class)]
-    public ?array $documentosReembolso = null;
+    #[MapFrom('bensMoveis'), CastWith(ArrayCaster::class, itemType: BemMovelData::class)]
+    public ?array $bensMoveis = null;
 
     /**
      * Código de Situação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.CST')]
+    #[MapFrom('valores.trib.CST')]
     public ?string $cst = null;
 
     /**
      * Código de Classificação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.cClassTrib')]
+    #[MapFrom('valores.trib.cClassTrib')]
     public ?string $codigoClassificacaoTributaria = null;
 
     /**

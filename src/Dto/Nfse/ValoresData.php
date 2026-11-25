@@ -20,10 +20,10 @@ class ValoresData extends Dto
     public ?DescontoData $desconto = null;
 
     /**
-     * Deduções e reduções da base de cálculo.
+     * Ajuste da base de cálculo do ISSQN e/ou IBS/CBS.
      */
-    #[MapFrom('vDedRed')]
-    public ?DeducaoReducaoData $deducaoReducao = null;
+    #[MapFrom('vAjusteBC')]
+    public ?AjusteBaseCalculoData $ajusteBaseCalculo = null;
 
     /**
      * Informações sobre a tributação do serviço.

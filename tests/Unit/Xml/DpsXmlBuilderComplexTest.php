@@ -78,15 +78,19 @@ it('can build xml with complex structures', function () {
                     'vDescIncond' => 10.0,
                     'vDescCond' => 5.0,
                 ],
-                'vDedRed' => [
-                    'pDR' => 20.0,
-                    'vDR' => 200.0,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 200.00,
                     'documentos' => [
-                        [
-                            'chNFSe' => '12345678901234567890123456789012345678901234',
-                            'tpDedRed' => 1,
-                            'vDedRedutivel' => 100.0,
-                            'vDedRed' => 100.0,
+                        'docAjusteBC' => [
+                            [
+                                'tpAjusteBC' => '2',
+                                'vTotDoc' => 100.0,
+                                'vAjusteAplic' => 100.0,
+                                'dFeNacional' => [
+                                    'tipoChaveDFe' => 1,
+                                    'chaveDFe' => '12345678901234567890123456789012345678901234',
+                                ],
+                            ],
                         ],
                     ],
                 ],
@@ -121,7 +125,7 @@ it('can build xml with complex structures', function () {
         ->and($xml)->toContain('<obra>')
         ->and($xml)->toContain('<atvEvento>')
         ->and($xml)->toContain('<vDescCondIncond>')
-        ->and($xml)->toContain('<vDedRed>')
+        ->and($xml)->toContain('<vAjusteBC>')
         ->and($xml)->toContain('<documentos>')
         ->and($xml)->toContain('<piscofins>')
         ->and($xml)->toContain('<vRetIRRF>15.00</vRetIRRF>')

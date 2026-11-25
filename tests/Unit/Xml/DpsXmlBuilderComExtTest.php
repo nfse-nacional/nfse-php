@@ -19,6 +19,7 @@ function dpsComComercioExterior(float $valorServicoMoeda): DpsData
             'nDPS' => '1001',
             'dCompet' => '2026-03-10',
             'tpEmit' => 1,
+            'finNFSe' => '0',
             'cLocEmi' => '3550308',
             'prest' => [
                 'CNPJ' => '12345678000199',

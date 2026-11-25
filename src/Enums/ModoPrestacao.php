@@ -5,12 +5,12 @@ namespace Nfse\Enums;
 /**
  * Modo de Prestação do Serviço (Comércio Exterior)
  *
- * Baseado no schema: TSMdPrestacao
+ * Baseado no schema: TSModoPrestacao
  */
 enum ModoPrestacao: string
 {
     /**
-     * Desconhecido ou Não Aplicável
+     * Desconhecido (tipo não informado na nota de origem)
      */
     case Desconhecido = '0';
 
@@ -20,37 +20,31 @@ enum ModoPrestacao: string
     case Transfronteirico = '1';
 
     /**
-     * Consumo no Exterior
+     * Consumo no Brasil
      */
-    case ConsumoNoExterior = '2';
+    case ConsumoNoBrasil = '2';
 
     /**
-     * Presença Comercial no Exterior
+     * Movimento temporário de pessoas físicas
      */
-    case PresencaComercialNoExterior = '3';
+    case MovimentoTemporarioPessoasFisicas = '3';
 
     /**
-     * Movimento Temporário de Pessoas Físicas
+     * Consumo no exterior
      */
-    case MovimentoTemporarioPessoasFisicas = '4';
+    case ConsumoNoExterior = '4';
 
-    /**
-     * Get description for the enum case
-     */
     public function getDescription(): string
     {
         return match ($this) {
+            self::Desconhecido => 'Desconhecido (tipo não informado na nota de origem)',
             self::Transfronteirico => 'Transfronteiriço',
-            self::ConsumoNoExterior => 'Consumo no Exterior',
-            self::PresencaComercialNoExterior => 'Presença Comercial no Exterior',
+            self::ConsumoNoBrasil => 'Consumo no Brasil',
             self::MovimentoTemporarioPessoasFisicas => 'Movimento Temporário de Pessoas Físicas',
-            self::Desconhecido => 'Desconhecido ou Não Aplicável',
+            self::ConsumoNoExterior => 'Consumo no Exterior',
         };
     }
 
-    /**
-     * Get label (alias for getDescription)
-     */
     public function label(): string
     {
         return $this->getDescription();

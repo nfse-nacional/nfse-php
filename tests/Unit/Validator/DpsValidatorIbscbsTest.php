@@ -25,7 +25,7 @@ function validarDpsComIbscbs(array $ibscbs, array $sobrescritas = []): array
             'cServ' => [
                 'cTribNac' => '010201',
                 'xDescServ' => 'Analise de sistemas',
-                'cNBS' => '112011000',
+                'cNBS' => '101011100',
             ],
         ],
         'valores' => [
@@ -44,15 +44,12 @@ function validarDpsComIbscbs(array $ibscbs, array $sobrescritas = []): array
 function ibscbsValido(array $sobrescritas = []): array
 {
     return array_replace([
-        'finNFSe' => '0',
         'cIndOp' => '010101',
         'indDest' => 0,
         'valores' => [
             'trib' => [
-                'gIBSCBS' => [
-                    'CST' => '000',
-                    'cClassTrib' => '000001',
-                ],
+                'CST' => '000',
+                'cClassTrib' => '000001',
             ],
         ],
     ], $sobrescritas);
@@ -103,10 +100,8 @@ it('rejects a cClassTrib outside the informed cst group', function () {
     $errors = validarDpsComIbscbs(ibscbsValido([
         'valores' => [
             'trib' => [
-                'gIBSCBS' => [
-                    'CST' => '200',
-                    'cClassTrib' => '000001',
-                ],
+                'CST' => '200',
+                'cClassTrib' => '000001',
             ],
         ],
     ]));
@@ -114,29 +109,17 @@ it('rejects a cClassTrib outside the informed cst group', function () {
     expect($errors)->toContain('O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.');
 });
 
-it('validates the reimbursement documents', function () {
-    $errors = validarDpsComIbscbs(ibscbsValido([
-        'valores' => [
-            'gReeRepRes' => [
-                'documentos' => [
-                    'docOutro' => ['nDoc' => '55', 'xDoc' => 'Recibo'],
-                    'dtEmiDoc' => '2026-01-10',
-                    'dtCompDoc' => '2026-02-10',
-                    'tpReeRepRes' => '01',
-                    'xTpReeRepRes' => 'Descricao indevida',
-                    'vlrReeRepRes' => 1500.00,
-                ],
-            ],
-            'trib' => [
-                'gIBSCBS' => [
-                    'CST' => '000',
-                    'cClassTrib' => '000001',
-                ],
+it('rejects an nbs code outside the catalog', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido(), [
+        'serv' => [
+            'locPrest' => ['cLocPrestacao' => '3550308'],
+            'cServ' => [
+                'cTribNac' => '010201',
+                'xDescServ' => 'Analise de sistemas',
+                'cNBS' => '112011000',
             ],
         ],
-    ]));
+    ]);
 
-    expect($errors)->toContain('A descrição do tipo de reembolso, repasse e ressarcimento só deve ser informada quando o tipo for 99.')
-        ->toContain('A data de emissão do documento de reembolso deve ser igual ou posterior à sua data de competência.')
-        ->toContain('O valor de reembolso, repasse e ressarcimento deve ser menor ou igual ao valor do serviço prestado.');
+    expect($errors)->toContain('O código NBS informado não consta na lista NBS 2.0.');
 });

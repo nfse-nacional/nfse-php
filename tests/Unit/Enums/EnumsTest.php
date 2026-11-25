@@ -7,8 +7,8 @@ use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\MovimentacaoTemporariaBens;
 use Nfse\Enums\ProcessoEmissao;
 use Nfse\Enums\RegimeEspecialTributacao;
+use Nfse\Enums\TipoAjusteBaseCalculo;
 use Nfse\Enums\TipoAmbiente;
-use Nfse\Enums\TipoDeducaoReducao;
 
 describe('TipoAmbiente', function () {
     it('has correct values', function () {
@@ -168,19 +168,19 @@ describe('IndicadorTotalTributos', function () {
 
 describe('MovimentacaoTemporariaBens', function () {
     it('has correct values', function () {
-        expect(MovimentacaoTemporariaBens::Nenhum->value)->toBe('0')
+        expect(MovimentacaoTemporariaBens::Desconhecido->value)->toBe('0')
             ->and(MovimentacaoTemporariaBens::Nao->value)->toBe('1')
-            ->and(MovimentacaoTemporariaBens::SimImportacao->value)->toBe('2')
-            ->and(MovimentacaoTemporariaBens::SimExportacao->value)->toBe('3');
+            ->and(MovimentacaoTemporariaBens::DeclaracaoImportacao->value)->toBe('2')
+            ->and(MovimentacaoTemporariaBens::DeclaracaoExportacao->value)->toBe('3');
     });
 
     it('can create from value', function () {
-        expect(MovimentacaoTemporariaBens::from('0'))->toBe(MovimentacaoTemporariaBens::Nenhum)
+        expect(MovimentacaoTemporariaBens::from('0'))->toBe(MovimentacaoTemporariaBens::Desconhecido)
             ->and(MovimentacaoTemporariaBens::from('1'))->toBe(MovimentacaoTemporariaBens::Nao)
-            ->and(MovimentacaoTemporariaBens::from('2'))->toBe(MovimentacaoTemporariaBens::SimImportacao)
-            ->and(MovimentacaoTemporariaBens::from('3'))->toBe(MovimentacaoTemporariaBens::SimExportacao);
+            ->and(MovimentacaoTemporariaBens::from('2'))->toBe(MovimentacaoTemporariaBens::DeclaracaoImportacao)
+            ->and(MovimentacaoTemporariaBens::from('3'))->toBe(MovimentacaoTemporariaBens::DeclaracaoExportacao);
 
-        expect(MovimentacaoTemporariaBens::tryFrom('0'))->toBe(MovimentacaoTemporariaBens::Nenhum)
+        expect(MovimentacaoTemporariaBens::tryFrom('0'))->toBe(MovimentacaoTemporariaBens::Desconhecido)
             ->and(MovimentacaoTemporariaBens::tryFrom('99'))->toBeNull();
     });
 
@@ -188,50 +188,34 @@ describe('MovimentacaoTemporariaBens', function () {
         $cases = MovimentacaoTemporariaBens::cases();
 
         expect($cases)->toHaveCount(4)
-            ->and($cases[0])->toBe(MovimentacaoTemporariaBens::Nenhum)
+            ->and($cases[0])->toBe(MovimentacaoTemporariaBens::Desconhecido)
             ->and($cases[1])->toBe(MovimentacaoTemporariaBens::Nao)
-            ->and($cases[2])->toBe(MovimentacaoTemporariaBens::SimImportacao)
-            ->and($cases[3])->toBe(MovimentacaoTemporariaBens::SimExportacao);
+            ->and($cases[2])->toBe(MovimentacaoTemporariaBens::DeclaracaoImportacao)
+            ->and($cases[3])->toBe(MovimentacaoTemporariaBens::DeclaracaoExportacao);
     });
 
     it('returns correct descriptions', function () {
-        expect(MovimentacaoTemporariaBens::Nenhum->getDescription())->toBe('Nenhum')
+        expect(MovimentacaoTemporariaBens::Desconhecido->getDescription())->toBe('Desconhecido (tipo não informado na nota de origem)')
             ->and(MovimentacaoTemporariaBens::Nao->getDescription())->toBe('Não')
-            ->and(MovimentacaoTemporariaBens::SimImportacao->getDescription())->toBe('Sim (Importação)')
-            ->and(MovimentacaoTemporariaBens::SimExportacao->getDescription())->toBe('Sim (Exportação)');
+            ->and(MovimentacaoTemporariaBens::DeclaracaoImportacao->getDescription())->toBe('Vinculada - Declaração de Importação')
+            ->and(MovimentacaoTemporariaBens::DeclaracaoExportacao->getDescription())->toBe('Vinculada - Declaração de Exportação');
 
-        expect(MovimentacaoTemporariaBens::Nenhum->label())->toBe('Nenhum')
+        expect(MovimentacaoTemporariaBens::Desconhecido->label())->toBe('Desconhecido (tipo não informado na nota de origem)')
             ->and(MovimentacaoTemporariaBens::Nao->label())->toBe('Não');
 
     });
 });
 
-describe('TipoDeducaoReducao', function () {
-    it('has all values of TSIdeDedRed from schema 1.01', function () {
-        expect(TipoDeducaoReducao::cases())->toHaveCount(10)
-            ->and(TipoDeducaoReducao::AlimentacaoBebidas->value)->toBe('1')
-            ->and(TipoDeducaoReducao::Materiais->value)->toBe('2')
-            ->and(TipoDeducaoReducao::ProducaoExterna->value)->toBe('3')
-            ->and(TipoDeducaoReducao::ReembolsoDespesas->value)->toBe('4')
-            ->and(TipoDeducaoReducao::RepasseConsorciado->value)->toBe('5')
-            ->and(TipoDeducaoReducao::RepassePlanoSaude->value)->toBe('6')
-            ->and(TipoDeducaoReducao::Servicos->value)->toBe('7')
-            ->and(TipoDeducaoReducao::SubempreitadaMaoObra->value)->toBe('8')
-            ->and(TipoDeducaoReducao::ProfissionalParceiro->value)->toBe('9')
-            ->and(TipoDeducaoReducao::OutrasDeducoes->value)->toBe('99');
-    });
-
-    it('can create from value', function () {
-        expect(TipoDeducaoReducao::from('3'))->toBe(TipoDeducaoReducao::ProducaoExterna)
-            ->and(TipoDeducaoReducao::tryFrom('4'))->toBe(TipoDeducaoReducao::ReembolsoDespesas)
-            ->and(TipoDeducaoReducao::tryFrom('10'))->toBeNull();
-    });
-
-    it('returns correct descriptions', function () {
-        expect(TipoDeducaoReducao::AlimentacaoBebidas->getDescription())->toBe('Alimentação e bebidas/frigobar')
-            ->and(TipoDeducaoReducao::SubempreitadaMaoObra->getDescription())->toBe('Subempreitada de mão de obra')
-            ->and(TipoDeducaoReducao::ProfissionalParceiro->getDescription())->toBe('Profissional parceiro')
-            ->and(TipoDeducaoReducao::OutrasDeducoes->label())->toBe('Outras deduções');
+describe('TipoAjusteBaseCalculo', function () {
+    it('has the values of TSRTCTpAjusteBC', function () {
+        expect(TipoAjusteBaseCalculo::cases())->toHaveCount(13)
+            ->and(TipoAjusteBaseCalculo::Materiais->value)->toBe('2')
+            ->and(TipoAjusteBaseCalculo::RepasseConsorciado->value)->toBe('5')
+            ->and(TipoAjusteBaseCalculo::OutrasDeducoes->value)->toBe('99')
+            ->and(TipoAjusteBaseCalculo::RepasseIntermediacaoImoveis->value)->toBe('101')
+            ->and(TipoAjusteBaseCalculo::OutrosReembolsos->value)->toBe('199')
+            ->and(TipoAjusteBaseCalculo::tryFrom('1'))->toBeNull()
+            ->and(TipoAjusteBaseCalculo::Materiais->label())->toBe('Materiais');
     });
 });
 

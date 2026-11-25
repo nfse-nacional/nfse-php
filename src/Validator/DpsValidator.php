@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
-use Nfse\Enums\TipoReembolsoRepasseRessarcimento;
+use Nfse\Support\CatalogoNbs;
 
 class DpsValidator
 {
@@ -124,15 +124,15 @@ class DpsValidator
             $errors[] = 'O valor do desconto condicionado deve ser menor que o valor do serviço.';
         }
 
-        // Rule 303: vServ >= descIncond + vDR + vRedBCBM
-        $vDR = $valores->deducaoReducao ? ($valores->deducaoReducao->valorDeducaoReducao ?? 0) : 0;
+        // O valor do serviço cobre desconto incondicionado, ajuste monetário da base e benefício municipal.
+        $valorAjuste = $valores->ajusteBaseCalculo?->valorAjusteBaseCalculoIssqn ?? 0;
         $vRedBCBM = 0;
         if ($valores->tributacao && $valores->tributacao->beneficioMunicipal) {
             $vRedBCBM = $valores->tributacao->beneficioMunicipal->valorReducaoBcBm ?? 0;
         }
 
-        if ($vServ < ($vDescIncond + $vDR + $vRedBCBM)) {
-            $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.';
+        if ($vServ < ($vDescIncond + $valorAjuste + $vRedBCBM)) {
+            $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Ajuste da Base de Cálculo e Benefício Municipal.';
         }
     }
 
@@ -173,8 +173,13 @@ class DpsValidator
             $errors[] = 'As informações de IBS/CBS só podem ser declaradas a partir da data de competência 01/01/2026.';
         }
 
+        $codigoNbs = $infDps->servico?->codigoServico?->codigoNbs;
+        if ($codigoNbs !== null && ! CatalogoNbs::contem($codigoNbs)) {
+            $errors[] = 'O código NBS informado não consta na lista NBS 2.0.';
+        }
+
         // Rule 324: cNBS é obrigatório quando o grupo de IBS/CBS é informado
-        if ($infDps->servico?->codigoServico?->codigoNbs === null) {
+        if ($infDps->ibscbs !== null && $codigoNbs === null) {
             $errors[] = 'O item da NBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
         }
 
@@ -192,26 +197,6 @@ class DpsValidator
         if ($ibscbs->cst !== null && $ibscbs->codigoClassificacaoTributaria !== null
             && ! str_starts_with($ibscbs->codigoClassificacaoTributaria, $ibscbs->cst)) {
             $errors[] = 'O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.';
-        }
-
-        $vServ = $infDps->valores?->valorServicoPrestado?->valorServico ?? 0;
-
-        foreach ($ibscbs->documentosReembolso ?? [] as $documento) {
-            // Rule 621: xTpReeRepRes só deve ser informado quando tpReeRepRes = 99
-            if ($documento->descricaoTipoReembolso !== null && $documento->tipoReembolso !== TipoReembolsoRepasseRessarcimento::Outros) {
-                $errors[] = 'A descrição do tipo de reembolso, repasse e ressarcimento só deve ser informada quando o tipo for 99.';
-            }
-
-            // Rule 618/619: a data de emissão deve ser igual ou posterior à data de competência
-            if ($documento->dataEmissaoDocumento !== null && $documento->dataCompetenciaDocumento !== null
-                && $documento->dataEmissaoDocumento < $documento->dataCompetenciaDocumento) {
-                $errors[] = 'A data de emissão do documento de reembolso deve ser igual ou posterior à sua data de competência.';
-            }
-
-            // Rule 622: o valor do reembolso deve ser menor ou igual ao valor do serviço prestado
-            if ($documento->valorReembolso !== null && $documento->valorReembolso > $vServ) {
-                $errors[] = 'O valor de reembolso, repasse e ressarcimento deve ser menor ou igual ao valor do serviço prestado.';
-            }
         }
     }
 }

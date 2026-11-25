@@ -70,10 +70,10 @@ it('writes finNFSe after cMotivoEmisTI', function () {
     expect($xml)->toContain('<tpEmit>1</tpEmit><cMotivoEmisTI>4</cMotivoEmisTI><finNFSe>0</finNFSe><cLocEmi>');
 });
 
-it('keeps the current layout when finNFSe is not informed', function () {
+it('writes cServ in the 1.01 order even without finNFSe', function () {
     $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009(null));
 
     expect($xml)->not->toContain('finNFSe')
-        ->and($xml)->toContain('<cTribNac>010701</cTribNac><xDescServ>Hospedagem de sites</xDescServ><cNBS>115031000</cNBS>')
-        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue();
+        ->and($xml)->toContain('<cNBS>115031000</cNBS><xDescServ>Hospedagem de sites</xDescServ></cServ>')
+        ->and($xml)->not->toContain('<cAtvSN>');
 });

@@ -48,6 +48,7 @@ try {
             'nDPS' => $numero,
             'dCompet' => date('Y-m-d'), // O grupo IBSCBS só é aceito a partir de 01/01/2026
             'tpEmit' => 1, // Prestador
+            'finNFSe' => '0',
             'cLocEmi' => $codigoMunicipio,
 
             'prest' => [
@@ -79,7 +80,7 @@ try {
                     'cTribNac' => '010101',
                     'xDescServ' => 'Desenvolvimento de Software',
                     // O item da NBS é obrigatório quando o grupo IBSCBS é informado
-                    'cNBS' => '112011000',
+                    'cNBS' => '101011100',
                 ],
             ],
             'valores' => [
@@ -97,15 +98,12 @@ try {
                 ],
             ],
             'IBSCBS' => [
-                'finNFSe' => '0', // NFS-e regular
-                'cIndOp' => '010101', // Código indicador da operação (Anexo VII)
-                'indDest' => 0, // O destinatário é o próprio tomador
+                'cIndOp' => '010101',
+                'indDest' => 0,
                 'valores' => [
                     'trib' => [
-                        'gIBSCBS' => [
-                            'CST' => '000', // Tributação integral
-                            'cClassTrib' => '000001',
-                        ],
+                        'CST' => '000',
+                        'cClassTrib' => '000001',
                     ],
                 ],
             ],

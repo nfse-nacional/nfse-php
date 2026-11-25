@@ -316,8 +316,8 @@ it('fails when service value is less than sum of deductions', function () {
                 'vDescCondIncond' => [
                     'vDescIncond' => 300.00,
                 ],
-                'vDedRed' => [
-                    'vDR' => 500.00,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 500.00,
                 ],
                 'trib' => [
                     'tribMun' => [
@@ -334,7 +334,7 @@ it('fails when service value is less than sum of deductions', function () {
     $result = $validator->validate($dps);
 
     expect($result->isValid)->toBeFalse();
-    expect($result->errors)->toContain('O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.');
+    expect($result->errors)->toContain('O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Ajuste da Base de Cálculo e Benefício Municipal.');
 });
 
 it('validates DPS with valid discount values', function () {
@@ -363,8 +363,8 @@ it('validates DPS with valid discount values', function () {
                     'vDescIncond' => 100.00, // Valid
                     'vDescCond' => 50.00, // Valid
                 ],
-                'vDedRed' => [
-                    'vDR' => 200.00,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 200.00,
                 ],
                 'trib' => [
                     'tribMun' => [

@@ -1,0 +1,3674 @@
+[
+  {
+    "codigo": "101011100",
+    "descricao": "Serviços de construção de edificações residenciais de um e dois pavimentos"
+  },
+  {
+    "codigo": "101011200",
+    "descricao": "Serviços de construção de edificações residenciais com mais de dois pavimentos"
+  },
+  {
+    "codigo": "101012100",
+    "descricao": "Serviços de construção de edificações industriais"
+  },
+  {
+    "codigo": "101012200",
+    "descricao": "Serviços de construção de edificações comerciais"
+  },
+  {
+    "codigo": "101012900",
+    "descricao": "Serviços de construção de edificações não residenciais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101013000",
+    "descricao": "Serviços de construção de edificações de uso misto (residencial e não residencial)"
+  },
+  {
+    "codigo": "101021100",
+    "descricao": "Serviços de construção de autoestradas (exceto autoestradas elevadas), ruas e estradas"
+  },
+  {
+    "codigo": "101021200",
+    "descricao": "Serviços de construção de ferrovias"
+  },
+  {
+    "codigo": "101021300",
+    "descricao": "Serviços de construção de pistas de pouso e decolagem em aeroportos e de infraestrutura aeroportuária"
+  },
+  {
+    "codigo": "101022000",
+    "descricao": "Serviços de construção de pontes, autoestradas elevadas e túneis"
+  },
+  {
+    "codigo": "101023100",
+    "descricao": "Serviços de construção de infraestrutura de proteção e acesso aquaviário"
+  },
+  {
+    "codigo": "101023200",
+    "descricao": "Serviços de construção de infraestrutura de acostagem aquaviária"
+  },
+  {
+    "codigo": "101023300",
+    "descricao": "Serviços de construção de infraestrutura terrestre e de obras de engenharia afins nos portos"
+  },
+  {
+    "codigo": "101023400",
+    "descricao": "Serviços de construção de barragens"
+  },
+  {
+    "codigo": "101023510",
+    "descricao": "Serviços de construção de adutoras em conduto livre"
+  },
+  {
+    "codigo": "101023520",
+    "descricao": "Serviços de construção de sistemas de irrigação"
+  },
+  {
+    "codigo": "101023530",
+    "descricao": "Serviços de construção relacionada ao controle dos cursos de água, inclusive canalização"
+  },
+  {
+    "codigo": "101024110",
+    "descricao": "Serviços de construção de dutos de longo curso para o transporte de petróleo, seus derivados, e gás"
+  },
+  {
+    "codigo": "101024120",
+    "descricao": "Serviços de construção de dutos de longo curso para o transporte e escoamento de águas"
+  },
+  {
+    "codigo": "101024190",
+    "descricao": "Serviços de construção de dutos de longo curso não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101024210",
+    "descricao": "Serviços de construção de linhas de comunicação de longo curso"
+  },
+  {
+    "codigo": "101024220",
+    "descricao": "Serviços de construção de linhas de transmissão de alta tensão"
+  },
+  {
+    "codigo": "101025100",
+    "descricao": "Serviços de construção de dutos locais"
+  },
+  {
+    "codigo": "101025210",
+    "descricao": "Serviços de construção de linhas locais de comunicação"
+  },
+  {
+    "codigo": "101025220",
+    "descricao": "Serviços de construção de linhas locais de transmissão de baixa e média tensão"
+  },
+  {
+    "codigo": "101025310",
+    "descricao": "Serviços de construção de sistemas de esgotos"
+  },
+  {
+    "codigo": "101025320",
+    "descricao": "Serviços de construção de sistemas de estações para elevação, tratamento e purificação de água"
+  },
+  {
+    "codigo": "101026100",
+    "descricao": "Serviços de construção de usinas de geração de energia"
+  },
+  {
+    "codigo": "101026900",
+    "descricao": "Serviços de construção de instalações industriais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101027000",
+    "descricao": "Serviços de construção de minas e suas unidades industriais"
+  },
+  {
+    "codigo": "101028000",
+    "descricao": "Serviços de construção de instalações para recreação e atividades desportivas ao ar livre"
+  },
+  {
+    "codigo": "101029000",
+    "descricao": "Serviços de construção de obras de engenharia civil não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101031000",
+    "descricao": "Serviços de demolição"
+  },
+  {
+    "codigo": "101032000",
+    "descricao": "Serviços de preparação de terrenos e de canteiros de obras"
+  },
+  {
+    "codigo": "101033000",
+    "descricao": "Serviços de escavação e remoção de terra"
+  },
+  {
+    "codigo": "101034100",
+    "descricao": "Serviços de perfuração de poços de água"
+  },
+  {
+    "codigo": "101034200",
+    "descricao": "Serviços de instalação de sistemas sépticos"
+  },
+  {
+    "codigo": "101040000",
+    "descricao": "Serviços de montagem e de edificação de construções pré-fabricadas"
+  },
+  {
+    "codigo": "101051100",
+    "descricao": "Serviços de estaqueamento"
+  },
+  {
+    "codigo": "101051200",
+    "descricao": "Serviços de fundação"
+  },
+  {
+    "codigo": "101052100",
+    "descricao": "Serviços de construção de estruturas de edificações"
+  },
+  {
+    "codigo": "101052200",
+    "descricao": "Serviços de construção de estruturas de telhados e coberturas"
+  },
+  {
+    "codigo": "101053000",
+    "descricao": "Serviços de construção de telhados e coberturas e serviços de impermeabilização"
+  },
+  {
+    "codigo": "101054000",
+    "descricao": "Serviços de concretagem"
+  },
+  {
+    "codigo": "101055000",
+    "descricao": "Serviços de montagem de estruturas de aço"
+  },
+  {
+    "codigo": "101056000",
+    "descricao": "Serviços de alvenaria"
+  },
+  {
+    "codigo": "101057000",
+    "descricao": "Serviços de andaimes"
+  },
+  {
+    "codigo": "101059000",
+    "descricao": "Serviços especializados de construção não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101061100",
+    "descricao": "Serviços de instalação de fiação elétrica e componentes"
+  },
+  {
+    "codigo": "101061200",
+    "descricao": "Serviços de instalação de alarmes contra incêndio"
+  },
+  {
+    "codigo": "101061300",
+    "descricao": "Serviços de instalação de sistemas de alarmes antifurto"
+  },
+  {
+    "codigo": "101061400",
+    "descricao": "Serviços de instalação de antenas residenciais"
+  },
+  {
+    "codigo": "101061900",
+    "descricao": "Serviços de instalação elétrica não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101062100",
+    "descricao": "Serviços de instalação de tubulação para fornecimento de água"
+  },
+  {
+    "codigo": "101062200",
+    "descricao": "Serviços de instalação de tubulação para escoamento de água"
+  },
+  {
+    "codigo": "101063100",
+    "descricao": "Serviços de instalação de equipamentos de aquecimento"
+  },
+  {
+    "codigo": "101063200",
+    "descricao": "Serviços de instalação de equipamentos de ventilação e de ar condicionado"
+  },
+  {
+    "codigo": "101064000",
+    "descricao": "Serviços de instalação de gás"
+  },
+  {
+    "codigo": "101065000",
+    "descricao": "Serviços de instalação de isolamentos"
+  },
+  {
+    "codigo": "101066000",
+    "descricao": "Serviços de instalação de elevadores, esteiras e escadas rolantes"
+  },
+  {
+    "codigo": "101069000",
+    "descricao": "Serviços de instalação não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "101071000",
+    "descricao": "Serviços de vidraçaria"
+  },
+  {
+    "codigo": "101072000",
+    "descricao": "Serviços de gesso e de estuque"
+  },
+  {
+    "codigo": "101073000",
+    "descricao": "Serviços de pintura"
+  },
+  {
+    "codigo": "101074000",
+    "descricao": "Serviços de revestimento de pisos e de paredes"
+  },
+  {
+    "codigo": "101075000",
+    "descricao": "Serviços de carpintaria e de serralharia"
+  },
+  {
+    "codigo": "101076000",
+    "descricao": "Serviços de instalação de cercas e grades"
+  },
+  {
+    "codigo": "101079000",
+    "descricao": "Serviços de acabamento não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "102010000",
+    "descricao": "Serviços de intermediação na distribuição de mercadorias"
+  },
+  {
+    "codigo": "102020000",
+    "descricao": "Comércio atacadista"
+  },
+  {
+    "codigo": "102030000",
+    "descricao": "Comércio varejista"
+  },
+  {
+    "codigo": "102040000",
+    "descricao": "Serviços de despacho aduaneiro"
+  },
+  {
+    "codigo": "102050000",
+    "descricao": "Serviços de intermediação na comercialização de energia elétrica"
+  },
+  {
+    "codigo": "103011000",
+    "descricao": "Fornecimento de refeições acompanhado de serviços de restaurante"
+  },
+  {
+    "codigo": "103012100",
+    "descricao": "Fornecimento de refeições pelo sistema de autosserviço (self-service)"
+  },
+  {
+    "codigo": "103012200",
+    "descricao": "Fornecimento de comidas rápidas (fast-food)"
+  },
+  {
+    "codigo": "103012900",
+    "descricao": "Fornecimento de refeições com serviços limitados de restaurante não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "103013100",
+    "descricao": "Fornecimento de alimentação para eventos"
+  },
+  {
+    "codigo": "103013200",
+    "descricao": "Fornecimento de alimentação para operadores de transportes (comissaria ou catering)"
+  },
+  {
+    "codigo": "103013900",
+    "descricao": "Fornecimento de alimentação, incluindo refeições, sob contrato, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "103019000",
+    "descricao": "Fornecimento de alimentação não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "103020000",
+    "descricao": "Fornecimento de bebidas em bares, cervejarias e outros"
+  },
+  {
+    "codigo": "103031100",
+    "descricao": "Serviços de hospedagem em quartos ou unidades de hospedagem para visitantes, com serviços diários de faxina"
+  },
+  {
+    "codigo": "103031200",
+    "descricao": "Serviços de hospedagem em quartos ou unidades de hospedagem para visitantes, sem serviços diários de faxina"
+  },
+  {
+    "codigo": "103031300",
+    "descricao": "Serviços de hospedagem em quartos ou unidades de hospedagem para visitantes, em propriedades partilhadas"
+  },
+  {
+    "codigo": "103031400",
+    "descricao": "Serviços de hospedagem para visitantes, em quartos de múltipla ocupação"
+  },
+  {
+    "codigo": "103032000",
+    "descricao": "Serviços de acampamentos turísticos (camping)"
+  },
+  {
+    "codigo": "103039000",
+    "descricao": "Serviços de hospedagem para visitantes não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "103041000",
+    "descricao": "Serviços de hospedagem em quartos ou unidades de hospedagem para estudantes em residências estudantis"
+  },
+  {
+    "codigo": "103042000",
+    "descricao": "Serviços de hospedagem em quartos ou unidades de hospedagem para trabalhadores em hotéis ou campos"
+  },
+  {
+    "codigo": "103049000",
+    "descricao": "Serviços de hospedagem, exceto para visitantes, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104011111",
+    "descricao": "Serviços de transporte rodoviário local prestados exclusivamente por meio de ônibus"
+  },
+  {
+    "codigo": "104011119",
+    "descricao": "Serviços de transporte rodoviário local regular de passageiros, exceto em áreas metropolitanas, não classificados em subitens anteriores"
+  },
+  {
+    "codigo": "104011120",
+    "descricao": "Serviços de transporte rodoviário local regular de passageiros, em áreas metropolitanas"
+  },
+  {
+    "codigo": "104011210",
+    "descricao": "Serviços de transporte escolar"
+  },
+  {
+    "codigo": "104011220",
+    "descricao": "Serviços de transporte para aeroportos (shuttle)"
+  },
+  {
+    "codigo": "104011290",
+    "descricao": "Serviços especiais de transporte rodoviário local regular de passageiros não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104011300",
+    "descricao": "Serviços de táxi"
+  },
+  {
+    "codigo": "104011400",
+    "descricao": "Serviços de carro com motorista, exceto táxi"
+  },
+  {
+    "codigo": "104011510",
+    "descricao": "Serviços de fretamento contínuo, local"
+  },
+  {
+    "codigo": "104011520",
+    "descricao": "Serviços de fretamento eventual ou turístico, local"
+  },
+  {
+    "codigo": "104011610",
+    "descricao": "Serviços de transporte ferroviário local de passageiros"
+  },
+  {
+    "codigo": "104011620",
+    "descricao": "Serviços de transporte metroviário (metrô) local de passageiros"
+  },
+  {
+    "codigo": "104011690",
+    "descricao": "Serviços de transporte local de passageiros por veículos sobre trilhos não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104011710",
+    "descricao": "Serviços de transporte rodoviário para passeios turísticos (sightseeing)"
+  },
+  {
+    "codigo": "104011720",
+    "descricao": "Serviços de transporte ferroviário para passeios turísticos (sightseeing)"
+  },
+  {
+    "codigo": "104011790",
+    "descricao": "Serviços de transporte terrestre para passeios turísticos (sightseeing), não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104011900",
+    "descricao": "Serviços de transporte terrestre local de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104012110",
+    "descricao": "Serviços de transporte aquaviário local de passageiros, por navegação interior, em embarcações para travessia"
+  },
+  {
+    "codigo": "104012120",
+    "descricao": "Serviços de transporte aquaviário local de passageiros, por navegação interior, em embarcações para cruzeiros"
+  },
+  {
+    "codigo": "104012190",
+    "descricao": "Serviços de transporte aquaviário local de passageiros, por navegação interior, não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104012200",
+    "descricao": "Serviços de transporte aquaviário local de passageiros por fretamento"
+  },
+  {
+    "codigo": "104012300",
+    "descricao": "Serviços de transporte aquaviário para passeios turísticos (sightseeing)"
+  },
+  {
+    "codigo": "104012900",
+    "descricao": "Serviços de transporte aquaviário local de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104013000",
+    "descricao": "Serviços de transporte integrado local de passageiros"
+  },
+  {
+    "codigo": "104014100",
+    "descricao": "Serviços de táxi aéreo local"
+  },
+  {
+    "codigo": "104014200",
+    "descricao": "Serviços de transporte aéreo local de passageiros por fretamento"
+  },
+  {
+    "codigo": "104014300",
+    "descricao": "Serviços de transporte aéreo para passeios turísticos (sightseeing)"
+  },
+  {
+    "codigo": "104014900",
+    "descricao": "Serviços de transporte aéreo local de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104019000",
+    "descricao": "Serviços de transporte local de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104021110",
+    "descricao": "Serviços de transporte rodoviário nacional, exceto local, prestados exclusivamente por meio de ônibus"
+  },
+  {
+    "codigo": "104021190",
+    "descricao": "Serviços de transporte rodoviário nacional, exceto local, de passageiros, não classificados em subitens anteriores"
+  },
+  {
+    "codigo": "104021200",
+    "descricao": "Serviços especiais de transporte rodoviário nacional, exceto local, regular de passageiros"
+  },
+  {
+    "codigo": "104021310",
+    "descricao": "Serviços de fretamento contínuo, nacional, exceto local"
+  },
+  {
+    "codigo": "104021320",
+    "descricao": "Serviços de fretamento eventual ou turístico, nacional, exceto local"
+  },
+  {
+    "codigo": "104021400",
+    "descricao": "Serviços de transporte ferroviário nacional, exceto local, de passageiros"
+  },
+  {
+    "codigo": "104021900",
+    "descricao": "Serviços de transporte terrestre nacional, exceto local, de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104022110",
+    "descricao": "Serviços de transporte aquaviário de passageiros, por navegação interior, em embarcações para travessia"
+  },
+  {
+    "codigo": "104022120",
+    "descricao": "Serviços de transporte aquaviário de passageiros, por navegação interior, em embarcações para cruzeiros"
+  },
+  {
+    "codigo": "104022190",
+    "descricao": "Serviços de transporte aquaviário nacional, exceto local, de passageiros, por navegação interior, não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104022200",
+    "descricao": "Serviços de transporte aquaviário nacional costeiro de passageiros"
+  },
+  {
+    "codigo": "104022300",
+    "descricao": "Serviços de transporte aquaviário nacional, exceto local, de passageiros, por fretamento"
+  },
+  {
+    "codigo": "104023100",
+    "descricao": "Serviços de transporte aéreo nacional, exceto local, regular de passageiros"
+  },
+  {
+    "codigo": "104023200",
+    "descricao": "Serviços de táxi aéreo nacional, exceto local"
+  },
+  {
+    "codigo": "104023300",
+    "descricao": "Serviços de transporte aéreo nacional, exceto local, de passageiros, por fretamento"
+  },
+  {
+    "codigo": "104023900",
+    "descricao": "Serviços de transporte aéreo nacional, exceto local, de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104029000",
+    "descricao": "Serviços de transporte nacional, exceto local, de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104031110",
+    "descricao": "Serviços de transporte de passageiros prestados exclusivamente por meio de ônibus"
+  },
+  {
+    "codigo": "104031190",
+    "descricao": "Serviços de transporte rodoviário internacional de passageiros não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104031200",
+    "descricao": "Serviços de transporte rodoviário internacional de passageiros por fretamento"
+  },
+  {
+    "codigo": "104031310",
+    "descricao": "Serviços de transporte internacional ferroviário de passageiros"
+  },
+  {
+    "codigo": "104031390",
+    "descricao": "Serviços de transporte internacional de passageiros por veículos sobre trilhos não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104031900",
+    "descricao": "Serviços de transporte terrestre internacional de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104032110",
+    "descricao": "Serviços de transporte aquaviário internacional de passageiros, por navegação interior, em embarcações para travessia"
+  },
+  {
+    "codigo": "104032120",
+    "descricao": "Serviços de transporte aquaviário internacional de passageiros, por navegação interior, em embarcações para cruzeiros"
+  },
+  {
+    "codigo": "104032190",
+    "descricao": "Serviços de transporte aquaviário internacional de passageiros, por navegação interior, não classificados em itens anteriores"
+  },
+  {
+    "codigo": "104032200",
+    "descricao": "Serviços de transporte aquaviário internacional costeiro de passageiros"
+  },
+  {
+    "codigo": "104032300",
+    "descricao": "Serviços de transporte aquaviário internacional transoceânico de passageiros"
+  },
+  {
+    "codigo": "104032400",
+    "descricao": "Serviços de transporte aquaviário internacional de passageiros por fretamento"
+  },
+  {
+    "codigo": "104033100",
+    "descricao": "Serviços de transporte aéreo internacional regular de passageiros"
+  },
+  {
+    "codigo": "104033200",
+    "descricao": "Serviços de táxi aéreo internacional"
+  },
+  {
+    "codigo": "104033300",
+    "descricao": "Serviços de transporte aéreo internacional de passageiros por fretamento"
+  },
+  {
+    "codigo": "104033900",
+    "descricao": "Serviços de transporte aéreo internacional de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104039000",
+    "descricao": "Serviços de transporte internacional de passageiros, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "104041000",
+    "descricao": "Locação de veículos rodoviários de passageiros com motorista"
+  },
+  {
+    "codigo": "104042000",
+    "descricao": "Locação de embarcações de passageiros com tripulação"
+  },
+  {
+    "codigo": "104043000",
+    "descricao": "Locação de aeronaves de passageiros com tripulação"
+  },
+  {
+    "codigo": "104050000",
+    "descricao": "Afretamento de embarcações de passageiros por tempo"
+  },
+  {
+    "codigo": "105011110",
+    "descricao": "Serviços de transporte rodoviário de cargas sólidas a granel"
+  },
+  {
+    "codigo": "105011120",
+    "descricao": "Serviços de transporte rodoviário de cargas líquidas, ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105011130",
+    "descricao": "Serviços de transporte rodoviário de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105011210",
+    "descricao": "Serviços de transporte rodoviário de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105011220",
+    "descricao": "Serviços de transporte rodoviário de carga unitizada"
+  },
+  {
+    "codigo": "105011230",
+    "descricao": "Serviços de transporte rodoviário de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105011310",
+    "descricao": "Serviços de transporte rodoviário de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105011320",
+    "descricao": "Serviços de transporte rodoviário de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105011410",
+    "descricao": "Serviços de transporte rodoviário de cargas vivas"
+  },
+  {
+    "codigo": "105011420",
+    "descricao": "Serviços de transporte rodoviário de mudanças domésticas e de mobília e outros objetos de escritório"
+  },
+  {
+    "codigo": "105011430",
+    "descricao": "Serviços de transporte rodoviário de cargas de grande porte"
+  },
+  {
+    "codigo": "105011440",
+    "descricao": "Serviços de transporte rodoviário de veículos"
+  },
+  {
+    "codigo": "105011451",
+    "descricao": "Serviços de transporte rodoviário de combustíveis, lubrificantes e GLP, inclusive apresentados em botijões metálicos"
+  },
+  {
+    "codigo": "105011452",
+    "descricao": "Serviços de transporte rodoviário de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105011459",
+    "descricao": "Serviços de transporte rodoviário de produtos perigosos não classificados em subitens anteriores"
+  },
+  {
+    "codigo": "105011500",
+    "descricao": "Serviços de transporte rodoviário de cargas postais e malotes"
+  },
+  {
+    "codigo": "105011900",
+    "descricao": "Serviços de transporte rodoviário de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105012110",
+    "descricao": "Serviços de transporte ferroviário de cargas sólidas a granel"
+  },
+  {
+    "codigo": "105012120",
+    "descricao": "Serviços de transporte ferroviário de cargas líquidas, ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105012130",
+    "descricao": "Serviços de transporte ferroviário de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105012210",
+    "descricao": "Serviços de transporte ferroviário de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105012220",
+    "descricao": "Serviços de transporte ferroviário de carga unitizada"
+  },
+  {
+    "codigo": "105012230",
+    "descricao": "Serviços de transporte ferroviário de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105012310",
+    "descricao": "Serviços de transporte ferroviário de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105012320",
+    "descricao": "Serviços de transporte ferroviário de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105012410",
+    "descricao": "Serviços de transporte ferroviário de cargas vivas"
+  },
+  {
+    "codigo": "105012421",
+    "descricao": "Serviços de transporte ferroviário de combustíveis, lubrificantes e GLP, inclusive apresentados em botijões metálicos"
+  },
+  {
+    "codigo": "105012422",
+    "descricao": "Serviços de transporte ferroviário de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105012429",
+    "descricao": "Serviços de transporte ferroviário de produtos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105012500",
+    "descricao": "Serviços de transporte ferroviário de bens e valores"
+  },
+  {
+    "codigo": "105012900",
+    "descricao": "Serviços de transporte ferroviário de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105013100",
+    "descricao": "Serviços de transporte de petróleo, gás natural e combustível por meio de dutos"
+  },
+  {
+    "codigo": "105013200",
+    "descricao": "Serviços de transporte de minérios por meio de dutos"
+  },
+  {
+    "codigo": "105013900",
+    "descricao": "Serviços de transporte de cargas por meio de dutos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105021110",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas sólidas, a granel"
+  },
+  {
+    "codigo": "105021120",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas líquidas, ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105021130",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105021210",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105021220",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de carga unitizada"
+  },
+  {
+    "codigo": "105021230",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105021310",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105021320",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105021410",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas vivas"
+  },
+  {
+    "codigo": "105021420",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de mudanças domésticas e de mobília e outros objetos de escritório"
+  },
+  {
+    "codigo": "105021430",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas de grande porte"
+  },
+  {
+    "codigo": "105021440",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de veículos"
+  },
+  {
+    "codigo": "105021451",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de combustíveis, lubrificantes e GLP, inclusive apresentado em botijões metálicos"
+  },
+  {
+    "codigo": "105021452",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105021459",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de produtos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105021490",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas especiais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105021900",
+    "descricao": "Serviços de transporte aquaviário por navegação interior de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105022110",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas sólidas a granel"
+  },
+  {
+    "codigo": "105022120",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas líquidas ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105022130",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105022210",
+    "descricao": "Serviços de transporte aquaviário costeiro de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105022220",
+    "descricao": "Serviços de transporte aquaviário costeiro de carga unitizada"
+  },
+  {
+    "codigo": "105022230",
+    "descricao": "Serviços de transporte aquaviário costeiro de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105022310",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105022320",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas em contêineres não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105022410",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas vivas"
+  },
+  {
+    "codigo": "105022420",
+    "descricao": "Serviços de transporte aquaviário costeiro de mudanças domésticas e de mobília e outros objetos de escritório"
+  },
+  {
+    "codigo": "105022430",
+    "descricao": "Serviços de transporte aquaviário costeiro de cargas de grande porte"
+  },
+  {
+    "codigo": "105022440",
+    "descricao": "Serviços de transporte aquaviário costeiro de veículos"
+  },
+  {
+    "codigo": "105022451",
+    "descricao": "Serviços de transporte aquaviário costeiro de combustíveis, lubrificantes e GLP, inclusive apresentado em botijões metálicos"
+  },
+  {
+    "codigo": "105022452",
+    "descricao": "Serviços de transporte aquaviário costeiro de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105022459",
+    "descricao": "Serviços de transporte aquaviário costeiro de produtos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105022900",
+    "descricao": "Serviços de transportes aquaviário costeiro de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105023110",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas sólidas a granel"
+  },
+  {
+    "codigo": "105023120",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas líquidas, ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105023130",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105023210",
+    "descricao": "Serviços de transporte aquaviário transoceânico de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105023220",
+    "descricao": "Serviços de transporte aquaviário transoceânico de carga unitizada"
+  },
+  {
+    "codigo": "105023230",
+    "descricao": "Serviços de transporte aquaviário transoceânico de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105023310",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105023320",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105023410",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas vivas"
+  },
+  {
+    "codigo": "105023420",
+    "descricao": "Serviços de transporte aquaviário transoceânico de mudanças domésticas e de mobília e outros objetos de escritório"
+  },
+  {
+    "codigo": "105023430",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas de grande porte"
+  },
+  {
+    "codigo": "105023440",
+    "descricao": "Serviços de transporte aquaviário transoceânico de veículos"
+  },
+  {
+    "codigo": "105023451",
+    "descricao": "Serviços de transporte aquaviário transoceânico de combustíveis, lubrificantes e GLP, inclusive apresentado em botijões metálicos"
+  },
+  {
+    "codigo": "105023452",
+    "descricao": "Serviços de transporte aquaviário transoceânico de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105023459",
+    "descricao": "Serviços de transporte aquaviário transoceânico de produtos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105023900",
+    "descricao": "Serviços de transporte aquaviário transoceânico de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105031100",
+    "descricao": "Serviços de transporte aéreo de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105031200",
+    "descricao": "Serviços de transporte aéreo de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105032100",
+    "descricao": "Serviços de transporte aéreo de produtos perigosos"
+  },
+  {
+    "codigo": "105032200",
+    "descricao": "Serviços de transporte aéreo de animais vivos"
+  },
+  {
+    "codigo": "105032300",
+    "descricao": "Serviços de transporte aéreo de máquinas e veículos"
+  },
+  {
+    "codigo": "105032400",
+    "descricao": "Serviços de transporte aéreo de perecíveis"
+  },
+  {
+    "codigo": "105032500",
+    "descricao": "Serviços de transporte aéreo de cargas frágeis"
+  },
+  {
+    "codigo": "105032600",
+    "descricao": "Serviços de transporte aéreo de cargas controladas"
+  },
+  {
+    "codigo": "105032700",
+    "descricao": "Serviços de transporte aéreo de valores"
+  },
+  {
+    "codigo": "105032800",
+    "descricao": "Serviços de transporte aéreo de cargas postais, remessas expressas e cargas congêneres"
+  },
+  {
+    "codigo": "105032900",
+    "descricao": "Serviços de transporte aéreo de cargas especiais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105039000",
+    "descricao": "Serviços de transporte aéreo de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105041100",
+    "descricao": "Serviços de transporte multimodal de cargas sólidas a granel"
+  },
+  {
+    "codigo": "105041200",
+    "descricao": "Serviços de transporte multimodal de cargas líquidas, ou liquefeitas, a granel"
+  },
+  {
+    "codigo": "105041300",
+    "descricao": "Serviços de transporte multimodal de cargas gasosas a granel"
+  },
+  {
+    "codigo": "105042100",
+    "descricao": "Serviços de transporte multimodal de carga solta, não unitizada"
+  },
+  {
+    "codigo": "105042200",
+    "descricao": "Serviços de transporte multimodal de carga unitizada"
+  },
+  {
+    "codigo": "105042300",
+    "descricao": "Serviços de transporte multimodal de carga frigorificada ou climatizada"
+  },
+  {
+    "codigo": "105043100",
+    "descricao": "Serviços de transporte multimodal de cargas em contêineres frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105043200",
+    "descricao": "Serviços de transporte multimodal de cargas em contêineres não frigorificados ou climatizados"
+  },
+  {
+    "codigo": "105044100",
+    "descricao": "Serviços de transporte multimodal de cargas vivas"
+  },
+  {
+    "codigo": "105044200",
+    "descricao": "Serviços de transporte multimodal de mudanças domésticas e de mobília e outros objetos de escritório"
+  },
+  {
+    "codigo": "105044300",
+    "descricao": "Serviços de transporte multimodal de cargas de grande porte"
+  },
+  {
+    "codigo": "105044400",
+    "descricao": "Serviços de transporte multimodal de veículos"
+  },
+  {
+    "codigo": "105044510",
+    "descricao": "Serviços de transporte multimodal de combustíveis, lubrificantes e GLP, inclusive apresentado em botijões metálicos"
+  },
+  {
+    "codigo": "105044520",
+    "descricao": "Serviços de transporte multimodal de produtos químicos perigosos, exceto lubrificantes e GLP"
+  },
+  {
+    "codigo": "105044590",
+    "descricao": "Serviços de transporte multimodal de produtos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105044900",
+    "descricao": "Serviços de transporte multimodal de cargas especiais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105049000",
+    "descricao": "Serviços de transporte multimodal de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "105051000",
+    "descricao": "Locação de veículos rodoviários de carga com motorista"
+  },
+  {
+    "codigo": "105052000",
+    "descricao": "Locação de embarcações de carga com tripulação"
+  },
+  {
+    "codigo": "105053000",
+    "descricao": "Locação de aeronaves de carga com tripulação"
+  },
+  {
+    "codigo": "105060000",
+    "descricao": "Afretamento de embarcações de carga por tempo"
+  },
+  {
+    "codigo": "106011000",
+    "descricao": "Serviços de manuseio de contêineres"
+  },
+  {
+    "codigo": "106019000",
+    "descricao": "Serviços de manuseio de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "106021000",
+    "descricao": "Serviços de armazenagem frigorificada"
+  },
+  {
+    "codigo": "106022100",
+    "descricao": "Serviços de armazenagem de petróleo e seus derivados"
+  },
+  {
+    "codigo": "106022200",
+    "descricao": "Serviços de armazenagem de combustíveis, lubrificantes e GLP, inclusive apresentado em botijões metálicos"
+  },
+  {
+    "codigo": "106022300",
+    "descricao": "Serviços de armazenagem de produtos químicos perigosos"
+  },
+  {
+    "codigo": "106022900",
+    "descricao": "Serviços de armazenagem de outros produtos perigosos"
+  },
+  {
+    "codigo": "106023100",
+    "descricao": "Serviços de armazenagem de granéis sólidos"
+  },
+  {
+    "codigo": "106023200",
+    "descricao": "Serviços de armazenagem de granéis líquidos ou liquefeitos"
+  },
+  {
+    "codigo": "106023300",
+    "descricao": "Serviços de armazenagem de granéis gasosos"
+  },
+  {
+    "codigo": "106029000",
+    "descricao": "Serviços de armazenagem não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "106030000",
+    "descricao": "Serviços de apoio ao transporte ferroviário"
+  },
+  {
+    "codigo": "106041000",
+    "descricao": "Serviços de estações rodoviárias"
+  },
+  {
+    "codigo": "106042100",
+    "descricao": "Serviços de operação de rodovias"
+  },
+  {
+    "codigo": "106042200",
+    "descricao": "Serviços de operação de pontes e túneis"
+  },
+  {
+    "codigo": "106043000",
+    "descricao": "Serviços de estacionamento"
+  },
+  {
+    "codigo": "106044000",
+    "descricao": "Serviços de reboque para veículos particulares e comerciais"
+  },
+  {
+    "codigo": "106049000",
+    "descricao": "Serviços de apoio ao transporte rodoviário não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "106051000",
+    "descricao": "Serviços de operação de portos e canais, exceto manuseio de cargas"
+  },
+  {
+    "codigo": "106052000",
+    "descricao": "Serviços de praticagem e de atracação"
+  },
+  {
+    "codigo": "106053000",
+    "descricao": "Serviços de salvamento de embarcações"
+  },
+  {
+    "codigo": "106054000",
+    "descricao": "Serviços de navegação de apoio"
+  },
+  {
+    "codigo": "106059000",
+    "descricao": "Serviços de apoio ao transporte aquaviário não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "106061100",
+    "descricao": "Serviços de operação aeroportuária, exceto manuseio de cargas"
+  },
+  {
+    "codigo": "106061200",
+    "descricao": "Serviços de controle de tráfego aéreo"
+  },
+  {
+    "codigo": "106061900",
+    "descricao": "Serviços de apoio ao transporte aéreo não classificados em suposições anteriores"
+  },
+  {
+    "codigo": "106062000",
+    "descricao": "Serviços de apoio ao transporte aeroespacial"
+  },
+  {
+    "codigo": "106070000",
+    "descricao": "Serviços de agenciamento de transporte de cargas"
+  },
+  {
+    "codigo": "106081000",
+    "descricao": "Serviços de coleta e entrega de cargas no transporte multimodal"
+  },
+  {
+    "codigo": "106082000",
+    "descricao": "Serviços de unitização ou desunitização de cargas no transporte multimodal"
+  },
+  {
+    "codigo": "106083000",
+    "descricao": "Serviços de movimentação de cargas no transporte multimodal"
+  },
+  {
+    "codigo": "106084000",
+    "descricao": "Serviços de consolidação ou desconsolidação documental de cargas no transporte multimodal"
+  },
+  {
+    "codigo": "106089000",
+    "descricao": "Serviços de apoio ao transporte multimodal de cargas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "106090000",
+    "descricao": "Serviços de apoio aos transportes não classificados em posições anteriores"
+  },
+  {
+    "codigo": "107010000",
+    "descricao": "Serviços postais e de telegrama"
+  },
+  {
+    "codigo": "107020000",
+    "descricao": "Serviços de coleta, transporte, remessa ou entrega de documentos ou encomendas, exceto remessas expressas"
+  },
+  {
+    "codigo": "107030000",
+    "descricao": "Serviços de remessas expressas"
+  },
+  {
+    "codigo": "108011000",
+    "descricao": "Serviços de transmissão de eletricidade"
+  },
+  {
+    "codigo": "108012000",
+    "descricao": "Serviços de distribuição de eletricidade"
+  },
+  {
+    "codigo": "108021000",
+    "descricao": "Serviços de distribuição de água por meio de tubulações, exceto vapor de água e água quente"
+  },
+  {
+    "codigo": "108022000",
+    "descricao": "Serviços de distribuição de vapor de água, água quente e ar condicionado por meio de tubulações"
+  },
+  {
+    "codigo": "108023000",
+    "descricao": "Serviços de distribuição de água, exceto por meio de tubulações"
+  },
+  {
+    "codigo": "108030000",
+    "descricao": "Serviços de distribuição de gás canalizado"
+  },
+  {
+    "codigo": "109011000",
+    "descricao": "Serviços de banco central"
+  },
+  {
+    "codigo": "109012100",
+    "descricao": "Serviços de depósito para pessoas jurídicas"
+  },
+  {
+    "codigo": "109012200",
+    "descricao": "Serviços de depósito para pessoas físicas"
+  },
+  {
+    "codigo": "109012900",
+    "descricao": "Serviços de depósito para outros depositantes"
+  },
+  {
+    "codigo": "109013100",
+    "descricao": "Serviços de financiamentos imobiliários residenciais"
+  },
+  {
+    "codigo": "109013200",
+    "descricao": "Serviços de financiamentos imobiliários não residenciais"
+  },
+  {
+    "codigo": "109013300",
+    "descricao": "Serviços de empréstimos e financiamentos pessoais"
+  },
+  {
+    "codigo": "109013400",
+    "descricao": "Serviços de empréstimos e financiamentos comerciais"
+  },
+  {
+    "codigo": "109013500",
+    "descricao": "Serviços de empréstimos e financiamentos industriais"
+  },
+  {
+    "codigo": "109013600",
+    "descricao": "Serviços de empréstimos e financiamentos agropecuários"
+  },
+  {
+    "codigo": "109013900",
+    "descricao": "Serviços de concessão de crédito não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109014000",
+    "descricao": "Serviços de cartão de crédito"
+  },
+  {
+    "codigo": "109015111",
+    "descricao": "Arrendamento mercantil financeiro de veículos rodoviários automotores para o transporte de passageiros"
+  },
+  {
+    "codigo": "109015112",
+    "descricao": "Arrendamento mercantil financeiro de veículos rodoviários automotores para o transporte de mercadorias"
+  },
+  {
+    "codigo": "109015113",
+    "descricao": "Arrendamento mercantil financeiro de veículos e equipamentos ferroviários"
+  },
+  {
+    "codigo": "109015114",
+    "descricao": "Arrendamento mercantil financeiro de outros equipamentos de transporte terrestre, inclusive de veículos de uso misto"
+  },
+  {
+    "codigo": "109015115",
+    "descricao": "Arrendamento mercantil financeiro de navios e outras embarcações"
+  },
+  {
+    "codigo": "109015116",
+    "descricao": "Arrendamento mercantil financeiro de aeronaves"
+  },
+  {
+    "codigo": "109015117",
+    "descricao": "Arrendamento mercantil financeiro de contêineres"
+  },
+  {
+    "codigo": "109015121",
+    "descricao": "Arrendamento mercantil financeiro de máquinas e equipamentos agrícolas"
+  },
+  {
+    "codigo": "109015122",
+    "descricao": "Arrendamento mercantil financeiro de máquinas e equipamentos de construção"
+  },
+  {
+    "codigo": "109015123",
+    "descricao": "Arrendamento mercantil financeiro de máquinas e equipamentos para escritórios, exceto computadores"
+  },
+  {
+    "codigo": "109015124",
+    "descricao": "Arrendamento mercantil financeiro de computadores"
+  },
+  {
+    "codigo": "109015125",
+    "descricao": "Arrendamento mercantil financeiro de equipamentos de telecomunicação"
+  },
+  {
+    "codigo": "109015129",
+    "descricao": "Arrendamento mercantil financeiro de outras máquinas e equipamentos não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "109015210",
+    "descricao": "Arrendamento mercantil financeiro de televisão e outros eletroeletrônicos domésticos, bem como seus acessórios"
+  },
+  {
+    "codigo": "109015220",
+    "descricao": "Arrendamento mercantil financeiro de mídias gravadas"
+  },
+  {
+    "codigo": "109015230",
+    "descricao": "Arrendamento mercantil financeiro de móveis e eletrodomésticos"
+  },
+  {
+    "codigo": "109015240",
+    "descricao": "Arrendamento mercantil financeiro de equipamentos para diversão e lazer"
+  },
+  {
+    "codigo": "109015250",
+    "descricao": "Arrendamento mercantil financeiro de artigos de cama, mesa e banho"
+  },
+  {
+    "codigo": "109015290",
+    "descricao": "Arrendamento mercantil financeiro de outras mercadorias não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "109019000",
+    "descricao": "Serviços financeiros, exceto bancos de investimento, serviços de seguros e previdência complementar, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109021000",
+    "descricao": "Serviços de valoração de ativos"
+  },
+  {
+    "codigo": "109022000",
+    "descricao": "Serviços de subscrição de valores mobiliários"
+  },
+  {
+    "codigo": "109023000",
+    "descricao": "Serviços de fusões e aquisições"
+  },
+  {
+    "codigo": "109024000",
+    "descricao": "Serviços de capital de risco e finanças corporativas"
+  },
+  {
+    "codigo": "109029000",
+    "descricao": "Serviços de banco de investimento não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109031100",
+    "descricao": "Serviços de seguro de vida"
+  },
+  {
+    "codigo": "109031200",
+    "descricao": "Serviços de previdência complementar aberta"
+  },
+  {
+    "codigo": "109031300",
+    "descricao": "Serviços de previdência complementar fechada"
+  },
+  {
+    "codigo": "109032100",
+    "descricao": "Serviços de seguro saúde"
+  },
+  {
+    "codigo": "109032200",
+    "descricao": "Serviços de seguro de acidentes"
+  },
+  {
+    "codigo": "109033100",
+    "descricao": "Serviços de seguro de veículos rodoviários"
+  },
+  {
+    "codigo": "109033200",
+    "descricao": "Serviços de seguro de veículos e equipamentos para transporte ferroviário, aquaviário e aéreo"
+  },
+  {
+    "codigo": "109033300",
+    "descricao": "Serviços de seguro de cargas"
+  },
+  {
+    "codigo": "109033400",
+    "descricao": "Serviços de seguro de outras propriedades"
+  },
+  {
+    "codigo": "109033500",
+    "descricao": "Serviços de seguro por responsabilidade civil"
+  },
+  {
+    "codigo": "109033600",
+    "descricao": "Serviços de seguro de crédito e de caução"
+  },
+  {
+    "codigo": "109033700",
+    "descricao": "Serviços de seguro de viagem"
+  },
+  {
+    "codigo": "109033800",
+    "descricao": "Serviços de seguro rural"
+  },
+  {
+    "codigo": "109033900",
+    "descricao": "Serviços de outros seguros, excluídos os serviços de resseguro, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109041000",
+    "descricao": "Serviços de resseguro de vida"
+  },
+  {
+    "codigo": "109042100",
+    "descricao": "Serviços de resseguro saúde"
+  },
+  {
+    "codigo": "109042200",
+    "descricao": "Serviços de resseguro de acidentes"
+  },
+  {
+    "codigo": "109043100",
+    "descricao": "Serviços de resseguro de veículos rodoviários"
+  },
+  {
+    "codigo": "109043200",
+    "descricao": "Serviços de resseguro de veículos e equipamentos para transporte ferroviário, aquaviário e aéreo"
+  },
+  {
+    "codigo": "109043300",
+    "descricao": "Serviços de resseguro de cargas"
+  },
+  {
+    "codigo": "109043400",
+    "descricao": "Serviços de resseguro de outras propriedades"
+  },
+  {
+    "codigo": "109043500",
+    "descricao": "Serviços de resseguro de responsabilidade civil"
+  },
+  {
+    "codigo": "109043600",
+    "descricao": "Serviços de resseguro de crédito e caução"
+  },
+  {
+    "codigo": "109043700",
+    "descricao": "Serviços de resseguro rural"
+  },
+  {
+    "codigo": "109043900",
+    "descricao": "Serviços de outros resseguros não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109051100",
+    "descricao": "Serviços de corretagem de títulos"
+  },
+  {
+    "codigo": "109051200",
+    "descricao": "Serviços de corretagem de derivativos e commodities"
+  },
+  {
+    "codigo": "109051300",
+    "descricao": "Serviços de compensação de transações financeiras, inclusive com ativos financeiros (clearinghouse)"
+  },
+  {
+    "codigo": "109052100",
+    "descricao": "Serviços de gestão e administração de carteiras de ativos, exceto fundos de pensão"
+  },
+  {
+    "codigo": "109052200",
+    "descricao": "Serviços de administração fundos de investimento e fundos de pensão"
+  },
+  {
+    "codigo": "109052300",
+    "descricao": "Serviços de gestão e administração de trust"
+  },
+  {
+    "codigo": "109053000",
+    "descricao": "Serviços de guarda e custódia"
+  },
+  {
+    "codigo": "109054000",
+    "descricao": "Serviços relacionados à administração de mercados financeiros"
+  },
+  {
+    "codigo": "109055000",
+    "descricao": "Serviços de consultoria financeira"
+  },
+  {
+    "codigo": "109056000",
+    "descricao": "Serviços de câmbio"
+  },
+  {
+    "codigo": "109057000",
+    "descricao": "Serviços de classificação de risco (rating)"
+  },
+  {
+    "codigo": "109058000",
+    "descricao": "Serviços fiduciários"
+  },
+  {
+    "codigo": "109059000",
+    "descricao": "Serviços auxiliares aos serviços financeiros não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109061100",
+    "descricao": "Serviços de agenciamento e corretagem de seguros, resseguros e previdência complementar, exceto de seguros saúde"
+  },
+  {
+    "codigo": "109061200",
+    "descricao": "Serviços de corretagem de seguros saúde"
+  },
+  {
+    "codigo": "109062000",
+    "descricao": "Serviços de perícia e avaliação de seguros e resseguros"
+  },
+  {
+    "codigo": "109063000",
+    "descricao": "Serviços atuariais"
+  },
+  {
+    "codigo": "109064000",
+    "descricao": "Serviços de gestão de fundos de previdência complementar"
+  },
+  {
+    "codigo": "109069000",
+    "descricao": "Serviços auxiliares a seguros, resseguros e previdência complementar não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109070000",
+    "descricao": "Serviços de seguro de recebíveis"
+  },
+  {
+    "codigo": "109080000",
+    "descricao": "Fomento comercial (factoring)"
+  },
+  {
+    "codigo": "109091000",
+    "descricao": "Serviços de holding de patrimônio de empresas subsidiárias"
+  },
+  {
+    "codigo": "109092000",
+    "descricao": "Serviços de holding de valores mobiliários e outros ativos financeiros e fundos e entidades financeiras similares"
+  },
+  {
+    "codigo": "109101000",
+    "descricao": "Serviços de planos privados de assistência à saúde"
+  },
+  {
+    "codigo": "109102000",
+    "descricao": "Serviços de corretagem de planos privados de assistência à saúde"
+  },
+  {
+    "codigo": "109109000",
+    "descricao": "Serviços de planos privados de assistência à saúde e serviços relacionados não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "109110000",
+    "descricao": "Serviços financeiros e serviços relacionados não classificados em posições anteriores"
+  },
+  {
+    "codigo": "110011100",
+    "descricao": "Serviços de administração e locação de imóveis residenciais"
+  },
+  {
+    "codigo": "110011210",
+    "descricao": "Serviços de administração e locação, sublocação, arrendamento, direito de passagem ou permissão de uso, compartilhado ou não, de ferrovia, rodovia, postes, cabos, dutos e condutos de qualquer natureza"
+  },
+  {
+    "codigo": "110011290",
+    "descricao": "Serviços de administração e locação de outros imóveis não residenciais"
+  },
+  {
+    "codigo": "110012100",
+    "descricao": "Serviços de intermediação na compra e venda de imóveis residenciais"
+  },
+  {
+    "codigo": "110012200",
+    "descricao": "Serviços de intermediação na compra e venda de imóveis não residenciais"
+  },
+  {
+    "codigo": "110013000",
+    "descricao": "Serviços de avaliação de imóveis"
+  },
+  {
+    "codigo": "110014000",
+    "descricao": "Serviços de consultoria imobiliária"
+  },
+  {
+    "codigo": "110015000",
+    "descricao": "Serviços de assessoria de gestão condominial (condomínios, edifícios residenciais e mistos)"
+  },
+  {
+    "codigo": "110019000",
+    "descricao": "Serviços imobiliários não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "110021000",
+    "descricao": "Locação de imóveis residenciais"
+  },
+  {
+    "codigo": "110022000",
+    "descricao": "Locação de imóveis não residenciais"
+  },
+  {
+    "codigo": "111011100",
+    "descricao": "Arrendamento mercantil operacional ou locação de veículos rodoviários automotores para o transporte de até oito passageiros, sem operador"
+  },
+  {
+    "codigo": "111011200",
+    "descricao": "Arrendamento mercantil operacional ou locação de veículos rodoviários automotores para o transporte de cargas, sem operador"
+  },
+  {
+    "codigo": "111011300",
+    "descricao": "Arrendamento mercantil operacional ou locação de veículos e equipamentos de transporte ferroviário, sem operador"
+  },
+  {
+    "codigo": "111011400",
+    "descricao": "Arrendamento mercantil operacional ou locação de outros equipamentos de transporte terrestre, inclusive de veículos de uso misto, sem operador"
+  },
+  {
+    "codigo": "111011500",
+    "descricao": "Arrendamento mercantil operacional ou locação de navios e outras embarcações, sem tripulação"
+  },
+  {
+    "codigo": "111011600",
+    "descricao": "Arrendamento mercantil operacional ou locação de aeronaves, sem tripulação"
+  },
+  {
+    "codigo": "111011700",
+    "descricao": "Arrendamento mercantil operacional ou locação de contêineres"
+  },
+  {
+    "codigo": "111012000",
+    "descricao": "Arrendamento mercantil operacional ou locação de máquinas e equipamentos agrícolas, sem operador"
+  },
+  {
+    "codigo": "111013000",
+    "descricao": "Arrendamento mercantil operacional ou locação de máquinas e equipamentos de construção, sem operador"
+  },
+  {
+    "codigo": "111014000",
+    "descricao": "Arrendamento mercantil operacional ou locação de máquinas e equipamentos para escritórios, exceto computadores, sem operador"
+  },
+  {
+    "codigo": "111015000",
+    "descricao": "Arrendamento mercantil operacional ou locação de computadores, sem operador"
+  },
+  {
+    "codigo": "111016000",
+    "descricao": "Arrendamento mercantil operacional ou locação de equipamentos de telecomunicação, sem operador"
+  },
+  {
+    "codigo": "111019000",
+    "descricao": "Arrendamento mercantil operacional ou locação de máquinas e equipamentos, sem operador, não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111021000",
+    "descricao": "Arrendamento mercantil operacional ou locação de televisão e outros eletroeletrônicos, bem como seus acessórios"
+  },
+  {
+    "codigo": "111022000",
+    "descricao": "Arrendamento mercantil operacional ou locação de mídias gravadas"
+  },
+  {
+    "codigo": "111023000",
+    "descricao": "Arrendamento mercantil operacional ou locação de móveis e eletrodomésticos"
+  },
+  {
+    "codigo": "111024000",
+    "descricao": "Arrendamento mercantil operacional ou locação de equipamentos para diversão e lazer"
+  },
+  {
+    "codigo": "111025000",
+    "descricao": "Arrendamento mercantil operacional ou locação de artigos de cama, mesa e banho"
+  },
+  {
+    "codigo": "111026000",
+    "descricao": "Arrendamento mercantil operacional ou locação de roupas e calçados"
+  },
+  {
+    "codigo": "111029000",
+    "descricao": "Arrendamento mercantil operacional ou locação de outras mercadorias não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111031000",
+    "descricao": "Licenciamento de direitos de obras literárias"
+  },
+  {
+    "codigo": "111032100",
+    "descricao": "Licenciamento de direitos de produção, distribuição ou comercialização de programas de computador (software)"
+  },
+  {
+    "codigo": "111032200",
+    "descricao": "Licenciamento de direitos de uso de programas de computador (software)"
+  },
+  {
+    "codigo": "111032300",
+    "descricao": "Licenciamento de direitos sobre bancos de dados"
+  },
+  {
+    "codigo": "111032900",
+    "descricao": "Licenciamento de direitos sobre programas de computador (software) e bancos de dados não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111033100",
+    "descricao": "Licenciamento de direitos de autor de obras cinematográficas"
+  },
+  {
+    "codigo": "111033200",
+    "descricao": "Licenciamento de direitos de autor de obras jornalísticas"
+  },
+  {
+    "codigo": "111033300",
+    "descricao": "Licenciamento de direitos de autor de obras publicitárias"
+  },
+  {
+    "codigo": "111033400",
+    "descricao": "Licenciamento de direitos conexos de artistas intérpretes ou executantes em obras audiovisuais"
+  },
+  {
+    "codigo": "111033500",
+    "descricao": "Licenciamento de direitos conexos de produtores de obras audiovisuais"
+  },
+  {
+    "codigo": "111033610",
+    "descricao": "Licenciamento de direitos de obras audiovisuais sobre transmissões de eventos esportivos"
+  },
+  {
+    "codigo": "111033620",
+    "descricao": "Licenciamento de direitos de obras audiovisuais sobre transmissões de programas televisivos"
+  },
+  {
+    "codigo": "111033690",
+    "descricao": "Licenciamento de direitos de obras audiovisuais sobre outras transmissões televisivas"
+  },
+  {
+    "codigo": "111033900",
+    "descricao": "Licenciamento de direitos de obras audiovisuais não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111034100",
+    "descricao": "Licenciamento de direitos de autor de obras musicais ou literomusicais"
+  },
+  {
+    "codigo": "111034200",
+    "descricao": "Licenciamento de direitos conexos de artistas intérpretes ou executantes"
+  },
+  {
+    "codigo": "111034300",
+    "descricao": "Licenciamento de direitos conexos de produtores de fonogramas"
+  },
+  {
+    "codigo": "111035000",
+    "descricao": "Licenciamento de direitos relacionados à radiodifusão"
+  },
+  {
+    "codigo": "111039000",
+    "descricao": "Licenciamento de direitos de autor e de direitos conexos não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111041000",
+    "descricao": "Licenciamento de direitos sobre patentes"
+  },
+  {
+    "codigo": "111042000",
+    "descricao": "Licenciamento de direitos sobre marcas"
+  },
+  {
+    "codigo": "111043000",
+    "descricao": "Licenciamento de direitos sobre desenho industrial"
+  },
+  {
+    "codigo": "111049000",
+    "descricao": "Licenciamento de direitos sobre a propriedade industrial não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111051000",
+    "descricao": "Licenciamento de direitos sobre cultivares"
+  },
+  {
+    "codigo": "111052000",
+    "descricao": "Licenciamento de direitos sobre topografias de circuitos integrados"
+  },
+  {
+    "codigo": "111053000",
+    "descricao": "Licenciamento de direitos relativos à informação não divulgada"
+  },
+  {
+    "codigo": "111054100",
+    "descricao": "Exploração de recursos vegetais, inclusive florestais"
+  },
+  {
+    "codigo": "111054200",
+    "descricao": "Exploração de recursos minerais"
+  },
+  {
+    "codigo": "111055100",
+    "descricao": "Licenciamento de direitos sobre conhecimento tradicional associado a recursos genéticos"
+  },
+  {
+    "codigo": "111055900",
+    "descricao": "Licenciamento de direitos sobre conhecimento tradicional não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111056000",
+    "descricao": "Licenciamento de direitos relativos ao acesso a recursos genéticos, exceto os decorrentes do conhecimento tradicional"
+  },
+  {
+    "codigo": "111057000",
+    "descricao": "Licenciamento de direitos sobre informações relativas à experiência adquirida no setor industrial, comercial ou científico (know-how)"
+  },
+  {
+    "codigo": "111059000",
+    "descricao": "Licenciamento de outros direitos não classificado em subposições anteriores"
+  },
+  {
+    "codigo": "111061000",
+    "descricao": "Cessão temporária de direitos de obras literárias"
+  },
+  {
+    "codigo": "111062000",
+    "descricao": "Cessão temporária de direitos sobre programas de computador (software)"
+  },
+  {
+    "codigo": "111063100",
+    "descricao": "Cessão temporária de direitos de autor de obras cinematográficas"
+  },
+  {
+    "codigo": "111063200",
+    "descricao": "Cessão temporária de direitos de autor de obras jornalísticas"
+  },
+  {
+    "codigo": "111063300",
+    "descricao": "Cessão temporária de direitos de autor de obras publicitárias"
+  },
+  {
+    "codigo": "111063400",
+    "descricao": "Cessão temporária de direitos conexos de artistas intérpretes ou executantes em obras audiovisuais"
+  },
+  {
+    "codigo": "111063500",
+    "descricao": "Cessão temporária de direitos conexos de produtores de obras audiovisuais"
+  },
+  {
+    "codigo": "111063610",
+    "descricao": "Cessão temporária de direitos de obras audiovisuais sobre transmissões de eventos esportivos"
+  },
+  {
+    "codigo": "111063620",
+    "descricao": "Cessão temporária de direitos de obras audiovisuais sobre transmissões de programas televisivos"
+  },
+  {
+    "codigo": "111063690",
+    "descricao": "Cessão temporária de direitos de obras audiovisuais sobre outras transmissões televisivas"
+  },
+  {
+    "codigo": "111063900",
+    "descricao": "Cessão temporária de direitos de obras audiovisuais não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111064100",
+    "descricao": "Cessão temporária de direitos de autor de obras musicais e literomusicais"
+  },
+  {
+    "codigo": "111064200",
+    "descricao": "Cessão temporária de direitos conexos de artistas intérpretes ou executantes"
+  },
+  {
+    "codigo": "111064300",
+    "descricao": "Cessão temporária de direitos conexos de produtores de fonogramas"
+  },
+  {
+    "codigo": "111065000",
+    "descricao": "Cessão temporária de direitos relacionados à radiodifusão"
+  },
+  {
+    "codigo": "111069000",
+    "descricao": "Cessão temporária de direitos de autor e de direitos conexos não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111071000",
+    "descricao": "Cessão definitiva de direitos de obras literárias"
+  },
+  {
+    "codigo": "111072000",
+    "descricao": "Cessão definitiva de direitos sobre programas de computador (software)"
+  },
+  {
+    "codigo": "111073100",
+    "descricao": "Cessão definitiva de direitos de obras cinematográficas"
+  },
+  {
+    "codigo": "111073200",
+    "descricao": "Cessão definitiva de direitos de obras jornalísticas"
+  },
+  {
+    "codigo": "111073300",
+    "descricao": "Cessão definitiva de direitos de obras publicitárias"
+  },
+  {
+    "codigo": "111073900",
+    "descricao": "Cessão definitiva de direitos de obras audiovisuais não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111074000",
+    "descricao": "Cessão definitiva de direitos de obras musicais e de fonogramas"
+  },
+  {
+    "codigo": "111075000",
+    "descricao": "Cessão definitiva de direitos relacionados à radiodifusão"
+  },
+  {
+    "codigo": "111079000",
+    "descricao": "Cessão definitiva de direitos de autor e de direitos conexos não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111081000",
+    "descricao": "Cessão definitiva de direitos sobre patentes"
+  },
+  {
+    "codigo": "111082000",
+    "descricao": "Cessão definitiva de direitos sobre marcas"
+  },
+  {
+    "codigo": "111083000",
+    "descricao": "Cessão definitiva de direitos sobre desenho industrial"
+  },
+  {
+    "codigo": "111089000",
+    "descricao": "Cessão definitiva de direitos sobre a propriedade industrial não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111091000",
+    "descricao": "Cessão definitiva de direitos sobre cultivares"
+  },
+  {
+    "codigo": "111092000",
+    "descricao": "Cessão definitiva de direitos sobre topografias de circuitos integrados"
+  },
+  {
+    "codigo": "111093000",
+    "descricao": "Cessão definitiva de direitos relativos à informação não divulgada"
+  },
+  {
+    "codigo": "111099000",
+    "descricao": "Cessão definitiva de outros direitos não classificada em subposições anteriores"
+  },
+  {
+    "codigo": "111100000",
+    "descricao": "Franquia"
+  },
+  {
+    "codigo": "112011100",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências físicas"
+  },
+  {
+    "codigo": "112011200",
+    "descricao": "Serviços de pesquisa e desenvolvimento em química e biologia"
+  },
+  {
+    "codigo": "112011900",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências naturais não classificadas em subposições anteriores"
+  },
+  {
+    "codigo": "112012000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em biotecnologia"
+  },
+  {
+    "codigo": "112013100",
+    "descricao": "Serviços de pesquisa e desenvolvimento em Tecnologia da Informação e Comunicação (TIC)"
+  },
+  {
+    "codigo": "112013200",
+    "descricao": "Serviços de pesquisa e desenvolvimento em nanotecnologia"
+  },
+  {
+    "codigo": "112013300",
+    "descricao": "Serviços de pesquisa e desenvolvimento em engenharia e tecnologia nucleares"
+  },
+  {
+    "codigo": "112013400",
+    "descricao": "Serviços de pesquisa e desenvolvimento em engenharia e tecnologia em micro-ondas de potência"
+  },
+  {
+    "codigo": "112013900",
+    "descricao": "Serviços de pesquisa e desenvolvimento em engenharia e tecnologia não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "112014000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências médicas, odontológicas e farmacêuticas"
+  },
+  {
+    "codigo": "112015000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências agrárias"
+  },
+  {
+    "codigo": "112019000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências, engenharia e tecnologia não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "112021000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em psicologia"
+  },
+  {
+    "codigo": "112022000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências econômicas"
+  },
+  {
+    "codigo": "112023000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em direito"
+  },
+  {
+    "codigo": "112024000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em línguas e literatura"
+  },
+  {
+    "codigo": "112029000",
+    "descricao": "Serviços de pesquisa e desenvolvimento em ciências sociais e humanidades não classificadas em subposições anteriores"
+  },
+  {
+    "codigo": "112030000",
+    "descricao": "Serviços de pesquisa e desenvolvimento interdisciplinar"
+  },
+  {
+    "codigo": "113011000",
+    "descricao": "Serviços de representação e consultoria jurídica criminal"
+  },
+  {
+    "codigo": "113012000",
+    "descricao": "Serviços de representação e consultoria jurídica em outras áreas do direito, exceto consultoria tributária"
+  },
+  {
+    "codigo": "113013000",
+    "descricao": "Serviços de documentação e certificação, exceto os serviços notariais e de registro"
+  },
+  {
+    "codigo": "113014000",
+    "descricao": "Serviços de arbitragem, conciliação e mediação"
+  },
+  {
+    "codigo": "113019000",
+    "descricao": "Serviços jurídicos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "113021100",
+    "descricao": "Serviços de auditoria contábil"
+  },
+  {
+    "codigo": "113021900",
+    "descricao": "Serviços de auditoria não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "113022100",
+    "descricao": "Serviços de contabilidade"
+  },
+  {
+    "codigo": "113022200",
+    "descricao": "Serviços de escrituração mercantil"
+  },
+  {
+    "codigo": "113022300",
+    "descricao": "Serviços de folha de pagamento"
+  },
+  {
+    "codigo": "113031000",
+    "descricao": "Serviços de consultoria tributária para pessoas jurídicas"
+  },
+  {
+    "codigo": "113032000",
+    "descricao": "Serviços de consultoria tributária para pessoas físicas"
+  },
+  {
+    "codigo": "113040000",
+    "descricao": "Serviços notariais e de registro"
+  },
+  {
+    "codigo": "114011100",
+    "descricao": "Serviços de consultoria em gestão estratégica"
+  },
+  {
+    "codigo": "114011200",
+    "descricao": "Serviços de consultoria em gestão financeira"
+  },
+  {
+    "codigo": "114011300",
+    "descricao": "Serviços de consultoria em gestão de recursos humanos"
+  },
+  {
+    "codigo": "114011400",
+    "descricao": "Serviços de consultoria em gestão de marketing"
+  },
+  {
+    "codigo": "114011500",
+    "descricao": "Serviços de consultoria em gestão operacional"
+  },
+  {
+    "codigo": "114011600",
+    "descricao": "Serviços de consultoria em gestão energética"
+  },
+  {
+    "codigo": "114011700",
+    "descricao": "Serviços de consultoria em gestão de cadeia logística"
+  },
+  {
+    "codigo": "114011800",
+    "descricao": "Serviços de consultoria em gestão hospitalar"
+  },
+  {
+    "codigo": "114011900",
+    "descricao": "Serviços de consultoria em gestão empresarial não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114012100",
+    "descricao": "Serviços de gestão em processos de negócios"
+  },
+  {
+    "codigo": "114012200",
+    "descricao": "Serviços de gestão hospitalar"
+  },
+  {
+    "codigo": "114012900",
+    "descricao": "Serviços de gestão não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114013100",
+    "descricao": "Serviços de assessoria de imprensa"
+  },
+  {
+    "codigo": "114013200",
+    "descricao": "Serviços de relações públicas"
+  },
+  {
+    "codigo": "114013900",
+    "descricao": "Serviços de assessoria empresarial não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114021100",
+    "descricao": "Serviços de consultoria em arquitetura"
+  },
+  {
+    "codigo": "114021200",
+    "descricao": "Serviços de arquitetura para projetos de construções residenciais"
+  },
+  {
+    "codigo": "114021300",
+    "descricao": "Serviços de arquitetura para projetos de construções não residenciais"
+  },
+  {
+    "codigo": "114021400",
+    "descricao": "Serviços de arquitetura para restauração de prédios históricos"
+  },
+  {
+    "codigo": "114021500",
+    "descricao": "Serviços de arquitetura relativos ao acompanhamento e fiscalização da execução de projetos arquitetônicos e urbanísticos"
+  },
+  {
+    "codigo": "114022100",
+    "descricao": "Serviços de planejamento urbano"
+  },
+  {
+    "codigo": "114022200",
+    "descricao": "Serviços de planejamento de áreas rurais"
+  },
+  {
+    "codigo": "114023100",
+    "descricao": "Serviços de consultoria em paisagismo"
+  },
+  {
+    "codigo": "114023200",
+    "descricao": "Serviços de paisagismo, exceto consultoria"
+  },
+  {
+    "codigo": "114029000",
+    "descricao": "Serviços de arquitetura, de planejamento urbano e de áreas rurais e de paisagismo não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114031000",
+    "descricao": "Serviços de consultoria em engenharia"
+  },
+  {
+    "codigo": "114032110",
+    "descricao": "Serviços de engenharia para projetos de construção residencial"
+  },
+  {
+    "codigo": "114032120",
+    "descricao": "Serviços de engenharia para projetos de construção não-residencial"
+  },
+  {
+    "codigo": "114032211",
+    "descricao": "Serviços de engenharia para projetos de exploração de minerais"
+  },
+  {
+    "codigo": "114032212",
+    "descricao": "Serviços de engenharia para projetos de exploração de petróleo e gás"
+  },
+  {
+    "codigo": "114032213",
+    "descricao": "Serviços de engenharia para projetos de refino de petróleo e petroquímica"
+  },
+  {
+    "codigo": "114032214",
+    "descricao": "Serviços de engenharia para projetos de unidades de produção de biocombustíveis"
+  },
+  {
+    "codigo": "114032221",
+    "descricao": "Serviços de engenharia para projetos de veículos terrestres"
+  },
+  {
+    "codigo": "114032222",
+    "descricao": "Serviços de engenharia para projetos de embarcações"
+  },
+  {
+    "codigo": "114032223",
+    "descricao": "Serviços de engenharia para projetos de veículos aéreos e aeroespaciais"
+  },
+  {
+    "codigo": "114032290",
+    "descricao": "Serviços de engenharia para outros projetos industriais e de fabricação, exceto para projetos de energia"
+  },
+  {
+    "codigo": "114032300",
+    "descricao": "Serviços de engenharia para projetos de infraestrutura de transportes"
+  },
+  {
+    "codigo": "114032400",
+    "descricao": "Serviços de engenharia para projetos de energia"
+  },
+  {
+    "codigo": "114032500",
+    "descricao": "Serviços de engenharia para projetos de telecomunicações, radiodifusão e televisão"
+  },
+  {
+    "codigo": "114032600",
+    "descricao": "Serviços de engenharia para projetos de gerenciamento de resíduos (perigosos e não perigosos)"
+  },
+  {
+    "codigo": "114032700",
+    "descricao": "Serviços de engenharia para projetos de distribuição de água e rede de esgoto"
+  },
+  {
+    "codigo": "114032900",
+    "descricao": "Serviços de engenharia para outros projetos"
+  },
+  {
+    "codigo": "114033000",
+    "descricao": "Serviços de gerenciamento de projetos de construção"
+  },
+  {
+    "codigo": "114039000",
+    "descricao": "Serviços de engenharia não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114041100",
+    "descricao": "Serviços de consultoria geológica e geofísica"
+  },
+  {
+    "codigo": "114041200",
+    "descricao": "Serviços geofísicos"
+  },
+  {
+    "codigo": "114041300",
+    "descricao": "Serviços geoquímicos"
+  },
+  {
+    "codigo": "114041400",
+    "descricao": "Serviços de informações para avaliação e exploração de recursos naturais"
+  },
+  {
+    "codigo": "114041900",
+    "descricao": "Serviços geológicos, geofísicos e outros de prospecção não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114042100",
+    "descricao": "Serviços topográficos"
+  },
+  {
+    "codigo": "114042200",
+    "descricao": "Serviços cartográficos"
+  },
+  {
+    "codigo": "114043000",
+    "descricao": "Serviços meteorológicos e de previsão do tempo"
+  },
+  {
+    "codigo": "114044100",
+    "descricao": "Serviços de análise e de exames técnicos sobre pureza e composição"
+  },
+  {
+    "codigo": "114044200",
+    "descricao": "Serviços de análise e de exames técnicos de propriedades físicas"
+  },
+  {
+    "codigo": "114044300",
+    "descricao": "Serviços de análise e de exames técnicos de sistemas elétricos e mecânicos"
+  },
+  {
+    "codigo": "114044400",
+    "descricao": "Serviços de inspeção técnica de veículos de transporte rodoviário"
+  },
+  {
+    "codigo": "114044900",
+    "descricao": "Serviços de análise e exames técnicos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114051100",
+    "descricao": "Serviços hospitalares, com ou sem internação, para animais domésticos"
+  },
+  {
+    "codigo": "114051200",
+    "descricao": "Serviços de atendimento, assistência ou tratamento para animais domésticos"
+  },
+  {
+    "codigo": "114052100",
+    "descricao": "Serviços hospitalares, com ou sem internação, para animais de corte"
+  },
+  {
+    "codigo": "114052200",
+    "descricao": "Serviços de atendimento, assistência ou tratamento para animais de corte"
+  },
+  {
+    "codigo": "114053000",
+    "descricao": "Serviços funerários, de cremação e de embalsamamento de animais"
+  },
+  {
+    "codigo": "114054000",
+    "descricao": "Serviços de bancos de órgãos, sangue, sêmen, tecidos, óvulos e outros materiais biológicos"
+  },
+  {
+    "codigo": "114055000",
+    "descricao": "Planos de atendimento e assistência médico-veterinária"
+  },
+  {
+    "codigo": "114056000",
+    "descricao": "Serviços de guarda, adestramento, embelezamento e alojamento"
+  },
+  {
+    "codigo": "114059000",
+    "descricao": "Serviços veterinários não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114061100",
+    "descricao": "Serviços de campanhas publicitárias"
+  },
+  {
+    "codigo": "114061200",
+    "descricao": "Serviços de marketing direto e mala direta"
+  },
+  {
+    "codigo": "114061900",
+    "descricao": "Serviços de propaganda não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114062000",
+    "descricao": "Aquisição ou venda de espaço ou tempo para propaganda, sob comissão"
+  },
+  {
+    "codigo": "114063100",
+    "descricao": "Venda de espaço para propaganda em mídia impressa, exceto sob comissão"
+  },
+  {
+    "codigo": "114063200",
+    "descricao": "Venda de tempo para propaganda em rádio e televisão, exceto sob comissão"
+  },
+  {
+    "codigo": "114063300",
+    "descricao": "Venda de espaço para propaganda na rede mundial de computadores, exceto sob comissão"
+  },
+  {
+    "codigo": "114063400",
+    "descricao": "Venda de espaço para propaganda em mídia exterior, exceto sob comissão"
+  },
+  {
+    "codigo": "114063900",
+    "descricao": "Venda de espaço ou tempo para propaganda, exceto sob comissão, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114070000",
+    "descricao": "Pesquisas de mercado e serviços de pesquisa de opinião pública"
+  },
+  {
+    "codigo": "114081100",
+    "descricao": "Serviços fotográficos de retratos"
+  },
+  {
+    "codigo": "114081200",
+    "descricao": "Serviços fotográficos e videográficos para propaganda"
+  },
+  {
+    "codigo": "114081300",
+    "descricao": "Serviços fotográficos e videográficos de eventos"
+  },
+  {
+    "codigo": "114081400",
+    "descricao": "Serviços fotográficos especiais"
+  },
+  {
+    "codigo": "114081500",
+    "descricao": "Serviços de restauração e retoque de fotografias"
+  },
+  {
+    "codigo": "114081900",
+    "descricao": "Serviços fotográficos e videográficos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114082000",
+    "descricao": "Serviços de processamento de fotografias"
+  },
+  {
+    "codigo": "114091100",
+    "descricao": "Serviços de design de interiores para espaços comerciais e públicos"
+  },
+  {
+    "codigo": "114091200",
+    "descricao": "Serviços de design de interiores para espaços residenciais"
+  },
+  {
+    "codigo": "114092100",
+    "descricao": "Serviços de desenho industrial de embalagens, expositores de loja e objetos promocionais para comunicação e vendas"
+  },
+  {
+    "codigo": "114092200",
+    "descricao": "Serviços de desenho industrial de produtos, utensílios, equipamentos, vestuário, calçados, ornamentos, joias e objetos pessoais"
+  },
+  {
+    "codigo": "114092300",
+    "descricao": "Serviços de desenho industrial de máquinas, equipamentos, acessórios e objetos de uso industrial de qualquer natureza"
+  },
+  {
+    "codigo": "114092400",
+    "descricao": "Serviços de desenho industrial de mobiliários e itens de decoração"
+  },
+  {
+    "codigo": "114092500",
+    "descricao": "Serviços de desenho industrial de utensílios e equipamentos eletrodomésticos e eletroeletrônicos"
+  },
+  {
+    "codigo": "114092900",
+    "descricao": "Serviços de desenho industrial não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114093000",
+    "descricao": "Serviços de design de marcas, imagens, objetos gráficos e digitais"
+  },
+  {
+    "codigo": "114099000",
+    "descricao": "Serviços especializados de design não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114101000",
+    "descricao": "Serviços de consultoria ambiental"
+  },
+  {
+    "codigo": "114109000",
+    "descricao": "Serviços de consultoria técnica e científica não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "114110000",
+    "descricao": "Serviços de tradução e de intérpretes"
+  },
+  {
+    "codigo": "114120000",
+    "descricao": "Serviços para registros de marcas comerciais e de franquias empresariais, exceto as licenças de uso de direito"
+  },
+  {
+    "codigo": "114130000",
+    "descricao": "Serviços de prospecção de clientes"
+  },
+  {
+    "codigo": "114140000",
+    "descricao": "Serviços de prospecção de fornecedores"
+  },
+  {
+    "codigo": "114150000",
+    "descricao": "Serviços profissionais, técnicos e gerenciais não classificados em posições anteriores"
+  },
+  {
+    "codigo": "115011000",
+    "descricao": "Serviços de consultoria em tecnologia da informação (TI)"
+  },
+  {
+    "codigo": "115012000",
+    "descricao": "Serviços de segurança em tecnologia da informação (TI)"
+  },
+  {
+    "codigo": "115013000",
+    "descricao": "Serviços de suporte em tecnologia da informação (TI)"
+  },
+  {
+    "codigo": "115021000",
+    "descricao": "Serviços de projeto, desenvolvimento e instalação de aplicativos e programas não personalizados (não customizados)"
+  },
+  {
+    "codigo": "115022000",
+    "descricao": "Serviços de projeto e desenvolvimento, adaptação e instalação de aplicativos personalizados (customizados)"
+  },
+  {
+    "codigo": "115023000",
+    "descricao": "Serviços de projeto e desenvolvimento de estruturas e conteúdo de páginas eletrônicas"
+  },
+  {
+    "codigo": "115024000",
+    "descricao": "Serviços de projeto e desenvolvimento de estruturas e conteúdo de bancos de dados"
+  },
+  {
+    "codigo": "115025000",
+    "descricao": "Serviços de integração de sistemas em tecnologia da informação (TI)"
+  },
+  {
+    "codigo": "115029000",
+    "descricao": "Serviços de projeto e desenvolvimento de aplicativos e programas em tecnologia da informação (TI) não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "115030000",
+    "descricao": "Serviços de projeto e desenvolvimento de redes em tecnologia da informação (TI)"
+  },
+  {
+    "codigo": "115040000",
+    "descricao": "Serviços de projeto e desenvolvimento de topografias de circuitos integrados"
+  },
+  {
+    "codigo": "115050000",
+    "descricao": "Serviços de projeto de circuitos integrados"
+  },
+  {
+    "codigo": "115061000",
+    "descricao": "Serviços de hospedagem de sítios na rede mundial de computadores"
+  },
+  {
+    "codigo": "115062100",
+    "descricao": "Serviços de hospedagem de aplicativos e programas software como serviço (SaaS)"
+  },
+  {
+    "codigo": "115062200",
+    "descricao": "Serviços de fornecimento de infraestrutura como serviço (IaaS)"
+  },
+  {
+    "codigo": "115062300",
+    "descricao": "Serviços de fornecimento de plataformas como serviço (PaaS)"
+  },
+  {
+    "codigo": "115062900",
+    "descricao": "Serviços de hospedagem de aplicativos e programas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "115069000",
+    "descricao": "Serviços de hospedagem e de disponibilização de infraestrutura em tecnologia da informação (TI) não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "115071000",
+    "descricao": "Serviços de gerenciamento de redes"
+  },
+  {
+    "codigo": "115072000",
+    "descricao": "Serviços de gerenciamento de sistemas computacionais"
+  },
+  {
+    "codigo": "115079000",
+    "descricao": "Serviços de gerenciamento de infraestrutura em tecnologia da informação (TI) não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "115080000",
+    "descricao": "Serviços de manutenção de aplicativos e programas"
+  },
+  {
+    "codigo": "115090000",
+    "descricao": "Serviços de processamento de dados"
+  },
+  {
+    "codigo": "115100000",
+    "descricao": "Serviços em tecnologia da informação (TI) não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117011100",
+    "descricao": "Serviços de interconexão pelo uso da rede fixa"
+  },
+  {
+    "codigo": "117011200",
+    "descricao": "Serviços de interconexão pelo uso de rede móvel"
+  },
+  {
+    "codigo": "117011900",
+    "descricao": "Serviços de operadoras não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117012100",
+    "descricao": "Serviços de chamadas de telecomunicações fixos comutados"
+  },
+  {
+    "codigo": "117012900",
+    "descricao": "Serviços de telecomunicações fixos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117013100",
+    "descricao": "Serviços de voz nas telecomunicações móveis"
+  },
+  {
+    "codigo": "117013200",
+    "descricao": "Serviços de texto nas telecomunicações móveis"
+  },
+  {
+    "codigo": "117013300",
+    "descricao": "Serviços de transmissão de dados nas telecomunicações móveis, exceto serviços de texto"
+  },
+  {
+    "codigo": "117013400",
+    "descricao": "Serviços de telecomunicações móveis para usuários visitantes (roaming)"
+  },
+  {
+    "codigo": "117014000",
+    "descricao": "Serviços de redes privadas"
+  },
+  {
+    "codigo": "117015100",
+    "descricao": "Serviços de transmissão de dados local, nacional ou internacional"
+  },
+  {
+    "codigo": "117015200",
+    "descricao": "Serviços de exploração de linha dedicada local, nacional ou internacional"
+  },
+  {
+    "codigo": "117019000",
+    "descricao": "Outros serviços de telecomunicações, exceto pela rede mundial de computadores, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117021000",
+    "descricao": "Serviços de fornecimento de infraestrutura de acesso (backbone) à rede mundial de computadores"
+  },
+  {
+    "codigo": "117022100",
+    "descricao": "Serviços de acesso à rede mundial de computadores por banda estreita"
+  },
+  {
+    "codigo": "117022200",
+    "descricao": "Serviços de acesso à rede mundial de computadores por banda larga"
+  },
+  {
+    "codigo": "117029000",
+    "descricao": "Serviços de telecomunicações pela rede mundial de computadores não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117031000",
+    "descricao": "Serviços de oferta de livros, jornais, periódicos, diretórios e malas diretas de acesso imediato (on-line)"
+  },
+  {
+    "codigo": "117032100",
+    "descricao": "Serviços de oferta de áudio para download"
+  },
+  {
+    "codigo": "117032200",
+    "descricao": "Serviços de oferta de áudio de conteúdo contínuo (streaming)"
+  },
+  {
+    "codigo": "117033100",
+    "descricao": "Serviços de oferta de arquivos contendo filmes e vídeos para download"
+  },
+  {
+    "codigo": "117033200",
+    "descricao": "Serviços de oferta de filmes e vídeos de conteúdo contínuo (streaming)"
+  },
+  {
+    "codigo": "117039100",
+    "descricao": "Serviços de oferta de jogos e games de acesso imediato (on-line)"
+  },
+  {
+    "codigo": "117039200",
+    "descricao": "Serviços de oferta de conteúdo de portais de busca na rede mundial de computadores"
+  },
+  {
+    "codigo": "117039900",
+    "descricao": "Serviços de oferta de outros conteúdos de acesso imediato (on-line) não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "117041000",
+    "descricao": "Serviços de agências de notícias para jornais e periódicos"
+  },
+  {
+    "codigo": "117042000",
+    "descricao": "Serviços de agências de notícias para mídia audiovisual"
+  },
+  {
+    "codigo": "117051000",
+    "descricao": "Serviços de biblioteca"
+  },
+  {
+    "codigo": "117052000",
+    "descricao": "Serviços de arquivo"
+  },
+  {
+    "codigo": "117061100",
+    "descricao": "Serviços de programação dos canais de rádio"
+  },
+  {
+    "codigo": "117061200",
+    "descricao": "Serviços de programação dos canais de televisão"
+  },
+  {
+    "codigo": "117062100",
+    "descricao": "Serviços de transmissão de sinais, sons e imagens de rádio e televisão, aberta ou por assinatura"
+  },
+  {
+    "codigo": "117062200",
+    "descricao": "Serviços de distribuição de pacotes básicos de programação de televisão por assinatura"
+  },
+  {
+    "codigo": "117062300",
+    "descricao": "Serviços de distribuição de pacotes de programação adicional de televisão por assinatura"
+  },
+  {
+    "codigo": "117062400",
+    "descricao": "Serviços de distribuição de programas de televisão por assinatura, na modalidade \"pague por exibição\" (pay-per-view)"
+  },
+  {
+    "codigo": "117069000",
+    "descricao": "Serviços de difusão, programação e distribuição de programas de rádio e televisão não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118011100",
+    "descricao": "Serviço de recrutamento e seleção de profissionais executivos"
+  },
+  {
+    "codigo": "118011200",
+    "descricao": "Serviço de recrutamento e seleção de profissionais, exceto executivos"
+  },
+  {
+    "codigo": "118012100",
+    "descricao": "Serviços de fornecimento de mão de obra terceirizada, exceto temporária"
+  },
+  {
+    "codigo": "118012200",
+    "descricao": "Serviços de fornecimento de mão de obra temporária"
+  },
+  {
+    "codigo": "118012900",
+    "descricao": "Serviços de fornecimento de mão de obra não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118021000",
+    "descricao": "Serviços de investigação"
+  },
+  {
+    "codigo": "118022000",
+    "descricao": "Serviços de consultoria em segurança"
+  },
+  {
+    "codigo": "118023000",
+    "descricao": "Serviços de sistemas de segurança"
+  },
+  {
+    "codigo": "118024000",
+    "descricao": "Serviços de carro-forte"
+  },
+  {
+    "codigo": "118025000",
+    "descricao": "Serviços de guarda e escolta armada"
+  },
+  {
+    "codigo": "118029000",
+    "descricao": "Serviços de segurança não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118031000",
+    "descricao": "Serviços gerais de limpeza"
+  },
+  {
+    "codigo": "118032100",
+    "descricao": "Serviços de desinfecção e extermínio de pragas"
+  },
+  {
+    "codigo": "118032200",
+    "descricao": "Serviços de limpeza de janelas"
+  },
+  {
+    "codigo": "118032900",
+    "descricao": "Serviços especializados de limpeza não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118040000",
+    "descricao": "Serviços de acondicionamento e empacotamento"
+  },
+  {
+    "codigo": "118051100",
+    "descricao": "Serviços de reservas para transporte aéreo de passageiros"
+  },
+  {
+    "codigo": "118051200",
+    "descricao": "Serviços de reservas para transporte ferroviário de passageiros"
+  },
+  {
+    "codigo": "118051300",
+    "descricao": "Serviços de reservas para transporte rodoviário de passageiros"
+  },
+  {
+    "codigo": "118051400",
+    "descricao": "Serviços de reservas de carros de aluguel"
+  },
+  {
+    "codigo": "118051900",
+    "descricao": "Serviços de reservas para transporte de passageiros não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118052100",
+    "descricao": "Serviços de reservas de hospedagem, exceto em unidades compartilhadas"
+  },
+  {
+    "codigo": "118052200",
+    "descricao": "Serviços de reservas e intercâmbio de unidades compartilhadas (time-share)"
+  },
+  {
+    "codigo": "118052300",
+    "descricao": "Serviços de reservas em cruzeiros"
+  },
+  {
+    "codigo": "118052400",
+    "descricao": "Serviços de reservas de pacotes turísticos"
+  },
+  {
+    "codigo": "118053100",
+    "descricao": "Serviços de reservas para centros de convenções, centros de congressos e salas de exposições"
+  },
+  {
+    "codigo": "118053200",
+    "descricao": "Serviços de reservas de ingressos para eventos de entretenimento e recreativos"
+  },
+  {
+    "codigo": "118053900",
+    "descricao": "Serviços de reservas não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118054000",
+    "descricao": "Serviços de operadoras de turismo"
+  },
+  {
+    "codigo": "118055000",
+    "descricao": "Serviços de guias turísticos"
+  },
+  {
+    "codigo": "118056100",
+    "descricao": "Serviços de promoção turística"
+  },
+  {
+    "codigo": "118056200",
+    "descricao": "Serviços de informação a visitantes"
+  },
+  {
+    "codigo": "118061000",
+    "descricao": "Serviços de informação cadastral e análise de crédito"
+  },
+  {
+    "codigo": "118062000",
+    "descricao": "Serviços de cobrança"
+  },
+  {
+    "codigo": "118063100",
+    "descricao": "Serviços de call center"
+  },
+  {
+    "codigo": "118063900",
+    "descricao": "Serviços de apoio às atividades empresariais por meio de telefone não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118064000",
+    "descricao": "Serviços combinados de escritório e apoio administrativo"
+  },
+  {
+    "codigo": "118065100",
+    "descricao": "Serviços de fotocópias e outros serviços de reprodução de documentos"
+  },
+  {
+    "codigo": "118065200",
+    "descricao": "Serviços de execução e envio de mala direta e de elaboração de listas de endereços"
+  },
+  {
+    "codigo": "118065300",
+    "descricao": "Serviços de preparação de documentos"
+  },
+  {
+    "codigo": "118065900",
+    "descricao": "Serviços especializados de apoio a escritório não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "118066100",
+    "descricao": "Serviços de assistência e organização de convenções"
+  },
+  {
+    "codigo": "118066200",
+    "descricao": "Serviços de assistência e organização de feiras de negócios"
+  },
+  {
+    "codigo": "118066300",
+    "descricao": "Serviços de assistência e organização de exposições e outros eventos"
+  },
+  {
+    "codigo": "118067000",
+    "descricao": "Serviços de jardinagem"
+  },
+  {
+    "codigo": "118068100",
+    "descricao": "Serviços de agenciamento de modelos"
+  },
+  {
+    "codigo": "118068200",
+    "descricao": "Serviços de agenciamento de artistas"
+  },
+  {
+    "codigo": "118068300",
+    "descricao": "Serviços de agenciamento de atletas"
+  },
+  {
+    "codigo": "118069000",
+    "descricao": "Serviços de apoio não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "119011000",
+    "descricao": "Serviços de apoio à agricultura"
+  },
+  {
+    "codigo": "119012000",
+    "descricao": "Serviços de apoio à pecuária"
+  },
+  {
+    "codigo": "119013000",
+    "descricao": "Serviços de apoio à produção florestal (silvicultura)"
+  },
+  {
+    "codigo": "119014000",
+    "descricao": "Serviços de apoio à pesca"
+  },
+  {
+    "codigo": "119015000",
+    "descricao": "Serviços de apoio à aquicultura"
+  },
+  {
+    "codigo": "119021000",
+    "descricao": "Serviços de apoio à extração de petróleo e gás"
+  },
+  {
+    "codigo": "119029000",
+    "descricao": "Serviços de apoio à mineração não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "119031100",
+    "descricao": "Serviços de apoio à transmissão de eletricidade"
+  },
+  {
+    "codigo": "119031200",
+    "descricao": "Serviços de apoio à distribuição de eletricidade"
+  },
+  {
+    "codigo": "119032000",
+    "descricao": "Serviços de apoio à distribuição de gás por meio de tubulações"
+  },
+  {
+    "codigo": "119033000",
+    "descricao": "Serviços de apoio à distribuição de água por meio de tubulações, exceto vapor de água e água quente"
+  },
+  {
+    "codigo": "119034000",
+    "descricao": "Serviços de apoio a distribuição de vapor de água, água quente e ar condicionado por meio de tubulações"
+  },
+  {
+    "codigo": "119035000",
+    "descricao": "Serviços de apoio à distribuição de água, exceto por meio de tubulações"
+  },
+  {
+    "codigo": "120011000",
+    "descricao": "Serviços de manutenção e reparação de produtos metálicos, exceto maquinários e equipamentos"
+  },
+  {
+    "codigo": "120012000",
+    "descricao": "Serviços de manutenção e reparação de computadores e seus periféricos e de maquinário para escritório"
+  },
+  {
+    "codigo": "120013110",
+    "descricao": "Serviços de manutenção e reparação de veículos rodoviários motorizados"
+  },
+  {
+    "codigo": "120013120",
+    "descricao": "Serviços de manutenção e reparação de veículos rodoviários não motorizados"
+  },
+  {
+    "codigo": "120013200",
+    "descricao": "Serviços de manutenção e reparação de veículos sobre trilhos"
+  },
+  {
+    "codigo": "120013300",
+    "descricao": "Serviços de manutenção e reparação de veículos aquaviários"
+  },
+  {
+    "codigo": "120013410",
+    "descricao": "Serviços de manutenção e reparação de aeronaves, exceto de motores, turborreatores e turbopropulsores aeronáuticos"
+  },
+  {
+    "codigo": "120013420",
+    "descricao": "Serviços de manutenção e reparação de motores, turborreatores e turbopropulsores aeronáuticos"
+  },
+  {
+    "codigo": "120013430",
+    "descricao": "Serviços de manutenção e reparação de foguetes e equipamentos aeroespaciais"
+  },
+  {
+    "codigo": "120013500",
+    "descricao": "Serviços de manutenção e reparação de veículos militares"
+  },
+  {
+    "codigo": "120013900",
+    "descricao": "Serviços de manutenção e reparação de maquinários e equipamentos de transporte não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "120014000",
+    "descricao": "Serviços de manutenção e reparação de plataformas, inclusive navios-plataforma, para extração de petróleo e gás"
+  },
+  {
+    "codigo": "120015000",
+    "descricao": "Serviços de manutenção e reparação de maquinários e equipamentos de uso industrial"
+  },
+  {
+    "codigo": "120016000",
+    "descricao": "Serviços de manutenção e reparação de maquinários e equipamentos de uso comercial"
+  },
+  {
+    "codigo": "120017000",
+    "descricao": "Serviços de manutenção e reparação de equipamentos e aparelhos de telecomunicações"
+  },
+  {
+    "codigo": "120018100",
+    "descricao": "Serviços de manutenção e reparação de aparelhos eletroeletrônicos domésticos"
+  },
+  {
+    "codigo": "120018200",
+    "descricao": "Serviços de manutenção e reparação de instrumentos e equipamentos médico-hospitalares, odontológicos, óticos e de precisão"
+  },
+  {
+    "codigo": "120018300",
+    "descricao": "Serviços de manutenção e reparação de equipamentos militares"
+  },
+  {
+    "codigo": "120018900",
+    "descricao": "Serviços de manutenção e reparação de outros maquinários e equipamentos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "120021000",
+    "descricao": "Serviços de manutenção e reparação de produtos de couro, calçados, malas e bolsas"
+  },
+  {
+    "codigo": "120022000",
+    "descricao": "Serviços de manutenção e reparação de relógios e joias"
+  },
+  {
+    "codigo": "120023000",
+    "descricao": "Serviços de manutenção e reparação de móveis"
+  },
+  {
+    "codigo": "120024000",
+    "descricao": "Serviços de manutenção de roupas e outros produtos têxteis"
+  },
+  {
+    "codigo": "120029000",
+    "descricao": "Serviços de manutenção e reparação de outros bens de consumo não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "120031000",
+    "descricao": "Serviços de instalação de produtos metálicos, exceto maquinário e equipamentos"
+  },
+  {
+    "codigo": "120032110",
+    "descricao": "Serviços de montagem sob encomenda de turbinas industriais"
+  },
+  {
+    "codigo": "120032190",
+    "descricao": "Serviços de instalação de maquinários, aparelhos e equipamentos industriais não classificados em itens anteriores"
+  },
+  {
+    "codigo": "120032200",
+    "descricao": "Serviços de instalação de computadores e seus periféricos e maquinário de escritório"
+  },
+  {
+    "codigo": "120032300",
+    "descricao": "Serviços de instalação de equipamentos e aparelhos de comunicação, incluindo de rádio e de televisão"
+  },
+  {
+    "codigo": "120032400",
+    "descricao": "Serviços de instalação de maquinários, equipamentos, instrumentos e aparelhos médico-hospitalares, óticos e de precisão"
+  },
+  {
+    "codigo": "120032510",
+    "descricao": "Serviços de instalação de sensores e sistemas de armas"
+  },
+  {
+    "codigo": "120032520",
+    "descricao": "Serviços de instalação de maquinários, aparelhos e equipamentos de emprego militar"
+  },
+  {
+    "codigo": "120032610",
+    "descricao": "Serviços de montagem sob encomenda de motores, turborreatores e turbopropulsores aeronáuticos"
+  },
+  {
+    "codigo": "120032690",
+    "descricao": "Serviços de instalação de maquinários e equipamentos de transporte não classificados em itens anteriores"
+  },
+  {
+    "codigo": "120032900",
+    "descricao": "Serviços de instalação de maquinários, aparelhos e equipamentos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "121011000",
+    "descricao": "Serviços de editoração"
+  },
+  {
+    "codigo": "121012100",
+    "descricao": "Serviços de impressão"
+  },
+  {
+    "codigo": "121012200",
+    "descricao": "Serviços relacionados à impressão"
+  },
+  {
+    "codigo": "121012300",
+    "descricao": "Serviços de reprodução de mídia gravada"
+  },
+  {
+    "codigo": "121013000",
+    "descricao": "Serviços de publicação"
+  },
+  {
+    "codigo": "122011100",
+    "descricao": "Serviços de creches ou de entidade equivalente"
+  },
+  {
+    "codigo": "122011200",
+    "descricao": "Serviços de pré-escola"
+  },
+  {
+    "codigo": "122011900",
+    "descricao": "Serviços de educação infantil não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "122012000",
+    "descricao": "Serviços de ensino fundamental"
+  },
+  {
+    "codigo": "122013000",
+    "descricao": "Serviços de ensino médio"
+  },
+  {
+    "codigo": "122020000",
+    "descricao": "Serviços de educação técnica de nível médio"
+  },
+  {
+    "codigo": "122031000",
+    "descricao": "Serviços de ensino fundamental de jovens e adultos"
+  },
+  {
+    "codigo": "122032000",
+    "descricao": "Serviços de ensino médio de jovens e adultos"
+  },
+  {
+    "codigo": "122041000",
+    "descricao": "Serviços educacionais de graduação"
+  },
+  {
+    "codigo": "122042000",
+    "descricao": "Serviços educacionais de pós-graduação"
+  },
+  {
+    "codigo": "122043000",
+    "descricao": "Serviços educacionais de extensão"
+  },
+  {
+    "codigo": "122044000",
+    "descricao": "Serviços educacionais de cursos sequenciais"
+  },
+  {
+    "codigo": "122051100",
+    "descricao": "Serviços de educação com enfoque cultural"
+  },
+  {
+    "codigo": "122051200",
+    "descricao": "Serviços de educação desportiva e recreacional"
+  },
+  {
+    "codigo": "122051300",
+    "descricao": "Serviços de educação em línguas estrangeiras e de sinais"
+  },
+  {
+    "codigo": "122051400",
+    "descricao": "Serviços de palestras e conferências"
+  },
+  {
+    "codigo": "122051900",
+    "descricao": "Outros serviços de educação, inclusive treinamento, não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "122052000",
+    "descricao": "Serviços de apoio aos serviços educacionais"
+  },
+  {
+    "codigo": "123011100",
+    "descricao": "Serviços cirúrgicos"
+  },
+  {
+    "codigo": "123011200",
+    "descricao": "Serviços ginecológicos e obstétricos"
+  },
+  {
+    "codigo": "123011300",
+    "descricao": "Serviços psiquiátricos"
+  },
+  {
+    "codigo": "123011400",
+    "descricao": "Serviços prestados em Unidades de Terapia Intensiva"
+  },
+  {
+    "codigo": "123011500",
+    "descricao": "Serviços de atendimento de urgência"
+  },
+  {
+    "codigo": "123011900",
+    "descricao": "Serviços hospitalares não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "123012100",
+    "descricao": "Serviços de clínica médica"
+  },
+  {
+    "codigo": "123012200",
+    "descricao": "Serviços médicos especializados"
+  },
+  {
+    "codigo": "123012300",
+    "descricao": "Serviços odontológicos"
+  },
+  {
+    "codigo": "123019100",
+    "descricao": "Serviços de enfermagem"
+  },
+  {
+    "codigo": "123019200",
+    "descricao": "Serviços de fisioterapia"
+  },
+  {
+    "codigo": "123019300",
+    "descricao": "Serviços laboratoriais"
+  },
+  {
+    "codigo": "123019400",
+    "descricao": "Serviços de diagnóstico por imagem"
+  },
+  {
+    "codigo": "123019500",
+    "descricao": "Serviços de bancos de material biológico humano"
+  },
+  {
+    "codigo": "123019600",
+    "descricao": "Serviços de ambulância"
+  },
+  {
+    "codigo": "123019700",
+    "descricao": "Serviços de assistência ao parto e pós-parto"
+  },
+  {
+    "codigo": "123019800",
+    "descricao": "Serviços de psicologia"
+  },
+  {
+    "codigo": "123019900",
+    "descricao": "Outros serviços de saúde humana não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "123021000",
+    "descricao": "Serviços de cuidado em saúde em unidades de acolhimento"
+  },
+  {
+    "codigo": "123022100",
+    "descricao": "Serviços de assistência a idosos em unidades de acolhimento"
+  },
+  {
+    "codigo": "123022200",
+    "descricao": "Serviços de assistência a crianças e adolescentes com deficiência em unidades de acolhimento"
+  },
+  {
+    "codigo": "123022300",
+    "descricao": "Serviços de assistência a adultos com deficiência em unidades de acolhimento"
+  },
+  {
+    "codigo": "123030000",
+    "descricao": "Serviços de assistência prestados a pessoas em situação de vulnerabilidade social com acomodação"
+  },
+  {
+    "codigo": "123041100",
+    "descricao": "Serviços de reabilitação vocacional para pessoas com deficiência"
+  },
+  {
+    "codigo": "123041200",
+    "descricao": "Serviços de reabilitação vocacional para desempregados"
+  },
+  {
+    "codigo": "123041900",
+    "descricao": "Serviço de reabilitação vocacional não classificados nas subposições anteriores"
+  },
+  {
+    "codigo": "123042000",
+    "descricao": "Serviços de orientação e aconselhamento relacionados a crianças e adolescentes"
+  },
+  {
+    "codigo": "123049000",
+    "descricao": "Serviços de assistência social sem acomodação não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "124010000",
+    "descricao": "Serviços de tratamento de água"
+  },
+  {
+    "codigo": "124021000",
+    "descricao": "Serviços de esgoto e tratamento de esgotos"
+  },
+  {
+    "codigo": "124022000",
+    "descricao": "Serviços de esvaziamento e limpeza de fossas sépticas"
+  },
+  {
+    "codigo": "124031100",
+    "descricao": "Serviços de coleta de resíduos de serviços de saúde e outros resíduos biológicos"
+  },
+  {
+    "codigo": "124031200",
+    "descricao": "Serviços de coleta de resíduos perigosos industriais, exceto resíduos de serviços de saúde e outros resíduos biológicos"
+  },
+  {
+    "codigo": "124031900",
+    "descricao": "Serviços de coleta de outros resíduos perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "124032100",
+    "descricao": "Serviços de coleta de resíduos recicláveis, não perigosos, de origem doméstica"
+  },
+  {
+    "codigo": "124032200",
+    "descricao": "Serviços de coleta de resíduos recicláveis, não perigosos, exceto de origem doméstica"
+  },
+  {
+    "codigo": "124033100",
+    "descricao": "Serviços de coleta de resíduos gerais de origem doméstica"
+  },
+  {
+    "codigo": "124033200",
+    "descricao": "Serviços de coleta de resíduos gerais, exceto de origem doméstica"
+  },
+  {
+    "codigo": "124041100",
+    "descricao": "Serviços de triagem, preparação, consolidação e estocagem de resíduos perigosos"
+  },
+  {
+    "codigo": "124041200",
+    "descricao": "Serviços de demolição e desmantelamento de embarcações, veículos e outros bens"
+  },
+  {
+    "codigo": "124041300",
+    "descricao": "Serviços de triagem, preparação, consolidação e estocagem de resíduos recicláveis não perigosos"
+  },
+  {
+    "codigo": "124041900",
+    "descricao": "Serviços de triagem, preparação, consolidação e estocagem de resíduos não perigosos, exceto os recicláveis"
+  },
+  {
+    "codigo": "124042100",
+    "descricao": "Serviços de tratamento de resíduos perigosos"
+  },
+  {
+    "codigo": "124042200",
+    "descricao": "Serviços de eliminação de resíduos perigosos"
+  },
+  {
+    "codigo": "124043100",
+    "descricao": "Serviços de tratamento e eliminação de resíduos não perigosos em aterros sanitários"
+  },
+  {
+    "codigo": "124043200",
+    "descricao": "Serviços de tratamento e eliminação de resíduos não perigosos em aterros, exceto os sanitários"
+  },
+  {
+    "codigo": "124043300",
+    "descricao": "Serviços de incineração de resíduos não perigosos"
+  },
+  {
+    "codigo": "124043900",
+    "descricao": "Serviços de tratamento e eliminação de resíduos não perigosos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "124051100",
+    "descricao": "Serviços de remediação e limpeza do ar"
+  },
+  {
+    "codigo": "124051200",
+    "descricao": "Serviços de remediação e limpeza de águas de superfície"
+  },
+  {
+    "codigo": "124051300",
+    "descricao": "Serviços de remediação e limpeza do solo e de águas subterrâneas"
+  },
+  {
+    "codigo": "124051400",
+    "descricao": "Serviços de remediação em edificações"
+  },
+  {
+    "codigo": "124052000",
+    "descricao": "Serviços de contenção, controle e monitoramento de áreas contaminadas"
+  },
+  {
+    "codigo": "124059000",
+    "descricao": "Serviços de remediação não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "124061000",
+    "descricao": "Serviços de varrição de vias e áreas públicas"
+  },
+  {
+    "codigo": "124069000",
+    "descricao": "Serviços de limpeza urbana e similares não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "124070000",
+    "descricao": "Serviços de proteção ambiental não classificados em posições anteriores"
+  },
+  {
+    "codigo": "125011100",
+    "descricao": "Serviços de gravação de som em estúdio"
+  },
+  {
+    "codigo": "125011200",
+    "descricao": "Serviços de gravação de som ao vivo"
+  },
+  {
+    "codigo": "125012100",
+    "descricao": "Serviços de produção de programas de televisão, videoteipes e filmes"
+  },
+  {
+    "codigo": "125012200",
+    "descricao": "Serviços de produção de programas de rádio"
+  },
+  {
+    "codigo": "125013100",
+    "descricao": "Serviços de edição de obras audiovisuais"
+  },
+  {
+    "codigo": "125013200",
+    "descricao": "Serviços de duplicação e transferência de obras audiovisuais"
+  },
+  {
+    "codigo": "125013300",
+    "descricao": "Serviços de correção de cor e restauração digital de obras audiovisuais"
+  },
+  {
+    "codigo": "125013400",
+    "descricao": "Serviços de efeitos visuais em obras audiovisuais"
+  },
+  {
+    "codigo": "125013500",
+    "descricao": "Serviços de animação"
+  },
+  {
+    "codigo": "125013600",
+    "descricao": "Serviços de legendas, títulos e dublagem em obras audiovisuais"
+  },
+  {
+    "codigo": "125013700",
+    "descricao": "Serviços de projeto e edição de som em obras audiovisuais"
+  },
+  {
+    "codigo": "125013900",
+    "descricao": "Serviços de pós-produção de obras audiovisuais não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "125014000",
+    "descricao": "Serviços de agenciamento para a comercialização de obras audiovisuais"
+  },
+  {
+    "codigo": "125015000",
+    "descricao": "Serviços de projeção de filmes"
+  },
+  {
+    "codigo": "125019000",
+    "descricao": "Serviços de produção audiovisual, de apoio e relacionados não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "125021000",
+    "descricao": "Serviços de organização e promoção de atuações artísticas ao vivo"
+  },
+  {
+    "codigo": "125022000",
+    "descricao": "Serviços de produção e apresentação de atuações artísticas ao vivo"
+  },
+  {
+    "codigo": "125023000",
+    "descricao": "Serviços de apoio para atuações artísticas ao vivo"
+  },
+  {
+    "codigo": "125029000",
+    "descricao": "Serviços de apresentação e promoção de atuações artísticas e outros serviços de entretenimento ao vivo não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "125031000",
+    "descricao": "Serviços de atuação artística"
+  },
+  {
+    "codigo": "125032000",
+    "descricao": "Serviços de autores, compositores, escultores, pintores e outros artistas, exceto os de atuação artística"
+  },
+  {
+    "codigo": "125041100",
+    "descricao": "Serviços de museus"
+  },
+  {
+    "codigo": "125041200",
+    "descricao": "Serviços de preservação e operação de locais e construções históricas"
+  },
+  {
+    "codigo": "125042100",
+    "descricao": "Serviços de jardins botânico e zoológico"
+  },
+  {
+    "codigo": "125042200",
+    "descricao": "Serviços de reserva natural, incluindo preservação de vida selvagem"
+  },
+  {
+    "codigo": "125051000",
+    "descricao": "Serviços de organização e promoção de eventos desportivos e recreacionais desportivos"
+  },
+  {
+    "codigo": "125052000",
+    "descricao": "Serviços de clubes desportivos"
+  },
+  {
+    "codigo": "125059000",
+    "descricao": "Serviços desportivos e recreacionais desportivos não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "125060000",
+    "descricao": "Serviços fornecidos por atletas e desportistas, por conta própria, e serviços de apoio relacionados com desportes e recreação desportiva"
+  },
+  {
+    "codigo": "125071000",
+    "descricao": "Serviços de parques temáticos de diversão"
+  },
+  {
+    "codigo": "125079000",
+    "descricao": "Serviços de parques de diversão e atrações similares não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "125080000",
+    "descricao": "Serviços recreativos, culturais e desportivos não classificados em posições anteriores"
+  },
+  {
+    "codigo": "126011000",
+    "descricao": "Serviços de limpeza de têxteis, exceto quando realizados a seco"
+  },
+  {
+    "codigo": "126012000",
+    "descricao": "Serviços de limpeza a seco"
+  },
+  {
+    "codigo": "126013000",
+    "descricao": "Serviços de tinturaria"
+  },
+  {
+    "codigo": "126014000",
+    "descricao": "Serviços de passadoria de roupas e outros artigos têxteis"
+  },
+  {
+    "codigo": "126019000",
+    "descricao": "Serviços de lavanderia não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "126021000",
+    "descricao": "Serviços de cabeleireiros e barbeiros"
+  },
+  {
+    "codigo": "126022000",
+    "descricao": "Serviços de manicure, pedicure e tratamento cosmético"
+  },
+  {
+    "codigo": "126023000",
+    "descricao": "Serviços de bem-estar físico"
+  },
+  {
+    "codigo": "126029000",
+    "descricao": "Serviços de tratamento de beleza e bem-estar físico não classificados em subposições anteriores"
+  },
+  {
+    "codigo": "126030000",
+    "descricao": "Serviços funerários, de cremação e de embalsamamento"
+  },
+  {
+    "codigo": "126040000",
+    "descricao": "Serviços de confecção de roupas e outros artigos têxteis"
+  },
+  {
+    "codigo": "126050000",
+    "descricao": "Serviços domésticos"
+  },
+  {
+    "codigo": "126060000",
+    "descricao": "Serviços pessoais não classificados em posições anteriores"
+  },
+  {
+    "codigo": "999999999",
+    "descricao": ""
+  }
+]

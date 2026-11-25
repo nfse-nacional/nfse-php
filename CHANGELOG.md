@@ -4,6 +4,27 @@ All notable changes to `nfse-php` will be documented in this file.
 
 ## [Unreleased]
 
+### Leiaute DPS 20/10/2026
+
+A DPS passa a seguir o pacote de esquemas de produção restrita de 20/10/2026 (`v1.01`).
+
+- `valores/vDedRed` foi substituído por `valores/vAjusteBC` (`AjusteBaseCalculoData`, `DocumentoAjusteBaseCalculoData`, `TipoAjusteBaseCalculo`).
+- `tribMun` passa a emitir `cPaisResult` e `nBM`. `tribFed` emite `vRetCP` no lugar de `vRetContPrev`.
+- `IBSCBS` não leva mais `finNFSe` nem `gReeRepRes`. `CST` e `cClassTrib` ficam em `valores/trib`. O imóvel ganhou `cMun`, `gLocacao` e `gUnidImob`. Novo grupo `bensMoveis`.
+- `cServ` não emite `cAtvSN` e grava `xDescServ` por último. `regTrib` não emite `regApIBSCBSSN`.
+- Obra aceita `cCIB`. Obra e evento usam endereço simples e escolha exclusiva de identificação.
+- `infoCompl` ganhou `xPed` e `gItemPed/xItemPed`.
+- `EventosXmlBuilder` serializa os 16 tipos de pedido de registro de evento.
+- Catálogo NBS 2.0 em `references/nbs2.json` e enum `CodigoIndicadorOperacao`.
+
+### ⚠️ Breaking changes
+
+- Removidos `DeducaoReducaoData`, `DocumentoDeducaoData` e `TipoDeducaoReducao`.
+- Removidos de `IbscbsData`: `finalidadeNfse` e `documentosReembolso`.
+- `ImovelData` deixou de ter inscrição, CIB e endereço no nível do imóvel. Esses dados ficam em `unidadesImovel`.
+- `ComercioExteriorData` deixou de expor os campos do leiaute antigo (`NIFExport`, `cPaisExport`, `cMecAFComex`, `nEnquad`, `nProc`, `indIncentivo`).
+- `ModoPrestacao` e `MovimentacaoTemporariaBens` foram alinhados aos códigos do XSD atual.
+
 ### 🧾 Grupo IBS/CBS (Reforma Tributária sobre o Consumo)
 
 Implementação do grupo `IBSCBS` conforme o pacote de esquemas AnexoVI v1.01.03 (NT 004),

@@ -127,6 +127,20 @@ $aliquotas = $service->consultarAliquota('COD_MUN', 'COD_SERV', 'COMPETENCIA');
 
 No leiaute da DPS de 20/10/2026, `CST` e `cClassTrib` do IBS e da CBS saíram de `valores.trib.gIBSCBS` e ficam em `valores.trib`. A biblioteca não lê mais o caminho antigo. Quem ainda monta a DPS com essas chaves dentro de `gIBSCBS` precisa movê-las para `valores.trib`.
 
+## Schema da DPS
+
+Os pacotes ficam em `references/schemas/20261020` e `references/schemas/20261124`. Os dois permanecem. Um pacote futuro entra como nova pasta, sem apagar os anteriores.
+
+`SchemaDps::Producao` aponta para `20261020`, o schema atual. `SchemaDps::Homologacao` aponta para `20261124`. Sem versão na chamada, `emitir($dps)` usa o ambiente do contexto: homologação monta o pacote novo e produção monta o atual. A versão informada na chamada prevalece sobre esse padrão.
+
+```php
+use Nfse\Xml\SchemaDps;
+
+$nfse->contribuinte()->emitir($dps, SchemaDps::Homologacao);
+```
+
+No pacote `20261124`, `indDest` fica em `infDPS`, logo depois de `toma`, e sai de `IBSCBS` junto com `dest`. O campo é obrigatório mesmo sem o grupo IBS/CBS. O ambiente (`tpAmb` e a URL) continua separado da pasta do schema.
+
 ## 📝 Exemplo de DPS (Declaração de Prestação de Serviço)
 
 Abaixo, um exemplo completo de como montar o objeto DPS para emissão.

@@ -85,4 +85,34 @@ class ComercioExteriorData extends Dto
      */
     #[MapFrom('mdic')]
     public ?string $mdic = null;
+
+    /**
+     * Número da fatura. Schema 20261124.
+     */
+    #[MapFrom('nFatura')]
+    public ?string $numeroFatura = null;
+
+    /**
+     * Valor da fatura. Schema 20261124.
+     */
+    #[MapFrom('vFatura')]
+    public ?float $valorFatura = null;
+
+    /**
+     * Número da DUIMP. Schema 20261124.
+     */
+    #[MapFrom('nDUIMP')]
+    public ?string $numeroDuimp = null;
+
+    /**
+     * Número da DU-E. Schema 20261124.
+     */
+    #[MapFrom('nDUE')]
+    public ?string $numeroDue = null;
+
+    /**
+     * Número do contrato de câmbio. Schema 20261124.
+     */
+    #[MapFrom('nContCambio')]
+    public ?string $numeroContratoCambio = null;
 }

@@ -4,6 +4,14 @@ All notable changes to `nfse-php` will be documented in this file.
 
 ## [Unreleased]
 
+### Schema da DPS
+
+A montagem da DPS passa a escolher o pacote de esquemas. `references/schemas/20261020` guarda o leiaute atual e `references/schemas/20261124` guarda o pacote da produção restrita de 24/11/2026. Os dois permanecem.
+
+Sem versão na chamada, `SchemaDps` usa o ambiente: homologação monta o `20261124` e produção monta o `20261020`. A versão informada em `emitir()` ou no `DpsXmlBuilder` prevalece.
+
+No pacote `20261124`, `indDest` e `dest` ficam em `infDPS`, logo depois de `toma`. `comExt` passa a usar `nFatura`, `vFatura`, `nDUIMP`, `nDUE` e `nContCambio`. Entram `cMun` no evento e `vAjusteBCIBSCBSComExt`.
+
 ### Leiaute DPS 20/10/2026
 
 A DPS passa a seguir o pacote de esquemas de produção restrita de 20/10/2026 (`v1.01`).

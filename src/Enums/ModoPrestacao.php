@@ -34,6 +34,11 @@ enum ModoPrestacao: string
      */
     case ConsumoNoExterior = '4';
 
+    /**
+     * Consumo concomitante no território nacional e no exterior. Schema 20261124.
+     */
+    case ConsumoConcomitante = '5';
+
     public function getDescription(): string
     {
         return match ($this) {
@@ -42,6 +47,7 @@ enum ModoPrestacao: string
             self::ConsumoNoBrasil => 'Consumo no Brasil',
             self::MovimentoTemporarioPessoasFisicas => 'Movimento Temporário de Pessoas Físicas',
             self::ConsumoNoExterior => 'Consumo no Exterior',
+            self::ConsumoConcomitante => 'Consumo concomitante no território nacional e no exterior',
         };
     }
 

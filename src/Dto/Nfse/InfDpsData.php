@@ -4,6 +4,7 @@ namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
 use Nfse\Enums\EmitenteDPS;
+use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Enums\MotivoEmissaoTomadorIntermediario;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Support\DTO\EnumCaster;
@@ -112,6 +113,18 @@ class InfDpsData extends Dto
      */
     #[MapFrom('toma')]
     public ?TomadorData $tomador = null;
+
+    /**
+     * Indicador do destinatário. No schema 20261124 fica em infDPS, depois do tomador.
+     */
+    #[MapFrom('indDest'), CastWith(EnumCaster::class, enumType: IndicadorDestinatario::class)]
+    public ?IndicadorDestinatario $indicadorDestinatario = null;
+
+    /**
+     * Destinatário do serviço quando não é o tomador. No schema 20261124 fica em infDPS.
+     */
+    #[MapFrom('dest')]
+    public ?TomadorData $destinatario = null;
 
     /**
      * Dados do intermediário do serviço.

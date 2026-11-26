@@ -8,13 +8,15 @@ use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Support\CatalogoNbs;
+use Nfse\Xml\SchemaDps;
 
 class DpsValidator
 {
-    public function validate(DpsData $dps): ValidationResult
+    public function validate(DpsData $dps, SchemaDps|string|null $schema = null): ValidationResult
     {
         $errors = [];
         $infDps = $dps->infDps;
+        $schemaResolvido = $schema === null ? SchemaDps::Producao : SchemaDps::resolver($schema);
 
         if ($infDps === null) {
             return ValidationResult::failure(['InfDpsData is required.']);
@@ -25,7 +27,10 @@ class DpsValidator
         $this->validateTomador($infDps, $errors);
         $this->validateValores($infDps, $errors);
         $this->validateServico($infDps, $errors);
-        $this->validateIbscbs($infDps, $errors);
+        $this->validateIbscbs($infDps, $errors, $schemaResolvido);
+        if ($schemaResolvido === SchemaDps::Homologacao) {
+            $this->validateSchema20261124($infDps, $errors);
+        }
 
         if (count($errors) > 0) {
             return ValidationResult::failure($errors);
@@ -162,7 +167,29 @@ class DpsValidator
         }
     }
 
-    private function validateIbscbs(InfDpsData $infDps, array &$errors): void
+    private function validateSchema20261124(InfDpsData $infDps, array &$errors): void
+    {
+        $indicador = $infDps->indicadorDestinatario ?? $infDps->ibscbs?->indicadorDestinatario;
+        if ($indicador === null) {
+            $errors[] = 'O indicador de destinatário é obrigatório no schema 20261124.';
+        }
+
+        $destinatario = $infDps->destinatario ?? $infDps->ibscbs?->destinatario;
+        if ($destinatario !== null && $indicador !== IndicadorDestinatario::DestinatarioDiverso) {
+            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        }
+
+        $comercioExterior = $infDps->servico?->comercioExterior;
+        if ($comercioExterior !== null && (
+            $comercioExterior->valorServicoMoeda !== null
+            || ($comercioExterior->numeroDeclaracaoImportacao !== null && $comercioExterior->numeroDeclaracaoImportacao !== '')
+            || ($comercioExterior->numeroRegistroExportacao !== null && $comercioExterior->numeroRegistroExportacao !== '')
+        )) {
+            $errors[] = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+        }
+    }
+
+    private function validateIbscbs(InfDpsData $infDps, array &$errors, SchemaDps $schema): void
     {
         $ibscbs = $infDps->ibscbs;
         if ($ibscbs === null) {
@@ -189,8 +216,9 @@ class DpsValidator
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 
-        // Rule 554: o destinatário só deve ser identificado quando indDest = 1
-        if ($ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
+        // Rule 554: o destinatário só deve ser identificado quando indDest = 1.
+        // No schema 20261124 a mesma regra vale para o indDest de infDPS.
+        if ($schema !== SchemaDps::Homologacao && $ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
             $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
         }
 

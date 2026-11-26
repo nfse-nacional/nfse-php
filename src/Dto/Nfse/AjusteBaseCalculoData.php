@@ -28,4 +28,10 @@ class AjusteBaseCalculoData extends Dto
      */
     #[MapFrom('documentos.docAjusteBC'), CastWith(ArrayCaster::class, itemType: DocumentoAjusteBaseCalculoData::class)]
     public ?array $documentos = null;
+
+    /**
+     * Ajuste da base de cálculo do IBS e da CBS no comércio exterior. Schema 20261124.
+     */
+    #[MapFrom('vAjusteBCIBSCBSComExt')]
+    public ?float $valorAjusteBaseCalculoIbscbsComercioExterior = null;
 }

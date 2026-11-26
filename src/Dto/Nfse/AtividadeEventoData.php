@@ -28,6 +28,12 @@ class AtividadeEventoData extends Dto
     public ?string $dataFim = null;
 
     /**
+     * Município do evento. Schema 20261124.
+     */
+    #[MapFrom('cMun')]
+    public ?string $codigoMunicipio = null;
+
+    /**
      * Identificador da atividade ou evento.
      */
     #[MapFrom('idAtvEvt')]

@@ -77,6 +77,12 @@ class IbscbsData extends Dto
     public ?array $bensMoveis = null;
 
     /**
+     * Operações de condomínio. Schema 20261124. Somente para o subitem 99.05.
+     */
+    #[MapFrom('condominios')]
+    public ?CondominioData $condominios = null;
+
+    /**
      * Código de Situação Tributária do IBS e da CBS.
      */
     #[MapFrom('valores.trib.CST')]

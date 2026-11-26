@@ -4,6 +4,7 @@ namespace Nfse\Xml;
 
 use DOMDocument;
 use DOMElement;
+use Nfse\Dto\Nfse\CondominioData;
 use Nfse\Dto\Nfse\DocumentoAjusteBaseCalculoData;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\EnderecoData;
@@ -488,6 +489,57 @@ class DpsXmlBuilder
         $parent->appendChild($dest);
     }
 
+    private function buildCondominios(CondominioData $data): DOMElement
+    {
+        $condominios = $this->dom->createElement('condominios');
+        $this->appendElement($condominios, 'dVencOrig', $data->dataVencimentoOriginal);
+
+        foreach ($data->cobrancas ?? [] as $cobranca) {
+            $gCobranca = $this->dom->createElement('gCobranca');
+            $this->appendElement($gCobranca, 'tpCobranca', $cobranca->tipoCobranca);
+            $this->appendElement($gCobranca, 'xTpCobranca', $cobranca->descricaoTipoCobranca);
+            $this->appendElement(
+                $gCobranca,
+                'vCobranca',
+                $cobranca->valorCobranca !== null
+                    ? number_format($cobranca->valorCobranca, 2, '.', '')
+                    : null
+            );
+
+            foreach ($cobranca->detalhamentos ?? [] as $detalhe) {
+                $gDetCobranca = $this->dom->createElement('gDetCobranca');
+                $this->appendElement($gDetCobranca, 'tpDetCobranca', $detalhe->tipoDetalhamento);
+                $this->appendElement($gDetCobranca, 'xTpDetCobranca', $detalhe->descricaoTipoDetalhamento);
+                $this->appendElement(
+                    $gDetCobranca,
+                    'vDetCobranca',
+                    $detalhe->valorDetalhamento !== null
+                        ? number_format($detalhe->valorDetalhamento, 2, '.', '')
+                        : null
+                );
+                $gCobranca->appendChild($gDetCobranca);
+            }
+
+            $condominios->appendChild($gCobranca);
+        }
+
+        foreach ($data->descontos ?? [] as $desconto) {
+            $gDesconto = $this->dom->createElement('gDesconto');
+            $this->appendElement($gDesconto, 'tpDesconto', $desconto->tipoDesconto);
+            $this->appendElement(
+                $gDesconto,
+                'vDesconto',
+                $desconto->valorDesconto !== null
+                    ? number_format($desconto->valorDesconto, 2, '.', '')
+                    : null
+            );
+            $this->appendElement($gDesconto, 'xTpDesconto', $desconto->descricaoTipoDesconto);
+            $condominios->appendChild($gDesconto);
+        }
+
+        return $condominios;
+    }
+
     private function buildIbscbs(DOMElement $parent, IbscbsData $data): void
     {
         $ibscbs = $this->dom->createElement('IBSCBS');
@@ -524,6 +576,10 @@ class DpsXmlBuilder
                 $this->appendElement($bensMoveis, 'qtdNCMBemMovel', $bemMovel->quantidadeNcmBemMovel);
                 $ibscbs->appendChild($bensMoveis);
             }
+        }
+
+        if ($this->schema === SchemaDps::Homologacao && $data->condominios) {
+            $ibscbs->appendChild($this->buildCondominios($data->condominios));
         }
 
         $valores = $this->dom->createElement('valores');

@@ -88,3 +88,61 @@ it('recusa campo antigo de comercio exterior no schema 20261124', function () {
         ->and((new DpsValidator)->validate($dps)->errors)
         ->not->toContain('Os campos vServMoeda, nDI e nRE não existem no schema 20261124.');
 });
+
+it('recusa condominios fora do subitem 99.05 no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'condominios' => [
+                'dVencOrig' => '2026-11-26',
+                'gCobranca' => [
+                    [
+                        'tpCobranca' => '01',
+                        'vCobranca' => 100,
+                    ],
+                ],
+            ],
+        ],
+    ]);
+
+    expect((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+        ->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.')
+        ->and((new DpsValidator)->validate($dps)->errors)
+        ->not->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.');
+});
+
+it('recusa descricao do tipo de cobranca quando o tipo nao e 99 no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'serv' => [
+            'locPrest' => ['cLocPrestacao' => '3550308'],
+            'cServ' => [
+                'cTribNac' => '99.05.01',
+                'xDescServ' => 'Administracao de condominio',
+                'cNBS' => '112011000',
+            ],
+        ],
+        'IBSCBS' => [
+            'cIndOp' => '010101',
+            'condominios' => [
+                'dVencOrig' => '2026-11-26',
+                'gCobranca' => [
+                    [
+                        'tpCobranca' => '01',
+                        'xTpCobranca' => 'Taxa extra',
+                        'vCobranca' => 100,
+                    ],
+                ],
+            ],
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    expect((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+        ->toContain('A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.');
+});

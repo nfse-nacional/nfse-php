@@ -195,3 +195,69 @@ it('grava cMun do evento e o ajuste de base do comercio exterior no schema 20261
         ->and($xml)->toContain('<pAjusteBCISSQN>1.50</pAjusteBCISSQN><vAjusteBCIBSCBSComExt>-2.50</vAjusteBCIBSCBSComExt>')
         ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', '20261124'))->toBeTrue();
 });
+
+it('grava condominios no schema 20261124 depois de bensMoveis', function () {
+    $dps = dpsSchema20261124([
+        'serv' => [
+            'locPrest' => ['cLocPrestacao' => '3550308'],
+            'cServ' => [
+                'cTribNac' => '990501',
+                'xDescServ' => 'Administracao de condominio',
+                'cNBS' => '112011000',
+            ],
+        ],
+        'IBSCBS' => [
+            'cIndOp' => '010101',
+            'bensMoveis' => [
+                [
+                    'cNCMBemMovel' => '12345678',
+                    'xNCMBemMovel' => 'Equipamento locado',
+                    'qtdNCMBemMovel' => 1,
+                ],
+            ],
+            'condominios' => [
+                'dVencOrig' => '2026-11-26',
+                'gCobranca' => [
+                    [
+                        'tpCobranca' => '99',
+                        'xTpCobranca' => 'Taxa de obra',
+                        'vCobranca' => 800.5,
+                        'gDetCobranca' => [
+                            [
+                                'tpDetCobranca' => '999',
+                                'xTpDetCobranca' => 'Reforma da fachada',
+                                'vDetCobranca' => 800.5,
+                            ],
+                        ],
+                    ],
+                ],
+                'gDesconto' => [
+                    [
+                        'tpDesconto' => '1',
+                        'vDesconto' => 50,
+                        'xTpDesconto' => 'Pontualidade',
+                    ],
+                ],
+            ],
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder(SchemaDps::Homologacao))->build($dps);
+
+    expect($xml)->toContain('</bensMoveis><condominios><dVencOrig>2026-11-26</dVencOrig>')
+        ->and($xml)->toContain('<tpCobranca>99</tpCobranca><xTpCobranca>Taxa de obra</xTpCobranca><vCobranca>800.50</vCobranca>')
+        ->and($xml)->toContain('<tpDetCobranca>999</tpDetCobranca><xTpDetCobranca>Reforma da fachada</xTpDetCobranca><vDetCobranca>800.50</vDetCobranca>')
+        ->and($xml)->toContain('<tpDesconto>1</tpDesconto><vDesconto>50.00</vDesconto><xTpDesconto>Pontualidade</xTpDesconto>')
+        ->and($xml)->toContain('</condominios><valores>')
+        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', '20261124'))->toBeTrue();
+
+    $xmlAtual = (new DpsXmlBuilder)->build($dps);
+
+    expect($xmlAtual)->not->toContain('<condominios>');
+});

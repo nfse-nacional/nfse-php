@@ -7,6 +7,8 @@ use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
+use Nfse\Enums\TipoCobrancaCondominio;
+use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
 use Nfse\Support\CatalogoNbs;
 use Nfse\Xml\SchemaDps;
 
@@ -186,6 +188,36 @@ class DpsValidator
             || ($comercioExterior->numeroRegistroExportacao !== null && $comercioExterior->numeroRegistroExportacao !== '')
         )) {
             $errors[] = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+        }
+
+        $condominios = $infDps->ibscbs?->condominios;
+        if ($condominios === null) {
+            return;
+        }
+
+        $codigoTributacao = preg_replace('/\D/', '', (string) $infDps->servico?->codigoServico?->codigoTributacaoNacional);
+        if (! str_starts_with($codigoTributacao, '9905')) {
+            $errors[] = 'O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.';
+        }
+
+        foreach ($condominios->cobrancas ?? [] as $cobranca) {
+            if (
+                $cobranca->descricaoTipoCobranca !== null
+                && $cobranca->descricaoTipoCobranca !== ''
+                && $cobranca->tipoCobranca !== TipoCobrancaCondominio::OutraCobranca
+            ) {
+                $errors[] = 'A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.';
+            }
+
+            foreach ($cobranca->detalhamentos ?? [] as $detalhe) {
+                if (
+                    $detalhe->descricaoTipoDetalhamento !== null
+                    && $detalhe->descricaoTipoDetalhamento !== ''
+                    && $detalhe->tipoDetalhamento !== TipoDetalhamentoCobrancaCondominio::Outro
+                ) {
+                    $errors[] = 'A descrição do detalhamento da cobrança só deve ser informada quando o tipo for 999.';
+                }
+            }
         }
     }
 

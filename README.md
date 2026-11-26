@@ -141,6 +141,8 @@ $nfse->contribuinte()->emitir($dps, SchemaDps::Homologacao);
 
 No pacote `20261124`, `indDest` fica em `infDPS`, logo depois de `toma`, e sai de `IBSCBS` junto com `dest`. O campo é obrigatório mesmo sem o grupo IBS/CBS. O ambiente (`tpAmb` e a URL) continua separado da pasta do schema.
 
+No mesmo pacote, o grupo opcional `condominios` entra em `IBSCBS`, depois de `bensMoveis`, para atividade de condomínio do subitem 99.05.
+
 ## 📝 Exemplo de DPS (Declaração de Prestação de Serviço)
 
 Abaixo, um exemplo completo de como montar o objeto DPS para emissão.

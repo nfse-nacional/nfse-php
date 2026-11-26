@@ -10,7 +10,7 @@ A montagem da DPS passa a escolher o pacote de esquemas. `references/schemas/202
 
 Sem versão na chamada, `SchemaDps` usa o ambiente: homologação monta o `20261124` e produção monta o `20261020`. A versão informada em `emitir()` ou no `DpsXmlBuilder` prevalece.
 
-No pacote `20261124`, `indDest` e `dest` ficam em `infDPS`, logo depois de `toma`. `comExt` passa a usar `nFatura`, `vFatura`, `nDUIMP`, `nDUE` e `nContCambio`. Entram `cMun` no evento e `vAjusteBCIBSCBSComExt`.
+No pacote `20261124`, `indDest` e `dest` ficam em `infDPS`, logo depois de `toma`. `comExt` passa a usar `nFatura`, `vFatura`, `nDUIMP`, `nDUE` e `nContCambio`. Entram `cMun` no evento, `vAjusteBCIBSCBSComExt` e o grupo opcional `condominios` em `IBSCBS`.
 
 ### Leiaute DPS 20/10/2026
 

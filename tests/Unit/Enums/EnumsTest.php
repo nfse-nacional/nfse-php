@@ -9,6 +9,9 @@ use Nfse\Enums\ProcessoEmissao;
 use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Enums\TipoAjusteBaseCalculo;
 use Nfse\Enums\TipoAmbiente;
+use Nfse\Enums\TipoCobrancaCondominio;
+use Nfse\Enums\TipoDescontoCondominio;
+use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
 
 describe('TipoAmbiente', function () {
     it('has correct values', function () {
@@ -245,5 +248,36 @@ describe('RegimeEspecialTributacao', function () {
             ->and(RegimeEspecialTributacao::tryFrom('7'))->toBeNull()
             ->and(RegimeEspecialTributacao::tryFrom('8'))->toBeNull()
             ->and(RegimeEspecialTributacao::tryFrom('10'))->toBeNull();
+    });
+});
+
+describe('TipoCobrancaCondominio', function () {
+    it('has the values of TSRTCTpCobranca', function () {
+        expect(TipoCobrancaCondominio::cases())->toHaveCount(6)
+            ->and(TipoCobrancaCondominio::CondominioOrdinario->value)->toBe('01')
+            ->and(TipoCobrancaCondominio::OutraCobranca->value)->toBe('99')
+            ->and(TipoCobrancaCondominio::tryFrom('00'))->toBeNull()
+            ->and(TipoCobrancaCondominio::CondominioOrdinario->label())->toBe('Condomínio Ordinário');
+    });
+});
+
+describe('TipoDescontoCondominio', function () {
+    it('has the values of TSRTCTpDesconto', function () {
+        expect(TipoDescontoCondominio::cases())->toHaveCount(2)
+            ->and(TipoDescontoCondominio::DescontoIncondicionado->value)->toBe('1')
+            ->and(TipoDescontoCondominio::DescontoCondicionado->value)->toBe('2')
+            ->and(TipoDescontoCondominio::tryFrom('3'))->toBeNull()
+            ->and(TipoDescontoCondominio::DescontoCondicionado->label())->toBe('Desconto Condicionado');
+    });
+});
+
+describe('TipoDetalhamentoCobrancaCondominio', function () {
+    it('has the values of TSRTCTpDetCobranca', function () {
+        expect(TipoDetalhamentoCobrancaCondominio::cases())->toHaveCount(37)
+            ->and(TipoDetalhamentoCobrancaCondominio::CondominioComumCrd->value)->toBe('001')
+            ->and(TipoDetalhamentoCobrancaCondominio::CondominioIrrecuperavel->value)->toBe('036')
+            ->and(TipoDetalhamentoCobrancaCondominio::Outro->value)->toBe('999')
+            ->and(TipoDetalhamentoCobrancaCondominio::tryFrom('000'))->toBeNull()
+            ->and(TipoDetalhamentoCobrancaCondominio::Outro->label())->toBe('Outro');
     });
 });

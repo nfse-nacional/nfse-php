@@ -160,8 +160,30 @@ it('rejects CST and cClassTrib left on the previous gIBSCBS path', function () {
         ],
     ]));
 
-    expect($errors)->toContain('O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.')
-        ->and($errors)->toContain('A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.');
+    expect($errors)->toContain('O CST foi informado em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe o CST em valores.trib.')
+        ->and($errors)->toContain('A classificação tributária foi informada em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe a classificação em valores.trib.')
+        ->and($errors)->not->toContain('O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.')
+        ->and($errors)->not->toContain('A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.');
+});
+
+it('warns when the previous gIBSCBS path is sent along with the current trib path', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido([
+        'valores' => [
+            'trib' => [
+                'CST' => '200',
+                'cClassTrib' => '200011',
+                'gIBSCBS' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]));
+
+    expect($errors)->toBe([
+        'O CST foi informado em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe o CST em valores.trib.',
+        'A classificação tributária foi informada em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe a classificação em valores.trib.',
+    ]);
 });
 
 it('rejects a cIndOp outside the operation indicator table', function () {

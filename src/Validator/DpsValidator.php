@@ -194,11 +194,15 @@ class DpsValidator
             $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
         }
 
-        if ($ibscbs->cst === null || $ibscbs->cst === '') {
+        if ($ibscbs->cstVeioCaminhoAntigo()) {
+            $errors[] = 'O CST foi informado em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe o CST em valores.trib.';
+        } elseif ($ibscbs->cst === null || $ibscbs->cst === '') {
             $errors[] = 'O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
         }
 
-        if ($ibscbs->codigoClassificacaoTributaria === null || $ibscbs->codigoClassificacaoTributaria === '') {
+        if ($ibscbs->classificacaoVeioCaminhoAntigo()) {
+            $errors[] = 'A classificação tributária foi informada em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe a classificação em valores.trib.';
+        } elseif ($ibscbs->codigoClassificacaoTributaria === null || $ibscbs->codigoClassificacaoTributaria === '') {
             $errors[] = 'A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.';
         }
 

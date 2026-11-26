@@ -16,7 +16,7 @@ A DPS passa a seguir o pacote de esquemas de produção restrita de 20/10/2026 (
 - `infoCompl` ganhou `xPed` e `gItemPed/xItemPed`.
 - `EventosXmlBuilder` serializa os 16 tipos de pedido de registro de evento.
 - Catálogo NBS 2.0 em `references/nbs2.json` e enum `CodigoIndicadorOperacao`.
-- Com `IBSCBS` informado, o `DpsValidator` exige `CST` e `cClassTrib` em `valores/trib`. `cIndOp` preenchido fora de `CodigoIndicadorOperacao` entra na lista de erros.
+- Com `IBSCBS` informado, o `DpsValidator` exige `CST` e `cClassTrib` em `valores/trib`. Se esses campos ainda vierem em `valores.trib.gIBSCBS`, o validador pede a mudança de caminho. `cIndOp` preenchido fora de `CodigoIndicadorOperacao` entra na lista de erros.
 - `CodigoIndicadorOperacao` inclui `020102`, `130101` e `130201`, em vigor a partir de 01/12/2026.
 
 ### ⚠️ Breaking changes

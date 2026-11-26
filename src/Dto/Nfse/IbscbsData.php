@@ -123,4 +123,39 @@ class IbscbsData extends Dto
      */
     #[MapFrom('valores.trib.gIBSCBS.gDif.pDifCBS')]
     public ?float $percentualDiferimentoCbs = null;
+
+    private bool $cstCaminhoAntigo = false;
+
+    private bool $classificacaoCaminhoAntigo = false;
+
+    public function cstVeioCaminhoAntigo(): bool
+    {
+        return $this->cstCaminhoAntigo;
+    }
+
+    public function classificacaoVeioCaminhoAntigo(): bool
+    {
+        return $this->classificacaoCaminhoAntigo;
+    }
+
+    protected function normalizeInput(array $input): array
+    {
+        $this->cstCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.CST');
+        $this->classificacaoCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.cClassTrib');
+
+        return parent::normalizeInput($input);
+    }
+
+    private function textoPreenchido(array $input, string $caminho): bool
+    {
+        $atual = $input;
+        foreach (explode('.', $caminho) as $chave) {
+            if (! is_array($atual) || ! array_key_exists($chave, $atual)) {
+                return false;
+            }
+            $atual = $atual[$chave];
+        }
+
+        return is_scalar($atual) && trim((string) $atual) !== '';
+    }
 }

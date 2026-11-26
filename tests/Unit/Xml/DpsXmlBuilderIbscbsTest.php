@@ -196,3 +196,57 @@ it('uses cCIB instead of the address when the property is registered', function 
         ->and($xml)->not->toContain('Rua do Imovel');
 });
 
+it('ignores CST and cClassTrib left on the previous gIBSCBS path', function () {
+    $dps = dpsComIbscbs([
+        'cIndOp' => '010101',
+        'indDest' => 0,
+        'valores' => [
+            'trib' => [
+                'gIBSCBS' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder)->build($dps);
+
+    expect($xml)->not->toContain('<CST>')
+        ->and($xml)->not->toContain('<cClassTrib>');
+});
+
+it('writes a cIndOp that enters into force on 2026-12-01', function () {
+    $dps = dpsComIbscbs([
+        'cIndOp' => '020102',
+        'indDest' => 0,
+        'valores' => [
+            'trib' => [
+                'CST' => '000',
+                'cClassTrib' => '000001',
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder)->build($dps);
+
+    expect($xml)->toContain('<cIndOp>020102</cIndOp>');
+});
+
+it('keeps an unknown cIndOp in the xml', function () {
+    $dps = dpsComIbscbs([
+        'cIndOp' => '999999',
+        'indDest' => 0,
+        'valores' => [
+            'trib' => [
+                'CST' => '000',
+                'cClassTrib' => '000001',
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder)->build($dps);
+
+    expect($xml)->toContain('<cIndOp>999999</cIndOp>');
+});
+

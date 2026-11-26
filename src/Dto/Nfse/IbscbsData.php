@@ -3,7 +3,6 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
-use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Enums\TipoEnteGovernamental;
 use Nfse\Enums\TipoOperacaoRtc;
@@ -24,9 +23,10 @@ class IbscbsData extends Dto
 
     /**
      * Código indicador da operação de fornecimento.
+     * Seis dígitos da tabela CodigoIndicadorOperacao.
      */
-    #[MapFrom('cIndOp'), CastWith(EnumCaster::class, enumType: CodigoIndicadorOperacao::class)]
-    public ?CodigoIndicadorOperacao $codigoIndicadorOperacao = null;
+    #[MapFrom('cIndOp')]
+    public ?string $codigoIndicadorOperacao = null;
 
     /**
      * Tipo de Operação com Entes Governamentais ou outros serviços sobre bens imóveis.

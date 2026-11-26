@@ -123,3 +123,55 @@ it('rejects an nbs code outside the catalog', function () {
 
     expect($errors)->toContain('O código NBS informado não consta na lista NBS 2.0.');
 });
+
+it('requires the ibs cbs cst when the group is informed', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido([
+        'valores' => [
+            'trib' => [
+                'cClassTrib' => '000001',
+            ],
+        ],
+    ]));
+
+    expect($errors)->toContain('O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.');
+});
+
+it('requires the ibs cbs classification when the group is informed', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido([
+        'valores' => [
+            'trib' => [
+                'CST' => '000',
+            ],
+        ],
+    ]));
+
+    expect($errors)->toContain('A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.');
+});
+
+it('rejects CST and cClassTrib left on the previous gIBSCBS path', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido([
+        'valores' => [
+            'trib' => [
+                'gIBSCBS' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]));
+
+    expect($errors)->toContain('O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.')
+        ->and($errors)->toContain('A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.');
+});
+
+it('rejects a cIndOp outside the operation indicator table', function () {
+    $errors = validarDpsComIbscbs(ibscbsValido(['cIndOp' => '999999']));
+
+    expect($errors)->toContain('O código indicador da operação informado não consta na tabela de cIndOp.');
+});
+
+it('accepts the operation indicators that enter into force on 2026-12-01', function () {
+    foreach (['020102', '130101', '130201'] as $codigo) {
+        expect(validarDpsComIbscbs(ibscbsValido(['cIndOp' => $codigo])))->toBeEmpty();
+    }
+});

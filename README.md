@@ -123,6 +123,10 @@ $params = $service->consultarParametrosConvenio('CODIGO_MUNICIPIO');
 $aliquotas = $service->consultarAliquota('COD_MUN', 'COD_SERV', 'COMPETENCIA');
 ```
 
+## Quebra de compatibilidade
+
+No leiaute da DPS de 20/10/2026, `CST` e `cClassTrib` do IBS e da CBS saíram de `valores.trib.gIBSCBS` e ficam em `valores.trib`. A biblioteca não lê mais o caminho antigo. Quem ainda monta a DPS com essas chaves dentro de `gIBSCBS` precisa movê-las para `valores.trib`.
+
 ## 📝 Exemplo de DPS (Declaração de Prestação de Serviço)
 
 Abaixo, um exemplo completo de como montar o objeto DPS para emissão.

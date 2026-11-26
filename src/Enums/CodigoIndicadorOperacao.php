@@ -35,6 +35,12 @@ enum CodigoIndicadorOperacao: string
     case Ind020101 = '020101';
 
     /**
+     * Operação com bem imóvel, bem móvel imaterial, inclusive direito, relacionada a Bem Imóvel de Características Especiais (BICE).
+     * Válido a partir de 01/12/2026.
+     */
+    case Ind020102 = '020102';
+
+    /**
      * Serviço prestado fisicamente sobre bem imóvel
      */
     case Ind020201 = '020201';
@@ -169,6 +175,18 @@ enum CodigoIndicadorOperacao: string
      */
     case Ind100601 = '100601';
 
+    /**
+     * Operações de transporte dutoviário de gás natural, na contratação de capacidade de entrada.
+     * Válido a partir de 01/12/2026.
+     */
+    case Ind130101 = '130101';
+
+    /**
+     * Operações de transporte dutoviário de gás natural, na contratação de capacidade de saída.
+     * Válido a partir de 01/12/2026.
+     */
+    case Ind130201 = '130201';
+
     public function getDescription(): string
     {
         return match ($this) {
@@ -177,6 +195,7 @@ enum CodigoIndicadorOperacao: string
             self::Ind010103 => 'Bem Móvel Material',
             self::Ind010106 => 'Bem Móvel Material',
             self::Ind020101 => 'Operação com bem imóvel, bem imaterial, inclusive direito, relacionada a bem imóvel',
+            self::Ind020102 => 'Operação com bem imóvel, bem móvel imaterial, inclusive direito, relacionada a Bem Imóvel de Características Especiais (BICE)',
             self::Ind020201 => 'Serviço prestado fisicamente sobre bem imóvel',
             self::Ind020202 => 'Serviço prestado fisicamente sobre bem imóvel',
             self::Ind020301 => 'Serviço de administração e intermediação de bem imóvel',
@@ -204,6 +223,8 @@ enum CodigoIndicadorOperacao: string
             self::Ind100501 => 'Demais bens, em operações onerosas',
             self::Ind100502 => 'Demais bens, em operações onerosas',
             self::Ind100601 => 'Demais bens, em operações não onerosas',
+            self::Ind130101 => 'Operações de transporte dutoviário de gás natural, na contratação de capacidade de entrada',
+            self::Ind130201 => 'Operações de transporte dutoviário de gás natural, na contratação de capacidade de saída',
         };
     }
 

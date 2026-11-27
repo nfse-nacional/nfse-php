@@ -147,3 +147,68 @@ it('recusa descricao do tipo de cobranca quando o tipo nao e 99 no schema 202611
     expect((new DpsValidator)->validate($dps, '20261124')->errors)
         ->toContain('A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.');
 });
+
+it('acusa indicadores de destinatario diferentes em infDPS e no grupo IBS/CBS', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 1,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $iguais = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $mensagem = 'O indicador de destinatário informado em infDPS difere do informado no grupo IBS/CBS.';
+
+    expect((new DpsValidator)->validate($dps, '20261020')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20261124')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($iguais, '20261020')->errors)->not->toContain($mensagem);
+});
+
+it('exige indDest no grupo IBS/CBS quando os dois lugares estao vazios', function () {
+    $vazio = dpsParaValidarSchema([
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $soNoTopo = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $mensagem = 'O indicador de destinatário é obrigatório no grupo IBS/CBS.';
+
+    expect((new DpsValidator)->validate($vazio, '20261020')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($vazio, '20260209')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($soNoTopo, '20261020')->errors)->not->toContain($mensagem);
+});

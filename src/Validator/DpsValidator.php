@@ -251,10 +251,20 @@ class DpsValidator
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 
+        if ($infDps->indicadorDestinatario !== null && $ibscbs->indicadorDestinatario !== null && $infDps->indicadorDestinatario !== $ibscbs->indicadorDestinatario) {
+            $errors[] = 'O indicador de destinatário informado em infDPS difere do informado no grupo IBS/CBS.';
+        }
+
         // Rule 554: o destinatário só deve ser identificado quando indDest = 1.
         // No schema 20261124 a mesma regra vale para o indDest de infDPS.
-        if ($schema !== '20261124' && $ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
-            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        if ($schema !== '20261124') {
+            $indicadorGravado = $ibscbs->indicadorDestinatario ?? $infDps->indicadorDestinatario;
+            if ($indicadorGravado === null) {
+                $errors[] = 'O indicador de destinatário é obrigatório no grupo IBS/CBS.';
+            }
+            if ($ibscbs->destinatario !== null && $indicadorGravado !== IndicadorDestinatario::DestinatarioDiverso) {
+                $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+            }
         }
 
         if ($ibscbs->cstVeioCaminhoAntigo()) {

@@ -18,6 +18,7 @@ use Nfse\Dto\Nfse\ServicoData;
 use Nfse\Dto\Nfse\TomadorData;
 use Nfse\Dto\Nfse\UnidadeImovelData;
 use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Enums\IndicadorDestinatario;
 use Nfse\Enums\OpcaoSimplesNacional;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Support\SchemaText;
@@ -122,7 +123,7 @@ class DpsXmlBuilder
         }
 
         if ($data->ibscbs) {
-            $this->buildIbscbs($parent, $data->ibscbs, $data->finalidadeNfse);
+            $this->buildIbscbs($parent, $data->ibscbs, $data->finalidadeNfse, $data->indicadorDestinatario);
         }
     }
 
@@ -575,7 +576,7 @@ class DpsXmlBuilder
         return $condominios;
     }
 
-    private function buildIbscbs(DOMElement $parent, IbscbsData $data, ?string $finalidadeInfDps = null): void
+    private function buildIbscbs(DOMElement $parent, IbscbsData $data, ?string $finalidadeInfDps = null, ?IndicadorDestinatario $indicadorInfDps = null): void
     {
         $ibscbs = $this->dom->createElement('IBSCBS');
 
@@ -597,7 +598,7 @@ class DpsXmlBuilder
 
         $this->appendElement($ibscbs, 'tpEnteGov', $data->tipoEnteGovernamental);
         if ($this->schema !== '20261124') {
-            $this->appendElement($ibscbs, 'indDest', $data->indicadorDestinatario);
+            $this->appendElement($ibscbs, 'indDest', $data->indicadorDestinatario ?? $indicadorInfDps);
             if ($data->destinatario) {
                 $this->buildDestinatario($ibscbs, $data->destinatario);
             }

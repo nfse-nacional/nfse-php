@@ -260,3 +260,64 @@ it('grava condominios no schema 20261124 depois de bensMoveis', function () {
 
     expect($xmlAtual)->not->toContain('<condominios>');
 });
+
+it('grava em IBSCBS o indDest que veio so em infDPS no pacote 20261020', function () {
+    $dps = dpsSchema20261124([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
+
+    expect($xml)->toContain('<IBSCBS><cIndOp>100301</cIndOp><indDest>0</indDest>')
+        ->and($xml)->not->toContain('</toma><indDest>');
+});
+
+it('no pacote 20261020 o indDest do grupo IBS/CBS prevalece sobre o de infDPS', function () {
+    $dps = dpsSchema20261124([
+        'indDest' => 1,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
+
+    expect($xml)->toContain('<IBSCBS><cIndOp>100301</cIndOp><indDest>0</indDest>');
+});
+
+it('no pacote 20261124 o indDest de infDPS prevalece sobre o do grupo IBS/CBS', function () {
+    $dps = dpsSchema20261124([
+        'indDest' => 1,
+        'IBSCBS' => [
+            'cIndOp' => '010101',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    $xml = (new DpsXmlBuilder('20261124'))->build($dps);
+
+    expect($xml)->toContain('</toma><indDest>1</indDest>')
+        ->and($xml)->not->toContain('<indDest>0</indDest>');
+});

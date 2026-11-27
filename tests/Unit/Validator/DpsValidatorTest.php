@@ -9,6 +9,7 @@ it('validates a valid DPS', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',
@@ -343,6 +344,7 @@ it('validates DPS with valid discount values', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',
@@ -462,6 +464,7 @@ it('validates DPS with construction service and obra information', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',

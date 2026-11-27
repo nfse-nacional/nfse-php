@@ -38,12 +38,14 @@ function dpsParaValidarSchema(array $infDps = []): DpsData
     ]);
 }
 
-it('exige indDest no schema 20261124 e nao exige no schema atual', function () {
-    $dps = dpsParaValidarSchema();
+it('exige indDest quando o tpAmb da DPS e homologacao', function () {
+    $homologacao = dpsParaValidarSchema();
+    $producao = dpsParaValidarSchema(['tpAmb' => 1]);
+    $mensagem = 'O indicador de destinatário é obrigatório no schema 20261124.';
 
-    expect((new DpsValidator)->validate($dps)->errors)->toBeEmpty()
-        ->and((new DpsValidator)->validate($dps, '20261124')->errors)
-        ->toContain('O indicador de destinatário é obrigatório no schema 20261124.');
+    expect((new DpsValidator)->validate($homologacao)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($homologacao, '20260209')->errors)->not->toContain($mensagem)
+        ->and((new DpsValidator)->validate($producao)->errors)->not->toContain($mensagem);
 });
 
 it('recusa destinatario quando o indicador nao e 1 no schema 20261124', function () {
@@ -82,10 +84,10 @@ it('recusa campo antigo de comercio exterior no schema 20261124', function () {
         ],
     ]);
 
-    expect((new DpsValidator)->validate($dps, '20261124')->errors)
-        ->toContain('Os campos vServMoeda, nDI e nRE não existem no schema 20261124.')
-        ->and((new DpsValidator)->validate($dps)->errors)
-        ->not->toContain('Os campos vServMoeda, nDI e nRE não existem no schema 20261124.');
+    $mensagem = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+
+    expect((new DpsValidator)->validate($dps)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20260209')->errors)->not->toContain($mensagem);
 });
 
 it('recusa condominios fora do subitem 99.05 no schema 20261124', function () {
@@ -104,10 +106,10 @@ it('recusa condominios fora do subitem 99.05 no schema 20261124', function () {
         ],
     ]);
 
-    expect((new DpsValidator)->validate($dps, '20261124')->errors)
-        ->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.')
-        ->and((new DpsValidator)->validate($dps)->errors)
-        ->not->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.');
+    $mensagem = 'O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.';
+
+    expect((new DpsValidator)->validate($dps)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20260209')->errors)->not->toContain($mensagem);
 });
 
 it('recusa descricao do tipo de cobranca quando o tipo nao e 99 no schema 20261124', function () {

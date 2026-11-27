@@ -19,7 +19,7 @@ class DpsValidator
     {
         $errors = [];
         $infDps = $dps->infDps;
-        $schemaResolvido = SchemaDps::resolver($schema, TipoAmbiente::Producao);
+        $schemaResolvido = SchemaDps::resolver($schema, $infDps?->tipoAmbiente ?? TipoAmbiente::Producao);
 
         if ($infDps === null) {
             return ValidationResult::failure(['InfDpsData is required.']);

@@ -129,14 +129,12 @@ No leiaute da DPS de 20/10/2026, `CST` e `cClassTrib` do IBS e da CBS saíram de
 
 ## Schema da DPS
 
-Os pacotes ficam em `references/schemas/20261020` e `references/schemas/20261124`. Os dois permanecem. Um pacote futuro entra como nova pasta, sem apagar os anteriores.
+Os pacotes ficam em `references/schemas/20260209`, `references/schemas/20261020` e `references/schemas/20261124`. Os três permanecem. Um pacote futuro entra como nova pasta, sem apagar os anteriores.
 
-`SchemaDps::Producao` aponta para `20261020`, o schema atual. `SchemaDps::Homologacao` aponta para `20261124`. Sem versão na chamada, `emitir($dps)` usa o ambiente do contexto: homologação monta o pacote novo e produção monta o atual. A versão informada na chamada prevalece sobre esse padrão.
+Sem versão na chamada, `emitir($dps)` olha a data de hoje no ambiente. Produção usa `20260209` até 06/12/2026 e `20261124` a partir de 07/12/2026. Homologação usa `20261020` a partir de 20/10/2026 e `20261124` a partir de 24/11/2026. A versão informada na chamada prevalece sobre a data.
 
 ```php
-use Nfse\Xml\SchemaDps;
-
-$nfse->contribuinte()->emitir($dps, SchemaDps::Homologacao);
+$nfse->contribuinte()->emitir($dps, '20261124');
 ```
 
 No pacote `20261124`, `indDest` fica em `infDPS`, logo depois de `toma`, e sai de `IBSCBS` junto com `dest`. O campo é obrigatório mesmo sem o grupo IBS/CBS. O ambiente (`tpAmb` e a URL) continua separado da pasta do schema.

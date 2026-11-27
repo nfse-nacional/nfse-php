@@ -14,6 +14,12 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 class IbscbsData extends Dto
 {
     /**
+     * Indicador da finalidade da emissão de NFS-e. Pacote 20260209, dentro de IBSCBS.
+     */
+    #[MapFrom('finNFSe')]
+    public ?string $finalidadeNfse = null;
+
+    /**
      * Indica operação de uso ou consumo pessoal (art. 57).
      * 0 - Não
      * 1 - Sim
@@ -67,6 +73,14 @@ class IbscbsData extends Dto
      */
     #[MapFrom('imovel')]
     public ?ImovelData $imovel = null;
+
+    /**
+     * Documentos de reembolso, repasse ou ressarcimento. Pacote 20260209.
+     *
+     * @var ReembolsoDocumentoData[]|null
+     */
+    #[MapFrom('valores.gReeRepRes.documentos'), CastWith(ArrayCaster::class, itemType: ReembolsoDocumentoData::class)]
+    public ?array $documentosReembolso = null;
 
     /**
      * Bens móveis objeto de locação.

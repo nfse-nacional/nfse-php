@@ -78,7 +78,7 @@ function dpsComComercioExterior(float $valorServicoMoeda): DpsData
 }
 
 it('writes vServMoeda with two decimal places', function (float $valor, string $esperado) {
-    $xml = (new DpsXmlBuilder)->build(dpsComComercioExterior($valor));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsComComercioExterior($valor));
 
     expect($xml)->toContain("<vServMoeda>{$esperado}</vServMoeda>")
         ->and(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue();

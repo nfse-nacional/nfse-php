@@ -128,7 +128,7 @@ it('builds a schema valid dps with the complete ibscbs group', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue()
         ->and($xml)->toContain('<cIndOp>010101</cIndOp>')
@@ -152,7 +152,7 @@ it('builds a schema valid dps with the minimum ibscbs group', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue()
         ->and($xml)->toContain('<IBSCBS><cIndOp>010101</cIndOp><indDest>0</indDest>')
@@ -189,7 +189,7 @@ it('uses cCIB instead of the address when the property is registered', function 
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue()
         ->and($xml)->toContain('<gUnidImob><cCIB>12345678</cCIB></gUnidImob>')
@@ -210,7 +210,7 @@ it('ignores CST and cClassTrib left on the previous gIBSCBS path', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect($xml)->not->toContain('<CST>')
         ->and($xml)->not->toContain('<cClassTrib>');
@@ -228,7 +228,7 @@ it('writes a cIndOp that enters into force on 2026-12-01', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect($xml)->toContain('<cIndOp>020102</cIndOp>');
 });
@@ -245,7 +245,7 @@ it('keeps an unknown cIndOp in the xml', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder)->build($dps);
+    $xml = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect($xml)->toContain('<cIndOp>999999</cIndOp>');
 });

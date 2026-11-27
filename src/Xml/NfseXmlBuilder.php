@@ -18,7 +18,7 @@ class NfseXmlBuilder
 
     private DpsXmlBuilder $dpsBuilder;
 
-    public function __construct(SchemaDps|string $schema = SchemaDps::Producao)
+    public function __construct(?string $schema = null)
     {
         $this->dpsBuilder = new DpsXmlBuilder($schema);
     }

@@ -13,22 +13,24 @@ use Nfse\Dto\Nfse\ImovelData;
 use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Dto\Nfse\LocacaoData;
 use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\ReembolsoDocumentoData;
 use Nfse\Dto\Nfse\ServicoData;
 use Nfse\Dto\Nfse\TomadorData;
 use Nfse\Dto\Nfse\UnidadeImovelData;
 use Nfse\Dto\Nfse\ValoresData;
 use Nfse\Enums\OpcaoSimplesNacional;
+use Nfse\Enums\TipoAmbiente;
 use Nfse\Support\SchemaText;
 
 class DpsXmlBuilder
 {
     private DOMDocument $dom;
 
-    private SchemaDps $schema;
+    private string $schema;
 
-    public function __construct(SchemaDps|string $schema = SchemaDps::Producao)
+    public function __construct(?string $schema = null)
     {
-        $this->schema = SchemaDps::resolver($schema);
+        $this->schema = SchemaDps::resolver($schema, TipoAmbiente::Producao);
     }
 
     public function build(DpsData $dps): string
@@ -62,7 +64,9 @@ class DpsXmlBuilder
         $this->appendElement($parent, 'dCompet', $data->dataCompetencia);
         $this->appendElement($parent, 'tpEmit', $data->tipoEmitente);
         $this->appendElement($parent, 'cMotivoEmisTI', $data->motivoEmissaoTomadorIntermediario);
-        $this->appendElement($parent, 'finNFSe', $data->finalidadeNfse);
+        if ($this->schema !== '20260209') {
+            $this->appendElement($parent, 'finNFSe', $data->finalidadeNfse);
+        }
         $this->appendElement($parent, 'chNFSeRej', $data->chaveNfseRejeitada);
         $this->appendElement($parent, 'cLocEmi', $data->codigoLocalEmissao);
 
@@ -82,7 +86,7 @@ class DpsXmlBuilder
             $this->buildTomador($parent, $data->tomador);
         }
 
-        if ($this->schema === SchemaDps::Homologacao) {
+        if ($this->schema === '20261124') {
             $this->appendElement($parent, 'indDest', $data->indicadorDestinatario ?? $data->ibscbs?->indicadorDestinatario);
             $destinatario = $data->destinatario ?? $data->ibscbs?->destinatario;
             if ($destinatario) {
@@ -118,7 +122,7 @@ class DpsXmlBuilder
         }
 
         if ($data->ibscbs) {
-            $this->buildIbscbs($parent, $data->ibscbs);
+            $this->buildIbscbs($parent, $data->ibscbs, $data->finalidadeNfse);
         }
     }
 
@@ -227,9 +231,14 @@ class DpsXmlBuilder
             $cServ = $this->dom->createElement('cServ');
             $this->appendElement($cServ, 'cTribNac', $data->codigoServico->codigoTributacaoNacional);
             $this->appendElement($cServ, 'cTribMun', $data->codigoServico->codigoTributacaoMunicipal);
+            if ($this->schema === '20260209') {
+                $this->appendElement($cServ, 'xDescServ', $data->codigoServico->descricaoServico);
+            }
             $this->appendElement($cServ, 'cNBS', $data->codigoServico->codigoNbs);
             $this->appendElement($cServ, 'cIntContrib', $data->codigoServico->codigoInternoContribuinte);
-            $this->appendElement($cServ, 'xDescServ', $data->codigoServico->descricaoServico);
+            if ($this->schema !== '20260209') {
+                $this->appendElement($cServ, 'xDescServ', $data->codigoServico->descricaoServico);
+            }
             $serv->appendChild($cServ);
         }
 
@@ -238,7 +247,7 @@ class DpsXmlBuilder
             $this->appendElement($comExt, 'mdPrestacao', $data->comercioExterior->modoPrestacao);
             $this->appendElement($comExt, 'vincPrest', $data->comercioExterior->vinculoPrestacao);
             $this->appendElement($comExt, 'tpMoeda', $data->comercioExterior->tipoMoeda);
-            if ($this->schema === SchemaDps::Homologacao) {
+            if ($this->schema === '20261124') {
                 $this->appendElement($comExt, 'nFatura', $data->comercioExterior->numeroFatura);
                 $this->appendElement(
                     $comExt,
@@ -260,7 +269,7 @@ class DpsXmlBuilder
             $this->appendElement($comExt, 'mecAFComexP', $data->comercioExterior->mecanismoApoioComexPrestador);
             $this->appendElement($comExt, 'mecAFComexT', $data->comercioExterior->mecanismoApoioComexTomador);
             $this->appendElement($comExt, 'movTempBens', $data->comercioExterior->movimentacaoTemporariaBens);
-            if ($this->schema === SchemaDps::Homologacao) {
+            if ($this->schema === '20261124') {
                 $this->appendElement($comExt, 'nDUIMP', $data->comercioExterior->numeroDuimp);
                 $this->appendElement($comExt, 'nDUE', $data->comercioExterior->numeroDue);
             } else {
@@ -268,7 +277,7 @@ class DpsXmlBuilder
                 $this->appendElement($comExt, 'nRE', $data->comercioExterior->numeroRegistroExportacao);
             }
             $this->appendElement($comExt, 'mdic', $data->comercioExterior->mdic);
-            if ($this->schema === SchemaDps::Homologacao) {
+            if ($this->schema === '20261124') {
                 $this->appendElement($comExt, 'nContCambio', $data->comercioExterior->numeroContratoCambio);
             }
             $serv->appendChild($comExt);
@@ -292,7 +301,7 @@ class DpsXmlBuilder
             $this->appendElement($atvEvento, 'xNome', $data->atividadeEvento->nome);
             $this->appendElement($atvEvento, 'dtIni', $data->atividadeEvento->dataInicio);
             $this->appendElement($atvEvento, 'dtFim', $data->atividadeEvento->dataFim);
-            if ($this->schema === SchemaDps::Homologacao) {
+            if ($this->schema === '20261124') {
                 $this->appendElement($atvEvento, 'cMun', $data->atividadeEvento->codigoMunicipio);
             }
             if ($data->atividadeEvento->idAtividadeEvento) {
@@ -341,7 +350,33 @@ class DpsXmlBuilder
             $valores->appendChild($vDescCondIncond);
         }
 
-        if ($data->ajusteBaseCalculo) {
+        if ($this->schema === '20260209' && $data->deducaoReducao) {
+            $vDedRed = $this->dom->createElement('vDedRed');
+
+            if ($data->deducaoReducao->documentos) {
+                $documentos = $this->dom->createElement('documentos');
+                foreach ($data->deducaoReducao->documentos as $docData) {
+                    $doc = $this->dom->createElement('docDedRed');
+                    $this->appendElement($doc, 'chNFSe', $docData->chaveNfse);
+                    $this->appendElement($doc, 'chNFe', $docData->chaveNfe);
+                    $this->appendElement($doc, 'tpDedRed', $docData->tipoDeducaoReducao);
+                    $this->appendElement($doc, 'xDescOutDed', $docData->descricaoOutrasDeducoes);
+                    $this->appendElement($doc, 'dtEmiDoc', $docData->dataEmissaoDocumento);
+                    $this->appendElement($doc, 'vDedutivelRedutivel', $docData->valorDedutivelRedutivel !== null ? number_format($docData->valorDedutivelRedutivel, 2, '.', '') : null);
+                    $this->appendElement($doc, 'vDeducaoReducao', $docData->valorDeducaoReducao !== null ? number_format($docData->valorDeducaoReducao, 2, '.', '') : null);
+                    $documentos->appendChild($doc);
+                }
+                $vDedRed->appendChild($documentos);
+            } elseif ($data->deducaoReducao->percentualDeducaoReducao !== null) {
+                $this->appendElement($vDedRed, 'pDR', number_format($data->deducaoReducao->percentualDeducaoReducao, 2, '.', ''));
+            } else {
+                $this->appendElement($vDedRed, 'vDR', $data->deducaoReducao->valorDeducaoReducao !== null ? number_format($data->deducaoReducao->valorDeducaoReducao, 2, '.', '') : null);
+            }
+
+            $valores->appendChild($vDedRed);
+        }
+
+        if ($this->schema !== '20260209' && $data->ajusteBaseCalculo) {
             $vAjusteBc = $this->dom->createElement('vAjusteBC');
             if ($data->ajusteBaseCalculo->percentualAjusteBaseCalculoIssqn !== null) {
                 $this->appendElement($vAjusteBc, 'pAjusteBCISSQN', number_format($data->ajusteBaseCalculo->percentualAjusteBaseCalculoIssqn, 2, '.', ''));
@@ -357,7 +392,7 @@ class DpsXmlBuilder
                 $vAjusteBc->appendChild($documentos);
             }
 
-            if ($this->schema === SchemaDps::Homologacao && $data->ajusteBaseCalculo->valorAjusteBaseCalculoIbscbsComercioExterior !== null) {
+            if ($this->schema === '20261124' && $data->ajusteBaseCalculo->valorAjusteBaseCalculoIbscbsComercioExterior !== null) {
                 $this->appendElement(
                     $vAjusteBc,
                     'vAjusteBCIBSCBSComExt',
@@ -540,9 +575,13 @@ class DpsXmlBuilder
         return $condominios;
     }
 
-    private function buildIbscbs(DOMElement $parent, IbscbsData $data): void
+    private function buildIbscbs(DOMElement $parent, IbscbsData $data, ?string $finalidadeInfDps = null): void
     {
         $ibscbs = $this->dom->createElement('IBSCBS');
+
+        if ($this->schema === '20260209') {
+            $this->appendElement($ibscbs, 'finNFSe', $data->finalidadeNfse ?? $finalidadeInfDps);
+        }
 
         $this->appendElement($ibscbs, 'indFinal', $data->indicadorUsoConsumoPessoal);
         $this->appendElement($ibscbs, 'cIndOp', $data->codigoIndicadorOperacao);
@@ -557,7 +596,7 @@ class DpsXmlBuilder
         }
 
         $this->appendElement($ibscbs, 'tpEnteGov', $data->tipoEnteGovernamental);
-        if ($this->schema !== SchemaDps::Homologacao) {
+        if ($this->schema !== '20261124') {
             $this->appendElement($ibscbs, 'indDest', $data->indicadorDestinatario);
             if ($data->destinatario) {
                 $this->buildDestinatario($ibscbs, $data->destinatario);
@@ -568,7 +607,7 @@ class DpsXmlBuilder
             $ibscbs->appendChild($this->buildImovel($data->imovel));
         }
 
-        if ($data->bensMoveis) {
+        if ($this->schema !== '20260209' && $data->bensMoveis) {
             foreach ($data->bensMoveis as $bemMovel) {
                 $bensMoveis = $this->dom->createElement('bensMoveis');
                 $this->appendElement($bensMoveis, 'cNCMBemMovel', $bemMovel->codigoNcmBemMovel);
@@ -578,23 +617,34 @@ class DpsXmlBuilder
             }
         }
 
-        if ($this->schema === SchemaDps::Homologacao && $data->condominios) {
+        if ($this->schema === '20261124' && $data->condominios) {
             $ibscbs->appendChild($this->buildCondominios($data->condominios));
         }
 
         $valores = $this->dom->createElement('valores');
-        $trib = $this->dom->createElement('trib');
-        $this->appendElement($trib, 'CST', $data->cst);
-        $this->appendElement($trib, 'cClassTrib', $data->codigoClassificacaoTributaria);
 
-        $temGrupo = $data->codigoCreditoPresumido !== null
+        if ($this->schema === '20260209' && $data->documentosReembolso) {
+            $gReeRepRes = $this->dom->createElement('gReeRepRes');
+            foreach ($data->documentosReembolso as $documento) {
+                $this->buildDocumentoReembolso($gReeRepRes, $documento);
+            }
+            $valores->appendChild($gReeRepRes);
+        }
+
+        $trib = $this->dom->createElement('trib');
+        $gIbscbs = $this->dom->createElement('gIBSCBS');
+        $destinoCst = $this->schema === '20260209' ? $gIbscbs : $trib;
+        $this->appendElement($destinoCst, 'CST', $data->cst);
+        $this->appendElement($destinoCst, 'cClassTrib', $data->codigoClassificacaoTributaria);
+
+        $temGrupo = $this->schema === '20260209'
+            || $data->codigoCreditoPresumido !== null
             || $data->cstTributacaoRegular !== null
             || $data->percentualDiferimentoUf !== null
             || $data->percentualDiferimentoMunicipal !== null
             || $data->percentualDiferimentoCbs !== null;
 
         if ($temGrupo) {
-            $gIbscbs = $this->dom->createElement('gIBSCBS');
             $this->appendElement($gIbscbs, 'cCredPres', $data->codigoCreditoPresumido);
 
             if ($data->cstTributacaoRegular) {
@@ -717,6 +767,48 @@ class DpsXmlBuilder
         }
 
         return $doc;
+    }
+
+    private function buildDocumentoReembolso(DOMElement $parent, ReembolsoDocumentoData $data): void
+    {
+        $documentos = $this->dom->createElement('documentos');
+
+        if ($data->chaveDfe) {
+            $dFeNacional = $this->dom->createElement('dFeNacional');
+            $this->appendElement($dFeNacional, 'tipoChaveDFe', $data->tipoChaveDfe);
+            $this->appendElement($dFeNacional, 'xTipoChaveDFe', $data->descricaoTipoChaveDfe);
+            $this->appendElement($dFeNacional, 'chaveDFe', $data->chaveDfe);
+            $documentos->appendChild($dFeNacional);
+        } elseif ($data->numeroDocumentoFiscal) {
+            $docFiscalOutro = $this->dom->createElement('docFiscalOutro');
+            $this->appendElement($docFiscalOutro, 'cMunDocFiscal', $data->codigoMunicipioDocumentoFiscal);
+            $this->appendElement($docFiscalOutro, 'nDocFiscal', $data->numeroDocumentoFiscal);
+            $this->appendElement($docFiscalOutro, 'xDocFiscal', $data->descricaoDocumentoFiscal);
+            $documentos->appendChild($docFiscalOutro);
+        } elseif ($data->numeroDocumento) {
+            $docOutro = $this->dom->createElement('docOutro');
+            $this->appendElement($docOutro, 'nDoc', $data->numeroDocumento);
+            $this->appendElement($docOutro, 'xDoc', $data->descricaoDocumento);
+            $documentos->appendChild($docOutro);
+        }
+
+        if ($data->fornecedor) {
+            $fornec = $this->dom->createElement('fornec');
+            $this->appendElement($fornec, 'CNPJ', $data->fornecedor->cnpj);
+            $this->appendElement($fornec, 'CPF', $data->fornecedor->cpf);
+            $this->appendElement($fornec, 'NIF', $data->fornecedor->nif);
+            $this->appendElement($fornec, 'cNaoNIF', $data->fornecedor->codigoNaoNif);
+            $this->appendElement($fornec, 'xNome', $data->fornecedor->nome);
+            $documentos->appendChild($fornec);
+        }
+
+        $this->appendElement($documentos, 'dtEmiDoc', $data->dataEmissaoDocumento);
+        $this->appendElement($documentos, 'dtCompDoc', $data->dataCompetenciaDocumento);
+        $this->appendElement($documentos, 'tpReeRepRes', $data->tipoReembolso);
+        $this->appendElement($documentos, 'xTpReeRepRes', $data->descricaoTipoReembolso);
+        $this->appendElement($documentos, 'vlrReeRepRes', $data->valorReembolso !== null ? number_format($data->valorReembolso, 2, '.', '') : null);
+
+        $parent->appendChild($documentos);
     }
 
     private function appendElement(DOMElement $parent, string $name, mixed $value): void

@@ -60,7 +60,7 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     // Assertions based on the example XML structure

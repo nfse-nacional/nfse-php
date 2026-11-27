@@ -5,7 +5,6 @@ namespace Nfse\Tests\Unit\Xml;
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Support\IdGenerator;
 use Nfse\Xml\DpsXmlBuilder;
-use Nfse\Xml\SchemaDps;
 
 function dpsSchema20261124(array $infDps = []): DpsData
 {
@@ -68,13 +67,13 @@ function dpsSchema20261124(array $infDps = []): DpsData
 
 it('grava indDest em infDPS no schema 20261124 mesmo sem IBS CBS', function () {
     $dps = dpsSchema20261124();
-    $xml = (new DpsXmlBuilder(SchemaDps::Homologacao))->build($dps);
+    $xml = (new DpsXmlBuilder('20261124'))->build($dps);
 
     expect($xml)->toContain('</toma><indDest>0</indDest><serv>')
         ->and($xml)->not->toContain('<IBSCBS>')
         ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', '20261124'))->toBeTrue();
 
-    $xmlAtual = (new DpsXmlBuilder)->build($dps);
+    $xmlAtual = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect($xmlAtual)->not->toContain('<indDest>');
 });
@@ -116,7 +115,7 @@ it('tira indDest e dest de IBSCBS no schema 20261124', function () {
     expect($xml)->toContain('</toma><indDest>1</indDest><dest><CNPJ>98765432000188</CNPJ>')
         ->and($xml)->toContain('<IBSCBS><cIndOp>010101</cIndOp><valores>')
         ->and($xml)->not->toContain('<IBSCBS><cIndOp>010101</cIndOp><indDest>')
-        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', SchemaDps::Homologacao->value))->toBeTrue();
+        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', '20261124'))->toBeTrue();
 });
 
 it('grava o comercio exterior do schema 20261124 sem os campos antigos', function () {
@@ -145,7 +144,7 @@ it('grava o comercio exterior do schema 20261124 sem os campos antigos', functio
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder(SchemaDps::Homologacao))->build($dps);
+    $xml = (new DpsXmlBuilder('20261124'))->build($dps);
 
     expect($xml)->toContain('<nFatura>12345</nFatura><vFatura>10.50</vFatura>')
         ->and($xml)->toContain('<nDUIMP>123456789012345</nDUIMP><nDUE>12345678901234</nDUE>')
@@ -189,7 +188,7 @@ it('grava cMun do evento e o ajuste de base do comercio exterior no schema 20261
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder(SchemaDps::Homologacao))->build($dps);
+    $xml = (new DpsXmlBuilder('20261124'))->build($dps);
 
     expect($xml)->toContain('<dtFim>2026-11-27</dtFim><cMun>3550308</cMun><idAtvEvt>EVT1</idAtvEvt>')
         ->and($xml)->toContain('<pAjusteBCISSQN>1.50</pAjusteBCISSQN><vAjusteBCIBSCBSComExt>-2.50</vAjusteBCIBSCBSComExt>')
@@ -248,7 +247,7 @@ it('grava condominios no schema 20261124 depois de bensMoveis', function () {
         ],
     ]);
 
-    $xml = (new DpsXmlBuilder(SchemaDps::Homologacao))->build($dps);
+    $xml = (new DpsXmlBuilder('20261124'))->build($dps);
 
     expect($xml)->toContain('</bensMoveis><condominios><dVencOrig>2026-11-26</dVencOrig>')
         ->and($xml)->toContain('<tpCobranca>99</tpCobranca><xTpCobranca>Taxa de obra</xTpCobranca><vCobranca>800.50</vCobranca>')
@@ -257,7 +256,7 @@ it('grava condominios no schema 20261124 depois de bensMoveis', function () {
         ->and($xml)->toContain('</condominios><valores>')
         ->and(validarContraSchema($xml, 'DPS_v1.01.xsd', '20261124'))->toBeTrue();
 
-    $xmlAtual = (new DpsXmlBuilder)->build($dps);
+    $xmlAtual = (new DpsXmlBuilder('20261020'))->build($dps);
 
     expect($xmlAtual)->not->toContain('<condominios>');
 });

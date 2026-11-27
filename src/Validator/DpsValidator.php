@@ -7,6 +7,7 @@ use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
+use Nfse\Enums\TipoAmbiente;
 use Nfse\Enums\TipoCobrancaCondominio;
 use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
 use Nfse\Support\CatalogoNbs;
@@ -14,11 +15,11 @@ use Nfse\Xml\SchemaDps;
 
 class DpsValidator
 {
-    public function validate(DpsData $dps, SchemaDps|string|null $schema = null): ValidationResult
+    public function validate(DpsData $dps, ?string $schema = null): ValidationResult
     {
         $errors = [];
         $infDps = $dps->infDps;
-        $schemaResolvido = $schema === null ? SchemaDps::Producao : SchemaDps::resolver($schema);
+        $schemaResolvido = SchemaDps::resolver($schema, TipoAmbiente::Producao);
 
         if ($infDps === null) {
             return ValidationResult::failure(['InfDpsData is required.']);
@@ -27,10 +28,10 @@ class DpsValidator
         $this->validateVersao($dps, $errors);
         $this->validatePrestador($infDps, $errors);
         $this->validateTomador($infDps, $errors);
-        $this->validateValores($infDps, $errors);
+        $this->validateValores($infDps, $errors, $schemaResolvido);
         $this->validateServico($infDps, $errors);
         $this->validateIbscbs($infDps, $errors, $schemaResolvido);
-        if ($schemaResolvido === SchemaDps::Homologacao) {
+        if ($schemaResolvido === '20261124') {
             $this->validateSchema20261124($infDps, $errors);
         }
 
@@ -111,7 +112,7 @@ class DpsValidator
         }
     }
 
-    private function validateValores(InfDpsData $infDps, array &$errors): void
+    private function validateValores(InfDpsData $infDps, array &$errors, string $schema): void
     {
         $valores = $infDps->valores;
         if ($valores === null) {
@@ -133,7 +134,9 @@ class DpsValidator
         }
 
         // O valor do serviço cobre desconto incondicionado, ajuste monetário da base e benefício municipal.
-        $valorAjuste = $valores->ajusteBaseCalculo?->valorAjusteBaseCalculoIssqn ?? 0;
+        $valorAjuste = $schema === '20260209'
+            ? 0
+            : ($valores->ajusteBaseCalculo?->valorAjusteBaseCalculoIssqn ?? 0);
         $vRedBCBM = 0;
         if ($valores->tributacao && $valores->tributacao->beneficioMunicipal) {
             $vRedBCBM = $valores->tributacao->beneficioMunicipal->valorReducaoBcBm ?? 0;
@@ -221,7 +224,7 @@ class DpsValidator
         }
     }
 
-    private function validateIbscbs(InfDpsData $infDps, array &$errors, SchemaDps $schema): void
+    private function validateIbscbs(InfDpsData $infDps, array &$errors, string $schema): void
     {
         $ibscbs = $infDps->ibscbs;
         if ($ibscbs === null) {
@@ -250,7 +253,7 @@ class DpsValidator
 
         // Rule 554: o destinatário só deve ser identificado quando indDest = 1.
         // No schema 20261124 a mesma regra vale para o indDest de infDPS.
-        if ($schema !== SchemaDps::Homologacao && $ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
+        if ($schema !== '20261124' && $ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
             $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
         }
 

@@ -6,9 +6,9 @@ All notable changes to `nfse-php` will be documented in this file.
 
 ### Schema da DPS
 
-A montagem da DPS passa a escolher o pacote de esquemas. `references/schemas/20261020` guarda o leiaute atual e `references/schemas/20261124` guarda o pacote da produção restrita de 24/11/2026. Os dois permanecem.
+A montagem da DPS escolhe o pacote pela data de lançamento do ambiente. `references/schemas/20260209` é o leiaute vigente em produção até 06/12/2026. `references/schemas/20261020` entra na homologação em 20/10/2026. `references/schemas/20261124` entra na homologação em 24/11/2026 e na produção em 07/12/2026. Os três permanecem.
 
-Sem versão na chamada, `SchemaDps` usa o ambiente: homologação monta o `20261124` e produção monta o `20261020`. A versão informada em `emitir()` ou no `DpsXmlBuilder` prevalece.
+Sem versão na chamada, `SchemaDps` usa essa tabela. A versão informada em `emitir()` ou no `DpsXmlBuilder` prevalece. No pacote `20260209`, a DPS grava `vDedRed` e `gReeRepRes`, com `finNFSe` dentro de `IBSCBS`.
 
 No pacote `20261124`, `indDest` e `dest` ficam em `infDPS`, logo depois de `toma`. `comExt` passa a usar `nFatura`, `vFatura`, `nDUIMP`, `nDUE` e `nContCambio`. Entram `cMun` no evento, `vAjusteBCIBSCBSComExt` e o grupo opcional `condominios` em `IBSCBS`.
 

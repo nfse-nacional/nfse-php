@@ -33,7 +33,7 @@ class ContribuinteService
     /**
      * Emite uma NFS-e a partir de um DPS.
      */
-    public function emitir(DpsData $dps, SchemaDps|string|null $schema = null): NfseData
+    public function emitir(DpsData $dps, ?string $schema = null): NfseData
     {
         $builder = new DpsXmlBuilder(SchemaDps::resolver($schema, $this->context->ambiente));
         $xml = $builder->build($dps);

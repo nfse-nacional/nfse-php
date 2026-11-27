@@ -30,7 +30,7 @@ test('XmlSigner should not contain newlines, carriage returns or tabs', function
 });
 
 test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', function () {
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $dpsData = new DpsData([
         'versao' => '1.00',
         'infDPS' => [
@@ -54,7 +54,7 @@ test('DpsXmlBuilder should not contain newlines, carriage returns or tabs', func
 });
 
 test('NfseXmlBuilder should not contain newlines, carriage returns or tabs', function () {
-    $builder = new NfseXmlBuilder;
+    $builder = new NfseXmlBuilder('20261020');
     $nfseData = new NfseData([
         'versao' => '1.00',
         'infNFSe' => [

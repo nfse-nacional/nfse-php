@@ -100,7 +100,7 @@ it('can build xml from dps data', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.0">')
@@ -211,7 +211,7 @@ it('can build xml with pAliq and correct tribMun order', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<pAliq>5.00</pAliq>');

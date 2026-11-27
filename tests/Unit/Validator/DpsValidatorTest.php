@@ -331,7 +331,7 @@ it('fails when service value is less than sum of deductions', function () {
     ]);
 
     $validator = new DpsValidator;
-    $result = $validator->validate($dps);
+    $result = $validator->validate($dps, '20261020');
 
     expect($result->isValid)->toBeFalse();
     expect($result->errors)->toContain('O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Ajuste da Base de Cálculo e Benefício Municipal.');

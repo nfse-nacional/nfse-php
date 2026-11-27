@@ -85,7 +85,7 @@ function dpsEmitidaNoSchema(): DpsData
     ]);
 }
 
-function xmlDaEmissao(TipoAmbiente|string $ambiente, SchemaDps|string|null $schema = null): string
+function xmlDaEmissao(TipoAmbiente|string $ambiente, ?string $schema = null): string
 {
     $servico = new EmissorSchemaTeste(new NfseContext(
         $ambiente,
@@ -135,14 +135,14 @@ it('usa o schema do ambiente quando a versao nao e informada', function () {
     $homologacao = xmlDaEmissao(TipoAmbiente::Homologacao);
     $producao = xmlDaEmissao(TipoAmbiente::Producao);
 
-    expect($homologacao)->toContain('</toma><indDest>0</indDest><serv>')
-        ->and($homologacao)->not->toContain('<indDest>0</indDest><valores>')
-        ->and($producao)->toContain('<IBSCBS><cIndOp>100301</cIndOp><indDest>0</indDest>')
-        ->and($producao)->not->toContain('</toma><indDest>');
+    expect(str_contains($homologacao, '</toma><indDest>'))
+        ->toBe(SchemaDps::padrao(TipoAmbiente::Homologacao) === '20261124')
+        ->and(str_contains($producao, '</toma><indDest>'))
+        ->toBe(SchemaDps::padrao(TipoAmbiente::Producao) === '20261124');
 });
 
 it('prevalece a versao informada sobre o ambiente', function () {
-    $xml = xmlDaEmissao(TipoAmbiente::Homologacao, SchemaDps::Producao);
+    $xml = xmlDaEmissao(TipoAmbiente::Homologacao, '20261020');
 
     expect($xml)->toContain('<IBSCBS><cIndOp>100301</cIndOp><indDest>0</indDest>')
         ->and($xml)->not->toContain('</toma><indDest>');

@@ -4,7 +4,6 @@ namespace Nfse\Tests\Unit\Validator;
 
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Validator\DpsValidator;
-use Nfse\Xml\SchemaDps;
 
 function dpsParaValidarSchema(array $infDps = []): DpsData
 {
@@ -43,7 +42,7 @@ it('exige indDest no schema 20261124 e nao exige no schema atual', function () {
     $dps = dpsParaValidarSchema();
 
     expect((new DpsValidator)->validate($dps)->errors)->toBeEmpty()
-        ->and((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+        ->and((new DpsValidator)->validate($dps, '20261124')->errors)
         ->toContain('O indicador de destinatário é obrigatório no schema 20261124.');
 });
 
@@ -83,7 +82,7 @@ it('recusa campo antigo de comercio exterior no schema 20261124', function () {
         ],
     ]);
 
-    expect((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+    expect((new DpsValidator)->validate($dps, '20261124')->errors)
         ->toContain('Os campos vServMoeda, nDI e nRE não existem no schema 20261124.')
         ->and((new DpsValidator)->validate($dps)->errors)
         ->not->toContain('Os campos vServMoeda, nDI e nRE não existem no schema 20261124.');
@@ -105,7 +104,7 @@ it('recusa condominios fora do subitem 99.05 no schema 20261124', function () {
         ],
     ]);
 
-    expect((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+    expect((new DpsValidator)->validate($dps, '20261124')->errors)
         ->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.')
         ->and((new DpsValidator)->validate($dps)->errors)
         ->not->toContain('O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.');
@@ -143,6 +142,6 @@ it('recusa descricao do tipo de cobranca quando o tipo nao e 99 no schema 202611
         ],
     ]);
 
-    expect((new DpsValidator)->validate($dps, SchemaDps::Homologacao)->errors)
+    expect((new DpsValidator)->validate($dps, '20261124')->errors)
         ->toContain('A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.');
 });

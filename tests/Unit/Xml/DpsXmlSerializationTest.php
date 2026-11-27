@@ -108,7 +108,7 @@ it('serializes dps data to xml correctly', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.0">')

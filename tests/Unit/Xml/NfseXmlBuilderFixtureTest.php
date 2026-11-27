@@ -13,7 +13,7 @@ it('can build nfse xml from parsed fixture data', function () {
     $nfseData = $parser->parse($xmlContent);
 
     // 2. Build XML from the parsed data
-    $builder = new NfseXmlBuilder;
+    $builder = new NfseXmlBuilder('20261020');
     $builtXml = $builder->build($nfseData);
 
     // 3. Assertions

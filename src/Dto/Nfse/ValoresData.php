@@ -20,6 +20,12 @@ class ValoresData extends Dto
     public ?DescontoData $desconto = null;
 
     /**
+     * Deduções e reduções da base de cálculo. Pacote 20260209.
+     */
+    #[MapFrom('vDedRed')]
+    public ?DeducaoReducaoData $deducaoReducao = null;
+
+    /**
      * Ajuste da base de cálculo do ISSQN e/ou IBS/CBS.
      */
     #[MapFrom('vAjusteBC')]

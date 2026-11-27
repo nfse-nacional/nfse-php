@@ -127,16 +127,16 @@ if (! function_exists('resolve')) {
 
 if (! function_exists('validarContraSchema')) {
     /**
-     * Valida um XML contra os esquemas oficiais publicados em references/schemas.
+     * Valida um XML contra o pacote em references/schemas/{pacote}. O padrão é 20261020.
      *
      * Os pacotes oficiais usam expressões regulares com lookahead e âncoras (^/$), que não são
      * aceitas pela gramática de expressões do XML Schema e impedem o libxml de compilar o
      * esquema. A cópia usada aqui substitui apenas esses padrões.
      */
-    function validarContraSchema(string $xml, string $schema): bool
+    function validarContraSchema(string $xml, string $schema, string $pacote = '20261020'): bool
     {
-        $origem = __DIR__.'/../references/schemas';
-        $destino = sys_get_temp_dir().'/nfse-php-schemas';
+        $origem = __DIR__.'/../references/schemas/'.$pacote;
+        $destino = sys_get_temp_dir().'/nfse-php-schemas/'.$pacote;
 
         if (! is_dir($destino)) {
             mkdir($destino, 0777, true);

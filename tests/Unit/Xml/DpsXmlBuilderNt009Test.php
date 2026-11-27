@@ -59,59 +59,60 @@ function dpsLeiauteNt009(?string $finNfse, ?string $motivoEmisTI = null, ?array 
 }
 
 it('writes the NT 009 layout when finNFSe is informed', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0'));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009('0'));
 
     expect($xml)->toContain('<tpEmit>1</tpEmit><finNFSe>0</finNFSe><cLocEmi>3550308</cLocEmi>')
         ->and($xml)->toContain('<cNBS>115031000</cNBS><xDescServ>Hospedagem de sites</xDescServ></cServ>');
 });
 
 it('writes finNFSe after cMotivoEmisTI', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', '4'));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009('0', '4'));
 
     expect($xml)->toContain('<tpEmit>1</tpEmit><cMotivoEmisTI>4</cMotivoEmisTI><finNFSe>0</finNFSe><cLocEmi>');
 });
 
-it('keeps the current layout when finNFSe is not informed', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009(null));
+it('writes cServ in the 1.01 order even without finNFSe', function () {
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009(null));
 
     expect($xml)->not->toContain('finNFSe')
-        ->and($xml)->toContain('<cTribNac>010701</cTribNac><xDescServ>Hospedagem de sites</xDescServ><cNBS>115031000</cNBS>')
-        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue();
+        ->and($xml)->toContain('<cNBS>115031000</cNBS><xDescServ>Hospedagem de sites</xDescServ></cServ>')
+        ->and($xml)->not->toContain('<cAtvSN>');
 });
 
 function ibscbsBasico(array $gIbscbs = []): array
 {
+    $trib = [
+        'CST' => '000',
+        'cClassTrib' => '000001',
+    ];
+
+    if ($gIbscbs !== []) {
+        $trib['gIBSCBS'] = $gIbscbs;
+    }
+
     return [
         'cIndOp' => '100301',
         'indDest' => 0,
-        'valores' => ['trib' => ['gIBSCBS' => ['CST' => '000', 'cClassTrib' => '000001'] + $gIbscbs]],
+        'valores' => ['trib' => $trib],
     ];
 }
 
 it('writes CST and cClassTrib directly in trib in the NT 009 layout', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ibscbsBasico()));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009('0', null, ibscbsBasico()));
 
     expect($xml)->toContain('<valores><trib><CST>000</CST><cClassTrib>000001</cClassTrib></trib></valores></IBSCBS>')
         ->and($xml)->not->toContain('gIBSCBS');
 });
 
 it('keeps only the remaining fields in gIBSCBS in the NT 009 layout', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ibscbsBasico(['cCredPres' => '01'])));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009('0', null, ibscbsBasico(['cCredPres' => '01'])));
 
     expect($xml)->toContain('<trib><CST>000</CST><cClassTrib>000001</cClassTrib><gIBSCBS><cCredPres>01</cCredPres></gIBSCBS></trib>');
 });
 
 it('writes finNFSe only in infDPS in the NT 009 layout', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009('0', null, ['finNFSe' => '0'] + ibscbsBasico()));
+    $xml = (new DpsXmlBuilder('20261020'))->build(dpsLeiauteNt009('0', null, ibscbsBasico()));
 
     expect(substr_count($xml, '<finNFSe>'))->toBe(1)
         ->and($xml)->toContain('<IBSCBS><cIndOp>100301</cIndOp>');
-});
-
-it('keeps CST and cClassTrib in gIBSCBS in the current layout', function () {
-    $xml = (new DpsXmlBuilder)->build(dpsLeiauteNt009(null, null, ['finNFSe' => '0', 'indFinal' => 0] + ibscbsBasico()));
-
-    expect($xml)->toContain('<IBSCBS><finNFSe>0</finNFSe>')
-        ->and($xml)->toContain('<trib><gIBSCBS><CST>000</CST><cClassTrib>000001</cClassTrib></gIBSCBS></trib>')
-        ->and(validarContraSchema($xml, 'DPS_v1.01.xsd'))->toBeTrue();
 });

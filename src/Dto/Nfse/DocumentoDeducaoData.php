@@ -37,7 +37,7 @@ class DocumentoDeducaoData extends Dto
     /**
      * Data de emissão do documento.
      */
-    #[MapFrom('dEmiDoc')]
+    #[MapFrom('dtEmiDoc')]
     public ?string $dataEmissaoDocumento = null;
 
     /**

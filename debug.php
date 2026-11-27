@@ -121,7 +121,7 @@ try {
                 valorDescontoIncondicionado: 0.0,
                 valorDescontoCondicionado: 0.0
             ),
-            deducaoReducao: null,
+            ajusteBaseCalculo: null,
             tributacao: new TributacaoData(
                 tributacaoIssqn: 1,
                 tipoRetencaoIssqn: 1,

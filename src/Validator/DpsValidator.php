@@ -4,16 +4,22 @@ namespace Nfse\Validator;
 
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Enums\CodigoIndicadorOperacao;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\IndicadorDestinatario;
-use Nfse\Enums\TipoReembolsoRepasseRessarcimento;
+use Nfse\Enums\TipoAmbiente;
+use Nfse\Enums\TipoCobrancaCondominio;
+use Nfse\Enums\TipoDetalhamentoCobrancaCondominio;
+use Nfse\Support\CatalogoNbs;
+use Nfse\Xml\SchemaDps;
 
 class DpsValidator
 {
-    public function validate(DpsData $dps): ValidationResult
+    public function validate(DpsData $dps, ?string $schema = null): ValidationResult
     {
         $errors = [];
         $infDps = $dps->infDps;
+        $schemaResolvido = SchemaDps::resolver($schema, $infDps?->tipoAmbiente ?? TipoAmbiente::Producao);
 
         if ($infDps === null) {
             return ValidationResult::failure(['InfDpsData is required.']);
@@ -22,9 +28,12 @@ class DpsValidator
         $this->validateVersao($dps, $errors);
         $this->validatePrestador($infDps, $errors);
         $this->validateTomador($infDps, $errors);
-        $this->validateValores($infDps, $errors);
+        $this->validateValores($infDps, $errors, $schemaResolvido);
         $this->validateServico($infDps, $errors);
-        $this->validateIbscbs($infDps, $errors);
+        $this->validateIbscbs($infDps, $errors, $schemaResolvido);
+        if ($schemaResolvido === '20261124') {
+            $this->validateSchema20261124($infDps, $errors);
+        }
 
         if (count($errors) > 0) {
             return ValidationResult::failure($errors);
@@ -103,7 +112,7 @@ class DpsValidator
         }
     }
 
-    private function validateValores(InfDpsData $infDps, array &$errors): void
+    private function validateValores(InfDpsData $infDps, array &$errors, string $schema): void
     {
         $valores = $infDps->valores;
         if ($valores === null) {
@@ -124,15 +133,17 @@ class DpsValidator
             $errors[] = 'O valor do desconto condicionado deve ser menor que o valor do serviço.';
         }
 
-        // Rule 303: vServ >= descIncond + vDR + vRedBCBM
-        $vDR = $valores->deducaoReducao ? ($valores->deducaoReducao->valorDeducaoReducao ?? 0) : 0;
+        // O valor do serviço cobre desconto incondicionado, ajuste monetário da base e benefício municipal.
+        $valorAjuste = $schema === '20260209'
+            ? 0
+            : ($valores->ajusteBaseCalculo?->valorAjusteBaseCalculoIssqn ?? 0);
         $vRedBCBM = 0;
         if ($valores->tributacao && $valores->tributacao->beneficioMunicipal) {
             $vRedBCBM = $valores->tributacao->beneficioMunicipal->valorReducaoBcBm ?? 0;
         }
 
-        if ($vServ < ($vDescIncond + $vDR + $vRedBCBM)) {
-            $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.';
+        if ($vServ < ($vDescIncond + $valorAjuste + $vRedBCBM)) {
+            $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Ajuste da Base de Cálculo e Benefício Municipal.';
         }
     }
 
@@ -161,7 +172,59 @@ class DpsValidator
         }
     }
 
-    private function validateIbscbs(InfDpsData $infDps, array &$errors): void
+    private function validateSchema20261124(InfDpsData $infDps, array &$errors): void
+    {
+        $indicador = $infDps->indicadorDestinatario ?? $infDps->ibscbs?->indicadorDestinatario;
+        if ($indicador === null) {
+            $errors[] = 'O indicador de destinatário é obrigatório no schema 20261124.';
+        }
+
+        $destinatario = $infDps->destinatario ?? $infDps->ibscbs?->destinatario;
+        if ($destinatario !== null && $indicador !== IndicadorDestinatario::DestinatarioDiverso) {
+            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        }
+
+        $comercioExterior = $infDps->servico?->comercioExterior;
+        if ($comercioExterior !== null && (
+            $comercioExterior->valorServicoMoeda !== null
+            || ($comercioExterior->numeroDeclaracaoImportacao !== null && $comercioExterior->numeroDeclaracaoImportacao !== '')
+            || ($comercioExterior->numeroRegistroExportacao !== null && $comercioExterior->numeroRegistroExportacao !== '')
+        )) {
+            $errors[] = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+        }
+
+        $condominios = $infDps->ibscbs?->condominios;
+        if ($condominios === null) {
+            return;
+        }
+
+        $codigoTributacao = preg_replace('/\D/', '', (string) $infDps->servico?->codigoServico?->codigoTributacaoNacional);
+        if (! str_starts_with($codigoTributacao, '9905')) {
+            $errors[] = 'O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.';
+        }
+
+        foreach ($condominios->cobrancas ?? [] as $cobranca) {
+            if (
+                $cobranca->descricaoTipoCobranca !== null
+                && $cobranca->descricaoTipoCobranca !== ''
+                && $cobranca->tipoCobranca !== TipoCobrancaCondominio::OutraCobranca
+            ) {
+                $errors[] = 'A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.';
+            }
+
+            foreach ($cobranca->detalhamentos ?? [] as $detalhe) {
+                if (
+                    $detalhe->descricaoTipoDetalhamento !== null
+                    && $detalhe->descricaoTipoDetalhamento !== ''
+                    && $detalhe->tipoDetalhamento !== TipoDetalhamentoCobrancaCondominio::Outro
+                ) {
+                    $errors[] = 'A descrição do detalhamento da cobrança só deve ser informada quando o tipo for 999.';
+                }
+            }
+        }
+    }
+
+    private function validateIbscbs(InfDpsData $infDps, array &$errors, string $schema): void
     {
         $ibscbs = $infDps->ibscbs;
         if ($ibscbs === null) {
@@ -173,8 +236,13 @@ class DpsValidator
             $errors[] = 'As informações de IBS/CBS só podem ser declaradas a partir da data de competência 01/01/2026.';
         }
 
+        $codigoNbs = $infDps->servico?->codigoServico?->codigoNbs;
+        if ($codigoNbs !== null && ! CatalogoNbs::contem($codigoNbs)) {
+            $errors[] = 'O código NBS informado não consta na lista NBS 2.0.';
+        }
+
         // Rule 324: cNBS é obrigatório quando o grupo de IBS/CBS é informado
-        if ($infDps->servico?->codigoServico?->codigoNbs === null) {
+        if ($infDps->ibscbs !== null && $codigoNbs === null) {
             $errors[] = 'O item da NBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
         }
 
@@ -183,35 +251,44 @@ class DpsValidator
             $errors[] = 'O grupo de NFS-e referenciadas é obrigatório quando o tipo de operação for 2 ou 3.';
         }
 
-        // Rule 554: o destinatário só deve ser identificado quando indDest = 1
-        if ($ibscbs->destinatario !== null && $ibscbs->indicadorDestinatario !== IndicadorDestinatario::DestinatarioDiverso) {
-            $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+        if ($infDps->indicadorDestinatario !== null && $ibscbs->indicadorDestinatario !== null && $infDps->indicadorDestinatario !== $ibscbs->indicadorDestinatario) {
+            $errors[] = 'O indicador de destinatário informado em infDPS difere do informado no grupo IBS/CBS.';
+        }
+
+        // Rule 554: o destinatário só deve ser identificado quando indDest = 1.
+        // No schema 20261124 a mesma regra vale para o indDest de infDPS.
+        if ($schema !== '20261124') {
+            $indicadorGravado = $ibscbs->indicadorDestinatario ?? $infDps->indicadorDestinatario;
+            if ($indicadorGravado === null) {
+                $errors[] = 'O indicador de destinatário é obrigatório no grupo IBS/CBS.';
+            }
+            if ($ibscbs->destinatario !== null && $indicadorGravado !== IndicadorDestinatario::DestinatarioDiverso) {
+                $errors[] = 'O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.';
+            }
+        }
+
+        if ($ibscbs->cstVeioCaminhoAntigo()) {
+            $errors[] = 'O CST foi informado em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe o CST em valores.trib.';
+        } elseif ($ibscbs->cst === null || $ibscbs->cst === '') {
+            $errors[] = 'O CST do IBS e da CBS é obrigatório quando o grupo de informações de IBS/CBS é informado.';
+        }
+
+        if ($ibscbs->classificacaoVeioCaminhoAntigo()) {
+            $errors[] = 'A classificação tributária foi informada em valores.trib.gIBSCBS. Esse caminho não é mais lido. Informe a classificação em valores.trib.';
+        } elseif ($ibscbs->codigoClassificacaoTributaria === null || $ibscbs->codigoClassificacaoTributaria === '') {
+            $errors[] = 'A classificação tributária do IBS e da CBS é obrigatória quando o grupo de informações de IBS/CBS é informado.';
+        }
+
+        if ($ibscbs->codigoIndicadorOperacao !== null && $ibscbs->codigoIndicadorOperacao !== ''
+            && CodigoIndicadorOperacao::tryFrom($ibscbs->codigoIndicadorOperacao) === null) {
+            $errors[] = 'O código indicador da operação informado não consta na tabela de cIndOp.';
         }
 
         // Rule 627: os 3 primeiros dígitos do cClassTrib devem corresponder ao CST
-        if ($ibscbs->cst !== null && $ibscbs->codigoClassificacaoTributaria !== null
+        if ($ibscbs->cst !== null && $ibscbs->cst !== ''
+            && $ibscbs->codigoClassificacaoTributaria !== null && $ibscbs->codigoClassificacaoTributaria !== ''
             && ! str_starts_with($ibscbs->codigoClassificacaoTributaria, $ibscbs->cst)) {
             $errors[] = 'O código de classificação tributária informado não pertence ao grupo do CST de IBS/CBS informado.';
-        }
-
-        $vServ = $infDps->valores?->valorServicoPrestado?->valorServico ?? 0;
-
-        foreach ($ibscbs->documentosReembolso ?? [] as $documento) {
-            // Rule 621: xTpReeRepRes só deve ser informado quando tpReeRepRes = 99
-            if ($documento->descricaoTipoReembolso !== null && $documento->tipoReembolso !== TipoReembolsoRepasseRessarcimento::Outros) {
-                $errors[] = 'A descrição do tipo de reembolso, repasse e ressarcimento só deve ser informada quando o tipo for 99.';
-            }
-
-            // Rule 618/619: a data de emissão deve ser igual ou posterior à data de competência
-            if ($documento->dataEmissaoDocumento !== null && $documento->dataCompetenciaDocumento !== null
-                && $documento->dataEmissaoDocumento < $documento->dataCompetenciaDocumento) {
-                $errors[] = 'A data de emissão do documento de reembolso deve ser igual ou posterior à sua data de competência.';
-            }
-
-            // Rule 622: o valor do reembolso deve ser menor ou igual ao valor do serviço prestado
-            if ($documento->valorReembolso !== null && $documento->valorReembolso > $vServ) {
-                $errors[] = 'O valor de reembolso, repasse e ressarcimento deve ser menor ou igual ao valor do serviço prestado.';
-            }
         }
     }
 }

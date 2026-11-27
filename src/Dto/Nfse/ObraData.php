@@ -14,10 +14,16 @@ class ObraData extends Dto
     public ?string $inscricaoImobiliariaFiscal = null;
 
     /**
-     * Código da obra.
+     * Número de identificação da obra (CNO ou CEI).
      */
     #[MapFrom('cObra')]
     public ?string $codigoObra = null;
+
+    /**
+     * Código do Cadastro Imobiliário Brasileiro (CIB).
+     */
+    #[MapFrom('cCIB')]
+    public ?string $codigoCib = null;
 
     /**
      * Endereço da obra.

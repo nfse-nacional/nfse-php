@@ -9,6 +9,7 @@ it('validates a valid DPS', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',
@@ -316,8 +317,8 @@ it('fails when service value is less than sum of deductions', function () {
                 'vDescCondIncond' => [
                     'vDescIncond' => 300.00,
                 ],
-                'vDedRed' => [
-                    'vDR' => 500.00,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 500.00,
                 ],
                 'trib' => [
                     'tribMun' => [
@@ -331,10 +332,10 @@ it('fails when service value is less than sum of deductions', function () {
     ]);
 
     $validator = new DpsValidator;
-    $result = $validator->validate($dps);
+    $result = $validator->validate($dps, '20261020');
 
     expect($result->isValid)->toBeFalse();
-    expect($result->errors)->toContain('O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.');
+    expect($result->errors)->toContain('O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Ajuste da Base de Cálculo e Benefício Municipal.');
 });
 
 it('validates DPS with valid discount values', function () {
@@ -343,6 +344,7 @@ it('validates DPS with valid discount values', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',
@@ -363,8 +365,8 @@ it('validates DPS with valid discount values', function () {
                     'vDescIncond' => 100.00, // Valid
                     'vDescCond' => 50.00, // Valid
                 ],
-                'vDedRed' => [
-                    'vDR' => 200.00,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 200.00,
                 ],
                 'trib' => [
                     'tribMun' => [
@@ -462,6 +464,7 @@ it('validates DPS with construction service and obra information', function () {
         'infDPS' => [
             '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
+            'indDest' => 0,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',
             'serie' => '1',

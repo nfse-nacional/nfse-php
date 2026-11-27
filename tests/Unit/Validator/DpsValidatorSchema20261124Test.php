@@ -1,0 +1,214 @@
+<?php
+
+namespace Nfse\Tests\Unit\Validator;
+
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Validator\DpsValidator;
+
+function dpsParaValidarSchema(array $infDps = []): DpsData
+{
+    return new DpsData([
+        '@attributes' => ['versao' => '1.01'],
+        'infDPS' => array_replace([
+            'tpAmb' => 2,
+            'dhEmi' => '2026-11-26T10:00:00-03:00',
+            'verAplic' => '1.0',
+            'serie' => '1',
+            'nDPS' => '1001',
+            'dCompet' => '2026-11-26',
+            'tpEmit' => 1,
+            'cLocEmi' => '3550308',
+            'prest' => [
+                'CNPJ' => '12345678000199',
+                'xNome' => 'Prestador Exemplo Ltda',
+            ],
+            'serv' => [
+                'locPrest' => ['cLocPrestacao' => '3550308'],
+                'cServ' => [
+                    'cTribNac' => '010201',
+                    'xDescServ' => 'Analise de sistemas',
+                    'cNBS' => '112011000',
+                ],
+            ],
+            'valores' => [
+                'vServPrest' => ['vServ' => 1000.00],
+                'trib' => ['tribMun.tribISSQN' => 1],
+            ],
+        ], $infDps),
+    ]);
+}
+
+it('exige indDest quando o tpAmb da DPS e homologacao', function () {
+    $homologacao = dpsParaValidarSchema();
+    $producao = dpsParaValidarSchema(['tpAmb' => 1]);
+    $mensagem = 'O indicador de destinatário é obrigatório no schema 20261124.';
+
+    expect((new DpsValidator)->validate($homologacao)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($homologacao, '20260209')->errors)->not->toContain($mensagem)
+        ->and((new DpsValidator)->validate($producao)->errors)->not->toContain($mensagem);
+});
+
+it('recusa destinatario quando o indicador nao e 1 no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'dest' => [
+            'CNPJ' => '98765432000188',
+            'xNome' => 'Destinatario Exemplo Ltda',
+        ],
+    ]);
+
+    expect((new DpsValidator)->validate($dps, '20261124')->errors)
+        ->toContain('O destinatário do serviço só deve ser identificado quando o indicador de destinatário for 1.');
+});
+
+it('recusa campo antigo de comercio exterior no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'serv' => [
+            'locPrest' => ['cLocPrestacao' => '3550308'],
+            'cServ' => [
+                'cTribNac' => '010701',
+                'xDescServ' => 'Hospedagem de sites',
+                'cNBS' => '115031000',
+            ],
+            'comExt' => [
+                'mdPrestacao' => '1',
+                'vincPrest' => '0',
+                'tpMoeda' => '220',
+                'vServMoeda' => 10.5,
+                'mecAFComexP' => '01',
+                'mecAFComexT' => '01',
+                'movTempBens' => '1',
+                'mdic' => '0',
+            ],
+        ],
+    ]);
+
+    $mensagem = 'Os campos vServMoeda, nDI e nRE não existem no schema 20261124.';
+
+    expect((new DpsValidator)->validate($dps)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20260209')->errors)->not->toContain($mensagem);
+});
+
+it('recusa condominios fora do subitem 99.05 no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'condominios' => [
+                'dVencOrig' => '2026-11-26',
+                'gCobranca' => [
+                    [
+                        'tpCobranca' => '01',
+                        'vCobranca' => 100,
+                    ],
+                ],
+            ],
+        ],
+    ]);
+
+    $mensagem = 'O grupo de condomínios só é admitido para o subitem 99.05 do código de tributação nacional.';
+
+    expect((new DpsValidator)->validate($dps)->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20260209')->errors)->not->toContain($mensagem);
+});
+
+it('recusa descricao do tipo de cobranca quando o tipo nao e 99 no schema 20261124', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 0,
+        'serv' => [
+            'locPrest' => ['cLocPrestacao' => '3550308'],
+            'cServ' => [
+                'cTribNac' => '99.05.01',
+                'xDescServ' => 'Administracao de condominio',
+                'cNBS' => '112011000',
+            ],
+        ],
+        'IBSCBS' => [
+            'cIndOp' => '010101',
+            'condominios' => [
+                'dVencOrig' => '2026-11-26',
+                'gCobranca' => [
+                    [
+                        'tpCobranca' => '01',
+                        'xTpCobranca' => 'Taxa extra',
+                        'vCobranca' => 100,
+                    ],
+                ],
+            ],
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+
+    expect((new DpsValidator)->validate($dps, '20261124')->errors)
+        ->toContain('A descrição do tipo de cobrança só deve ser informada quando o tipo for 99.');
+});
+
+it('acusa indicadores de destinatario diferentes em infDPS e no grupo IBS/CBS', function () {
+    $dps = dpsParaValidarSchema([
+        'indDest' => 1,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $iguais = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'indDest' => 0,
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $mensagem = 'O indicador de destinatário informado em infDPS difere do informado no grupo IBS/CBS.';
+
+    expect((new DpsValidator)->validate($dps, '20261020')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($dps, '20261124')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($iguais, '20261020')->errors)->not->toContain($mensagem);
+});
+
+it('exige indDest no grupo IBS/CBS quando os dois lugares estao vazios', function () {
+    $vazio = dpsParaValidarSchema([
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $soNoTopo = dpsParaValidarSchema([
+        'indDest' => 0,
+        'IBSCBS' => [
+            'cIndOp' => '100301',
+            'valores' => [
+                'trib' => [
+                    'CST' => '000',
+                    'cClassTrib' => '000001',
+                ],
+            ],
+        ],
+    ]);
+    $mensagem = 'O indicador de destinatário é obrigatório no grupo IBS/CBS.';
+
+    expect((new DpsValidator)->validate($vazio, '20261020')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($vazio, '20260209')->errors)->toContain($mensagem)
+        ->and((new DpsValidator)->validate($soNoTopo, '20261020')->errors)->not->toContain($mensagem);
+});

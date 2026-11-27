@@ -18,9 +18,9 @@ class NfseXmlBuilder
 
     private DpsXmlBuilder $dpsBuilder;
 
-    public function __construct()
+    public function __construct(?string $schema = null)
     {
-        $this->dpsBuilder = new DpsXmlBuilder;
+        $this->dpsBuilder = new DpsXmlBuilder($schema);
     }
 
     public function build(NfseData $nfse): string

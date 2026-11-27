@@ -14,8 +14,7 @@ use Spatie\DataTransferObject\Attributes\MapFrom;
 class IbscbsData extends Dto
 {
     /**
-     * Indicador da finalidade da emissão de NFS-e.
-     * 0 - NFS-e regular
+     * Indicador da finalidade da emissão de NFS-e. Pacote 20260209, dentro de IBSCBS.
      */
     #[MapFrom('finNFSe')]
     public ?string $finalidadeNfse = null;
@@ -29,8 +28,8 @@ class IbscbsData extends Dto
     public ?int $indicadorUsoConsumoPessoal = null;
 
     /**
-     * Código indicador da operação de fornecimento, conforme tabela
-     * "código indicador de operação" (Anexo VII).
+     * Código indicador da operação de fornecimento.
+     * Seis dígitos da tabela CodigoIndicadorOperacao.
      */
     #[MapFrom('cIndOp')]
     public ?string $codigoIndicadorOperacao = null;
@@ -70,13 +69,13 @@ class IbscbsData extends Dto
     public ?TomadorData $destinatario = null;
 
     /**
-     * Informações de operações relacionadas a bens imóveis, exceto obras.
+     * Operações relacionadas a bens imóveis, exceto obras.
      */
     #[MapFrom('imovel')]
     public ?ImovelData $imovel = null;
 
     /**
-     * Documentos referenciados de reembolso, repasse ou ressarcimento.
+     * Documentos de reembolso, repasse ou ressarcimento. Pacote 20260209.
      *
      * @var ReembolsoDocumentoData[]|null
      */
@@ -84,15 +83,29 @@ class IbscbsData extends Dto
     public ?array $documentosReembolso = null;
 
     /**
+     * Bens móveis objeto de locação.
+     *
+     * @var BemMovelData[]|null
+     */
+    #[MapFrom('bensMoveis'), CastWith(ArrayCaster::class, itemType: BemMovelData::class)]
+    public ?array $bensMoveis = null;
+
+    /**
+     * Operações de condomínio. Schema 20261124. Somente para o subitem 99.05.
+     */
+    #[MapFrom('condominios')]
+    public ?CondominioData $condominios = null;
+
+    /**
      * Código de Situação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.CST')]
+    #[MapFrom('valores.trib.CST')]
     public ?string $cst = null;
 
     /**
      * Código de Classificação Tributária do IBS e da CBS.
      */
-    #[MapFrom('valores.trib.gIBSCBS.cClassTrib')]
+    #[MapFrom('valores.trib.cClassTrib')]
     public ?string $codigoClassificacaoTributaria = null;
 
     /**
@@ -130,4 +143,39 @@ class IbscbsData extends Dto
      */
     #[MapFrom('valores.trib.gIBSCBS.gDif.pDifCBS')]
     public ?float $percentualDiferimentoCbs = null;
+
+    private bool $cstCaminhoAntigo = false;
+
+    private bool $classificacaoCaminhoAntigo = false;
+
+    public function cstVeioCaminhoAntigo(): bool
+    {
+        return $this->cstCaminhoAntigo;
+    }
+
+    public function classificacaoVeioCaminhoAntigo(): bool
+    {
+        return $this->classificacaoCaminhoAntigo;
+    }
+
+    protected function normalizeInput(array $input): array
+    {
+        $this->cstCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.CST');
+        $this->classificacaoCaminhoAntigo = $this->textoPreenchido($input, 'valores.trib.gIBSCBS.cClassTrib');
+
+        return parent::normalizeInput($input);
+    }
+
+    private function textoPreenchido(array $input, string $caminho): bool
+    {
+        $atual = $input;
+        foreach (explode('.', $caminho) as $chave) {
+            if (! is_array($atual) || ! array_key_exists($chave, $atual)) {
+                return false;
+            }
+            $atual = $atual[$chave];
+        }
+
+        return is_scalar($atual) && trim((string) $atual) !== '';
+    }
 }

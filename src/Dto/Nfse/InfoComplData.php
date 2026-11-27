@@ -3,6 +3,8 @@
 namespace Nfse\Dto\Nfse;
 
 use Nfse\Dto\Dto;
+use Nfse\Support\DTO\ArrayCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 
 class InfoComplData extends Dto
@@ -27,6 +29,20 @@ class InfoComplData extends Dto
      */
     #[MapFrom('docRef')]
     public ?string $documentoReferencia = null;
+
+    /**
+     * Número do pedido, ordem de compra, ordem de serviço ou projeto.
+     */
+    #[MapFrom('xPed')]
+    public ?string $numeroPedido = null;
+
+    /**
+     * Itens do pedido citado em numeroPedido.
+     *
+     * @var string[]|null
+     */
+    #[MapFrom('gItemPed.xItemPed'), CastWith(ArrayCaster::class, itemType: 'string')]
+    public ?array $itensPedido = null;
 
     /**
      * Oc. 0-1

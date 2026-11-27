@@ -10,9 +10,9 @@ namespace Nfse\Enums;
 enum MovimentacaoTemporariaBens: string
 {
     /**
-     * Nenhum
+     * Desconhecido (tipo não informado na nota de origem)
      */
-    case Nenhum = '0';
+    case Desconhecido = '0';
 
     /**
      * Não
@@ -20,14 +20,14 @@ enum MovimentacaoTemporariaBens: string
     case Nao = '1';
 
     /**
-     * Sim (Importação)
+     * Vinculada à Declaração de Importação
      */
-    case SimImportacao = '2';
+    case DeclaracaoImportacao = '2';
 
     /**
-     * Sim (Exportação)
+     * Vinculada à Declaração de Exportação
      */
-    case SimExportacao = '3';
+    case DeclaracaoExportacao = '3';
 
     /**
      * Get description for the enum case
@@ -35,10 +35,10 @@ enum MovimentacaoTemporariaBens: string
     public function getDescription(): string
     {
         return match ($this) {
-            self::Nenhum => 'Nenhum',
+            self::Desconhecido => 'Desconhecido (tipo não informado na nota de origem)',
             self::Nao => 'Não',
-            self::SimImportacao => 'Sim (Importação)',
-            self::SimExportacao => 'Sim (Exportação)',
+            self::DeclaracaoImportacao => 'Vinculada - Declaração de Importação',
+            self::DeclaracaoExportacao => 'Vinculada - Declaração de Exportação',
         };
     }
 

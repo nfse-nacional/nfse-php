@@ -83,7 +83,7 @@ it('adds infoCompl element when informacoesComplementares is provided', function
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<infoCompl>')
@@ -164,7 +164,7 @@ it('does not add infoCompl element when descricaoInformacoesComplementares is nu
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->not->toContain('<infoCompl>');

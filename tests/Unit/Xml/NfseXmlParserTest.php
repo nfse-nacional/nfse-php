@@ -75,7 +75,7 @@ it('can parse nfse xml to data', function () {
         ],
     ]);
 
-    $builder = new NfseXmlBuilder;
+    $builder = new NfseXmlBuilder('20261020');
     $xml = $builder->build($nfse);
 
     $parser = new NfseXmlParser;

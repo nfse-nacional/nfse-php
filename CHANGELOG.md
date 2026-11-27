@@ -4,6 +4,37 @@ All notable changes to `nfse-php` will be documented in this file.
 
 ## [Unreleased]
 
+### Schema da DPS
+
+A montagem da DPS escolhe o pacote pela data de lançamento do ambiente. `references/schemas/20260209` é o leiaute vigente em produção até 06/12/2026. `references/schemas/20261020` entra na homologação em 20/10/2026. `references/schemas/20261124` entra na homologação em 24/11/2026 e na produção em 07/12/2026. Os três permanecem.
+
+Sem versão na chamada, `SchemaDps` usa essa tabela. `validate()` segue o `tpAmb` da DPS. A versão informada em `emitir()`, no `DpsXmlBuilder` ou no `validate()` prevalece. No pacote `20260209`, a DPS grava `vDedRed` e `gReeRepRes`, com `finNFSe` dentro de `IBSCBS`.
+
+No pacote `20261124`, `indDest` e `dest` ficam em `infDPS`, logo depois de `toma`. `comExt` passa a usar `nFatura`, `vFatura`, `nDUIMP`, `nDUE` e `nContCambio`. Entram `cMun` no evento, `vAjusteBCIBSCBSComExt` e o grupo opcional `condominios` em `IBSCBS`.
+
+### Leiaute DPS 20/10/2026
+
+A DPS passa a seguir o pacote de esquemas de produção restrita de 20/10/2026 (`v1.01`).
+
+- `valores/vDedRed` foi substituído por `valores/vAjusteBC` (`AjusteBaseCalculoData`, `DocumentoAjusteBaseCalculoData`, `TipoAjusteBaseCalculo`).
+- `tribMun` passa a emitir `cPaisResult` e `nBM`. `tribFed` emite `vRetCP` no lugar de `vRetContPrev`.
+- `IBSCBS` não leva mais `finNFSe` nem `gReeRepRes`. `CST` e `cClassTrib` ficam em `valores/trib`. O imóvel ganhou `cMun`, `gLocacao` e `gUnidImob`. Novo grupo `bensMoveis`.
+- `cServ` não emite `cAtvSN` e grava `xDescServ` por último. `regTrib` não emite `regApIBSCBSSN`.
+- Obra aceita `cCIB`. Obra e evento usam endereço simples e escolha exclusiva de identificação.
+- `infoCompl` ganhou `xPed` e `gItemPed/xItemPed`.
+- `EventosXmlBuilder` serializa os 16 tipos de pedido de registro de evento.
+- Catálogo NBS 2.0 em `references/nbs2.json` e enum `CodigoIndicadorOperacao`.
+- Com `IBSCBS` informado, o `DpsValidator` exige `CST` e `cClassTrib` em `valores/trib`. Se esses campos ainda vierem em `valores.trib.gIBSCBS`, o validador pede a mudança de caminho. `cIndOp` preenchido fora de `CodigoIndicadorOperacao` entra na lista de erros.
+- `CodigoIndicadorOperacao` inclui `020102`, `130101` e `130201`, em vigor a partir de 01/12/2026.
+
+### ⚠️ Breaking changes
+
+- Removidos `DeducaoReducaoData`, `DocumentoDeducaoData` e `TipoDeducaoReducao`.
+- Removidos de `IbscbsData`: `finalidadeNfse` e `documentosReembolso`.
+- `ImovelData` deixou de ter inscrição, CIB e endereço no nível do imóvel. Esses dados ficam em `unidadesImovel`.
+- `ComercioExteriorData` deixou de expor os campos do leiaute antigo (`NIFExport`, `cPaisExport`, `cMecAFComex`, `nEnquad`, `nProc`, `indIncentivo`).
+- `ModoPrestacao` e `MovimentacaoTemporariaBens` foram alinhados aos códigos do XSD atual.
+
 ### 🧾 Grupo IBS/CBS (Reforma Tributária sobre o Consumo)
 
 Implementação do grupo `IBSCBS` conforme o pacote de esquemas AnexoVI v1.01.03 (NT 004),

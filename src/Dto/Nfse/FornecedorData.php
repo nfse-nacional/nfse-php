@@ -52,7 +52,7 @@ class FornecedorData extends Dto
     /**
      * Endereço do fornecedor.
      */
-    #[MapFrom('endFornec')]
+    #[MapFrom('end')]
     public ?EnderecoData $endereco = null;
 
     /**

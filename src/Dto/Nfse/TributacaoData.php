@@ -27,6 +27,12 @@ class TributacaoData extends Dto
     public ?TributacaoIssqn $tributacaoIssqn = null;
 
     /**
+     * Código do país onde ocorreu o resultado do serviço (tabela ISO).
+     */
+    #[MapFrom('tribMun.cPaisResult')]
+    public ?string $codigoPaisResultado = null;
+
+    /**
      * Tipo de imunidade.
      * Obrigatório se tribISSQN = 2.
      * 0 - Imunidade (tipo não informado na nota de origem)
@@ -128,6 +134,12 @@ class TributacaoData extends Dto
      */
     #[MapFrom('tribFed.piscofins.tpRetPisCofins'), CastWith(EnumCaster::class, enumType: TipoRetencaoPisCofins::class)]
     public ?TipoRetencaoPisCofins $tipoRetencaoPisCofins = null;
+
+    /**
+     * Valor retido de contribuição previdenciária (R$).
+     */
+    #[MapFrom('tribFed.vRetCP')]
+    public ?float $valorRetidoCp = null;
 
     /**
      * Valor retido de IRRF (R$).

@@ -123,6 +123,24 @@ $params = $service->consultarParametrosConvenio('CODIGO_MUNICIPIO');
 $aliquotas = $service->consultarAliquota('COD_MUN', 'COD_SERV', 'COMPETENCIA');
 ```
 
+## Quebra de compatibilidade
+
+No leiaute da DPS de 20/10/2026, `CST` e `cClassTrib` do IBS e da CBS saíram de `valores.trib.gIBSCBS` e ficam em `valores.trib`. A biblioteca não lê mais o caminho antigo. Quem ainda monta a DPS com essas chaves dentro de `gIBSCBS` precisa movê-las para `valores.trib`.
+
+## Schema da DPS
+
+Os pacotes ficam em `references/schemas/20260209`, `references/schemas/20261020` e `references/schemas/20261124`. Os três permanecem. Um pacote futuro entra como nova pasta, sem apagar os anteriores.
+
+Sem versão na chamada, `emitir($dps)` olha a data de hoje no ambiente. Produção usa `20260209` até 06/12/2026 e `20261124` a partir de 07/12/2026. Homologação usa `20261020` a partir de 20/10/2026 e `20261124` a partir de 24/11/2026. A versão informada na chamada prevalece sobre a data.
+
+```php
+$nfse->contribuinte()->emitir($dps, '20261124');
+```
+
+No pacote `20261124`, `indDest` fica em `infDPS`, logo depois de `toma`, e sai de `IBSCBS` junto com `dest`. O campo é obrigatório mesmo sem o grupo IBS/CBS. O ambiente (`tpAmb` e a URL) continua separado da pasta do schema.
+
+No mesmo pacote, o grupo opcional `condominios` entra em `IBSCBS`, depois de `bensMoveis`, para atividade de condomínio do subitem 99.05.
+
 ## 📝 Exemplo de DPS (Declaração de Prestação de Serviço)
 
 Abaixo, um exemplo completo de como montar o objeto DPS para emissão.

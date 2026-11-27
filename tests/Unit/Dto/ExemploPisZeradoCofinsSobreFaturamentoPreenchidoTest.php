@@ -122,7 +122,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
         ],
     ]);
 
-    $builder = new NfseXmlBuilder;
+    $builder = new NfseXmlBuilder('20261020');
     $xml = $builder->build($nfse);
 
     // Assertions for NFSe fields

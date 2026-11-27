@@ -99,7 +99,7 @@ it('parses the ibscbs group calculated by the national system', function () {
 it('serializes the ibscbs group back after the valores group', function () {
     $nfse = (new NfseXmlParser)->parse(nfseXmlComIbscbs());
 
-    $xml = (new NfseXmlBuilder)->build($nfse);
+    $xml = (new NfseXmlBuilder('20261020'))->build($nfse);
 
     expect($xml)->toContain('<cLocalidadeIncid>3550308</cLocalidadeIncid>')
         ->and($xml)->toContain('<uf><pIBSUF>0.10</pIBSUF><pRedAliqUF>30.00</pRedAliqUF><pAliqEfetUF>0.07</pAliqEfetUF></uf>')

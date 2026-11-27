@@ -78,15 +78,19 @@ it('can build xml with complex structures', function () {
                     'vDescIncond' => 10.0,
                     'vDescCond' => 5.0,
                 ],
-                'vDedRed' => [
-                    'pDR' => 20.0,
-                    'vDR' => 200.0,
+                'vAjusteBC' => [
+                    'vAjusteBCISSQN' => 200.00,
                     'documentos' => [
-                        [
-                            'chNFSe' => '12345678901234567890123456789012345678901234',
-                            'tpDedRed' => 1,
-                            'vDedRedutivel' => 100.0,
-                            'vDedRed' => 100.0,
+                        'docAjusteBC' => [
+                            [
+                                'tpAjusteBC' => '2',
+                                'vTotDoc' => 100.0,
+                                'vAjusteAplic' => 100.0,
+                                'dFeNacional' => [
+                                    'tipoChaveDFe' => 1,
+                                    'chaveDFe' => '12345678901234567890123456789012345678901234',
+                                ],
+                            ],
                         ],
                     ],
                 ],
@@ -110,7 +114,7 @@ it('can build xml with complex structures', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<subst>')
@@ -121,7 +125,7 @@ it('can build xml with complex structures', function () {
         ->and($xml)->toContain('<obra>')
         ->and($xml)->toContain('<atvEvento>')
         ->and($xml)->toContain('<vDescCondIncond>')
-        ->and($xml)->toContain('<vDedRed>')
+        ->and($xml)->toContain('<vAjusteBC>')
         ->and($xml)->toContain('<documentos>')
         ->and($xml)->toContain('<piscofins>')
         ->and($xml)->toContain('<vRetIRRF>15.00</vRetIRRF>')
@@ -169,7 +173,7 @@ it('can build xml with endExt (foreign address)', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<endExt>')
@@ -206,7 +210,7 @@ it('can build xml with indicadorTotalTributos', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<indTotTrib>1</indTotTrib>');
@@ -238,7 +242,7 @@ it('can build xml with percentualTotalTributosSN', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<pTotTribSN>5.00</pTotTribSN>');
@@ -270,7 +274,7 @@ it('can build xml with percentualTotalTributosSN equal to zero', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<totTrib><pTotTribSN>0.00</pTotTribSN></totTrib>');
@@ -304,7 +308,7 @@ it('can build xml with percentualTotalTributos Fed Est Mun', function () {
         ],
     ]);
 
-    $builder = new DpsXmlBuilder;
+    $builder = new DpsXmlBuilder('20261020');
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<pTotTribFed>10.50</pTotTribFed>')

@@ -5,7 +5,6 @@ namespace Nfse\Dto\Nfse;
 use Nfse\Dto\Dto;
 use Nfse\Enums\ModoPrestacao;
 use Nfse\Enums\MovimentacaoTemporariaBens;
-use Nfse\Enums\TipoPessoa;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
@@ -14,76 +13,31 @@ class ComercioExteriorData extends Dto
 {
     /**
      * Modo de prestação do serviço.
+     * 0 - Desconhecido
      * 1 - Transfronteiriço
      * 2 - Consumo no Brasil
-     * 3 - Presença Comercial no Exterior
-     * 4 - Movimento Temporário de Pessoas Físicas
+     * 3 - Movimento temporário de pessoas físicas
+     * 4 - Consumo no exterior
      */
     #[MapFrom('mdPrestacao'), CastWith(EnumCaster::class, enumType: ModoPrestacao::class)]
     public ?ModoPrestacao $modoPrestacao = null;
 
     /**
      * Vínculo entre as partes no negócio.
-     * 1 - Sem vínculo
-     * 2 - Com vínculo
+     * 0 - Sem vínculo
+     * 1 - Controlada
+     * 2 - Controladora
+     * 3 - Coligada
+     * 4 - Matriz
+     * 5 - Filial ou sucursal
+     * 6 - Outro vínculo
+     * 9 - Desconhecido
      */
     #[MapFrom('vincPrest')]
     public ?int $vinculoPrestacao = null;
 
     /**
-     * Tipo de pessoa do exportador.
-     * 1 - Pessoa Jurídica
-     * 2 - Pessoa Física
-     */
-    #[MapFrom('tpPessoaExport'), CastWith(EnumCaster::class, enumType: TipoPessoa::class)]
-    public ?TipoPessoa $tipoPessoaExportador = null;
-
-    /**
-     * NIF do exportador.
-     */
-    #[MapFrom('NIFExport')]
-    public ?string $nifExportador = null;
-
-    /**
-     * Código do país do exportador.
-     */
-    #[MapFrom('cPaisExport')]
-    public ?string $codigoPaisExportador = null;
-
-    /**
-     * Código do mecanismo de apoio/fomento.
-     */
-    #[MapFrom('cMecAFComex')]
-    public ?string $codigoMecanismoApoioFomento = null;
-
-    /**
-     * Número do enquadramento.
-     */
-    #[MapFrom('nEnquad')]
-    public ?string $numeroEnquadramento = null;
-
-    /**
-     * Número do processo.
-     */
-    #[MapFrom('nProc')]
-    public ?string $numeroProcesso = null;
-
-    /**
-     * Indicador de incentivo fiscal.
-     * 1 - Sim
-     * 2 - Não
-     */
-    #[MapFrom('indIncentivo')]
-    public ?int $indicadorIncentivo = null;
-
-    /**
-     * Descrição do incentivo fiscal.
-     */
-    #[MapFrom('xDescIncentivo')]
-    public ?string $descricaoIncentivo = null;
-
-    /**
-     * Código da moeda da transação (ISO 4217).
+     * Código da moeda da transação (tabela do Banco Central).
      */
     #[MapFrom('tpMoeda')]
     public ?string $tipoMoeda = null;
@@ -107,7 +61,7 @@ class ComercioExteriorData extends Dto
     public ?string $mecanismoApoioComexTomador = null;
 
     /**
-     * Movimentação temporária de bens.
+     * Vínculo da operação à movimentação temporária de bens.
      */
     #[MapFrom('movTempBens'), CastWith(EnumCaster::class, enumType: MovimentacaoTemporariaBens::class)]
     public ?MovimentacaoTemporariaBens $movimentacaoTemporariaBens = null;
@@ -125,10 +79,40 @@ class ComercioExteriorData extends Dto
     public ?string $numeroRegistroExportacao = null;
 
     /**
-     * Compartilhamento de dados com o MDIC.
-     * 1 - Sim
-     * 2 - Não
+     * Envio das informações ao MDIC.
+     * 0 - Não enviar
+     * 1 - Enviar
      */
     #[MapFrom('mdic')]
     public ?string $mdic = null;
+
+    /**
+     * Número da fatura. Schema 20261124.
+     */
+    #[MapFrom('nFatura')]
+    public ?string $numeroFatura = null;
+
+    /**
+     * Valor da fatura. Schema 20261124.
+     */
+    #[MapFrom('vFatura')]
+    public ?float $valorFatura = null;
+
+    /**
+     * Número da DUIMP. Schema 20261124.
+     */
+    #[MapFrom('nDUIMP')]
+    public ?string $numeroDuimp = null;
+
+    /**
+     * Número da DU-E. Schema 20261124.
+     */
+    #[MapFrom('nDUE')]
+    public ?string $numeroDue = null;
+
+    /**
+     * Número do contrato de câmbio. Schema 20261124.
+     */
+    #[MapFrom('nContCambio')]
+    public ?string $numeroContratoCambio = null;
 }
